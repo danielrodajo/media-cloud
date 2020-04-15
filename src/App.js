@@ -1,11 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment } from 'react';
 import './App.css';
 import TopBar from './components/TopBar/TopBar';
+import BottomBar from './components/BottomBar/BottomBar';
+import ListButtons from './components/BottomBar/ListButtons';
 
 function App() {
   return (
-   <TopBar title="Inicio"/>
+    <Fragment>
+      <TopBar title="Inicio"/>
+      <BottomBar buttons = {ListButtons()}/>
+    </Fragment>  
   );
 }
 
