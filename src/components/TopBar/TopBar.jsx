@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
+import './TopBar.css'
 
 const TopBar = props => {
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h2 className="h2 main_title">{props.title}</h2>
         </div>
     );
 }
