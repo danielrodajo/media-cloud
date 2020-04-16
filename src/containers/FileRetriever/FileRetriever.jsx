@@ -11,17 +11,11 @@ const FileRetriever = () => {
         return state.fileRetriever.files;
     });
 
-    const onFiles = useCallback(
-        () => dispatch(actions.recoverFiles()),
-        [dispatch]
-      );
+    const onFiles = useCallback(() => dispatch(actions.recoverFiles()),[dispatch]);
 
     useEffect(() => {
         onFiles();
-    }, [onFiles])
-
-    const filesAll = () => dispatch(actions.recoverFiles());
-    console.log(filesAll);
+    }, [onFiles]);
 
     if (files) {
         return (

@@ -1,5 +1,6 @@
 import * as types from '../actions/ActionTypes';
 import { updateObject } from '../../shared/utility';
+import logo from '../../assets/images/logo.png';
 
 const initialState = {
     files: []
@@ -7,7 +8,36 @@ const initialState = {
 
 const recoverAllFiles = (state, action) => {
     return updateObject( state, {
-        files: ['prueba.png', 'palermo.jpg', 'text.txt', 'text2.txt', 'text3.txt', 'text4.txt', 'text5.txt', 'text6.txt', 'text7.txt', 'text8.txt' , 'text9.txt']       
+        files: [
+            {
+                filename: 'prueba.png',
+                file: logo
+            },
+            {
+                filename: 'prueba2.png',
+                file: logo
+            },
+            {
+                filename: 'prueba3.png',
+                file: logo
+            },
+            {
+                filename: 'prueba4.png',
+                file: logo
+            },
+            {
+                filename: 'prueba5.png',
+                file: logo
+            },
+            {
+                filename: 'prueba6.png',
+                file: logo
+            },
+            {
+                filename: 'prueba7.png',
+                file: logo
+            },
+        ]       
     })
 }
 

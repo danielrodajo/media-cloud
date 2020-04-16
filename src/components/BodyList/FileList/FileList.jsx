@@ -5,12 +5,11 @@ const FileList = props => {
     return (
         <div className="FileList">
             {
-                props.files.map(file => (
-                    <div key={file}>
-                        <img src="" alt="IMAGEN" />
-                        <h5>{file}</h5>
-                    </div>
-                    
+                props.files.map(filedata => (
+                    <div key={filedata}>
+                        <img src={filedata.file} alt={filedata.filename} />
+                        <h5>{filedata.filename}</h5>
+                    </div>                  
                 ))
             }
         </div>
