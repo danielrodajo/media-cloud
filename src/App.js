@@ -5,13 +5,14 @@ import BottomBar from './components/BottomBar/BottomBar';
 import ListButtons from './components/BottomBar/ListButtons';
 import BodyList from './components/BodyList/BodyList';
 import { Switch, Route } from 'react-router-dom';
+import FileRetriever from './containers/FileRetriever/FileRetriever';
 
 function App() {
 
   let routes = (
     <Switch>
       <Route path="/" exact>
-        <BodyList />
+        <FileRetriever />
       </Route>
     </Switch>
   )

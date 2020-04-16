@@ -1,9 +1,37 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react';
+import { connect, useDispatch, useSelector } from "react-redux";
+import BodyList from '../../components/BodyList/BodyList';
+import * as actions from '../../store/actions/index';
 
 const FileRetriever = () => {
-    return (
-        <div></div>
-    );
+
+    const dispatch = useDispatch();
+
+    const files = useSelector((state) => {
+        return state.fileRetriever.files;
+    });
+
+    const onFiles = useCallback(
+        () => dispatch(actions.recoverFiles()),
+        [dispatch]
+      );
+
+    useEffect(() => {
+        onFiles();
+    }, [onFiles])
+
+    const filesAll = () => dispatch(actions.recoverFiles());
+    console.log(filesAll);
+
+    if (files) {
+        return (
+            <BodyList files={files} />
+        );
+    } else {
+        return <h4>No hay archivos</h4>;
+    }
+
+    
 }
  
 export default FileRetriever;
