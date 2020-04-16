@@ -1,5 +1,17 @@
+import home from '../../assets/images/svg/home.svg';
+import plus from '../../assets/images/svg/plus.svg';
+
 const ListButton = () => {
-    return ['inicio', 'añadir', 'ajustes', 'anterior'];
+    return [
+        {
+            text: "Inicio",
+            img: home
+        },
+        {
+            text: "Añadir fichero",
+            img: plus
+        }
+    ]
 }
 
 export default ListButton;

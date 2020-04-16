@@ -4,7 +4,7 @@ import './ButtonBar.css';
 const ButtonBar = props => {
     return (
         <button className="ButtonBar">
-            {props.text}
+            <img src={props.img} alt={props.text}/>
         </button>
     );
 }
