@@ -6,7 +6,7 @@ const FileList = props => {
         <div className="FileList">
             {
                 props.files.map(filedata => (
-                    <div key={filedata}>
+                    <div key={filedata.filename}>
                         <img src={filedata.file} alt={filedata.filename} />
                         <h5>{filedata.filename}</h5>
                     </div>                  
