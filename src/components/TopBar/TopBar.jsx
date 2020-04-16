@@ -3,8 +3,8 @@ import './TopBar.css'
 
 const TopBar = props => {
     return (
-        <div>
-            <h2 className="h2 main_title">{props.title}</h2>
+        <div className="main_title">
+            <h2>{props.title}</h2>
         </div>
     );
 }
