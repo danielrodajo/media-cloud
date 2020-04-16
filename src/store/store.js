@@ -1,8 +1,9 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+import fileRetrieverReducer from './reducers/FileRetriever';
 
 const rootReducer = combineReducers({
-
+    fileRetriever : fileRetrieverReducer
 });
 
 //Configurar Store con el Plugin de Redux DevTools de Google Chrome

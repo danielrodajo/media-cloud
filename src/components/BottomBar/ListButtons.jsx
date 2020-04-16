@@ -5,11 +5,13 @@ const ListButton = () => {
     return [
         {
             text: "Inicio",
-            img: home
+            img: home,
+            onClick: () => {console.log("inicio")}
         },
         {
             text: "Añadir fichero",
-            img: plus
+            img: plus,
+            onClick: () => {console.log("agregar")}
         }
     ]
 }

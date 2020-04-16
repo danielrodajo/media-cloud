@@ -1,0 +1,1 @@
+export const RECOVER_FILES = 'RECOVER_FILES';

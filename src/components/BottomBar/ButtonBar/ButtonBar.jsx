@@ -3,7 +3,7 @@ import './ButtonBar.css';
 
 const ButtonBar = props => {
     return (
-        <button className="ButtonBar">
+        <button className="ButtonBar" onClick={props.onClick}>
             <img src={props.img} alt={props.text}/>
         </button>
     );
