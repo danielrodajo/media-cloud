@@ -1,14 +1,15 @@
 import React from 'react';
 import './FileList.css';
+import { S3Image } from 'aws-amplify-react';
 
 const FileList = props => {
     return (
         <div className="FileList">
             {
                 props.files.map(filedata => (
-                    <div key={filedata.filename}>
-                        <img src={filedata.file} alt={filedata.filename} />
-                        <h5>{filedata.filename}</h5>
+                    <div key={filedata.key}>
+                        <S3Image key={filedata.key} level="protected" imgKey={filedata.key}/>
+                        <h5>{filedata.key}</h5>
                     </div>                  
                 ))
             }

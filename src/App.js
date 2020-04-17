@@ -5,12 +5,13 @@ import BottomBar from './components/BottomBar/BottomBar';
 import ListButtons from './components/BottomBar/ListButtons';
 import { Switch, Route } from 'react-router-dom';
 import FileRetriever from './containers/FileRetriever/FileRetriever';
-import Amplify from 'aws-amplify';
+import Amplify, { Storage } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { withAuthenticator, Authenticator } from 'aws-amplify-react';
 import '@aws-amplify/ui/dist/style.css';
 
 Amplify.configure(awsconfig);
+Storage.configure({ level: 'protected' });
 
 function App() {
 

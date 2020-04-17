@@ -17,14 +17,9 @@ const FileRetriever = () => {
         onFiles();
     }, [onFiles]);
 
-    if (files) {
-        return (
-            <BodyList files={files} />
-        );
-    } else {
-        return <h4>No hay archivos</h4>;
-    }
-
+    return (
+        <BodyList files={files} />
+    );
     
 }
  
