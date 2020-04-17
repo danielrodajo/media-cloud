@@ -12,3 +12,9 @@ export const recoverFiles = () => {
         }).catch(err => console.log(err));
     }
 }
+
+export const addingFile = () => {
+    return {
+        type: types.ADDING_FILE
+    }
+}

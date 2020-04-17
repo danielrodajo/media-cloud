@@ -4,10 +4,9 @@ import FileList from './FileList/FileList'
 import Modal from '../Modal/Modal';
 
 const BodyList = props => {
-    console.log(props.files)
     return (
         <div>
-            <Modal />
+            <Modal show={props.adding}/>
             <MenuList text="Archivos Recientes"/>
             {             
                 (Array.isArray(props.files) && props.files.length) ? <FileList files={props.files}/> : <p>No hay archivos.</p>

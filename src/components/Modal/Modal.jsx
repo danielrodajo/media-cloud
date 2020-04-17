@@ -1,7 +1,8 @@
 import React from 'react';
 import { Storage } from 'aws-amplify';
+import './Modal.css';
 
-const Modal = () => {
+const Modal = props => {
 
     const submit = evt => {
         evt.preventDefault();
@@ -11,7 +12,10 @@ const Modal = () => {
     };
 
     return (
-        <div>
+        <div className="Modal" style={{
+            transform: props.show ? "translateY(0)" : "translateY(-100vh)",
+            opacity: props.show ? "1" : "0"
+        }}>
             <form action=""  onSubmit={submit}>
             <div className="row">
                     <input className="col-sm-12" type="file" id="fileinput"/>

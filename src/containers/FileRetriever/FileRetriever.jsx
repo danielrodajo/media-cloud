@@ -11,14 +11,18 @@ const FileRetriever = () => {
         return state.fileRetriever.files;
     });
 
-    const onFiles = useCallback(() => dispatch(actions.recoverFiles()),[dispatch]);
+    const adding = useSelector((state) => {
+        return state.fileRetriever.adding
+    });
+
+    const onGetFiles = useCallback(() => dispatch(actions.recoverFiles()),[dispatch]);
 
     useEffect(() => {
-        onFiles();
-    }, [onFiles]);
+        onGetFiles();
+    }, [onGetFiles]);
 
     return (
-        <BodyList files={files} />
+        <BodyList files={files} adding={adding}/>
     );
     
 }
