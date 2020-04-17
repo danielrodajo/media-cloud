@@ -1,0 +1,27 @@
+{
+    "mediacloud": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-media-cloud-mediacloud-90216-authRole",
+            "UnauthRoleArn": "arn:aws:iam::893847739855:role/amplify-media-cloud-mediacloud-90216-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::893847739855:role/amplify-media-cloud-mediacloud-90216-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-media-cloud-mediacloud-90216-deployment",
+            "UnauthRoleName": "amplify-media-cloud-mediacloud-90216-unauthRole",
+            "StackName": "amplify-media-cloud-mediacloud-90216",
+            "StackId": "arn:aws:cloudformation:eu-west-1:893847739855:stack/amplify-media-cloud-mediacloud-90216/5fb2e860-8079-11ea-b6e3-02ac8ce49a7a",
+            "AmplifyAppId": "d2hz1i5pcu1vb"
+        },
+        "categories": {
+            "function": {
+                "mediacloudauthDefineAuthChallenge": {},
+                "mediacloudauthCreateAuthChallenge": {}
+            },
+            "auth": {
+                "mediacloudauth": {
+                    "facebookAppId": "527891327896169",
+                    "googleClientId": "1026139280427-ha03efs2g8nd19ip6bfh498ei5htc4ii.apps.googleusercontent.com"
+                }
+            }
+        }
+    }
+}
