@@ -1,3 +1,4 @@
 export {
-    recoverFiles
+    recoverFiles,
+    addingFile
 } from './FileRetriever';

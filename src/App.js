@@ -2,7 +2,7 @@ import React, { Fragment, Suspense } from 'react';
 import './App.css';
 import TopBar from './components/TopBar/TopBar';
 import BottomBar from './components/BottomBar/BottomBar';
-import ListButtons from './components/BottomBar/ListButtons';
+import ListButtons from './containers/ListButtons';
 import { Switch, Route } from 'react-router-dom';
 import FileRetriever from './containers/FileRetriever/FileRetriever';
 import Amplify, { Storage } from 'aws-amplify';
