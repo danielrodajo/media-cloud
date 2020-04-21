@@ -1,4 +1,3 @@
 export {
-    recoverFiles,
-    addingFile
-} from './FileRetriever';
+    recoverFiles
+} from './FileReducer';

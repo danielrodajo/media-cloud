@@ -13,8 +13,14 @@ export const recoverFiles = () => {
     }
 }
 
-export const addingFile = () => {
-    return {
-        type: types.ADDING_FILE
-    }
+export const uploadFile = (name, file) => {
+    return (dispatch) => {
+        Storage.put(name, file)
+        .then(result => {
+            dispatch({
+                type: types.UPLOAD_FILE,
+                file: result
+            })
+        }).catch(err => console.log(err));
+    }   
 }

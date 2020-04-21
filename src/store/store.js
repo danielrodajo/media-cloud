@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import fileRetrieverReducer from './reducers/FileRetriever';
+import FileReducerReducer from './reducers/FileReducer';
 
 const rootReducer = combineReducers({
-    fileRetriever : fileRetrieverReducer
+    FileReducer : FileReducerReducer
 });
 
 //Configurar Store con el Plugin de Redux DevTools de Google Chrome
@@ -12,6 +12,5 @@ const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDU
 
 export default function generateStore() {
     const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
-
     return store;
 }
