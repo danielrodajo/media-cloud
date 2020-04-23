@@ -1,3 +1,4 @@
 export {
-    recoverFiles
-} from './FileReducer';
+    recoverFiles,
+    uploadFile
+} from './FileManager';

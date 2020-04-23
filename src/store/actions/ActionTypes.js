@@ -1,4 +1,5 @@
 export const RECOVER_FILES = 'RECOVER_FILES';
+export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const UPLOAD_FILE_OK = 'UPLOAD_FILE_OK';
