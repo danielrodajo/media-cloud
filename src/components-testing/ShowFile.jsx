@@ -5,10 +5,7 @@ import { useSelector } from 'react-redux';
 
 const ShowFile = props => {
 
-    const url = useSelector((state) => {
-        return state.FileReducer.url;
-    });
-
+    const url = '';
     const download = (dataurl, filename) => {
         console.log(dataurl)
         var a = document.createElement("a");
@@ -21,7 +18,7 @@ const ShowFile = props => {
         <Fragment>
             <S3Image key={props.file.key} level="protected" imgKey={props.file.key}/>
             <h5>{props.file.key}</h5>
-            <button className="btn btn-primary" onClick={() => download(url, props.file.key)}>Descargar</button>
+            <button className="btn btn-primary" onClick={() => download(props.file.url, props.file.key)}>Descargar</button>
         </Fragment>
     );
 }

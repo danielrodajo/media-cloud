@@ -1,14 +1,28 @@
 import * as types from './ActionTypes';
 import { Storage } from 'aws-amplify';
 
+//Recupera TODOS los ficheros del bucket del usuario autenticado
 export const recoverFiles = () => {
     return (dispatch) => {  
+        //Obtener todos los ficheros (nombre y eTag)
         Storage.list('', {level: 'protected'})
         .then(result => {
-            dispatch({
-                type: types.RECOVER_FILES,
-                files: result
-            })
+            //A cada fichero, recuperar su URL
+            let promises = result.map(file => {
+                return Storage.get(file.key)
+                //Agregar al objeto el nuevo valor recuperado
+                .then(result => {
+                    return file = {...file, url: result}
+                });
+            });     
+            //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
+            Promise.all(promises)
+            .then(result => {
+                dispatch({
+                    type: types.RECOVER_FILES,
+                    files: result
+                })
+            });          
         }).catch(err => {
             console.log(err);
             dispatch({
