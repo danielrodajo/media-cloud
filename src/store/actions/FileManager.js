@@ -33,14 +33,21 @@ export const recoverFiles = () => {
     }
 }
 
+//Subida de un fichero
 export const uploadFile = (name, file) => {
     return (dispatch) => {
         Storage.put(name, file)
         .then(result => {
-            dispatch({
-                type: types.UPLOAD_FILE,
-                file: result
-            })
+            //Agregar al objeto recuperado su URL
+            Storage.get(result.key)
+            .then(result2 => {
+                const newFile = {...result, url: result2}
+                dispatch({
+                    type: types.UPLOAD_FILE,
+                    file: newFile
+                })
+            });
+            
         }).catch(err => {
             console.log(err);
             dispatch({
@@ -49,24 +56,4 @@ export const uploadFile = (name, file) => {
             });
         });
     }   
-}
-
-export const downloadFile = (name) => {
-    return (dispatch) => {
-        Storage.get(name)
-        .then(result => {
-            console.log(result)
-            dispatch({
-                type: types.DOWNLOAD_FILE,
-                url: result
-            })
-        })
-        .catch(err => {
-            console.log(err)
-            dispatch({
-                type: types.DOWNLOAD_FILE_NOK,
-                error: err
-            })
-        });
-    }
 }

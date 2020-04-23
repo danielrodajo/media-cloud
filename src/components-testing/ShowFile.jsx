@@ -4,8 +4,7 @@ import { Storage } from 'aws-amplify';
 import { useSelector } from 'react-redux';
 
 const ShowFile = props => {
-
-    const url = '';
+    
     const download = (dataurl, filename) => {
         console.log(dataurl)
         var a = document.createElement("a");

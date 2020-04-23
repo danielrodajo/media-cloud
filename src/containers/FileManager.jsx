@@ -16,15 +16,13 @@ const FileManager = () => {
 
     const uploadFile = (name, file) => dispatch(actions.uploadFile(name, file));
 
-    const downloadFile = (name) => dispatch(actions.downloadFile(name));
-
     useEffect(() => {
         onGetFiles();
     }, [onGetFiles]);
 
     return (
         <Fragment>
-            <ShowFiles files={files} download={downloadFile}/>   
+            <ShowFiles files={files} />   
             <UploadFile upload={uploadFile}/> 
         </Fragment>    
     );

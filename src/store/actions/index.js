@@ -1,5 +1,4 @@
 export {
     recoverFiles,
-    uploadFile,
-    downloadFile
+    uploadFile
 } from './FileManager';
