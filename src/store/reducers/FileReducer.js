@@ -5,6 +5,7 @@ const initialState = {
     files: [],
     recoverError: null,
     uploadError: null,
+    removeError: null,
 }
 
 const recoverFiles = (state, action) => {   
@@ -31,6 +32,18 @@ const uploadFail = (state, action) => {
     })
 }
 
+const removeFile = (state, action) => {
+    return updateObject( state, {
+        files: state.files.filter(file => file.key !== action.filename)
+    })
+}
+
+const removeFail = (state, action) => {
+    return updateObject( state, {
+        removeError: action.error
+    })
+}
+
 
 
 const reducer = ( state = initialState, action ) => {
@@ -39,6 +52,8 @@ const reducer = ( state = initialState, action ) => {
         case types.RECOVER_FILES_NOK: return recoverFail(state, action);
         case types.UPLOAD_FILE: return uploadFile(state, action);
         case types.UPLOAD_FILE_NOK: return uploadFail(state, action);
+        case types.REMOVE_FILE: return removeFile(state, action);
+        case types.REMOVE_FILE_NOK: return removeFail(state, action);
         default: return state;
     }
 }

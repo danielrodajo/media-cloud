@@ -57,3 +57,15 @@ export const uploadFile = (name, file) => {
         });
     }   
 }
+
+export  const removeFile = (name) => {
+    return (dispatch) => {
+        Storage.remove(name)
+        .then(() =>
+        dispatch({
+            type: types.REMOVE_FILE,
+            filename: name
+        })
+        ).catch(err => console.log(err))
+    }
+}

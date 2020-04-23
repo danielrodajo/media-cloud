@@ -1,7 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { S3Image } from 'aws-amplify-react';
-import { Storage } from 'aws-amplify';
-import { useSelector } from 'react-redux';
 
 const ShowFile = props => {
     
@@ -14,11 +12,12 @@ const ShowFile = props => {
       }
 
     return (
-        <Fragment>
+        <div className="container mb-5 mt-5">
             <S3Image key={props.file.key} level="protected" imgKey={props.file.key}/>
             <h5>{props.file.key}</h5>
             <button className="btn btn-primary" onClick={() => download(props.file.url, props.file.key)}>Descargar</button>
-        </Fragment>
+            <button className="btn btn-secondary" onClick={() => {props.remove(props.file.key)}}>Eliminar</button>
+        </div>
     );
 }
  

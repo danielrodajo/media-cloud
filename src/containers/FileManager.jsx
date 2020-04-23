@@ -16,13 +16,15 @@ const FileManager = () => {
 
     const uploadFile = (name, file) => dispatch(actions.uploadFile(name, file));
 
+    const removeFile = (name) => dispatch(actions.removeFile(name));
+
     useEffect(() => {
         onGetFiles();
     }, [onGetFiles]);
 
     return (
         <Fragment>
-            <ShowFiles files={files} />   
+            <ShowFiles files={files} remove={removeFile} />   
             <UploadFile upload={uploadFile}/> 
         </Fragment>    
     );

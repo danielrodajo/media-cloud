@@ -8,7 +8,7 @@ const ShowFiles = (props) => {
             {
                 props.files.map(file => (
                     <div key={file.key}>
-                        <ShowFile file={file} />
+                        <ShowFile file={file}  remove={props.remove}/>
                     </div> 
                 ))
             }
