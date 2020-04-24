@@ -8,7 +8,7 @@ export const recoverFiles = () => {
         Storage.list('', {level: 'protected'})
         .then(result => {
             //A cada fichero, recuperar su URL
-            let promises = result.map(file => {
+            let promises = result.filter(file => file.key !== 'default').map(file => {
                 return Storage.get(file.key)
                 //Agregar al objeto el nuevo valor recuperado
                 .then(result => {
@@ -56,4 +56,22 @@ export const uploadFile = (name, file) => {
             });
         });
     }   
+}
+
+export  const removeFile = (name) => {
+    return (dispatch) => {
+        Storage.remove(name)
+        .then(() =>
+        dispatch({
+            type: types.REMOVE_FILE,
+            filename: name
+        })
+        ).catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.REMOVE_FILE_NOK,
+                error: err
+            });
+        })
+    }
 }

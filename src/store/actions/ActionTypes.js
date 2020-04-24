@@ -4,3 +4,7 @@ export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const UPLOAD_FILE_OK = 'UPLOAD_FILE_OK';
 export const UPLOAD_FILE_NOK = 'UPLOAD_FILE_NOK';
+
+export const REMOVE_FILE = 'REMOVE_FILE';
+export const REMOVE_FILE_OK = 'REMOVE_FILE_OK';
+export const REMOVE_FILE_NOK = 'REMOVE_FILE_NOK';
