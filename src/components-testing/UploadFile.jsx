@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import MessageError from '../shared/MessageError';
 
 const UploadFile = props => {
     
@@ -16,7 +17,7 @@ const UploadFile = props => {
     return (
         <Fragment>
             {
-                (props.uploadError) ? <p>Error de subida: no se puede subir el/los fichero</p> : <Fragment></Fragment>
+                (props.uploadError) ? <MessageError error={props.uploadError.message} /> : <Fragment></Fragment>
             }
             <form id="upload-form" onSubmit={submit}>
                 <input type="file" id='fileinput'></input>

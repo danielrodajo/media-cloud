@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../store/actions/index';
 import ShowFiles from '../components-testing/ShowFiles';
 import UploadFile from '../components-testing/UploadFile';
+import MessageError from '../shared/MessageError';
 
 const FileManager = () => {
 
@@ -28,7 +29,7 @@ const FileManager = () => {
     return (
         <Fragment>
             {
-                (recoverError) ? <p>No se pueden descargar los ficheros</p> : <ShowFiles files={files} remove={removeFile} removeError={removeError}/>
+                (recoverError) ? <MessageError error={recoverError.message} /> : <ShowFiles files={files} remove={removeFile} removeError={removeError} />
             } 
             <UploadFile upload={uploadFile} uploadError={uploadError}/> 
         </Fragment>    

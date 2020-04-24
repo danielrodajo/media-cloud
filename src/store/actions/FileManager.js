@@ -8,7 +8,7 @@ export const recoverFiles = () => {
         Storage.list('', {level: 'protected'})
         .then(result => {
             //A cada fichero, recuperar su URL
-            let promises = result.map(file => {
+            let promises = result.filter(file => file.key !== 'default').map(file => {
                 return Storage.get(file.key)
                 //Agregar al objeto el nuevo valor recuperado
                 .then(result => {
