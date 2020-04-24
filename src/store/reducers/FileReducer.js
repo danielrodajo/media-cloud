@@ -8,9 +8,10 @@ const initialState = {
     removeError: null,
 }
 
-const recoverFiles = (state, action) => {   
+
+const recoverFiles = (state, action) => {
     return updateObject( state, {
-        files: action.files 
+        files: action.files
     });
 }
 
@@ -19,6 +20,7 @@ const recoverFail = (state, action) => {
         recoverError: action.error
     })
 }
+
 
 const uploadFile = (state, action) => {
     return updateObject( state, {
@@ -31,6 +33,7 @@ const uploadFail = (state, action) => {
         uploadError: action.error
     })
 }
+
 
 const removeFile = (state, action) => {
     return updateObject( state, {

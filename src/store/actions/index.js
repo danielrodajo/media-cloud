@@ -1,5 +1,10 @@
 export {
     recoverFiles,
     uploadFile,
-    removeFile
+    removeFile,
 } from './FileManager';
+
+export {
+    signIn,
+    signUp,
+} from './AuthManager';

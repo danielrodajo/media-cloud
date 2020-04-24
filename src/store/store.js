@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import FileReducerReducer from './reducers/FileReducer';
+import FileReducer from './reducers/FileReducer';
+import AuthReducer from './reducers/AuthReducer';
 
 const rootReducer = combineReducers({
-    FileReducer : FileReducerReducer
+    FileReducer : FileReducer,
+    AuthReducer : AuthReducer,
 });
 
 //Configurar Store con el Plugin de Redux DevTools de Google Chrome

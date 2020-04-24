@@ -1,24 +1,30 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Suspense } from 'react';
 import './App.css';
 import Amplify, { Storage } from 'aws-amplify';
 import awsconfig from './aws-exports';
-import { withAuthenticator, Authenticator } from 'aws-amplify-react';
 import '@aws-amplify/ui/dist/style.css';
 import FileManager from './containers/FileManager';
+import Authentication from './containers/Auth/Authentication';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 Amplify.configure(awsconfig);
 Storage.configure({ level: 'protected' });
 
 function App() {
 
-  
+
+  let routes = (
+    <Switch>
+      <Route path="/auth" component={Authentication} />
+      <Route path="/" component={FileManager} />
+    </Switch>
+  );
 
   return (
     <Fragment>
-      <Authenticator usernameAttributes="email"/>
-      <FileManager />
-    </Fragment>  
+      <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
+    </Fragment>
   );
 }
 
-export default withAuthenticator(App, { usernameAttributes: 'email' });
+export default App;
