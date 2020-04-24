@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const UploadFile = props => {
     
@@ -14,10 +14,15 @@ const UploadFile = props => {
     }
 
     return (
-        <form id="upload-form" onSubmit={submit}>
-            <input type="file" id='fileinput'></input>
-            <button type="submit" className="btn btn-primary">Enviar</button>
-        </form>
+        <Fragment>
+            {
+                (props.uploadError) ? <p>Error de subida: no se puede subir el/los fichero</p> : <Fragment></Fragment>
+            }
+            <form id="upload-form" onSubmit={submit}>
+                <input type="file" id='fileinput'></input>
+                <button type="submit" className="btn btn-primary">Enviar</button>
+            </form>
+        </Fragment>      
     );
 }
  

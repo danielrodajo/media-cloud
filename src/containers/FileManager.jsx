@@ -13,10 +13,13 @@ const FileManager = () => {
     });
 
     const onGetFiles = useCallback(() => dispatch(actions.recoverFiles()), [dispatch]);
+    const recoverError = useSelector((state) => state.FileReducer.recoverError);
 
     const uploadFile = (name, file) => dispatch(actions.uploadFile(name, file));
+    const uploadError = useSelector((state) => state.FileReducer.uploadError);
 
     const removeFile = (name) => dispatch(actions.removeFile(name));
+    const removeError = useSelector((state) => state.FileReducer.removeError);
 
     useEffect(() => {
         onGetFiles();
@@ -24,8 +27,10 @@ const FileManager = () => {
 
     return (
         <Fragment>
-            <ShowFiles files={files} remove={removeFile} />   
-            <UploadFile upload={uploadFile}/> 
+            {
+                (recoverError) ? <p>No se pueden descargar los ficheros</p> : <ShowFiles files={files} remove={removeFile} removeError={removeError}/>
+            } 
+            <UploadFile upload={uploadFile} uploadError={uploadError}/> 
         </Fragment>    
     );
 }

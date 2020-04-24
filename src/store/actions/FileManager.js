@@ -66,6 +66,12 @@ export  const removeFile = (name) => {
             type: types.REMOVE_FILE,
             filename: name
         })
-        ).catch(err => console.log(err))
+        ).catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.REMOVE_FILE_NOK,
+                error: err
+            });
+        })
     }
 }

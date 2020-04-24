@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { S3Image } from 'aws-amplify-react';
 
 const ShowFile = props => {
@@ -17,6 +17,9 @@ const ShowFile = props => {
             <h5>{props.file.key}</h5>
             <button className="btn btn-primary" onClick={() => download(props.file.url, props.file.key)}>Descargar</button>
             <button className="btn btn-secondary" onClick={() => {props.remove(props.file.key)}}>Eliminar</button>
+            {
+                (props.removeError) ? <span>Error al borrar el fichero</span> : <Fragment></Fragment>
+            }
         </div>
     );
 }
