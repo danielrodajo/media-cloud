@@ -1,21 +1,56 @@
 import React, { Fragment, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import SignUp from './SignUp/SignUp';
 import SignIn from './SignIn/SignIn';
 import Verify from './Verify/Verify';
 
 const Authentication = () => {
 
-    const dispatch = useDispatch();
-
     const [status, setStatus] = useState("signin");
+
+    const [userData, setUserData] = useState({
+        username: "",
+        password: "",
+        phone_number: "",
+        code: "",
+    });
+
+    const handleFormInput = event => {
+        setUserData({
+            ...userData,
+            [event.target.name] : event.target.value
+        });
+    }
 
     const AuthComponent = () => {
         switch (status) {
-            case "signin": return <SignIn switchComponent={setStatus}/>;
-            case "signup": return <SignUp switchComponent={setStatus}/>;
-            case "verify": return <Verify switchComponent={setStatus}/>;
-            default: return <SignIn switchComponent={setStatus}/>;
+            case "signin": return (
+                <SignIn 
+                    switchComponent={setStatus} 
+                    handleFormInput={handleFormInput}
+                    userData={userData}
+                />
+            );
+            case "signup": return (
+                <SignUp 
+                    switchComponent={setStatus}
+                    handleFormInput={handleFormInput}
+                    userData={userData}
+                />
+            );
+            case "verify": return (
+                <Verify 
+                    switchComponent={setStatus}
+                    handleFormInput={handleFormInput}
+                    userData={userData}
+                />
+            );
+            default: return (
+                <SignIn 
+                    switchComponent={setStatus}
+                    handleFormInput={handleFormInput}
+                    userData={userData}
+                />
+            );
         }
     }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
@@ -6,22 +6,9 @@ const SignUp = props => {
 
     const dispatch = useDispatch();
 
-    const [userData, setUserData] = useState({
-        username: "",
-        password: "",
-        phone_number: "",
-    });
-
-    const handleFormInput = event => {
-        setUserData({
-            ...userData,
-            [event.target.name] : event.target.value
-        });
-    }
-
     const handleSignUp = event => {
         event.preventDefault();
-        dispatch(actions.signUp(userData.username, userData.password, userData.phone_number));
+        dispatch(actions.signUp(props.userData.username, props.userData.password, props.userData.phone_number));
         props.switchComponent("verify");
       };
 
@@ -30,25 +17,25 @@ const SignUp = props => {
             <input
                 type="email"
                 name="username"
-                value={userData.username}
+                value={props.userData.username}
                 placeholder="Correo electrónico"
-                onChange={handleFormInput}
+                onChange={props.handleFormInput}
                 className=""
             />
             <input
                 type="password"
                 name="password"
-                value={userData.password}
+                value={props.userData.password}
                 placeholder="Contraseña"
-                onChange={handleFormInput}
+                onChange={props.handleFormInput}
                 className="authentication__input"
             />
             <input
                 type="text"
                 name="phone_number"
-                value={userData.phone_number}
+                value={props.userData.phone_number}
                 placeholder="Número de teléfono"
-                onChange={handleFormInput}
+                onChange={props.handleFormInput}
                 className=""
             />
             <input

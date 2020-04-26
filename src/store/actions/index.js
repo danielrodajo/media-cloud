@@ -7,4 +7,7 @@ export {
 export {
     signIn,
     signUp,
+    verify,
+    signOut,
+    authCheckState
 } from './AuthManager';

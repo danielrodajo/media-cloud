@@ -1,24 +1,40 @@
-import React, { Fragment, Suspense } from 'react';
+import React, { Fragment, Suspense, useEffect } from 'react';
 import './App.css';
-import Amplify, { Storage } from 'aws-amplify';
+import Amplify, { Storage} from 'aws-amplify';
 import awsconfig from './aws-exports';
 import '@aws-amplify/ui/dist/style.css';
 import FileManager from './containers/FileManager';
 import Authentication from './containers/Auth/Authentication';
-import { Route, Redirect, Switch } from 'react-router-dom';
-
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from './store/actions/index';
 Amplify.configure(awsconfig);
 Storage.configure({ level: 'protected' });
 
-function App() {
 
+const App = props => { 
+
+  const { onTryAutoSignup } = props;
+
+  useEffect(() => {
+    onTryAutoSignup();
+  }, [onTryAutoSignup]);
 
   let routes = (
     <Switch>
-      <Route path="/auth" component={Authentication} />
-      <Route path="/" component={FileManager} />
+      <Route path="/" component={Authentication} />
+      <Redirect to="/" />
     </Switch>
   );
+
+  if (props.isAuthenticated) {
+    routes = (
+      <Switch>
+        <Route path="/" component={FileManager} />
+        <Redirect to="/" />
+      </Switch>
+    )
+  }
 
   return (
     <Fragment>
@@ -27,4 +43,21 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.AuthReducer.user !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState())
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

@@ -20,3 +20,5 @@ export const AUTH_SIGNIN_NOK = 'AUTH_SIGNIN_NOK';
 export const AUTH_VERIFY = 'AUTH_VERIFY';
 export const AUTH_VERIFY_OK = 'AUTH_VERIFY_OK';
 export const AUTH_VERIFY_NOK = 'AUTH_VERIFY_NOK';
+
+export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';

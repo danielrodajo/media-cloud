@@ -1,18 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 
 const Verify = props => {
 
+    const dispatch = useDispatch();
+
+    
     const handleVerification = event => {
         event.preventDefault();
-        const { username, code } = props.inputs;
-        // After retrieveing the confirmation code from the user
-        /*Auth.confirmSignUp(username, code, {
-          // Optional. Force user confirmation irrespective of existing alias. By default set to True.
-          forceAliasCreation: true
-        })
-          .then(data => console.log(data))
-          .then(()=>props.switchComponent("SignIn"))
-          .catch(err => console.log(err));*/
+        dispatch(actions.verify(props.userData.username, props.userData.code));
+        props.switchComponent("signin");
       };
 
     return (

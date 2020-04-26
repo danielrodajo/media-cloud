@@ -27,13 +27,29 @@ const signUpFail = (state, action) => {
 
 const signIn = (state, action) => {
     return updateObject( state, {
-        username: action.username
+        user: action.user
     });
 }
 
 const signInFail = (state, action) => {
     return updateObject( state, {
         signInError: action.error
+    })
+}
+
+const verify = (state, action) => {
+    return updateObject( state )
+}
+
+const verifyFail = (state, action) => {
+    return updateObject( state, {
+        verifyError: action.error
+    } )
+}
+
+const signOut = (state, action) => {
+    return updateObject(state, {
+        user: null
     })
 }
 
@@ -44,6 +60,9 @@ const reducer = ( state = initialState, action ) => {
         case types.AUTH_SIGNUP_NOK: return signUpFail(state, action);
         case types.AUTH_SIGNIN: return signIn(state, action);
         case types.AUTH_SIGNIN_NOK: return signInFail(state, action);
+        case types.AUTH_VERIFY: return verify(state, action);
+        case types.AUTH_VERIFY_NOK: return verifyFail(state, action);
+        case types.AUTH_SIGNOUT: return signOut(state, action);
         default: return state;
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
@@ -6,22 +6,11 @@ const SignIn = props => {
 
     const dispatch = useDispatch();
 
-    const [userData, setUserData] = useState({
-        username: "",
-        password: "",
-    });
-
-    const handleFormInput = event => {
-        setUserData({
-            ...userData,
-            [event.target.name] : event.target.value
-        });
-    }
 
     const handleSignIn = event => {
         event.preventDefault();
        
-        dispatch(actions.signIn(userData.username, userData.password));
+        dispatch(actions.signIn(props.userData.username, props.userData.password));
       };
 
     return (
@@ -29,17 +18,17 @@ const SignIn = props => {
             <input
                 type="text"
                 name="username"
-                value={userData.username}
+                value={props.userData.username}
                 placeholder="example@mediacloud.es"
-                onChange={handleFormInput}
+                onChange={props.handleFormInput}
                 className=""
             />
             <input
                 type="password"
                 name="password"
-                value={userData.password}
+                value={props.userData.password}
                 placeholder="Contraseña"
-                onChange={handleFormInput}
+                onChange={props.handleFormInput}
                 className=""
             />
             <input
