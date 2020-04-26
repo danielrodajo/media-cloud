@@ -2,21 +2,18 @@ import * as types from '../actions/ActionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
-    username: null,
-    password: "",
-    phone_number: "",
-    code: "",
     user: null,
-    authRedirectPath: '/',
-    verifying: false,
-    logged: false,
+    status: "signin", //en que fase del proceso de autenticacion se encuentra
     signUpError: null,
     signInError: null,
     verifyError: null,
+    signOutError: null
 }
 
 const signUp = (state, action) => {
-    return updateObject( state )
+    return updateObject( state, {
+        status: action.status
+    } )
 }
 
 const signUpFail = (state, action) => {
@@ -27,7 +24,11 @@ const signUpFail = (state, action) => {
 
 const signIn = (state, action) => {
     return updateObject( state, {
-        user: action.user
+        user: action.user,
+        signUpError: null,
+        signInError: null,
+        verifyError: null,
+        signOutError: null
     });
 }
 
@@ -38,7 +39,9 @@ const signInFail = (state, action) => {
 }
 
 const verify = (state, action) => {
-    return updateObject( state )
+    return updateObject( state, {
+        status: action.status
+    } )
 }
 
 const verifyFail = (state, action) => {
@@ -47,9 +50,15 @@ const verifyFail = (state, action) => {
     } )
 }
 
-const signOut = (state, action) => {
+const signOutFail = (state, action) => {
+    return updateObject( state, {
+        signOutError: action.error
+    })
+}
+
+const switchComponent = (state, action) => {
     return updateObject(state, {
-        user: null
+        status: action.component
     })
 }
 
@@ -62,7 +71,8 @@ const reducer = ( state = initialState, action ) => {
         case types.AUTH_SIGNIN_NOK: return signInFail(state, action);
         case types.AUTH_VERIFY: return verify(state, action);
         case types.AUTH_VERIFY_NOK: return verifyFail(state, action);
-        case types.AUTH_SIGNOUT: return signOut(state, action);
+        case types.AUTH_SIGNOUT_NOK: return signOutFail(state, action);
+        case types.AUTH_SWITCH_COMPONENT: return switchComponent(state, action);
         default: return state;
     }
 }

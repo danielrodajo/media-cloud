@@ -1,20 +1,21 @@
-import React from 'react';
-import { Auth } from 'aws-amplify';
+import React, { Fragment } from 'react';
 import * as actions from '../../../store/actions/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignOut = () => {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.AuthReducer.user);
 
     const handleSignOut = event => {
         event.preventDefault();
-        Auth.signOut({ global: true })
-        .then(() =>  dispatch(actions.signOut()))
-        .catch(err => console.log(err));
+        dispatch(actions.signOut());    
     };
 
     return (
-        <button onClick={handleSignOut}>Salir</button>
+        <Fragment>
+            <button onClick={handleSignOut}>Salir</button>
+            <h5>{user.attributes.email}</h5>
+        </Fragment>  
     );
 }
  

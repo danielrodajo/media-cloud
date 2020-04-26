@@ -9,7 +9,6 @@ const SignIn = props => {
 
     const handleSignIn = event => {
         event.preventDefault();
-       
         dispatch(actions.signIn(props.userData.username, props.userData.password));
       };
 
@@ -37,7 +36,7 @@ const SignIn = props => {
                 onClick={handleSignIn}
                 className=""
             />
-            <button onClick={() => {props.switchComponent("signup")}}>Registrarse</button>
+            <button onClick={() => {dispatch(actions.switchComponent("signup"))}}>Registrarse</button>
         </form>
     );
 }

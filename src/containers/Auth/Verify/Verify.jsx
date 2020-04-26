@@ -10,8 +10,7 @@ const Verify = props => {
     const handleVerification = event => {
         event.preventDefault();
         dispatch(actions.verify(props.userData.username, props.userData.code));
-        props.switchComponent("signin");
-      };
+    };
 
     return (
         <form className="">
@@ -29,6 +28,7 @@ const Verify = props => {
                 onClick={handleVerification}
                 className=""
             />
+            <button onClick={() => dispatch(actions.switchComponent("signup"))}>Volver</button>
         </form>
     );
 }

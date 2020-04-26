@@ -37,6 +37,7 @@ export const signUp = (username, password, phone_number) => {
           })
             .then(()=> dispatch({
                 type: types.AUTH_SIGNUP,
+                status: "verify"
             })) 
             .catch(err => {
                 console.log(err);
@@ -55,7 +56,8 @@ export const verify = (username, code) => {
             forceAliasCreation: true
           })
             .then(() => dispatch({
-                type: types.AUTH_VERIFY
+                type: types.AUTH_VERIFY,
+                status: "signin"
             }))
             .catch(err => {
                 console.log(err);
@@ -67,9 +69,26 @@ export const verify = (username, code) => {
     }
 }
 
-export const signOut = () => {
+export const signOut = () => { 
+    return (dispatch) => {
+        Auth.signOut({ global: true })
+            .then(() => dispatch({
+                type: types.AUTH_SIGNOUT
+            }))
+            .catch(err => {
+                console.log(err);
+                dispatch({
+                type: types.AUTH_SIGNOUT_NOK,
+                error: err
+            })
+        });
+    }
+}
+
+export const switchComponent = (component) => {
     return {
-        type: types.AUTH_SIGNOUT
+        type: types.AUTH_SWITCH_COMPONENT,
+        component: component
     }
 }
 

@@ -9,5 +9,6 @@ export {
     signUp,
     verify,
     signOut,
+    switchComponent,
     authCheckState
 } from './AuthManager';

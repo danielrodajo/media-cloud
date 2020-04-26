@@ -9,7 +9,6 @@ const SignUp = props => {
     const handleSignUp = event => {
         event.preventDefault();
         dispatch(actions.signUp(props.userData.username, props.userData.password, props.userData.phone_number));
-        props.switchComponent("verify");
       };
 
     return (
@@ -44,7 +43,7 @@ const SignUp = props => {
                 onClick={handleSignUp}
                 className=""
             />
-            <span>¿Ya tienes cuenta? <button onClick={() => {props.switchComponent("signin")}}>Inicia sesión</button></span>
+            <span>¿Ya tienes cuenta? <button onClick={() => {dispatch(actions.switchComponent("signin"))}}>Inicia sesión</button></span>
         </form>
     );
 }

@@ -2,10 +2,11 @@ import React, { Fragment, useState } from 'react';
 import SignUp from './SignUp/SignUp';
 import SignIn from './SignIn/SignIn';
 import Verify from './Verify/Verify';
+import { useSelector } from 'react-redux';
 
 const Authentication = () => {
 
-    const [status, setStatus] = useState("signin");
+    const status = useSelector(state => state.AuthReducer.status);
 
     const [userData, setUserData] = useState({
         username: "",
@@ -25,28 +26,24 @@ const Authentication = () => {
         switch (status) {
             case "signin": return (
                 <SignIn 
-                    switchComponent={setStatus} 
                     handleFormInput={handleFormInput}
                     userData={userData}
                 />
             );
             case "signup": return (
                 <SignUp 
-                    switchComponent={setStatus}
                     handleFormInput={handleFormInput}
                     userData={userData}
                 />
             );
             case "verify": return (
                 <Verify 
-                    switchComponent={setStatus}
                     handleFormInput={handleFormInput}
                     userData={userData}
                 />
             );
             default: return (
                 <SignIn 
-                    switchComponent={setStatus}
                     handleFormInput={handleFormInput}
                     userData={userData}
                 />
