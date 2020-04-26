@@ -22,10 +22,12 @@ export const recoverFiles = () => {
             });          
         }).catch(err => {
             console.log(err);
-            dispatch({
-                type: types.RECOVER_FILES_NOK,
-                error: err
-            });
+            if (err.message !== "Cannot read property 'map' of undefined") {
+                dispatch({
+                    type: types.RECOVER_FILES_NOK,
+                    error: err
+                });
+            }       
         });
     }
 }

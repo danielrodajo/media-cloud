@@ -8,6 +8,7 @@ import Authentication from './containers/Auth/Authentication';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
+
 Amplify.configure(awsconfig);
 Storage.configure({ level: 'protected' });
 

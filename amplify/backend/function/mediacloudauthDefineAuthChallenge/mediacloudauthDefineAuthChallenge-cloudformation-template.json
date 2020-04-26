@@ -95,7 +95,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-media-cloud-mediacloud-90216-deployment",
-					"S3Key": "amplify-builds/mediacloudauthDefineAuthChallenge-744e54387171616c6156-build.zip"
+					"S3Key": "amplify-builds/mediacloudauthDefineAuthChallenge-70717368744150695837-build.zip"
 				}
 			}
 		},

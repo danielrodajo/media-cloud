@@ -20,7 +20,8 @@
                 "mediacloudauth": {
                     "facebookAppId": "527891327896169",
                     "googleClientId": "1026139280427-ha03efs2g8nd19ip6bfh498ei5htc4ii.apps.googleusercontent.com"
-                }
+                },
+                "userPoolGroups": {}
             }
         }
     }
