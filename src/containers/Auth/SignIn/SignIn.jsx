@@ -1,10 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
 const SignIn = props => {
 
     const dispatch = useDispatch();
+    const messageError = useSelector(state => state.AuthReducer.signInError);
 
 
     const handleSignIn = event => {
@@ -14,6 +15,7 @@ const SignIn = props => {
 
     return (
         <form className="">
+            {(messageError) ? <span>{messageError.message}</span> : null}
             <input
                 type="text"
                 name="username"

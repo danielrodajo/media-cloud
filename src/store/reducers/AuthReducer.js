@@ -12,7 +12,8 @@ const initialState = {
 
 const signUp = (state, action) => {
     return updateObject( state, {
-        status: action.status
+        status: action.status,
+        signUpError: null
     } )
 }
 

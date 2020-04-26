@@ -1,11 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
 const Verify = props => {
 
     const dispatch = useDispatch();
-
+    const messageError = useSelector(state => state.AuthReducer.verifyError);
     
     const handleVerification = event => {
         event.preventDefault();
@@ -14,6 +14,7 @@ const Verify = props => {
 
     return (
         <form className="">
+            {(messageError) ? <span>{messageError.message}</span> : null}
             <input
                 type="text"
                 name="code"
