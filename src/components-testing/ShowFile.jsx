@@ -10,7 +10,7 @@ const ShowFile = props => {
         a.href = dataurl;
         a.setAttribute("download", filename);
         a.click();
-      }
+    }
 
     return (
         <div className="container mb-5 mt-5">

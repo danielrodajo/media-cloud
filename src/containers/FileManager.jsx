@@ -4,6 +4,7 @@ import * as actions from '../store/actions/index';
 import ShowFiles from '../components-testing/ShowFiles';
 import UploadFile from '../components-testing/UploadFile';
 import MessageError from '../shared/MessageError';
+import SignOut from './Auth/SignOut/SignOut';
 
 const FileManager = () => {
 
@@ -28,6 +29,7 @@ const FileManager = () => {
 
     return (
         <Fragment>
+            <SignOut />
             {
                 (recoverError) ? <MessageError error={recoverError.message} /> : <ShowFiles files={files} remove={removeFile} removeError={removeError} />
             } 

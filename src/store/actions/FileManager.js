@@ -1,6 +1,6 @@
 import * as types from './ActionTypes';
 import { Storage } from 'aws-amplify';
-
+    
 //Recupera TODOS los ficheros del bucket del usuario autenticado
 export const recoverFiles = () => {
     return (dispatch) => {  
@@ -8,12 +8,9 @@ export const recoverFiles = () => {
         Storage.list('', {level: 'protected'})
         .then(result => {
             //A cada fichero, recuperar su URL
-            let promises = result.filter(file => file.key !== 'default').map(file => {
-                return Storage.get(file.key)
-                //Agregar al objeto el nuevo valor recuperado
-                .then(result => {
-                    return file = {...file, url: result}
-                });
+            let promises = result.filter(file => file.key !== 'default').map(async file => {
+                const result = await Storage.get(file.key);
+                return file = { ...file, url: result };
             });     
             //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
             Promise.all(promises)
