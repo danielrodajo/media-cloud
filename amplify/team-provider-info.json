@@ -1,27 +1,22 @@
 {
-    "mediacloud": {
+    "mdenv": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-media-cloud-mediacloud-90216-authRole",
-            "UnauthRoleArn": "arn:aws:iam::893847739855:role/amplify-media-cloud-mediacloud-90216-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::893847739855:role/amplify-media-cloud-mediacloud-90216-authRole",
+            "AuthRoleName": "amplify-media-cloud-ionic-mdenv-105758-authRole",
+            "UnauthRoleArn": "arn:aws:iam::148947381356:role/amplify-media-cloud-ionic-mdenv-105758-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::148947381356:role/amplify-media-cloud-ionic-mdenv-105758-authRole",
             "Region": "eu-west-1",
-            "DeploymentBucketName": "amplify-media-cloud-mediacloud-90216-deployment",
-            "UnauthRoleName": "amplify-media-cloud-mediacloud-90216-unauthRole",
-            "StackName": "amplify-media-cloud-mediacloud-90216",
-            "StackId": "arn:aws:cloudformation:eu-west-1:893847739855:stack/amplify-media-cloud-mediacloud-90216/5fb2e860-8079-11ea-b6e3-02ac8ce49a7a",
-            "AmplifyAppId": "d2hz1i5pcu1vb"
+            "DeploymentBucketName": "amplify-media-cloud-ionic-mdenv-105758-deployment",
+            "UnauthRoleName": "amplify-media-cloud-ionic-mdenv-105758-unauthRole",
+            "StackName": "amplify-media-cloud-ionic-mdenv-105758",
+            "StackId": "arn:aws:cloudformation:eu-west-1:148947381356:stack/amplify-media-cloud-ionic-mdenv-105758/378e8540-fa56-11ea-814a-06d4f42323aa",
+            "AmplifyAppId": "d7bpo6pco4bd4"
         },
         "categories": {
-            "function": {
-                "mediacloudauthDefineAuthChallenge": {},
-                "mediacloudauthCreateAuthChallenge": {}
-            },
             "auth": {
-                "mediacloudauth": {
-                    "facebookAppId": "527891327896169",
-                    "googleClientId": "1026139280427-ha03efs2g8nd19ip6bfh498ei5htc4ii.apps.googleusercontent.com"
-                },
-                "userPoolGroups": {}
+                "mediacloudionic01a3afd401a3afd4": {
+                    "facebookAppId": "2772597199667376",
+                    "googleClientId": "AIzaSyBH01tUKhWVuA8vpJPyLxf6zvgHOhnq4vA"
+                }
             }
         }
     }

@@ -1,0 +1,13 @@
+.max-height {
+    height: 100%;
+}
+
+.logoimage{
+    width: 13em;
+    height: 3em;
+}
+
+.forgot-password-link {
+    color: #763BC6;
+    font-weight: bold;
+}

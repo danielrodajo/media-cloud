@@ -1,14 +1,14 @@
 {
-    "projectName": "media-cloud",
+    "projectName": "media-cloud-ionic",
     "version": "3.0",
     "frontend": "javascript",
     "javascript": {
-        "framework": "react",
+        "framework": "ionic",
         "config": {
             "SourceDir": "src",
-            "DistributionDir": "build",
+            "DistributionDir": "www",
             "BuildCommand": "npm.cmd run-script build",
-            "StartCommand": "npm.cmd run-script start"
+            "StartCommand": "ionic serve"
         }
     },
     "providers": [

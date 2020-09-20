@@ -1,22 +1,4 @@
 {
-	"hosting": {
-		"S3AndCloudFront": {
-			"service": "S3AndCloudFront",
-			"providerPlugin": "awscloudformation"
-		}
-	},
-	"function": {
-		"mediacloudauthDefineAuthChallenge": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda"
-		},
-		"mediacloudauthCreateAuthChallenge": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda"
-		}
-	},
 	"auth": {
 		"userPoolGroups": {
 			"service": "Cognito-UserPool-Groups",
@@ -24,7 +6,7 @@
 			"dependsOn": [
 				{
 					"category": "auth",
-					"resourceName": "mediacloudauth",
+					"resourceName": "mediacloudionic01a3afd401a3afd4",
 					"attributes": [
 						"UserPoolId",
 						"AppClientIDWeb",
@@ -34,14 +16,14 @@
 				}
 			]
 		},
-		"mediacloudauth": {
+		"mediacloudionic01a3afd401a3afd4": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []
 		}
 	},
 	"storage": {
-		"mediaclouds3": {
+		"s3a565a2da": {
 			"service": "S3",
 			"providerPlugin": "awscloudformation"
 		}

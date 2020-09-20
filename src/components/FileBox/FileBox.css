@@ -1,0 +1,17 @@
+.default-img {
+    float: left;
+    height: 20vw;
+    object-fit: contain;
+    
+}
+
+.hide-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+.card {
+    margin-left: 0;
+    margin-right: 0;
+}

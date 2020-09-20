@@ -1,23 +1,23 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authmediacloudauthUserPoolId": {
+        "authmediacloudionic01a3afd401a3afd4UserPoolId": {
             "Type": "String",
-            "Default": "authmediacloudauthUserPoolId"
+            "Default": "authmediacloudionic01a3afd401a3afd4UserPoolId"
         },
         
-        "authmediacloudauthIdentityPoolId": {
+        "authmediacloudionic01a3afd401a3afd4IdentityPoolId": {
             "Type": "String",
-            "Default": "authmediacloudauthIdentityPoolId"
+            "Default": "authmediacloudionic01a3afd401a3afd4IdentityPoolId"
         },
         
-        "authmediacloudauthAppClientID": {
+        "authmediacloudionic01a3afd401a3afd4AppClientID": {
             "Type": "String",
-            "Default": "authmediacloudauthAppClientID"
+            "Default": "authmediacloudionic01a3afd401a3afd4AppClientID"
         },
-        "authmediacloudauthAppClientIDWeb": {
+        "authmediacloudionic01a3afd401a3afd4AppClientIDWeb": {
             "Type": "String",
-            "Default": "authmediacloudauthAppClientIDWeb"
+            "Default": "authmediacloudionic01a3afd401a3afd4AppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -41,26 +41,26 @@
     },
     "Resources": {
     
-        "mediacloudpoolGroup": {
+        "userpoolgroupGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "mediacloudpool",
+              "GroupName" : "userpoolgroup",
               "Precedence" : 1,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "mediacloudpoolGroupRole",
+                    "userpoolgroupGroupRole",
                     "Arn"
                 ]
               },
               
               "UserPoolId" : {
-                "Ref": "authmediacloudauthUserPoolId"
+                "Ref": "authmediacloudionic01a3afd401a3afd4UserPoolId"
               } 
             }
         },
         
-        "mediacloudpoolGroupRole": {
+        "userpoolgroupGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -68,9 +68,9 @@
                         "",
                         [
                           {
-                            "Ref": "authmediacloudauthUserPoolId"
+                            "Ref": "authmediacloudionic01a3afd401a3afd4UserPoolId"
                           },
-                          "-mediacloudpoolGroupRole"
+                          "-userpoolgroupGroupRole"
                         ]
                     ]
                 },
@@ -85,7 +85,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authmediacloudauthIdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authmediacloudionic01a3afd401a3afd4IdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -111,7 +111,7 @@
                                 "",
                                 [
                                   
-                                  "mediacloudauth",
+                                  "mediacloudionic01a3afd401a3afd4",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -270,16 +270,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authmediacloudauthIdentityPoolId"
+                    "Ref": "authmediacloudionic01a3afd401a3afd4IdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authmediacloudauthUserPoolId"
+                    "Ref": "authmediacloudionic01a3afd401a3afd4UserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authmediacloudauthAppClientIDWeb"
+                    "Ref": "authmediacloudionic01a3afd401a3afd4AppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authmediacloudauthAppClientID"
+                    "Ref": "authmediacloudionic01a3afd401a3afd4AppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"
@@ -295,10 +295,10 @@
     
     "Outputs": {
       
-        "mediacloudpoolGroupRole": {
+        "userpoolgroupGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "mediacloudpoolGroupRole",
+                    "userpoolgroupGroupRole",
                     "Arn"
                 ]
             }
