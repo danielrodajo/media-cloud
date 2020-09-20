@@ -25,7 +25,7 @@ const FileBox: React.FC<props> = props => {
                 <IonCardContent>
                     <IonCardSubtitle className="ion-text-center">
                     {
-                        (props.name.length > 20) ? props.name.substring(0,17)+"..." : props.name
+                        (props.name.length > 17) ? props.name.substring(0,14)+"..." : props.name
                     }
                     </IonCardSubtitle>
                 </IonCardContent>

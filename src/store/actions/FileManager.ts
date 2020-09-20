@@ -38,7 +38,19 @@ export const recoverFiles = () => {
 //Subida de un fichero
 export const uploadFile = (name: string, file: File) => {
     return (dispatch: any) => {
-        Storage.put(name, file)
+        dispatch({type: types.UPLOAD_FILE});
+        Storage.put(name, file, {
+            progressCallback(progress: any) {
+                console.log(progress.loaded + "/" + progress.total)
+                dispatch({
+                    type: types.UPLOADING_FILE,
+                    payload: {
+                        loaded: progress.loaded,
+                        total: progress.total
+                    }
+                });
+            }
+        })
         .then((result: any) => {
             //Agregar al objeto recuperado su URL
             Storage.get(result.key)
@@ -51,7 +63,7 @@ export const uploadFile = (name: string, file: File) => {
                 }
                 console.log(newFile)
                 dispatch({
-                    type: types.UPLOAD_FILE,
+                    type: types.UPLOAD_FILE_OK,
                     payload: newFile
                 })
             });

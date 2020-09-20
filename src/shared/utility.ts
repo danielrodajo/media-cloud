@@ -1,6 +1,7 @@
 import txt from '../default-images/txt.jpg';
 import word from '../default-images/word.jpg';
 import pdf from '../default-images/pdf.jpg';
+import defaultFile from '../default-images/default-file.png';
 
 export const updateObject = (oldObject: any, updatedProperties: any) => {
     return {
@@ -9,6 +10,7 @@ export const updateObject = (oldObject: any, updatedProperties: any) => {
     };
 };
 
+//Devuelve una imagen por defecto en caso de no ser una imagen el propio fichero
 export const formatDisplayImage = (name: string, source: string) => {
     const extension = name.split('.').pop(); 
     switch (extension) {
@@ -17,6 +19,15 @@ export const formatDisplayImage = (name: string, source: string) => {
         case "docx":
              return word;
         case "pdf": return pdf;
-        default: return source;
+        case "jpg":
+        case "jpeg":
+        case "png":
+        case "gif": 
+        case "tiff": 
+        case "psd": 
+        case "bmp":
+        case "svg":
+            return source;
+        default: return defaultFile;
     }
 };

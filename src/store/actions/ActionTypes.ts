@@ -1,9 +1,10 @@
-import { File, Error, AuthState } from "../types";
+import { File, AuthState } from "../types";
 
 export const RECOVER_FILES = 'RECOVER_FILES';
 export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 
 export const UPLOAD_FILE = 'UPLOAD_FILE';
+export const UPLOADING_FILE = 'UPLOADING_FILE';
 export const UPLOAD_FILE_OK = 'UPLOAD_FILE_OK';
 export const UPLOAD_FILE_NOK = 'UPLOAD_FILE_NOK';
 
@@ -23,6 +24,10 @@ export const AUTH_FORGOT_PASSWORD = 'AUTH_FORGOT_PASSWORD'
 export const AUTH_FORGOT_PASSWORD_OK = 'AUTH_FORGOT_PASSWORD_OK'
 export const AUTH_FORGOT_PASSWORD_NOK = 'AUTH_FORGOT_PASSWORD_NOK'
 
+export const AUTH_FORGOT_PASSWORD_SUBMIT = 'AUTH_FORGOT_PASSWORD_SUBMIT'
+export const AUTH_FORGOT_PASSWORD_SUBMIT_OK = 'AUTH_FORGOT_PASSWORD_SUBMIT_OK'
+export const AUTH_FORGOT_PASSWORD_SUBMIT_NOK = 'AUTH_FORGOT_PASSWORD_SUBMIT_NOK'
+
 export const AUTH_VERIFY = 'AUTH_VERIFY';
 export const AUTH_VERIFY_OK = 'AUTH_VERIFY_OK';
 export const AUTH_VERIFY_NOK = 'AUTH_VERIFY_NOK';
@@ -39,16 +44,26 @@ interface RecoverFilesAction {
 }
 interface RecoverFilesNokAction {
     type: typeof RECOVER_FILES_NOK
-    payload: Error
+    payload: any
 }
 
 interface UploadFileAction {
     type: typeof UPLOAD_FILE
+}
+interface UploadingFileAction {
+    type: typeof UPLOADING_FILE
+    payload: {
+        loaded: number
+        total: number
+    }
+}
+interface UploadFileokAction {
+    type: typeof UPLOAD_FILE_OK
     payload: File
 }
 interface UploadFileNokAction {
     type: typeof UPLOAD_FILE_NOK
-    payload: Error
+    payload: any
 }
 
 interface RemoveFileAction {
@@ -57,7 +72,7 @@ interface RemoveFileAction {
 }
 interface RemoveFileNokAction {
     type: typeof REMOVE_FILE_NOK
-    payload: Error
+    payload: any
 }
 
 
@@ -67,7 +82,7 @@ interface AuthSignUpAction {
 }
 interface AuthSignUpNokAction {
     type: typeof AUTH_SIGNUP_NOK
-    payload: Error
+    payload: any
 }
 
 interface AuthSignInAction {
@@ -76,16 +91,25 @@ interface AuthSignInAction {
 }
 interface AuthSignInNokAction {
     type: typeof AUTH_SIGNIN_NOK
-    payload: Error
+    payload: any
 }
 
 interface AuthForgotPasswordAction {
     type: typeof AUTH_FORGOT_PASSWORD
-    payload: any
+    payload: string
 }
 interface AuthForgotPasswordNokAction {
     type: typeof AUTH_FORGOT_PASSWORD_NOK
-    payload: Error
+    payload: any
+}
+
+interface AuthForgotPasswordSubmitAction {
+    type: typeof AUTH_FORGOT_PASSWORD_SUBMIT
+    payload: any
+}
+interface AuthForgotPasswordSubmitNokAction {
+    type: typeof AUTH_FORGOT_PASSWORD_SUBMIT_NOK
+    payload: any
 }
 
 interface AuthSignOutAction {
@@ -93,7 +117,7 @@ interface AuthSignOutAction {
 }
 interface AuthSignOutNokAction {
     type: typeof AUTH_SIGNOUT_NOK
-    payload: Error
+    payload: any
 }
 
 interface VerifyAction {
@@ -102,7 +126,7 @@ interface VerifyAction {
 }
 interface VerifyNokAction {
     type: typeof AUTH_VERIFY_NOK
-    payload: Error
+    payload: any
 }
 
 interface SwitchComponentAction {
@@ -111,6 +135,6 @@ interface SwitchComponentAction {
 }
 
 
-export type ActionTypes = RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
+export type ActionTypes = RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
-                            AuthForgotPasswordAction | AuthForgotPasswordNokAction
+                            AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction

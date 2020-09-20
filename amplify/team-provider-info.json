@@ -13,9 +13,8 @@
         },
         "categories": {
             "auth": {
-                "mediacloudionic01a3afd401a3afd4": {
-                    "facebookAppId": "2772597199667376",
-                    "googleClientId": "AIzaSyBH01tUKhWVuA8vpJPyLxf6zvgHOhnq4vA"
+                "mediacloudproject": {
+                    "facebookAppId": "2772597199667376"
                 }
             }
         }

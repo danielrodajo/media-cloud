@@ -10,6 +10,7 @@ export {
     verify,
     signOut,
     forgotPassword,
+    forgotPasswordSubmit,
     switchComponent,
     authCheckState
 } from './AuthManager';

@@ -15,7 +15,7 @@ interface props {
 const SignIn: React.FC<props> = props => {
 
     const dispatch = useDispatch();
-    const messageError = useSelector((state: RootState) => state.AuthReducer.signInError);
+    const messageError: any = useSelector((state: RootState) => state.AuthReducer.signInError);
 
 
     const handleSignIn = (event: FormEvent<HTMLIonButtonElement>) => {
@@ -33,7 +33,7 @@ const SignIn: React.FC<props> = props => {
                         </IonCardHeader>
 
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
-                            {(messageError) ? <span>{messageError}</span> : null}
+                            {(messageError) ? <span>{messageError.message}</span> : null}
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
                                 <IonInput type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    

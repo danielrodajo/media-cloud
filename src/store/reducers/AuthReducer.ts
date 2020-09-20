@@ -8,7 +8,9 @@ const initialState: AuthState = {
     signUpError: null,
     signInError: null,
     verifyError: null,
-    signOutError: null
+    signOutError: null,
+    forgotPasswordError: null,
+    forgotPasswordSubmitError: null,
 }
 
 const signUp = (state: AuthState, payload: AuthState) => {
@@ -35,7 +37,6 @@ const signIn = (state: AuthState, payload: AuthState) => {
 }
 
 const signInFail = (state: AuthState, payload: Error) => {
-    
     return updateObject( state, {
         signInError: payload
     })
@@ -59,10 +60,38 @@ const signOutFail = (state: AuthState, payload: Error) => {
     })
 }
 
+const forgotPassword = (state: AuthState, payload: string) => {
+    return updateObject( state, {
+        status: payload
+    })
+}
+const forgotPasswordFail = (state: AuthState, payload: Error) => {
+    return updateObject( state, {
+        forgotPasswordError: payload
+    })
+}
+
+const forgotPasswordSubmit = (state: AuthState, payload: string) => {
+    return updateObject( state, {
+        status: payload
+    })
+}
+const forgotPasswordSubmitFail = (state: AuthState, payload: Error) => {
+    return updateObject( state, {
+        forgotPasswordSubmitError: payload
+    })
+}
+
 const switchComponent = (state: AuthState, payload: string) => {
     console.log(payload)
     return updateObject(state, {
-        status: payload
+        status: payload,
+        signUpError: null,
+        signInError: null,
+        verifyError: null,
+        signOutError: null,
+        forgotPasswordError: null,
+        forgotPasswordSubmitError: null,
     })
 }
 
@@ -76,6 +105,10 @@ const reducer = ( state = initialState, action: types.ActionTypes ): AuthState =
         case types.AUTH_VERIFY: return verify(state, action.payload);
         case types.AUTH_VERIFY_NOK: return verifyFail(state, action.payload);
         case types.AUTH_SIGNOUT_NOK: return signOutFail(state, action.payload);
+        case types.AUTH_FORGOT_PASSWORD: return forgotPassword(state, action.payload);
+        case types.AUTH_FORGOT_PASSWORD_NOK: return forgotPasswordFail(state, action.payload);
+        case types.AUTH_FORGOT_PASSWORD_SUBMIT: return forgotPasswordSubmit(state, action.payload);
+        case types.AUTH_FORGOT_PASSWORD_SUBMIT_NOK: return forgotPasswordSubmitFail(state, action.payload);
         case types.AUTH_SWITCH_COMPONENT: return switchComponent(state, action.payload);
         default: return state;
     }

@@ -1,5 +1,5 @@
 import React, { useRef, FormEvent, useState } from 'react';
-import { IonButton, IonPage, IonContent, IonItem } from '@ionic/react';
+import { IonButton, IonPage, IonContent, IonItem, IonProgressBar } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
@@ -11,6 +11,11 @@ const Add: React.FC = () => {
     const dispatch = useDispatch();
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
     const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
+    
+    const showProgressBar = useSelector((state: RootState) => state.FileReducer.uploading);
+
+    const loadedFile = useSelector((state: RootState) => state.FileReducer.loadedFile);
+    const totalFile = useSelector((state: RootState) => state.FileReducer.totalFile);
 
     const fileInput = useRef(null);
     const [ file, setFile ] = useState<File | null>();
@@ -54,6 +59,9 @@ const Add: React.FC = () => {
             <IonItem>       
             <IonButton onClick={submit}>Subir</IonButton>
             </IonItem>
+            {
+                (showProgressBar) ? <IonProgressBar value={loadedFile/totalFile}></IonProgressBar> : null
+            }
             </IonContent>
         </IonPage>
     );

@@ -6,6 +6,7 @@ import { RootState } from '../../store/store';
 import SignIn from './signin/SignIn';
 import SignUp from './signup/SignUp';
 import ForgotPassword from './forgotpassword/ForgotPassword';
+import ForgotPasswordSubmit from './forgotpasswordsubmit/ForgotPasswordSubmit';
 
 const Authentication: React.FC = () => {
 
@@ -46,6 +47,12 @@ const Authentication: React.FC = () => {
             );
             case "forgotpass": return (
                 <ForgotPassword
+                    handleFormInput={handleFormInput}
+                    userData={userData}
+                />
+            );
+            case "fpsubmit": return (
+                <ForgotPasswordSubmit
                     handleFormInput={handleFormInput}
                     userData={userData}
                 />

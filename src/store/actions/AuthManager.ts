@@ -18,7 +18,7 @@ export const signIn = (username: string, password: string) => {
             console.log(err);
             dispatch({
                 type: types.AUTH_SIGNIN_NOK,
-                payload: err.message
+                payload: err
             })
         });
     }
@@ -45,7 +45,7 @@ export const signUp = (username: string, nickname: string, password: string) => 
                 console.log(err);
                 dispatch({
                     type: types.AUTH_SIGNUP_NOK,
-                    payload: err.message
+                    payload: err
                 })
               });
     }
@@ -76,12 +76,30 @@ export const forgotPassword = (username: string) => {
     return (dispatch: any) => {
         Auth.forgotPassword(username)
         .then(() => dispatch({
-            type: types.AUTH_FORGOT_PASSWORD
+            type: types.AUTH_FORGOT_PASSWORD,
+            payload: "fpsubmit"
         }))
         .catch(err => {
             console.log(err);
             dispatch({
                 type: types.AUTH_FORGOT_PASSWORD_NOK,
+                payload: err
+            })
+        })
+    }
+}
+
+export const forgotPasswordSubmit = (username: string, password: string, code: string) => {
+    return (dispatch: any) => {
+        Auth.forgotPasswordSubmit(username, code, password)
+        .then(() => dispatch({
+            type: types.AUTH_FORGOT_PASSWORD_SUBMIT,
+            payload: "signin"
+        }))
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.AUTH_FORGOT_PASSWORD_SUBMIT_NOK,
                 payload: err
             })
         })

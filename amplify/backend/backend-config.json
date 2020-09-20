@@ -6,7 +6,7 @@
 			"dependsOn": [
 				{
 					"category": "auth",
-					"resourceName": "mediacloudionic01a3afd401a3afd4",
+					"resourceName": "mediacloudproject",
 					"attributes": [
 						"UserPoolId",
 						"AppClientIDWeb",
@@ -16,7 +16,7 @@
 				}
 			]
 		},
-		"mediacloudionic01a3afd401a3afd4": {
+		"mediacloudproject": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []
@@ -33,5 +33,6 @@
 			"service": "S3AndCloudFront",
 			"providerPlugin": "awscloudformation"
 		}
-	}
+	},
+	"function": {}
 }

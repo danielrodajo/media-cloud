@@ -20,9 +20,6 @@ const Home: React.FC = props => {
   const onGetFiles = useCallback(() => dispatch(actions.recoverFiles()), [dispatch]);
   const recoverError = useSelector((state: RootState) => state.FileReducer.recoverError);
 
-  const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
-  const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
-
   const removeFile = (name: string) => dispatch(actions.removeFile(name));
   const removeError = useSelector((state: RootState) => state.FileReducer.removeError);
 
@@ -35,6 +32,9 @@ const Home: React.FC = props => {
     <IonPage>
       <Toolbar/>
       <IonContent>
+        {
+          (recoverError) ? <span>{recoverError.message}</span> : null
+        }
         <IonGrid>
           {         
             //GENERA TABLA DE DOS COLUMNAS CON LOS FICHEROS 

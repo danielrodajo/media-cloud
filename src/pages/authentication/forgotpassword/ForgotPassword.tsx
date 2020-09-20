@@ -14,7 +14,7 @@ interface props {
 const ForgotPassword: React.FC<props> = props => {
 
     const dispatch = useDispatch();
-    const messageError = useSelector((state: RootState) => state.AuthReducer.signUpError);
+    const messageError: any = useSelector((state: RootState) => state.AuthReducer.forgotPasswordError);
 
     const handlePassword = (event: FormEvent<HTMLIonButtonElement>) => {
         event.preventDefault();
@@ -31,7 +31,7 @@ const ForgotPassword: React.FC<props> = props => {
                         </IonCardHeader>
 
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center ion-margin-top">
-                            {(messageError) ? <span>{messageError}</span> : null}
+                            {(messageError) ? <span>{messageError.message}</span> : null}
                             Se le enviará un mensaje al correo de <br/>su cuenta para recuperar la contraseña.
                             <IonItem lines="inset" className="ion-margin-bottom">
                                 <IonLabel position="floating">Introduzca su Email</IonLabel>

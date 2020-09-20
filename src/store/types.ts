@@ -12,12 +12,6 @@ export interface File {
     url: string;
 }
 
-export interface Error {
-    code: string;
-    message: string;
-    name: string;
-}
-
 export interface AuthState {
     user: any | null;
     status: string;
@@ -25,6 +19,8 @@ export interface AuthState {
     signInError: Object | null;
     verifyError: Object | null;
     signOutError: Object | null;
+    forgotPasswordError: Object | null;
+    forgotPasswordSubmitError: Object | null;
 }
 
 export interface FileState {
@@ -32,4 +28,7 @@ export interface FileState {
     recoverError: Object | null;
     uploadError: Object | null;
     removeError: Object | null;
+    uploading: boolean;
+    loadedFile: number;
+    totalFile: number;
 }

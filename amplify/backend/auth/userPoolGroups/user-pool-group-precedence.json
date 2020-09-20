@@ -1,6 +1,6 @@
 [
     {
-        "groupName": "userpoolgroup",
+        "groupName": "UserPoolGroup",
         "precedence": 1
     }
 ]

@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "media_cloud_ionic01a3afd4_identitypool_01a3afd4",
+    "identityPoolName": "media_cloud1032edb7_identitypool_1032edb7",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "mediac01a3afd4",
-    "userPoolName": "media_cloud_ionic01a3afd4_userpool_01a3afd4",
+    "resourceNameTruncated": "mediac1032edb7",
+    "userPoolName": "media_cloud1032edb7_userpool_1032edb7",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -24,23 +24,19 @@
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-        "phone_number",
-        "email",
-        "name"
+        "email"
     ],
     "userpoolClientReadAttributes": [
-        "email",
-        "name"
+        "email"
     ],
-    "userpoolClientLambdaRole": "mediac01a3afd4_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": true,
+    "userpoolClientLambdaRole": "mediac1032edb7_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
     "useDefault": "manual",
     "authSelections": "identityPoolAndUserPool",
-    "resourceName": "mediacloudionic01a3afd401a3afd4",
+    "resourceName": "mediacloudproject",
     "thirdPartyAuth": true,
     "authProviders": [
-        "graph.facebook.com",
-        "accounts.google.com"
+        "graph.facebook.com"
     ],
     "usernameAttributes": [
         "email"
@@ -50,7 +46,7 @@
     "triggers": "{}",
     "hostedUI": false,
     "userPoolGroupList": [
-        "userpoolgroup"
+        "UserPoolGroup"
     ],
     "authRoleArn": {
         "Fn::GetAtt": [

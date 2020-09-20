@@ -7,6 +7,9 @@ const initialState: FileState = {
     recoverError: null,
     uploadError: null,
     removeError: null,
+    uploading: false,
+    loadedFile: 0,
+    totalFile: 0,
 }
 
 
@@ -23,7 +26,26 @@ const recoverFail = (state: FileState, payload: Error) => {
 }
 
 
-const uploadFile = (state: FileState, payload: File) => {
+//Reseteamos valores de visualizacion de la subida
+const uploadFile = (state: FileState) => {
+    return updateObject( state, {
+        uploading: true,
+        loadedFile: 0,
+        totalFile: 1,
+    });
+}
+
+const uploadingFile = (state: FileState, payload: {
+    loaded: number
+    total: number
+}) => {
+    return updateObject( state, {
+        loadedFile: payload.loaded,
+        totalFile: payload.total,
+    });
+}
+
+const uploadFileSuccess = (state: FileState, payload: File) => {
     console.log(payload)
     return updateObject( state, {
         files: state.files.concat(payload)
@@ -55,7 +77,9 @@ const reducer = ( state = initialState, action: types.ActionTypes ) => {
     switch (action.type) {
         case types.RECOVER_FILES: return recoverFiles(state, action.payload);
         case types.RECOVER_FILES_NOK: return recoverFail(state, action.payload);
-        case types.UPLOAD_FILE: return uploadFile(state, action.payload);
+        case types.UPLOAD_FILE: return uploadFile(state);
+        case types.UPLOADING_FILE: return uploadingFile(state, action.payload);
+        case types.UPLOAD_FILE_OK: return uploadFileSuccess(state, action.payload);
         case types.UPLOAD_FILE_NOK: return uploadFail(state, action.payload);
         case types.REMOVE_FILE: return removeFile(state, action.payload);
         case types.REMOVE_FILE_NOK: return removeFail(state, action.payload);
