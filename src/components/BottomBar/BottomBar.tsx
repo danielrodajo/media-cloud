@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
 import { homeOutline, searchOutline, addOutline, peopleOutline, folderOutline } from 'ionicons/icons';
@@ -7,6 +7,8 @@ import Add from '../../pages/add/Add';
 
  
 const BottomBar: React.FC = () => {
+
+    const [ showModal, setShowModal ] = useState(false);
 
     return ( 
       <React.Fragment>
@@ -28,7 +30,7 @@ const BottomBar: React.FC = () => {
               <IonIcon icon={searchOutline}/> 
               <IonLabel>Search</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="Add" href="/add">
+            <IonTabButton tab="Add" href="/add" onClick={() => console.log("ADD")}>
               <IonIcon icon={addOutline}/> 
               <IonLabel>Add</IonLabel>
             </IonTabButton>
