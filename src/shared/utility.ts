@@ -25,7 +25,6 @@ export const formatDisplayImage = (name: string, source: string) => {
         case "gif": 
         case "tiff": 
         case "psd": 
-        case "bmp":
         case "svg":
             return source;
         default: return defaultFile;

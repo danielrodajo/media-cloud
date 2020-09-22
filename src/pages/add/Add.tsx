@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { IonItem, IonProgressBar, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonText, IonLabel, IonPopover } from '@ionic/react';
+import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonText, IonLabel } from '@ionic/react';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { cloudUploadOutline, folderOutline, cameraOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
 import './Add.scss';
-import Popover from './Popover/Popover';
+import Popover from './PopoverUpload/PopoverUpload';
 
 interface props {
     showModal: boolean
@@ -18,8 +18,7 @@ const Add: React.FC<props> = props => {
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
     const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.FileReducer.uploading);
-    
-    const showProgressBar = useSelector((state: RootState) => state.FileReducer.uploading);
+    const success = useSelector((state: RootState) => state.FileReducer.uploadSuccess);
 
     const loadedFile = useSelector((state: RootState) => state.FileReducer.loadedFile);
     const totalFile = useSelector((state: RootState) => state.FileReducer.totalFile);
@@ -42,8 +41,8 @@ const Add: React.FC<props> = props => {
             <Popover 
                 loadedFile = {loadedFile}
                 totalFile = {totalFile}
-                showProgressBar = {showProgressBar}
                 uploading = {uploading}
+                success = {success}
             />
             
             <input

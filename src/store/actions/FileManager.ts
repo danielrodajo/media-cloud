@@ -2,6 +2,9 @@ import * as types from './ActionTypes';
 import { Storage } from 'aws-amplify';
 import { File as CustomFile } from '../types';
 
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
     
 //Recupera TODOS los ficheros del bucket del usuario autenticado
 export const recoverFiles = () => {
@@ -41,7 +44,6 @@ export const uploadFile = (name: string, file: File) => {
         dispatch({type: types.UPLOAD_FILE});
         Storage.put(name, file, {
             progressCallback(progress: any) {
-                console.log(progress.loaded + "/" + progress.total)
                 dispatch({
                     type: types.UPLOADING_FILE,
                     payload: {
@@ -60,12 +62,20 @@ export const uploadFile = (name: string, file: File) => {
                     url: result2,
                     eTag: "",
                     size: file.size
-                }
-                console.log(newFile)
+                };
                 dispatch({
-                    type: types.UPLOAD_FILE_OK,
+                    type: types.UPLOAD_FILE_OK_WAIT,
                     payload: newFile
-                })
+                });
+
+                (async () => {
+                    await delay(2500);
+
+                    dispatch({
+                        type: types.UPLOAD_FILE_OK,
+                    });
+                })();
+                
             });
             
         }).catch(err => {

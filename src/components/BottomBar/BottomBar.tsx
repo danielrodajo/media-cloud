@@ -19,7 +19,7 @@ const BottomBar: React.FC = () => {
             <Route path="/home" component={Home} exact />
             <Route path="/search" exact />
             <Route path="/shared" exact />
-            <Route path="/docs" component={Profile} exact />
+            <Route path="/profile" component={Profile} exact />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
