@@ -3,9 +3,13 @@ import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonText, IonLabel 
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { cloudUploadOutline, folderOutline, cameraOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
+import { cloudUploadOutline, folderOutline, cameraOutline, checkmarkOutline, closeOutline, folder } from 'ionicons/icons';
 import './Add.scss';
 import Popover from './PopoverUpload/PopoverUpload';
+import UploadButton from '../../components/UploadButton/UploadButton';
+import { Plugins, CameraResultType } from '@capacitor/core';
+import { useCamera } from '@ionic/react-hooks/camera';
+
 
 interface props {
     showModal: boolean
@@ -13,6 +17,8 @@ interface props {
 }
 
 const Add: React.FC<props> = props => {
+    
+    const { Camera } = Plugins;
 
     const dispatch = useDispatch();
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
@@ -62,31 +68,22 @@ const Add: React.FC<props> = props => {
             <IonGrid className="ion-no-margin ion-text-center">
                 <IonRow>
                     <IonCol>
-                        <IonItem button className="ion-text-center" lines="none">
-                            <IonLabel>
-                                <IonIcon size="large" icon={cameraOutline} />
-                                <IonText><br/>Subir<br/>Foto</IonText>
-                            </IonLabel>
-                        </IonItem>
+                        <UploadButton icon={cameraOutline} onClick={() => {}}>
+                            <br/>Subir<br/>Foto
+                        </UploadButton>
                     </IonCol>
                     <IonCol>
-                        <IonItem button className="ion-text-center" lines="none">
-                            <IonLabel>
-                                <IonIcon size="large" icon={folderOutline} />
-                                <IonText><br/>Crear<br/>Carpeta</IonText>
-                            </IonLabel>
-                        </IonItem>  
+                        <UploadButton icon={folderOutline} onClick={() => {}}>
+                            <br/>Crear<br/>Carpeta
+                        </UploadButton>
                     </IonCol>
                     <IonCol>
-                        <IonItem button className="ion-text-center" onClick={() => {
+                        <UploadButton icon={cloudUploadOutline} onClick={() => {
                             // @ts-ignore
                             fileInput?.current?.click();
-                            }} lines="none">
-                            <IonLabel>
-                                <IonIcon size="large" icon={cloudUploadOutline} />
-                                <IonText><br/>Subir<br/>Fichero</IonText>
-                            </IonLabel>
-                        </IonItem>
+                            }}>
+                            <br/>Subir<br/>Fichero
+                        </UploadButton>
                     </IonCol>
                 </IonRow>
             </IonGrid>

@@ -23,7 +23,7 @@ const PopoverFileBox: React.FC<props> = props => {
         >
             <IonCard>
                 <IonCardHeader>
-                    <IonImg className="popover-img" src={formatDisplayImage(props.name, props.src)} />
+                    <IonImg className="default-img" src={formatDisplayImage(props.name, props.src)} />  
                 </IonCardHeader>
 
                 <IonCardContent>

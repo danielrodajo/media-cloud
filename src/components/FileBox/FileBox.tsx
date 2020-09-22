@@ -19,7 +19,7 @@ const FileBox: React.FC<props> = props => {
             <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} src={props.src} name={props.name}/>
             <IonCard className="card ion-activatable ripple-parent" onClick={() => setShowPopover(true)}>
                 <IonCardHeader>
-                    <IonImg className="default-img" src={formatDisplayImage(props.name, props.src)} />
+                    <IonImg className="default-img" src={formatDisplayImage(props.name, props.src)} />  
                 </IonCardHeader>
 
                 <IonCardContent>
