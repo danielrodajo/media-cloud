@@ -1,22 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
-import { homeOutline, searchOutline, addOutline, peopleOutline, folderOutline } from 'ionicons/icons';
+import { homeOutline, searchOutline, addCircleOutline, peopleOutline, folderOutline } from 'ionicons/icons';
 import Home from '../../pages/home/Home';
 import Add from '../../pages/add/Add';
+import Profile from '../../pages/profile/Profile';
 
  
 const BottomBar: React.FC = () => {
 
+    const [ showModal, setShowModal ] = useState(false);
+
     return ( 
       <React.Fragment>
+        <Add showModal={showModal} setShowModal={setShowModal} />
         <IonTabs>
           <IonRouterOutlet>
             <Route path="/home" component={Home} exact />
             <Route path="/search" exact />
-            <Route path="/add" component={Add} exact />
             <Route path="/shared" exact />
-            <Route path="/docs" exact />
+            <Route path="/profile" component={Profile} exact />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
@@ -28,15 +31,14 @@ const BottomBar: React.FC = () => {
               <IonIcon icon={searchOutline}/> 
               <IonLabel>Search</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="Add" href="/add">
-              <IonIcon icon={addOutline}/> 
-              <IonLabel>Add</IonLabel>
+            <IonTabButton>
+              <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)}/> 
             </IonTabButton>
             <IonTabButton>
               <IonIcon icon={peopleOutline}/> 
               <IonLabel>Shared</IonLabel>
             </IonTabButton>
-            <IonTabButton>
+            <IonTabButton tab="Profile" href="/profile">
               <IonIcon icon={folderOutline}/> 
               <IonLabel>Documents</IonLabel>
             </IonTabButton>

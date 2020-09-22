@@ -29,6 +29,7 @@ export interface FileState {
     uploadError: Object | null;
     removeError: Object | null;
     uploading: boolean;
+    uploadSuccess: boolean;
     loadedFile: number;
     totalFile: number;
 }

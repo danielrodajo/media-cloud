@@ -6,6 +6,7 @@ export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const UPLOADING_FILE = 'UPLOADING_FILE';
 export const UPLOAD_FILE_OK = 'UPLOAD_FILE_OK';
+export const UPLOAD_FILE_OK_WAIT = 'UPLOAD_FILE_OK_WAIT';
 export const UPLOAD_FILE_NOK = 'UPLOAD_FILE_NOK';
 
 export const REMOVE_FILE = 'REMOVE_FILE';
@@ -59,6 +60,9 @@ interface UploadingFileAction {
 }
 interface UploadFileokAction {
     type: typeof UPLOAD_FILE_OK
+}
+interface UploadFileokWaitAction{
+    type: typeof UPLOAD_FILE_OK_WAIT
     payload: File
 }
 interface UploadFileNokAction {
@@ -135,6 +139,6 @@ interface SwitchComponentAction {
 }
 
 
-export type ActionTypes = RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
+export type ActionTypes = RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction

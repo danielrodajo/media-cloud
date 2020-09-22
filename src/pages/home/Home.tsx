@@ -38,10 +38,18 @@ const Home: React.FC = props => {
         <IonGrid>
           {         
             //GENERA TABLA DE DOS COLUMNAS CON LOS FICHEROS 
-
+            //Ordenamos ficheros por orden alfabetico en base a su nombre
+            files.sort(function(a: CustomFile, b: CustomFile){
+              if (a.key > b.key) {
+                return 1;
+              }
+              if (a.key < b.key) {
+                return -1;
+              }
+              return 0;    
             //Generamos nº de filas
             //Por cada fila, generamos pares de columnas 
-            files.map((file, index) => (
+            }).map((file, index) => (
               (index < Math.ceil(files.length/2)) ?
               <IonRow key={file.key}>
                 <IonCol>
