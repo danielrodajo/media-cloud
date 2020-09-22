@@ -48,13 +48,15 @@ const uploadingFile = (state: FileState, payload: {
 const uploadFileSuccess = (state: FileState, payload: File) => {
     console.log(payload)
     return updateObject( state, {
-        files: state.files.concat(payload)
+        files: state.files.concat(payload),
+        uploading: false
     });
 }
 
 const uploadFail = (state: FileState, payload: Error) => {
     return updateObject( state, {
-        uploadError: payload
+        uploadError: payload,
+        uploading: false
     })
 }
 
