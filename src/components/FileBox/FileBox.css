@@ -1,8 +1,5 @@
 .default-img {
-    float: left;
     height: 20vw;
-    object-fit: contain;
-    
 }
 
 .hide-text {
