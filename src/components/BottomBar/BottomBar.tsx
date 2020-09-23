@@ -45,7 +45,7 @@ const BottomBar: React.FC = () => {
             </IonTabButton>
             <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile")? "icon-top" : "label-hide"}>
               <IonIcon icon={folderOutline}/> 
-              <IonLabel>Documents</IonLabel>
+              <IonLabel>Profile</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
