@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonText, IonLabel } from '@ionic/react';
+import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonText } from '@ionic/react';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { cloudUploadOutline, folderOutline, cameraOutline, checkmarkOutline, closeOutline, folder } from 'ionicons/icons';
+import { cloudUploadOutline, folderOutline, cameraOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
 import './Add.scss';
 import Popover from './PopoverUpload/PopoverUpload';
 import UploadButton from '../../components/UploadButton/UploadButton';
-import { Plugins, CameraResultType } from '@capacitor/core';
-import { useCamera } from '@ionic/react-hooks/camera';
+import { usePhotoGallery } from '../../hooks/usePhotoGallery';
+import DisplaySelectFile from '../../components/DisplaySelectFile/DisplaySelectFile';
 
 
 interface props {
@@ -17,10 +17,12 @@ interface props {
 }
 
 const Add: React.FC<props> = props => {
-    
-    const { Camera } = Plugins;
 
     const dispatch = useDispatch();
+
+    //Agregamos Hook para tomar una foto y guardarla
+    const { photo, setPhoto, takePhoto } = usePhotoGallery();
+
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
     const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.FileReducer.uploading);
@@ -32,13 +34,23 @@ const Add: React.FC<props> = props => {
     const fileInput = useRef(null);
     const [ file, setFile ] = useState<File | null>();
 
-    const submit = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
+    const submitFile = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
         event.preventDefault();
         const name = (file as File).name;   
         //Subir el fichero a S3
         uploadFile(name, file as File);
         //Vaciar campo despues de enviarlo
         setFile(null);
+        props.setShowModal(false);
+    }
+
+    const submitPhoto = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
+        event.preventDefault(); 
+        const name = (photo as File).name;  
+        //Subir el fichero a S3
+        uploadFile(name, photo as File);
+        //Vaciar campo despues de enviarlo
+        setPhoto(null);
         props.setShowModal(false);
     }
 
@@ -68,7 +80,7 @@ const Add: React.FC<props> = props => {
             <IonGrid className="ion-no-margin ion-text-center">
                 <IonRow>
                     <IonCol>
-                        <UploadButton icon={cameraOutline} onClick={() => {}}>
+                        <UploadButton icon={cameraOutline} onClick={takePhoto}>
                             <br/>Subir<br/>Foto
                         </UploadButton>
                     </IonCol>
@@ -90,25 +102,13 @@ const Add: React.FC<props> = props => {
             {
                 //En caso de seleccionar fichero, mostrar fila de confirmacion
                 (file) ?
-                <IonGrid className="ion-no-margin ion-margin-start">
-                    <IonRow>
-                        <IonCol size="6">
-                            <IonText className="fullheight xc">
-                                {
-                                    (file.name.length > 25) ? file.name.substring(0,22)+"..." : file.name
-                                }
-                            </IonText>
-                        </IonCol>
-                        <IonCol>
-                            <IonItem button onClick={submit} className="ion-float-left" lines="none">
-                                <IonIcon icon={checkmarkOutline} />
-                            </IonItem>
-                            <IonItem button onClick={e => setFile(null)} className="ion-float-left" lines="none">
-                                <IonIcon icon={closeOutline} />
-                            </IonItem>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
+                <DisplaySelectFile file={file} submit={submitFile} reset={() => setFile(null)}/>        
+                : null
+            }
+            {
+                //En caso de hacer una foto, mostrar fila de confirmacion
+                (photo) ?
+                <DisplaySelectFile file={photo} submit={submitPhoto} reset={() => setPhoto(null)}/>
                 : null
             }
             </IonModal>

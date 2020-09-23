@@ -8,6 +8,13 @@ function delay(ms: number) {
     
 //Recupera TODOS los ficheros del bucket del usuario autenticado
 export const recoverFiles = () => {
+    /*return (dispatch: any) => {
+        dispatch({
+            type: types.RECOVER_FILES,
+            payload: []
+        })
+    }
+    */
     return (dispatch: any) => {  
         //Obtener todos los ficheros (nombre y eTag)
         Storage.list('', {level: 'protected'})

@@ -9,7 +9,7 @@ import { RootState } from '../../store/store';
 import * as actions from '../../store/actions/index';
 
 
-const Home: React.FC = props => {
+const Home: React.FC = () => {
 
   const dispatch = useDispatch();
 
@@ -49,7 +49,9 @@ const Home: React.FC = props => {
               return 0;    
             //Generamos nº de filas
             //Por cada fila, generamos pares de columnas 
-            }).map((file, index) => (
+            }).map((file, index) => {
+              console.log(file);
+              return (
               (index < Math.ceil(files.length/2)) ?
               <IonRow key={file.key}>
                 <IonCol>
@@ -63,7 +65,7 @@ const Home: React.FC = props => {
                   </IonCol>: <IonCol></IonCol>
                 }
               </IonRow> : null
-            ))
+            )})
           }        
         </IonGrid>
       </IonContent>

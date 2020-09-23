@@ -15,6 +15,12 @@ interface props {
 
 const PopoverFileBox: React.FC<props> = props => {
 
+
+    const handleRemove = () => {
+        props.remove(props.name);
+        props.setShowPopover(false);
+     }
+
     return (
         <IonPopover
             isOpen={props.showPopover}
@@ -36,7 +42,7 @@ const PopoverFileBox: React.FC<props> = props => {
                                 </IonButton>
                             </IonCol>
                             <IonCol>
-                                <IonButton color="danger" onClick={() => {props.remove(props.name)}}>
+                                <IonButton color="danger" onClick={handleRemove}>
                                     <IonIcon icon={trashOutline}></IonIcon>
                                 </IonButton>
                             </IonCol>
