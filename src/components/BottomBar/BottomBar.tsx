@@ -11,10 +11,15 @@ const BottomBar: React.FC = () => {
 
     const [ showModal, setShowModal ] = useState(false);
 
+    const [activeTab, setActiveTab] = useState("Home");
+    const handleActiveButton = (event: CustomEvent) => {
+      setActiveTab(event.detail.tab);
+    }
+
     return ( 
       <React.Fragment>
         <Add showModal={showModal} setShowModal={setShowModal} />
-        <IonTabs>
+        <IonTabs onIonTabsDidChange={handleActiveButton}>
           <IonRouterOutlet>
             <Route path="/home" component={Home} exact />
             <Route path="/search" exact />
@@ -23,11 +28,11 @@ const BottomBar: React.FC = () => {
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="Home" href="/home">
+            <IonTabButton tab="Home" href="/home" layout={(activeTab === "Home")? "icon-top" : "label-hide"}>
               <IonIcon icon={homeOutline}/> 
               <IonLabel>Home</IonLabel>
             </IonTabButton>
-            <IonTabButton>
+            <IonTabButton >
               <IonIcon icon={searchOutline}/> 
               <IonLabel>Search</IonLabel>
             </IonTabButton>
@@ -38,7 +43,7 @@ const BottomBar: React.FC = () => {
               <IonIcon icon={peopleOutline}/> 
               <IonLabel>Shared</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="Profile" href="/profile">
+            <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile")? "icon-top" : "label-hide"}>
               <IonIcon icon={folderOutline}/> 
               <IonLabel>Documents</IonLabel>
             </IonTabButton>
