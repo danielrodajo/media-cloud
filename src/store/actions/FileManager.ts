@@ -39,7 +39,7 @@ export const uploadFile = (name: string, file: File) => {
                 });
 
                 (async () => {
-                    await delay(2500);
+                    await delay(2000);
 
                     dispatch({
                         type: types.UPLOAD_FILE_OK,

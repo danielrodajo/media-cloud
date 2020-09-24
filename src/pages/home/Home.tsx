@@ -76,7 +76,12 @@ const Home: React.FC = () => {
   }, [currentPath, onGetFiles]);
 
   const handleRemoveFolder = (path: string) => {
+    //Recuperamos todos los ficheros contenidos en la carpeta y lo borramos
+    const removeFiles = files.filter(file => file.key.startsWith(path.substring(0, path.length-8)));
+    removeFiles.forEach(file => removeFile(file.key));
+    //Eliminamos carpeta
     removeFolder(path);
+    //Volvemos a la carpeta padre despues de borrarla
     changeFolder(goBackPath(currentPath));
   };
 
@@ -88,17 +93,22 @@ const Home: React.FC = () => {
     <IonPage>
       <Toolbar />
       <IonContent className="my-custom-content">
-        {downloading ? (
+        {
+        //Mostrar Spinner mientras se descargan los ficheros
+        downloading ? (
           <IonSpinner className="spinner" color="tertiary" />
         ) : (
           <React.Fragment>
-            {currentPath !== "" ? (
+            {
+            //En caso de estar dentro de una carpeta, mostrar barra de retroceder, borrar y ver carpeta
+            currentPath !== "" ? (
               <React.Fragment>
                 <IonAlert
                   isOpen={showAlert}
                   onDidDismiss={() => setShowAlert(false)}
                   cssClass="my-custom-class"
                   header={"¿Quieres borrar todo?"}
+                  subHeader={"NO BORRAR SI HAY OTRAS CARPETAS DENTRO"}
                   message={"¿Deseas borrar la carpeta y todo su contenido?"}
                   buttons={["Cancelar",
                     {
@@ -112,7 +122,7 @@ const Home: React.FC = () => {
                 />
                 <IonGrid>
                   <IonRow className="ion-text-center">
-                    <IonCol>
+                    <IonCol size="2">
                       <IonItem
                         lines="none"
                         button
@@ -121,26 +131,27 @@ const Home: React.FC = () => {
                         <IonIcon icon={returnUpBackOutline} />
                       </IonItem>
                     </IonCol>
-                    <IonCol>
+                    <IonCol size="8">
                       <IonItem lines="none">
                         <IonTitle className="ion-text-center">
                           {currentPath.substring(1, currentPath.length)}
                         </IonTitle>
                       </IonItem>
                     </IonCol>
-                    <IonCol>
+                    <IonCol size="2">
                       <IonItem
                         lines="none"
                         button
                         onClick={(e) => setShowAlert(true)}
                       >
-                        <IonIcon icon={trashOutline} className="trash-icon" />
+                        <IonIcon icon={trashOutline} />
                       </IonItem>
                     </IonCol>
                   </IonRow>
                 </IonGrid>
               </React.Fragment>
             ) : null}
+            
             {recoverError ? <span>{recoverError.message}</span> : null}
 
             <IonGrid>
