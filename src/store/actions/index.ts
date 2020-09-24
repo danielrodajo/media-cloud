@@ -21,4 +21,5 @@ export {
 export {
     createFolder,
     removeFolder,
+    changeFolder,
 } from './FolderManager';

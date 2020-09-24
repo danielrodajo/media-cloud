@@ -5,6 +5,8 @@ import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personCirc
 import Home from '../../pages/home/Home';
 import Add from '../../pages/add/Add';
 import Profile from '../../pages/profile/Profile';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
  
 const BottomBar: React.FC = () => {
@@ -37,7 +39,7 @@ const BottomBar: React.FC = () => {
               <IonLabel>Search</IonLabel>
             </IonTabButton>
             <IonTabButton>
-              <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)}/> 
+              <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)} /> 
             </IonTabButton>
             <IonTabButton layout={(activeTab === "") ? "icon-top" : "label-hide"}>
               <IonIcon icon={peopleOutline}/> 

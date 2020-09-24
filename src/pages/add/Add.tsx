@@ -41,10 +41,12 @@ const Add: React.FC<props> = props => {
 
     const fileInput = useRef(null);
 
+    const currentPath = useSelector((state: RootState) => state.FolderReducer.currentPath);
+
 
     const submitFolder = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
         event.preventDefault();
-        createFolder(folderName);
+        createFolder(currentPath+"/"+folderName);
         setFolderName("");
         setCreatingFolder(false);
         props.setShowModal(false);
@@ -54,7 +56,7 @@ const Add: React.FC<props> = props => {
         event.preventDefault();
         const name = (file as File).name;   
         //Subir el fichero a S3
-        uploadFile(name, file as File);
+        uploadFile(currentPath+"/"+name, file as File);
         //Vaciar campo despues de enviarlo
         setFile(null);
         props.setShowModal(false);
@@ -64,7 +66,7 @@ const Add: React.FC<props> = props => {
         event.preventDefault(); 
         const name = (photo as File).name;  
         //Subir el fichero a S3
-        uploadFile(name, photo as File);
+        uploadFile(currentPath+"/"+name, photo as File);
         //Vaciar campo despues de enviarlo
         setPhoto(null);
         props.setShowModal(false);

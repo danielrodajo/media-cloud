@@ -10,6 +10,7 @@ export interface File {
     key: string;
     size: number;
     url: string;
+    name: string;
 }
 
 export interface AuthState {
@@ -33,9 +34,11 @@ export interface FileState {
     uploadSuccess: boolean;
     loadedFile: number;
     totalFile: number;
+    downloading: boolean;
 }
 
 export interface FolderState {
+    currentPath: string;
     folders: File[];
     createFolderError: Object | null;
     creating: boolean;

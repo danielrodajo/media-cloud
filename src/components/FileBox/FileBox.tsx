@@ -3,10 +3,10 @@ import './FileBox.css';
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect } from '@ionic/react';
 import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
 import { formatDisplayImage } from '../../shared/utility';
+import { File } from '../../store/types';
 
 interface props {
-    src: string;
-    name: string;
+    file: File;
     remove: (value: string) => void;
     removeError: Error
 }
@@ -17,16 +17,16 @@ const FileBox: React.FC<props> = props => {
 
     return (
         <React.Fragment>
-            <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} src={props.src} name={props.name}/>
+            <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} file={props.file}/>
             <IonCard className="card ion-activatable ripple-parent" onClick={() => setShowPopover(true)}>
                 <IonCardHeader>
-                    <IonImg className="default-img" src={formatDisplayImage(props.name, props.src)} />  
+                    <IonImg className="default-img" src={formatDisplayImage(props.file.name, props.file.url)} />  
                 </IonCardHeader>
 
                 <IonCardContent>
                     <IonCardSubtitle className="ion-text-center">
                     {
-                        (props.name.length > 17) ? props.name.substring(0,14)+"..." : props.name
+                        (props.file.name.length > 17) ? props.file.name.substring(0,14)+"..." : props.file.name
                     }
                     </IonCardSubtitle>
                 </IonCardContent>
