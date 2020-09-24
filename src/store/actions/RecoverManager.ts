@@ -9,7 +9,14 @@ export const recoverFiles = (path: string) => {
         Storage.list(path, {level: 'protected'})
         .then((result: any) => {
             //Separamos ficheros de carpetas
-            const folders = result.filter((file: CustomFile) => file.key.endsWith('default') && file.key !== path+"/default");
+            const folders = result.filter((file: CustomFile) => 
+                //Localizamos carpetas por su fichero default
+                file.key.endsWith('default') && 
+                //Evitamos meter el fichero default de la carpeta como una carpeta en sí misma
+                file.key !== path+"/default" &&
+                //Respetamos que no se acoplen carpetas de otros niveles
+                path.split("/").length === file.key.split("/").length-2
+            );
 
             //Aseguramos que se muestren los ficheros correspondientes de su nivel
             const files = result.filter((file: CustomFile) => (!file.key.endsWith('default') 

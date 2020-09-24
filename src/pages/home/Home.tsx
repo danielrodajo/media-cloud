@@ -42,7 +42,7 @@ const Home: React.FC = () => {
 
   const removeFolder = (name: string) => dispatch(actions.removeFolder(name));
   const removeFolderError = useSelector((state: RootState) => state.FolderReducer.removeError);
-
+ 
   useEffect(() => {
     onGetFiles(currentPath);
   }, [currentPath, onGetFiles]);
@@ -54,9 +54,21 @@ const Home: React.FC = () => {
       <IonContent>
         {
           (currentPath !== "") ? 
-          <IonItem button onClick={e => changeFolder(goBackPath(currentPath))}>
-            <IonIcon icon={returnUpBackOutline}/>
-          </IonItem>
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <IonItem lines="none" button onClick={e => changeFolder(goBackPath(currentPath))}>
+                  <IonIcon icon={returnUpBackOutline}/>
+                </IonItem>
+              </IonCol>
+              <IonCol>
+
+              </IonCol>
+              <IonCol>
+                
+              </IonCol>
+            </IonRow>
+          </IonGrid>
           : null
         }
         {
