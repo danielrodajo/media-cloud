@@ -5,12 +5,13 @@ import { File as CustomFile } from '../types';
 //Recupera TODOS los ficheros del bucket del usuario autenticado
 export const recoverFiles = (path: string) => {
     return (dispatch: any) => {  
-        console.log(path)
         //Obtener todos los ficheros (nombre y eTag)
         Storage.list(path, {level: 'protected'})
         .then((result: any) => {
             //Separamos ficheros de carpetas
-            const folders = result.filter((file: CustomFile) => file.key.endsWith('default'));
+            const folders = result.filter((file: CustomFile) => file.key.endsWith('default') && file.key !== path+"/default");
+
+            //Aseguramos que se muestren los ficheros correspondientes de su nivel
             const files = result.filter((file: CustomFile) => (!file.key.endsWith('default') 
             && ((path === "" && !file.key.includes("/")) || (path !== "" && file.key.startsWith(path)))));
 

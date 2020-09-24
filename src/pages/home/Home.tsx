@@ -1,4 +1,4 @@
-import { IonContent, IonPage, IonGrid, IonRow, IonCol } from '@ionic/react';
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonText, IonItem, IonIcon } from '@ionic/react';
 import React, { useCallback, useEffect } from 'react';
 import './Home.css';
 import FileBox from '../../components/FileBox/FileBox';
@@ -8,12 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import * as actions from '../../store/actions/index';
 import FolderBox from '../../components/FolderBox/FolderBox';
+import { returnUpBackOutline } from 'ionicons/icons';
 
 const Home: React.FC = () => {
 
+  const goBackPath = (path: string) => {
+    const slices = currentPath.split("/");
+    return currentPath.substring(0, path.length-slices[slices.length-1].length);
+  }
+
   const dispatch = useDispatch();
   
-
   const currentPath = useSelector((state: RootState) => state.FolderReducer.currentPath);
 
   const files: CustomFile[] = useSelector((state: RootState) => {
@@ -44,6 +49,13 @@ const Home: React.FC = () => {
     <IonPage>
       <Toolbar/>
       <IonContent>
+        {
+          (currentPath !== "") ? 
+          <IonItem button onClick={e => changeFolder(goBackPath(currentPath))}>
+            <IonIcon icon={returnUpBackOutline}/>
+          </IonItem>
+          : null
+        }
         {
           (recoverError) ? <span>{recoverError.message}</span> : null
         }
