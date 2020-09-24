@@ -4,6 +4,7 @@ import { FileState, File } from '../types';
 
 const initialState: FileState = {
     files: [],
+    createFolderError: null,
     recoverError: null,
     uploadError: null,
     removeError: null,
@@ -25,7 +26,6 @@ const recoverFail = (state: FileState, payload: Error) => {
         recoverError: payload
     })
 }
-
 
 //Reseteamos valores de visualizacion de la subida
 const uploadFile = (state: FileState) => {

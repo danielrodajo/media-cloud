@@ -83,7 +83,6 @@ const forgotPasswordSubmitFail = (state: AuthState, payload: Error) => {
 }
 
 const switchComponent = (state: AuthState, payload: string) => {
-    console.log(payload)
     return updateObject(state, {
         status: payload,
         signUpError: null,
