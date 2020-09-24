@@ -3,12 +3,12 @@ import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubt
 import { cloudDownloadOutline, trashOutline } from 'ionicons/icons';
 import './PopoverFileBox.css';
 import { formatDisplayImage } from '../../shared/utility';
+import { File } from '../../store/types';
 
 interface props {
     showPopover: boolean; 
     setShowPopover: (value: boolean) => void;
-    src: string;
-    name: string;
+    file: File;
     remove: (value: string) => void;
     removeError: Error
  }
@@ -17,7 +17,7 @@ const PopoverFileBox: React.FC<props> = props => {
 
 
     const handleRemove = () => {
-        props.remove(props.name);
+        props.remove(props.file.key);
         props.setShowPopover(false);
      }
 
@@ -29,15 +29,15 @@ const PopoverFileBox: React.FC<props> = props => {
         >
             <IonCard>
                 <IonCardHeader>
-                    <IonImg className="popover-img" src={formatDisplayImage(props.name, props.src)} />  
+                    <IonImg className="popover-img" src={formatDisplayImage(props.file.name, props.file.url)} />  
                 </IonCardHeader>
 
                 <IonCardContent>
-                    <IonCardSubtitle className="ion-text-center">{props.name}</IonCardSubtitle>
+                    <IonCardSubtitle className="ion-text-center">{props.file.name}</IonCardSubtitle>
                     <IonGrid>
                         <IonRow className="ion-text-center">
                             <IonCol>
-                                <IonButton color="tertiary" download={props.name} href={props.src}>
+                                <IonButton color="tertiary" download={props.file.name} href={props.file.url}>
                                     <IonIcon icon={cloudDownloadOutline}></IonIcon>
                                 </IonButton>
                             </IonCol>

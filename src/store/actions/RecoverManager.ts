@@ -13,7 +13,7 @@ export const recoverFiles = (path: string) => {
 
             //Aseguramos que se muestren los ficheros correspondientes de su nivel
             const files = result.filter((file: CustomFile) => (!file.key.endsWith('default') 
-            && ((path === "" && !file.key.includes("/")) || (path !== "" && file.key.startsWith(path)))));
+            && ((path === "" && !file.key.includes("/")) || (path !== "" && file.key.startsWith(path+"/") && file.key.split("/").length-1 === path.split("/").length))));
 
             dispatch({
                 type: types.RECOVER_FOLDERS,
@@ -23,7 +23,8 @@ export const recoverFiles = (path: string) => {
             //A cada fichero, recuperar su URL
             let promises = files.map(async (file: CustomFile) => {
                 const result = await Storage.get(file.key);
-                return file = { ...file, url: result+"" };
+                const slices = file.key.split("/");
+                return file = { ...file, url: result+"", name: slices[slices.length-1] };
             });     
             //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
             Promise.all(promises)

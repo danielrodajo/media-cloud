@@ -14,7 +14,10 @@ const Home: React.FC = () => {
 
   const goBackPath = (path: string) => {
     const slices = currentPath.split("/");
-    return currentPath.substring(0, path.length-slices[slices.length-1].length);
+    const formatPath = currentPath.substring(0, path.length-slices[slices.length-1].length);
+
+    //Controlamos si acaba en barra puesto que si no es la raiz, siempre acaba con esta y hay que quitarla
+    return (formatPath.endsWith("/")) ? formatPath.substring(0, formatPath.length-1) : formatPath
   }
 
   const dispatch = useDispatch();
@@ -97,13 +100,13 @@ const Home: React.FC = () => {
               (index < Math.ceil(files.length/2)) ?
               <IonRow key={file.key}>
                 <IonCol>
-                  <FileBox src={files[index*2].url} name={files[index*2].key} remove={removeFile} removeError={removeError} />
+                  <FileBox file={files[index*2]} remove={removeFile} removeError={removeError} />
                 </IonCol>
                 {
                   //Comprobamos si nos pasamos del array de ficheros con el último de la fila
                   (index * 2 + 1 < files.length) ?
                   <IonCol>
-                    <FileBox src={files[index*2+1].url} name={files[index*2+1].key} remove={removeFile} removeError={removeError} />
+                    <FileBox file={files[index*2+1]} remove={removeFile} removeError={removeError} />
                   </IonCol>: <IonCol></IonCol>
                 }
               </IonRow> : null

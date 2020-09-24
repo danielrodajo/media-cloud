@@ -10,6 +10,7 @@ export interface File {
     key: string;
     size: number;
     url: string;
+    name: string;
 }
 
 export interface AuthState {
