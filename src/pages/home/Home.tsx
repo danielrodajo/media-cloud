@@ -28,6 +28,9 @@ const Home: React.FC = () => {
   const removeFile = (name: string) => dispatch(actions.removeFile(name));
   const removeError = useSelector((state: RootState) => state.FileReducer.removeError);
 
+  const removeFolder = (name: string) => dispatch(actions.removeFolder(name));
+  const removeFolderError = useSelector((state: RootState) => state.FolderReducer.removeError);
+
   useEffect(() => {
     onGetFiles();
   }, [onGetFiles]);
@@ -47,13 +50,13 @@ const Home: React.FC = () => {
                 (index < Math.ceil(folders.length/2)) ?
                 <IonRow key={folder.key}>
                   <IonCol>
-                    <FolderBox name={folders[index*2].key} />
+                    <FolderBox name={folders[index*2].key} src={folders[index*2].key} remove={removeFolder} removeError={removeFolderError} />
                   </IonCol>
                   {
                     //Comprobamos si nos pasamos del array de carpetas con el último de la fila
                     (index * 2 + 1 < folders.length) ?
                     <IonCol>
-                      <FolderBox name={folders[index*2+1].key} />
+                      <FolderBox name={folders[index*2+1].key} src={folders[index*2+1].key}  remove={removeFolder} removeError={removeFolderError} />
                     </IonCol>: <IonCol></IonCol>
                   }
                 </IonRow> : null

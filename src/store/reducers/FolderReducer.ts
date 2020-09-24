@@ -44,6 +44,19 @@ const createFolderFail = (state: FolderState, payload: Error) => {
     })
 }
 
+const removeFolder = (state: FolderState, payload: string) => {
+    return updateObject( state, {
+        folders: state.folders.filter(folder => folder.key !== payload)
+    })
+}
+
+const removeFail = (state: FolderState, payload: Error) => {
+    return updateObject( state, {
+        removeError: payload
+    })
+}
+
+
 const reducer = ( state = initialState, action: types.ActionTypes ) => {
     switch (action.type) {
         case types.RECOVER_FOLDERS: return recoverFolders(state, action.payload);
@@ -51,6 +64,8 @@ const reducer = ( state = initialState, action: types.ActionTypes ) => {
         case types.CREATE_FOLDER: return createFolder(state);
         case types.CREATE_FOLDER_OK: return createFolderSuccess(state, action.payload);
         case types.CREATE_FOLDER_NOK: return createFolderFail(state, action.payload);
+        case types.REMOVE_FOLDER: return removeFolder(state, action.payload);
+        case types.REMOVE_FOLDER_NOK: return removeFail(state, action.payload);
         default: return state;
     }
 }

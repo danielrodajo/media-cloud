@@ -72,7 +72,8 @@ interface CreateFolderActionNok {
 }
 
 interface RemoveFolderAction {
-    type: typeof REMOVE_FOLDER
+    type: typeof REMOVE_FOLDER,
+    payload: string
 }
 interface RemoveFolderActionNok {
     type: typeof REMOVE_FOLDER_NOK,
