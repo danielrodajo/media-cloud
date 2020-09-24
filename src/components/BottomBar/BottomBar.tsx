@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
-import { homeOutline, searchOutline, addCircleOutline, peopleOutline, folderOutline } from 'ionicons/icons';
+import { homeOutline, searchOutline, addCircleOutline, peopleOutline, folderOutline, personCircleOutline } from 'ionicons/icons';
 import Home from '../../pages/home/Home';
 import Add from '../../pages/add/Add';
 import Profile from '../../pages/profile/Profile';
@@ -44,8 +44,8 @@ const BottomBar: React.FC = () => {
               <IonLabel>Shared</IonLabel>
             </IonTabButton>
             <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile")? "icon-top" : "label-hide"}>
-              <IonIcon icon={folderOutline}/> 
-              <IonLabel>Documents</IonLabel>
+              <IonIcon icon={personCircleOutline}/> 
+              <IonLabel>Profile</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
