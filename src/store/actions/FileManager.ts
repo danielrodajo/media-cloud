@@ -5,51 +5,13 @@ import { File as CustomFile } from '../types';
 function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
 }
-    
-//Recupera TODOS los ficheros del bucket del usuario autenticado
-export const recoverFiles = () => {
-    /*return (dispatch: any) => {
-        dispatch({
-            type: types.RECOVER_FILES,
-            payload: []
-        })
-    }
-    */
-    return (dispatch: any) => {  
-        //Obtener todos los ficheros (nombre y eTag)
-        Storage.list('', {level: 'protected'})
-        .then((result: any) => {
 
-            //A cada fichero, recuperar su URL
-            let promises = result.filter((file: CustomFile) => file.key !== 'default').map(async (file: CustomFile) => {
-                const result = await Storage.get(file.key);
-                return file = { ...file, url: result+"" };
-            });     
-            //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
-            Promise.all(promises)
-            .then(result => {
-                dispatch({
-                    type: types.RECOVER_FILES,
-                    payload: result
-                })
-            });          
-        }).catch((err) => {
-            console.log(err);
-            if (err.message !== "Cannot read property 'map' of undefined") {
-                dispatch({
-                    type: types.RECOVER_FILES_NOK,
-                    payload: err
-                });
-            }       
-        });
-    }
-}
 
 //Subida de un fichero
 export const uploadFile = (name: string, file: File) => {
     return (dispatch: any) => {
         dispatch({type: types.UPLOAD_FILE});
-        Storage.put("folder/"+name, file, {
+        Storage.put(name, file, {
             progressCallback(progress: any) {
                 dispatch({
                     type: types.UPLOADING_FILE,

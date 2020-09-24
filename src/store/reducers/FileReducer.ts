@@ -14,6 +14,7 @@ const initialState: FileState = {
     totalFile: 0,
 }
 
+
 const recoverFiles = (state: FileState, payload: File[]) => {
     return updateObject( state, {
         files: payload
@@ -25,7 +26,6 @@ const recoverFail = (state: FileState, payload: Error) => {
         recoverError: payload
     })
 }
-
 
 //Reseteamos valores de visualizacion de la subida
 const uploadFile = (state: FileState) => {

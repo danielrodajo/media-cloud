@@ -6,10 +6,12 @@ export const createFolder = (name: string) => {
     return (dispatch: any) => {
         dispatch({type: types.CREATE_FOLDER});
         Storage.put(name+"/default", new File(["foo"], "foo.txt"))
-        .then(
+        .then((result: any) => {
             dispatch({
-                type: types.CREATE_FOLDER_OK
+                type: types.CREATE_FOLDER_OK,
+                payload: result
             })
+        }
         )
         .catch(err => {
             console.log(err);

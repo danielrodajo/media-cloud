@@ -23,9 +23,13 @@ const Add: React.FC<props> = props => {
     //Agregamos Hook para tomar una foto y guardarla
     const { photo, setPhoto, takePhoto } = usePhotoGallery();
     const [ file, setFile ] = useState<File | null>();
-    const [ showInputFolder, setShowInputFolder ] = useState(false);
+    const [ creatingFolder,setCreatingFolder ] = useState(false);
+    const [ folderName, setFolderName ] = useState("");
 
     const createFolder = (name: string) => dispatch(actions.createFolder(name));
+    const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
+    const creating = useSelector((state: RootState) => state.FolderReducer.creating);
+    const successFolder = useSelector((state: RootState) => state.FolderReducer.createSuccess);
 
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
     const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
@@ -38,8 +42,12 @@ const Add: React.FC<props> = props => {
     const fileInput = useRef(null);
 
 
-    const submitFolder = () => {
-
+    const submitFolder = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
+        event.preventDefault();
+        createFolder(folderName);
+        setFolderName("");
+        setCreatingFolder(false);
+        props.setShowModal(false);
     }
 
     const submitFile = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
@@ -93,7 +101,7 @@ const Add: React.FC<props> = props => {
                         </UploadButton>
                     </IonCol>
                     <IonCol>
-                        <UploadButton icon={folderOutline} onClick={() => {createFolder("folder")}}>
+                        <UploadButton icon={folderOutline} onClick={() => {setCreatingFolder(true)}}>
                             <br/>Crear<br/>Carpeta
                         </UploadButton>
                     </IonCol>
@@ -120,9 +128,25 @@ const Add: React.FC<props> = props => {
                 : null
             }
             {
-                (showInputFolder) ? 
-                <IonInput type="text"/>
-                : null
+               (creatingFolder) ?             
+                <IonGrid className="ion-no-margin ion-margin-start">
+                    <IonRow>
+                        <IonCol size="6">
+                            <IonItem lines="none">
+                                <IonInput value={folderName} placeholder="Nombre carpeta" onIonChange={e => setFolderName(e.detail.value!)}></IonInput>
+                            </IonItem>       
+                        </IonCol>
+                        <IonCol>
+                            <IonItem button onClick={submitFolder} className="ion-float-left" lines="none">
+                                <IonIcon icon={checkmarkOutline} />
+                            </IonItem>
+                            <IonItem button onClick={() => setCreatingFolder(false)} className="ion-float-left" lines="none">
+                                <IonIcon icon={closeOutline} />
+                            </IonItem>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>     
+               : null
             }
             </IonModal>
         </React.Fragment>

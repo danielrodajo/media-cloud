@@ -1,12 +1,25 @@
 import * as types from '../actions/ActionTypes';
 import { updateObject } from '../../shared/utility';
-import { FolderState } from '../types';
+import { FolderState, File } from '../types';
 
 const initialState: FolderState = {
-    folder: [],
+    folders: [],
     createFolderError: null,
     creating: false,
     createSuccess: false,
+}
+
+const recoverFolders = (state: FolderState, payload: File[]) => {
+    console.log(payload)
+    return updateObject( state, {
+        folders: payload
+    });
+}
+
+const recoverFail = (state: FolderState, payload: Error) => {
+    return updateObject( state, {
+        recoverError: payload
+    })
 }
 
 const createFolder = (state: FolderState) => {
@@ -16,10 +29,11 @@ const createFolder = (state: FolderState) => {
     });
 }
 
-const createFolderSuccess = (state: FolderState) => {
+const createFolderSuccess = (state: FolderState, payload: File) => {
     return updateObject( state, {
         creating: false,
         createSuccess: true,
+        folders: state.folders.concat(payload),
     });
 }
 
@@ -32,8 +46,10 @@ const createFolderFail = (state: FolderState, payload: Error) => {
 
 const reducer = ( state = initialState, action: types.ActionTypes ) => {
     switch (action.type) {
+        case types.RECOVER_FOLDERS: return recoverFolders(state, action.payload);
+        case types.RECOVER_FOLDERS_NOK: return recoverFail(state, action.payload);
         case types.CREATE_FOLDER: return createFolder(state);
-        case types.CREATE_FOLDER_OK: return createFolderSuccess(state);
+        case types.CREATE_FOLDER_OK: return createFolderSuccess(state, action.payload);
         case types.CREATE_FOLDER_NOK: return createFolderFail(state, action.payload);
         default: return state;
     }

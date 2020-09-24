@@ -14,6 +14,7 @@ interface props {
 const FileBox: React.FC<props> = props => {
 
     const [showPopover, setShowPopover] = useState(false);
+
     return (
         <React.Fragment>
             <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} src={props.src} name={props.name}/>

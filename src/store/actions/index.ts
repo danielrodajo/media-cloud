@@ -1,8 +1,11 @@
 export {
-    recoverFiles,
     uploadFile,
     removeFile,
 } from './FileManager';
+
+export {
+    recoverFiles,
+} from './RecoverManager';
 
 export {
     signIn,
