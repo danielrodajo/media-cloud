@@ -1,6 +1,16 @@
 import * as types from './ActionTypes';
 import { Storage } from 'aws-amplify';
 
+
+export const changeFolder = (path: string) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.CHANGE_FOLDER,
+            payload: path
+        });
+    }
+}
+
 //Creacion de carpeta vacia
 export const createFolder = (name: string) => {
     return (dispatch: any) => {

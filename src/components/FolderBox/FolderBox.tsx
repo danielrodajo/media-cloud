@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './FolderBox.css';
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect, IonIcon } from '@ionic/react';
-import { folderOutline, folder } from 'ionicons/icons';
-import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
+import { folder } from 'ionicons/icons';
 
 interface props {
-    src: string;
-    name: string;
-    remove: (value: string) => void;
-    removeError: Error
+    path: string;
+    onClick: (path: string) => void;
 }
 
 const FolderBox: React.FC<props> = props => {
-
-    const [showPopover, setShowPopover] = useState(false);
 
     //Formateamos ruta del nombre para obtener unicamente el nombre de la carpeta
     const formatName = (name: string) => {
@@ -25,8 +20,7 @@ const FolderBox: React.FC<props> = props => {
 
     return (
         <React.Fragment>
-           <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} src={props.name} name={props.name}/>
-            <IonCard className="card ion-activatable ripple-parent" onClick={() => setShowPopover(true)}>
+           <IonCard className="card ion-activatable ripple-parent" onClick={(e) => props.onClick(props.path.substring(0, (props.path.length-8)))}>
                 <IonCardHeader>
                     <IonIcon icon={folder} className="custom-icon" />  
                 </IonCardHeader>
@@ -34,7 +28,7 @@ const FolderBox: React.FC<props> = props => {
                 <IonCardContent>
                     <IonCardSubtitle className="ion-text-center">
                     {
-                        (formatName(props.name).length > 17) ? formatName(props.name).substring(0,14)+"..." : formatName(props.name)
+                        (formatName(props.path).length > 17) ? formatName(props.path).substring(0,14)+"..." : formatName(props.path)
                     }
                     </IonCardSubtitle>
                 </IonCardContent>

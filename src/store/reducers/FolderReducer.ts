@@ -3,10 +3,17 @@ import { updateObject } from '../../shared/utility';
 import { FolderState, File } from '../types';
 
 const initialState: FolderState = {
+    currentPath: "",
     folders: [],
     createFolderError: null,
     creating: false,
     createSuccess: false,
+}
+
+const changeFolder = (state: FolderState, payload: string) => {
+    return updateObject( state, {
+        currentPath: payload
+    });
 }
 
 const recoverFolders = (state: FolderState, payload: File[]) => {
@@ -58,6 +65,7 @@ const removeFail = (state: FolderState, payload: Error) => {
 
 const reducer = ( state = initialState, action: types.ActionTypes ) => {
     switch (action.type) {
+        case types.CHANGE_FOLDER: return changeFolder(state, action.payload);
         case types.RECOVER_FOLDERS: return recoverFolders(state, action.payload);
         case types.RECOVER_FOLDERS_NOK: return recoverFail(state, action.payload);
         case types.CREATE_FOLDER: return createFolder(state);

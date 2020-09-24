@@ -3,14 +3,16 @@ import { Storage } from 'aws-amplify';
 import { File as CustomFile } from '../types';
 
 //Recupera TODOS los ficheros del bucket del usuario autenticado
-export const recoverFiles = () => {
+export const recoverFiles = (path: string) => {
     return (dispatch: any) => {  
+        console.log(path)
         //Obtener todos los ficheros (nombre y eTag)
-        Storage.list('', {level: 'protected'})
+        Storage.list(path, {level: 'protected'})
         .then((result: any) => {
             //Separamos ficheros de carpetas
             const folders = result.filter((file: CustomFile) => file.key.endsWith('default'));
-            const files = result.filter((file: CustomFile) => !file.key.endsWith('default'));
+            const files = result.filter((file: CustomFile) => (!file.key.endsWith('default') 
+            && ((path === "" && !file.key.includes("/")) || (path !== "" && file.key.startsWith(path)))));
 
             dispatch({
                 type: types.RECOVER_FOLDERS,

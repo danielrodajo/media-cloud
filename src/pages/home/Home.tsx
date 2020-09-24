@@ -9,10 +9,12 @@ import { RootState } from '../../store/store';
 import * as actions from '../../store/actions/index';
 import FolderBox from '../../components/FolderBox/FolderBox';
 
-
 const Home: React.FC = () => {
 
   const dispatch = useDispatch();
+  
+
+  const currentPath = useSelector((state: RootState) => state.FolderReducer.currentPath);
 
   const files: CustomFile[] = useSelector((state: RootState) => {
       return state.FileReducer.files;
@@ -22,7 +24,9 @@ const Home: React.FC = () => {
       return state.FolderReducer.folders;
   });
 
-  const onGetFiles = useCallback(() => dispatch(actions.recoverFiles()), [dispatch]);
+  const changeFolder = (path: string) => dispatch(actions.changeFolder(path));
+
+  const onGetFiles = useCallback((path) => dispatch(actions.recoverFiles(path)), [dispatch]);
   const recoverError = useSelector((state: RootState) => state.FileReducer.recoverError);
 
   const removeFile = (name: string) => dispatch(actions.removeFile(name));
@@ -32,8 +36,8 @@ const Home: React.FC = () => {
   const removeFolderError = useSelector((state: RootState) => state.FolderReducer.removeError);
 
   useEffect(() => {
-    onGetFiles();
-  }, [onGetFiles]);
+    onGetFiles(currentPath);
+  }, [currentPath, onGetFiles]);
 
 
   return (
@@ -50,13 +54,13 @@ const Home: React.FC = () => {
                 (index < Math.ceil(folders.length/2)) ?
                 <IonRow key={folder.key}>
                   <IonCol>
-                    <FolderBox name={folders[index*2].key} src={folders[index*2].key} remove={removeFolder} removeError={removeFolderError} />
+                    <FolderBox path={folders[index*2].key} onClick={changeFolder}/>
                   </IonCol>
                   {
                     //Comprobamos si nos pasamos del array de carpetas con el último de la fila
                     (index * 2 + 1 < folders.length) ?
                     <IonCol>
-                      <FolderBox name={folders[index*2+1].key} src={folders[index*2+1].key}  remove={removeFolder} removeError={removeFolderError} />
+                      <FolderBox path={folders[index*2+1].key} onClick={changeFolder} />
                     </IonCol>: <IonCol></IonCol>
                   }
                 </IonRow> : null

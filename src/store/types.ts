@@ -36,6 +36,7 @@ export interface FileState {
 }
 
 export interface FolderState {
+    currentPath: string;
     folders: File[];
     createFolderError: Object | null;
     creating: boolean;
