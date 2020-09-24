@@ -6,7 +6,6 @@ function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
 }
 
-
 //Subida de un fichero
 export const uploadFile = (name: string, file: File) => {
     return (dispatch: any) => {
