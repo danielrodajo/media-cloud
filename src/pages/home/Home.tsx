@@ -1,6 +1,6 @@
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonText, IonItem, IonIcon } from '@ionic/react';
-import React, { useCallback, useEffect } from 'react';
-import './Home.css';
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonText, IonItem, IonIcon, IonTitle, IonAlert } from '@ionic/react';
+import React, { useCallback, useEffect, useState } from 'react';
+import './Home.scss';
 import FileBox from '../../components/FileBox/FileBox';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import { File as CustomFile } from '../../store/types';
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import * as actions from '../../store/actions/index';
 import FolderBox from '../../components/FolderBox/FolderBox';
-import { returnUpBackOutline } from 'ionicons/icons';
+import { returnUpBackOutline, trashOutline } from 'ionicons/icons';
 
 const Home: React.FC = () => {
 
@@ -21,6 +21,8 @@ const Home: React.FC = () => {
   }
 
   const dispatch = useDispatch();
+
+  const [ showAlert, setShowAlert ] = useState(false);
   
   const currentPath = useSelector((state: RootState) => state.FolderReducer.currentPath);
 
@@ -47,6 +49,10 @@ const Home: React.FC = () => {
     onGetFiles(currentPath);
   }, [currentPath, onGetFiles]);
 
+  const handleRemoveFolder = (path:string) => {
+    removeFolder(path);
+    changeFolder(goBackPath(currentPath));
+  }
 
   return (
     <IonPage>
@@ -54,21 +60,48 @@ const Home: React.FC = () => {
       <IonContent>
         {
           (currentPath !== "") ? 
-          <IonGrid>
-            <IonRow>
-              <IonCol>
-                <IonItem lines="none" button onClick={e => changeFolder(goBackPath(currentPath))}>
-                  <IonIcon icon={returnUpBackOutline}/>
-                </IonItem>
-              </IonCol>
-              <IonCol>
-
-              </IonCol>
-              <IonCol>
-                
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+          <React.Fragment>
+            <IonAlert
+              isOpen={showAlert}
+              onDidDismiss={() => setShowAlert(false)}
+              cssClass='my-custom-class'
+              header={'¿Quieres borrar todo?'}
+              message={'¿Deseas borrar la carpeta y todo su contenido?'}
+              buttons={[{
+                text: 'Cancelar',
+                role: 'cancel',
+                handler: () => {
+                  console.log("CANCELAR")
+                }
+              }, 
+              {
+                text: 'Aceptar',
+                role: 'accept',
+                handler: () => {
+                  handleRemoveFolder(currentPath+"/default")
+                }
+              }]}
+            />
+            <IonGrid>
+              <IonRow className="ion-text-center">
+                <IonCol>
+                  <IonItem lines="none" button onClick={e => changeFolder(goBackPath(currentPath))}>
+                    <IonIcon icon={returnUpBackOutline}/>
+                  </IonItem>
+                </IonCol>
+                <IonCol>
+                    <IonItem lines="none">
+                      <IonTitle className="ion-text-center">{currentPath.substring(1, currentPath.length)}</IonTitle>
+                    </IonItem>         
+                </IonCol>
+                <IonCol>
+                  <IonItem lines="none" button onClick={e => setShowAlert(true)}>
+                    <IonIcon icon={trashOutline} className="trash-icon" />
+                  </IonItem>    
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </React.Fragment>
           : null
         }
         {
