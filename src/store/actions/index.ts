@@ -12,5 +12,9 @@ export {
     forgotPassword,
     forgotPasswordSubmit,
     switchComponent,
-    authCheckState
+    authCheckState,
 } from './AuthManager';
+
+export {
+    createFolder,
+} from './FolderManager';

@@ -49,7 +49,7 @@ export const recoverFiles = () => {
 export const uploadFile = (name: string, file: File) => {
     return (dispatch: any) => {
         dispatch({type: types.UPLOAD_FILE});
-        Storage.put(name, file, {
+        Storage.put("folder/"+name, file, {
             progressCallback(progress: any) {
                 dispatch({
                     type: types.UPLOADING_FILE,

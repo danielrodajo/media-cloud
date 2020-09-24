@@ -31,7 +31,6 @@ import * as actions from './store/actions/index';
 import Authentication from './pages/authentication/Authentication';
 
 
-
 Amplify.configure(awsconfig);
 Storage.configure({ level: 'protected' });
 

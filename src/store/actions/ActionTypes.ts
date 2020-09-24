@@ -1,5 +1,13 @@
 import { File, AuthState } from "../types";
 
+export const CREATE_FOLDER = "CREATE_FOLDER";
+export const CREATE_FOLDER_OK = "CREATE_FOLDER_OK";
+export const CREATE_FOLDER_NOK = "CREATE_FOLDER_NOK";
+
+export const REMOVE_FOLDER = "REMOVE_FOLDER";
+export const REMOVE_FOLDER_OK = "REMOVE_FOLDER_OK";
+export const REMOVE_FOLDER_NOK = "REMOVE_FOLDER_NOK";
+
 export const RECOVER_FILES = 'RECOVER_FILES';
 export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 
@@ -38,6 +46,24 @@ export const AUTH_SWITCH_COMPONENT = 'AUTH_CHANGE_COMPONENT';
 export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';
 export const AUTH_SIGNOUT_NOK = 'AUTH_SIGNOUT_NOK';
 
+interface CreateFolderAction {
+    type: typeof CREATE_FOLDER
+}
+interface CreateFolderActionOk {
+    type: typeof CREATE_FOLDER_OK
+}
+interface CreateFolderActionNok {
+    type: typeof CREATE_FOLDER_NOK,
+    payload: any
+}
+
+interface RemoveFolderAction {
+    type: typeof REMOVE_FOLDER
+}
+interface RemoveFolderActionNok {
+    type: typeof REMOVE_FOLDER_NOK,
+    payload: any
+}
 
 interface RecoverFilesAction {
     type: typeof RECOVER_FILES
@@ -139,6 +165,7 @@ interface SwitchComponentAction {
 }
 
 
-export type ActionTypes = RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
+export type ActionTypes =   CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
+                            RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction

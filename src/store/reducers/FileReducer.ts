@@ -4,6 +4,7 @@ import { FileState, File } from '../types';
 
 const initialState: FileState = {
     files: [],
+    createFolderError: null,
     recoverError: null,
     uploadError: null,
     removeError: null,
@@ -12,7 +13,6 @@ const initialState: FileState = {
     loadedFile: 0,
     totalFile: 0,
 }
-
 
 const recoverFiles = (state: FileState, payload: File[]) => {
     return updateObject( state, {

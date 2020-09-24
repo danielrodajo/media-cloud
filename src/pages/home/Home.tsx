@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   const removeError = useSelector((state: RootState) => state.FileReducer.removeError);
 
   useEffect(() => {
-      onGetFiles();
+    onGetFiles();
   }, [onGetFiles]);
 
 
@@ -50,7 +50,6 @@ const Home: React.FC = () => {
             //Generamos nº de filas
             //Por cada fila, generamos pares de columnas 
             }).map((file, index) => {
-              console.log(file);
               return (
               (index < Math.ceil(files.length/2)) ?
               <IonRow key={file.key}>

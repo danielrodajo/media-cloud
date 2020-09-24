@@ -39,7 +39,7 @@ const BottomBar: React.FC = () => {
               <IonLabel>Shared</IonLabel>
             </IonTabButton>
             <IonTabButton tab="Profile" href="/profile">
-              <IonIcon icon={folderOutline}/> 
+              <IonIcon icon={folderOutline} /> 
               <IonLabel>Documents</IonLabel>
             </IonTabButton>
           </IonTabBar>
