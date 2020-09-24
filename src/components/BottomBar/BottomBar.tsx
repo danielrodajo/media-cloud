@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
-import { homeOutline, searchOutline, addCircleOutline, peopleOutline, folderOutline, personCircleOutline } from 'ionicons/icons';
+import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personCircleOutline } from 'ionicons/icons';
 import Home from '../../pages/home/Home';
 import Add from '../../pages/add/Add';
 import Profile from '../../pages/profile/Profile';
@@ -28,22 +28,22 @@ const BottomBar: React.FC = () => {
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="Home" href="/home" layout={(activeTab === "Home")? "icon-top" : "label-hide"}>
+            <IonTabButton tab="Home" href="/home" layout={(activeTab === "Home") ? "icon-top" : "label-hide"}>
               <IonIcon icon={homeOutline}/> 
               <IonLabel>Home</IonLabel>
             </IonTabButton>
-            <IonTabButton >
+            <IonTabButton layout={(activeTab === "") ? "icon-top" : "label-hide"}>
               <IonIcon icon={searchOutline}/> 
               <IonLabel>Search</IonLabel>
             </IonTabButton>
             <IonTabButton>
               <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)}/> 
             </IonTabButton>
-            <IonTabButton>
+            <IonTabButton layout={(activeTab === "") ? "icon-top" : "label-hide"}>
               <IonIcon icon={peopleOutline}/> 
               <IonLabel>Shared</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile")? "icon-top" : "label-hide"}>
+            <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile") ? "icon-top" : "label-hide"}>
               <IonIcon icon={personCircleOutline}/> 
               <IonLabel>Profile</IonLabel>
             </IonTabButton>

@@ -10,7 +10,6 @@ const initialState: FolderState = {
 }
 
 const recoverFolders = (state: FolderState, payload: File[]) => {
-    console.log(payload)
     return updateObject( state, {
         folders: payload
     });

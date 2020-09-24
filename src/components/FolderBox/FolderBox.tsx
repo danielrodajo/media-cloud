@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './FolderBox.css';
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect } from '@ionic/react';
-import { formatDisplayImage } from '../../shared/utility';
-import { folderOutline } from 'ionicons/icons';
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect, IonIcon } from '@ionic/react';
+import { folderOutline, folder } from 'ionicons/icons';
 import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
 
 interface props {
@@ -29,7 +28,7 @@ const FolderBox: React.FC<props> = props => {
            <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} src={props.name} name={props.name}/>
             <IonCard className="card ion-activatable ripple-parent" onClick={() => setShowPopover(true)}>
                 <IonCardHeader>
-                    <IonImg className="default-img" src={folderOutline}  color="white"/>  
+                    <IonIcon icon={folder} className="custom-icon" />  
                 </IonCardHeader>
 
                 <IonCardContent>
