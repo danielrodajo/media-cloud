@@ -34,6 +34,7 @@ export interface FileState {
     uploadSuccess: boolean;
     loadedFile: number;
     totalFile: number;
+    downloading: boolean;
 }
 
 export interface FolderState {

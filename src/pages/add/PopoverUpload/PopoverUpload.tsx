@@ -12,19 +12,18 @@ interface props {
     success: boolean;
 }
 
-const Popover: React.FC<props> = props => {
-    return (
-        <IonPopover
-            isOpen={props.uploading}
-            cssClass='my-custom-class'
-        >
-            {
-                (!props.success) 
-                ? <CircularProgressbar value={props.loadedFile/props.totalFile} maxValue={1} text={Math.floor((props.loadedFile/props.totalFile)*100)+"%"}  background={true} styles={{background: {fill: '#ffffff'}}}/> 
-                : <AnimatedCheckmark />
-            }
-        </IonPopover>
-    );
-}
+const Popover: React.FC<props> = props => (
+    <IonPopover
+        isOpen={props.uploading}
+        backdropDismiss={false}
+        cssClass='my-custom-class'
+    >
+    {
+        (!props.success) 
+        ? <CircularProgressbar value={props.loadedFile/props.totalFile} maxValue={1} text={Math.floor((props.loadedFile/props.totalFile)*100)+"%"}  background={true} styles={{background: {fill: '#ffffff'}}}/> 
+        : <AnimatedCheckmark />
+    }
+    </IonPopover>
+);
 
 export default Popover;

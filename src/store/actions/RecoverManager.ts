@@ -5,6 +5,9 @@ import { File as CustomFile } from '../types';
 //Recupera TODOS los ficheros del bucket del usuario autenticado
 export const recoverFiles = (path: string) => {
     return (dispatch: any) => {  
+        dispatch({
+            type: types.RECOVER_FILES
+        });
         //Obtener todos los ficheros (nombre y eTag)
         Storage.list(path, {level: 'protected'})
         .then((result: any) => {
@@ -37,7 +40,7 @@ export const recoverFiles = (path: string) => {
             Promise.all(promises)
             .then(result => {
                 dispatch({
-                    type: types.RECOVER_FILES,
+                    type: types.RECOVER_FILES_OK,
                     payload: result
                 })
             });          

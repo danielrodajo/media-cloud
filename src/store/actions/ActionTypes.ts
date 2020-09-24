@@ -17,6 +17,7 @@ export const REMOVE_FOLDER_OK = "REMOVE_FOLDER_OK";
 export const REMOVE_FOLDER_NOK = "REMOVE_FOLDER_NOK";
 
 export const RECOVER_FILES = 'RECOVER_FILES';
+export const RECOVER_FILES_OK = 'RECOVER_FILES_OK';
 export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 
 export const UPLOAD_FILE = 'UPLOAD_FILE';
@@ -96,6 +97,9 @@ interface RemoveFolderActionNok {
 
 interface RecoverFilesAction {
     type: typeof RECOVER_FILES
+}
+interface RecoverFilesOkAction {
+    type: typeof RECOVER_FILES_OK,
     payload: File[]
 }
 interface RecoverFilesNokAction {
@@ -194,7 +198,7 @@ interface SwitchComponentAction {
 }
 
 
-export type ActionTypes =   ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
+export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction
