@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
-import { homeOutline, searchOutline, addCircleOutline, peopleOutline, folderOutline } from 'ionicons/icons';
+import { homeOutline, searchOutline, addCircleOutline, peopleOutline, folderOutline, personOutline } from 'ionicons/icons';
 import Home from '../../pages/home/Home';
 import Add from '../../pages/add/Add';
 import Profile from '../../pages/profile/Profile';
+import Theme from '../../pages/profile/theme/Theme';
+import AboutUs from '../../pages/profile/aboutus/AboutUs';
 
  
 const BottomBar: React.FC = () => {
@@ -14,7 +16,9 @@ const BottomBar: React.FC = () => {
     const [activeTab, setActiveTab] = useState("Home");
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
+      console.log(event.detail.tab);
     }
+
 
     return ( 
       <React.Fragment>
@@ -25,6 +29,8 @@ const BottomBar: React.FC = () => {
             <Route path="/search" exact />
             <Route path="/shared" exact />
             <Route path="/profile" component={Profile} exact />
+            <Route path="/profile/theme" component={Theme}/>
+            <Route path="/profile/aboutus" component={AboutUs}/>
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
@@ -32,20 +38,20 @@ const BottomBar: React.FC = () => {
               <IonIcon icon={homeOutline}/> 
               <IonLabel>Home</IonLabel>
             </IonTabButton>
-            <IonTabButton >
+            <IonTabButton layout={(activeTab === "")? "icon-top" : "label-hide"}>
               <IonIcon icon={searchOutline}/> 
               <IonLabel>Search</IonLabel>
             </IonTabButton>
             <IonTabButton>
               <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)}/> 
             </IonTabButton>
-            <IonTabButton>
+            <IonTabButton layout={(activeTab === "")? "icon-top" : "label-hide"}>
               <IonIcon icon={peopleOutline}/> 
               <IonLabel>Shared</IonLabel>
             </IonTabButton>
             <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile")? "icon-top" : "label-hide"}>
-              <IonIcon icon={folderOutline}/> 
-              <IonLabel>Documents</IonLabel>
+              <IonIcon icon={personOutline}/> 
+              <IonLabel>Profile</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>

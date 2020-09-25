@@ -10,12 +10,15 @@
     margin-left: 4%;
     float: left;
     font-size: 25px;
+    width: 200px;
 }
 .botton{
-    float: left;
     margin-top: 3%;
     margin-left: 4%;
     background-color: rgb(164, 78, 245);
     border-radius: 20px;
     height: 20px;
+}
+.bottonlabel{
+    margin-right: 70px;
 }
