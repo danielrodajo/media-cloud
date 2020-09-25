@@ -16,7 +16,6 @@ const BottomBar: React.FC = () => {
     const [activeTab, setActiveTab] = useState("Home");
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
-      console.log(event.detail.tab);
     }
 
 
