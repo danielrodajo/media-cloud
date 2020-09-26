@@ -4,6 +4,7 @@ import * as types from './ActionTypes';
 //Iniciar sesion
 export const signIn = (username: string, password: string) => {
     return (dispatch: any) => {
+        console.log(username, password)
         Auth.signIn({ username, password })
         .then(() => {
             Auth.currentAuthenticatedUser({
