@@ -3,7 +3,6 @@ import word from '../default-images/word.jpg';
 import pdf from '../default-images/pdf.jpg';
 import excel from '../default-images/excel.jpg';
 import defaultFile from '../default-images/default-file.png';
-import { execFile } from 'child_process';
 
 export const updateObject = (oldObject: any, updatedProperties: any) => {
     return {
