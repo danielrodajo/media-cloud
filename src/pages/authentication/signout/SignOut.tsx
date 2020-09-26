@@ -17,19 +17,19 @@ const SignOut = () => {
     return (
         <React.Fragment>
             <IonAlert
-            isOpen={showAlert}
-            onDidDismiss={() => setShowAlert(false)}
-            cssClass="my-custom-class"
-            header={"¿Quieres cerrar sesión?"}
-            buttons={["No",
-                {
-                text: "Si",
-                role: "accept",
-                handler: () => {
-                    dispatch(actions.signOut())
-                },
-                },
-            ]}
+                isOpen={showAlert}
+                onDidDismiss={() => setShowAlert(false)}
+                cssClass="my-custom-class"
+                header={"¿Quieres cerrar sesión?"}
+                buttons={["No",
+                    {
+                    text: "Si",
+                    role: "accept",
+                    handler: () => {
+                        dispatch(actions.signOut())
+                    },
+                    },
+                ]}
             />
             <IonItem className="ion-float-right" button onClick={() => setShowAlert(true)} lines="none">
                 <IonIcon icon={logOutOutline}/>

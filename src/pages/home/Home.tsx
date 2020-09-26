@@ -8,7 +8,6 @@ import {
   IonIcon,
   IonTitle,
   IonAlert,
-  IonSpinner,
 } from "@ionic/react";
 import React, { useCallback, useEffect, useState } from "react";
 import "./Home.scss";
@@ -20,8 +19,11 @@ import { RootState } from "../../store/store";
 import * as actions from "../../store/actions/index";
 import FolderBox from "../../components/FolderBox/FolderBox";
 import { returnUpBackOutline, trashOutline } from "ionicons/icons";
+import CustomSpinner from "../../components/CustomSpinner/CustomSpinner";
 
 const Home: React.FC = () => {
+
+  //Devuelve un nivel anterior a la ruta introducida (retrocede)
   const goBackPath = (path: string) => {
     const slices = currentPath.split("/");
     const formatPath = currentPath.substring(
@@ -96,7 +98,7 @@ const Home: React.FC = () => {
         {
         //Mostrar Spinner mientras se descargan los ficheros
         downloading ? (
-          <IonSpinner className="spinner" color="tertiary" />
+          <CustomSpinner />
         ) : (
           <React.Fragment>
             {

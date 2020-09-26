@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon } from '@ionic/react';
+import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { cloudDownloadOutline, trashOutline } from 'ionicons/icons';
 import './PopoverFileBox.css';
 import { formatDisplayImage } from '../../shared/utility';
@@ -14,7 +14,6 @@ interface props {
  }
 
 const PopoverFileBox: React.FC<props> = props => {
-
 
     const handleRemove = () => {
         props.remove(props.file.key);

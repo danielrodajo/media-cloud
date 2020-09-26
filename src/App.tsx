@@ -29,6 +29,7 @@ import awsconfig from './aws-exports';
 import { RootState } from './store/store';
 import * as actions from './store/actions/index';
 import Authentication from './pages/authentication/Authentication';
+import { Plugins } from '@capacitor/core';
 
 
 Amplify.configure(awsconfig);

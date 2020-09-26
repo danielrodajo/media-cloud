@@ -1,7 +1,9 @@
 import txt from '../default-images/txt.jpg';
 import word from '../default-images/word.jpg';
 import pdf from '../default-images/pdf.jpg';
+import excel from '../default-images/excel.jpg';
 import defaultFile from '../default-images/default-file.png';
+import { execFile } from 'child_process';
 
 export const updateObject = (oldObject: any, updatedProperties: any) => {
     return {
@@ -19,13 +21,15 @@ export const formatDisplayImage = (name: string, source: string) => {
         case "docx":
              return word;
         case "pdf": return pdf;
+        case "xls":
+        case "xlsx":
+            return excel;
         case "jpg":
         case "jpeg":
+        case "tiff":
+        case "raw":
         case "png":
-        case "gif": 
-        case "tiff": 
-        case "psd": 
-        case "svg":
+        case "gif":
             return source;
         default: return defaultFile;
     }

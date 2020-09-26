@@ -56,7 +56,7 @@ const Add: React.FC<props> = props => {
         event.preventDefault();
         const name = (file as File).name;   
         //Subir el fichero a S3
-        uploadFile(currentPath+"/"+name, file as File);
+        uploadFile(((currentPath == "") ? name : currentPath+"/"+name), file as File);
         //Vaciar campo despues de enviarlo
         setFile(null);
         props.setShowModal(false);
