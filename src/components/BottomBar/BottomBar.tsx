@@ -5,15 +5,16 @@ import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personCirc
 import Home from '../../pages/home/Home';
 import Add from '../../pages/add/Add';
 import Profile from '../../pages/profile/Profile';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-
  
 const BottomBar: React.FC = () => {
 
+    //Indicador de si mostrar ventana de añadir o no
     const [ showModal, setShowModal ] = useState(false);
 
+    //Indica que pagina es la activa
     const [activeTab, setActiveTab] = useState("Home");
+
+    //Actualiza el indicador de pagina activa
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
     }

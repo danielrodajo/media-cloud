@@ -10,4 +10,7 @@
 .forgot-password-link {
     color: #763BC6;
     font-weight: bold;
+    --background: transparent;
+    --background-activated: transparent;
+    --box-shadow: 0;
 }

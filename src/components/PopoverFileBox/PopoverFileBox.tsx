@@ -15,7 +15,6 @@ interface props {
 
 const PopoverFileBox: React.FC<props> = props => {
 
-
     const handleRemove = () => {
         props.remove(props.file.key);
         props.setShowPopover(false);

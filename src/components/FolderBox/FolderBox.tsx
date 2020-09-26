@@ -1,6 +1,6 @@
 import React from 'react';
 import './FolderBox.css';
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect, IonIcon } from '@ionic/react';
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonRippleEffect, IonIcon } from '@ionic/react';
 import { folder } from 'ionicons/icons';
 
 interface props {
@@ -20,7 +20,7 @@ const FolderBox: React.FC<props> = props => {
 
     return (
         <React.Fragment>
-           <IonCard className="card ion-activatable ripple-parent" onClick={(e) => props.onClick(props.path.substring(0, (props.path.length-8)))}>
+           <IonCard className="my-card ion-activatable ripple-parent" onClick={(e) => props.onClick(props.path.substring(0, (props.path.length-8)))}>
                 <IonCardHeader>
                     <IonIcon icon={folder} className="custom-icon" />  
                 </IonCardHeader>

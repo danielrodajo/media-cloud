@@ -8,7 +8,6 @@ import {
   IonIcon,
   IonTitle,
   IonAlert,
-  IonSpinner,
 } from "@ionic/react";
 import React, { useCallback, useEffect, useState } from "react";
 import "./Home.scss";
@@ -20,8 +19,11 @@ import { RootState } from "../../store/store";
 import * as actions from "../../store/actions/index";
 import FolderBox from "../../components/FolderBox/FolderBox";
 import { returnUpBackOutline, trashOutline } from "ionicons/icons";
+import CustomSpinner from "../../components/CustomSpinner/CustomSpinner";
 
 const Home: React.FC = () => {
+
+  //Devuelve un nivel anterior a la ruta introducida (retrocede)
   const goBackPath = (path: string) => {
     const slices = currentPath.split("/");
     const formatPath = currentPath.substring(
@@ -67,9 +69,9 @@ const Home: React.FC = () => {
   );
 
   const removeFolder = (name: string) => dispatch(actions.removeFolder(name));
-  const removeFolderError = useSelector(
-    (state: RootState) => state.FolderReducer.removeError
-  );
+  //const removeFolderError = useSelector(
+  //  (state: RootState) => state.FolderReducer.removeError
+  //);
 
   useEffect(() => {
     onGetFiles(currentPath);
@@ -96,7 +98,7 @@ const Home: React.FC = () => {
         {
         //Mostrar Spinner mientras se descargan los ficheros
         downloading ? (
-          <IonSpinner className="spinner" color="tertiary" />
+          <CustomSpinner />
         ) : (
           <React.Fragment>
             {
@@ -154,78 +156,36 @@ const Home: React.FC = () => {
             
             {recoverError ? <span>{recoverError.message}</span> : null}
 
-            <IonGrid>
-              {folders
-                ? folders.map((folder, index) =>
-                    index < Math.ceil(folders.length / 2) ? (
-                      <IonRow key={folder.key}>
-                        <IonCol>
-                          <FolderBox
-                            path={folders[index * 2].key}
-                            onClick={changeFolder}
-                          />
-                        </IonCol>
-                        {
-                          //Comprobamos si nos pasamos del array de carpetas con el último de la fila
-                          index * 2 + 1 < folders.length ? (
-                            <IonCol>
-                              <FolderBox
-                                path={folders[index * 2 + 1].key}
-                                onClick={changeFolder}
-                              />
-                            </IonCol>
-                          ) : (
-                            <IonCol></IonCol>
-                          )
-                        }
-                      </IonRow>
-                    ) : null
-                  )
-                : console.log(files)}
-              {
-                //GENERA TABLA DE DOS COLUMNAS CON LOS FICHEROS
-                //Ordenamos ficheros por orden alfabetico en base a su nombre
-                files
-                  .sort(function (a: CustomFile, b: CustomFile) {
-                    if (a.key > b.key) {
-                      return 1;
-                    }
-                    if (a.key < b.key) {
-                      return -1;
-                    }
-                    return 0;
-                    //Generamos nº de filas
-                    //Por cada fila, generamos pares de columnas
-                  })
-                  .map((file, index) => {
-                    return index < Math.ceil(files.length / 2) ? (
-                      <IonRow key={file.key}>
-                        <IonCol>
-                          <FileBox
-                            file={files[index * 2]}
-                            remove={removeFile}
-                            removeError={removeError}
-                          />
-                        </IonCol>
-                        {
-                          //Comprobamos si nos pasamos del array de ficheros con el último de la fila
-                          index * 2 + 1 < files.length ? (
-                            <IonCol>
-                              <FileBox
-                                file={files[index * 2 + 1]}
-                                remove={removeFile}
-                                removeError={removeError}
-                              />
-                            </IonCol>
-                          ) : (
-                            <IonCol></IonCol>
-                          )
-                        }
-                      </IonRow>
-                    ) : null;
-                  })
-              }
-            </IonGrid>
+            {
+              folders.map(folder => 
+              <FolderBox
+                key={folder.key}
+                path={folder.key}
+                onClick={changeFolder}
+              />
+              )
+            }
+            {
+              files
+              .sort(function (a: CustomFile, b: CustomFile) {
+                if (a.key > b.key) {
+                  return 1;
+                }
+                if (a.key < b.key) {
+                  return -1;
+                }
+                return 0;
+              })
+              .map(file => 
+                <FileBox
+                  key={file.key}
+                  file={file}
+                  remove={removeFile}
+                  removeError={removeError}
+                />
+              )
+            }
+            
           </React.Fragment>
         )}
       </IonContent>

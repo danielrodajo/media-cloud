@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonText, IonInput } from '@ionic/react';
+import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonInput } from '@ionic/react';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -27,9 +27,11 @@ const Add: React.FC<props> = props => {
     const [ folderName, setFolderName ] = useState("");
 
     const createFolder = (name: string) => dispatch(actions.createFolder(name));
-    const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
-    const creating = useSelector((state: RootState) => state.FolderReducer.creating);
-    const successFolder = useSelector((state: RootState) => state.FolderReducer.createSuccess);
+
+    //Estados que tal vez se usen en un futuro para la creacion de carpeta
+    //const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
+    //const creating = useSelector((state: RootState) => state.FolderReducer.creating);
+    //const successFolder = useSelector((state: RootState) => state.FolderReducer.createSuccess);
 
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
     const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
@@ -56,7 +58,7 @@ const Add: React.FC<props> = props => {
         event.preventDefault();
         const name = (file as File).name;   
         //Subir el fichero a S3
-        uploadFile(currentPath+"/"+name, file as File);
+        uploadFile(((currentPath === "") ? name : currentPath+"/"+name), file as File);
         //Vaciar campo despues de enviarlo
         setFile(null);
         props.setShowModal(false);

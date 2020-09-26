@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonPopover, IonProgressBar, IonText, IonTitle } from '@ionic/react';
+import { IonPopover } from '@ionic/react';
 import './PopoverUpload.scss';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
