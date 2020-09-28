@@ -1,6 +1,23 @@
 import { File, AuthState } from "../types";
 
+export const CHANGE_FOLDER = "CHANGE_FOLDER";
+export const CHANGE_FOLDER_OK = "CHANGE_FOLDER_OK";
+export const CHANGE_FOLDER_NOK = "CHANGE_FOLDER_NOK";
+
+export const RECOVER_FOLDERS = "RECOVER_FOLDERS";
+export const RECOVER_FOLDERS_OK = "RECOVER_FOLDERS_OK";
+export const RECOVER_FOLDERS_NOK = "RECOVER_FOLDERS_NOK";
+
+export const CREATE_FOLDER = "CREATE_FOLDER";
+export const CREATE_FOLDER_OK = "CREATE_FOLDER_OK";
+export const CREATE_FOLDER_NOK = "CREATE_FOLDER_NOK";
+
+export const REMOVE_FOLDER = "REMOVE_FOLDER";
+export const REMOVE_FOLDER_OK = "REMOVE_FOLDER_OK";
+export const REMOVE_FOLDER_NOK = "REMOVE_FOLDER_NOK";
+
 export const RECOVER_FILES = 'RECOVER_FILES';
+export const RECOVER_FILES_OK = 'RECOVER_FILES_OK';
 export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 
 export const UPLOAD_FILE = 'UPLOAD_FILE';
@@ -39,8 +56,50 @@ export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';
 export const AUTH_SIGNOUT_NOK = 'AUTH_SIGNOUT_NOK';
 
 
+interface ChangeFolderAction {
+    type: typeof CHANGE_FOLDER,
+    payload: string
+}
+interface ChangeFolderActionNok {
+    type: typeof CHANGE_FOLDER,
+    payload: any
+}
+
+interface RecoverFoldersAction {
+    type: typeof RECOVER_FOLDERS,
+    payload: any
+}
+interface RecoverFoldersActionNok {
+    type: typeof RECOVER_FOLDERS_NOK,
+    payload: any
+}
+
+interface CreateFolderAction {
+    type: typeof CREATE_FOLDER
+}
+interface CreateFolderActionOk {
+    type: typeof CREATE_FOLDER_OK,
+    payload: any
+}
+interface CreateFolderActionNok {
+    type: typeof CREATE_FOLDER_NOK,
+    payload: any
+}
+
+interface RemoveFolderAction {
+    type: typeof REMOVE_FOLDER,
+    payload: string
+}
+interface RemoveFolderActionNok {
+    type: typeof REMOVE_FOLDER_NOK,
+    payload: any
+}
+
 interface RecoverFilesAction {
     type: typeof RECOVER_FILES
+}
+interface RecoverFilesOkAction {
+    type: typeof RECOVER_FILES_OK,
     payload: File[]
 }
 interface RecoverFilesNokAction {
@@ -139,6 +198,7 @@ interface SwitchComponentAction {
 }
 
 
-export type ActionTypes = RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
+export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
+                            RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction

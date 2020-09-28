@@ -1,8 +1,12 @@
 export {
-    recoverFiles,
     uploadFile,
     removeFile,
 } from './FileManager';
+
+export {
+    recoverFiles,
+    recoverRecentFiles,
+} from './RecoverManager';
 
 export {
     signIn,
@@ -12,5 +16,11 @@ export {
     forgotPassword,
     forgotPasswordSubmit,
     switchComponent,
-    authCheckState
+    authCheckState,
 } from './AuthManager';
+
+export {
+    createFolder,
+    removeFolder,
+    changeFolder,
+} from './FolderManager';

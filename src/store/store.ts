@@ -2,8 +2,9 @@ import { createStore, applyMiddleware, compose, combineReducers, Store, AnyActio
 import thunk from 'redux-thunk';
 import FileReducer from './reducers/FileReducer';
 import AuthReducer from './reducers/AuthReducer';
+import FolderReducer from './reducers/FolderReducer';
 import * as types from './actions/ActionTypes';
-import { FileState, AuthState } from './types';
+import { FileState, AuthState, FolderState } from './types';
 
 declare global {
     interface Window {
@@ -14,9 +15,10 @@ declare global {
 const appReducer = combineReducers({
     FileReducer : FileReducer,
     AuthReducer : AuthReducer,
+    FolderReducer: FolderReducer,
 });
 
-const rootReducer = (state: CombinedState<{ FileReducer: FileState; AuthReducer: AuthState; }> | undefined, action: AnyAction) => {
+const rootReducer = (state: CombinedState<{ FileReducer: FileState; AuthReducer: AuthState; FolderReducer: FolderState }> | undefined, action: AnyAction) => {
     if (action.type === types.AUTH_SIGNOUT) {
         state = undefined;
     }

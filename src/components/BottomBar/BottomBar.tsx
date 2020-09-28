@@ -11,9 +11,13 @@ import AboutUs from '../../pages/profile/aboutus/AboutUs';
  
 const BottomBar: React.FC = () => {
 
+    //Indicador de si mostrar ventana de añadir o no
     const [ showModal, setShowModal ] = useState(false);
 
+    //Indica que pagina es la activa
     const [activeTab, setActiveTab] = useState("Home");
+
+    //Actualiza el indicador de pagina activa
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
     }
@@ -33,22 +37,23 @@ const BottomBar: React.FC = () => {
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="Home" href="/home" layout={(activeTab === "Home")? "icon-top" : "label-hide"}>
+            <IonTabButton tab="Home" href="/home" layout={(activeTab === "Home") ? "icon-top" : "label-hide"}>
               <IonIcon icon={homeOutline}/> 
               <IonLabel>Inicio</IonLabel>
             </IonTabButton>
-            <IonTabButton layout={(activeTab === "")? "icon-top" : "label-hide"}>
+            <IonTabButton layout={(activeTab === "") ? "icon-top" : "label-hide"}>
               <IonIcon icon={searchOutline}/> 
               <IonLabel>Busqueda</IonLabel>
             </IonTabButton>
             <IonTabButton>
-              <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)}/> 
+              <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)} /> 
             </IonTabButton>
-            <IonTabButton layout={(activeTab === "")? "icon-top" : "label-hide"}>
+            <IonTabButton layout={(activeTab === "") ? "icon-top" : "label-hide"}>
               <IonIcon icon={peopleOutline}/> 
               <IonLabel>Compartido</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile")? "icon-top" : "label-hide"}>
+            
+            <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile") ? "icon-top" : "label-hide"}>
               <IonIcon icon={personOutline}/> 
               <IonLabel>Perfil</IonLabel>
             </IonTabButton>
