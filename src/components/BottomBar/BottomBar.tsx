@@ -35,22 +35,22 @@ const BottomBar: React.FC = () => {
           <IonTabBar slot="bottom">
             <IonTabButton tab="Home" href="/home" layout={(activeTab === "Home")? "icon-top" : "label-hide"}>
               <IonIcon icon={homeOutline}/> 
-              <IonLabel>Home</IonLabel>
+              <IonLabel>Inicio</IonLabel>
             </IonTabButton>
             <IonTabButton layout={(activeTab === "")? "icon-top" : "label-hide"}>
               <IonIcon icon={searchOutline}/> 
-              <IonLabel>Search</IonLabel>
+              <IonLabel>Busqueda</IonLabel>
             </IonTabButton>
             <IonTabButton>
               <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)}/> 
             </IonTabButton>
             <IonTabButton layout={(activeTab === "")? "icon-top" : "label-hide"}>
               <IonIcon icon={peopleOutline}/> 
-              <IonLabel>Shared</IonLabel>
+              <IonLabel>Compartido</IonLabel>
             </IonTabButton>
             <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile")? "icon-top" : "label-hide"}>
               <IonIcon icon={personOutline}/> 
-              <IonLabel>Profile</IonLabel>
+              <IonLabel>Perfil</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
