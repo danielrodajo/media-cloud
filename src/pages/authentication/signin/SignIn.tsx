@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import * as actions from '../../../store/actions/index';
 import logo from "../../../images/lightlogobg.png";
-import { input } from 'aws-amplify';
-import { eye } from 'ionicons/icons';
 
 interface props {
     userData: UserData,

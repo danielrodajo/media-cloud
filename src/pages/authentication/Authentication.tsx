@@ -24,8 +24,6 @@ const Authentication: React.FC = () => {
             ...userData,
             [event.target.name] : event.target.value
         });
-        console.log(userData)
-        console.log(event.target)
     }
     const AuthComponent = () => {
         switch (status) {
