@@ -1,17 +1,20 @@
 import React from 'react';
-import { IonPage, IonContent, IonText, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonRippleEffect, IonNav, IonItem, IonIcon } from '@ionic/react';
+import { IonPage, IonContent, IonText, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonRippleEffect, IonNav, IonItem, IonIcon, IonToggle } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
 import './Profile.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { colorPaletteOutline, informationCircleOutline } from 'ionicons/icons';
+import { informationCircleOutline, moonOutline } from 'ionicons/icons';
 import './Profile.css';
 
 const Profile: React.FC = () => {
     
-    const user:any = useSelector((state: RootState) => state.AuthReducer.user);
+    const user = useSelector((state: RootState) => state.AuthReducer.user);
+    const toggleDarkModeHandler = () => {
+        document.body.classList.toggle("dark");
+    };
     
     return (
         <React.Fragment>
@@ -22,18 +25,17 @@ const Profile: React.FC = () => {
                         <IonImg src={userdefault} alt="user"/>
                     </IonAvatar>
                     <IonLabel className="namelabel">{user.attributes.name}</IonLabel>
-                    <IonButton className="botton">Edit profile</IonButton>
+                    <IonButton className="botton">Editar perfil</IonButton>
                     <IonItemDivider/>
-                    <IonItem button href="/profile/theme">
-                        <IonIcon slot="start" icon={colorPaletteOutline}/>
-                        <IonLabel>
-                            Theme
-                        </IonLabel>
+                    <IonItem>
+                        <IonIcon slot="start" icon={moonOutline} />
+                        <IonLabel>Modo oscuro</IonLabel>
+                        <IonToggle slot="end" name="darkMode" onIonChange={toggleDarkModeHandler}/>
                     </IonItem>
                     <IonItem button href="/profile/aboutus">
                         <IonIcon slot="start" icon={informationCircleOutline}/>
                         <IonLabel>
-                            About Us
+                            Sobre nosotros
                         </IonLabel>
                     </IonItem>            
                 </IonContent>
