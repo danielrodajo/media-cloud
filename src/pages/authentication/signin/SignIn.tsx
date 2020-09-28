@@ -1,6 +1,6 @@
 import React, { FormEvent, useRef } from 'react';
 import './SignIn.scss';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText, IonIcon } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';

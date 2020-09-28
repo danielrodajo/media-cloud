@@ -58,7 +58,7 @@ const uploadingFile = (state: FileState, payload: {
 
 const uploadFileSuccessWait = (state: FileState, payload: File) => {
     return updateObject( state, {
-        files: state.files.concat(payload),
+        files: [payload].concat(state.files),
         uploadSuccess: true,
     });
 }
