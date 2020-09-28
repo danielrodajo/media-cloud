@@ -5,6 +5,7 @@ export {
 
 export {
     recoverFiles,
+    recoverRecentFiles,
 } from './RecoverManager';
 
 export {
