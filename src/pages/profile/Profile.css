@@ -1,0 +1,24 @@
+.avatar{
+    height: 100px;
+    width: 100px;
+    margin-top: 5%;
+    margin-left: 5%;
+    float: left;
+}
+.namelabel{
+    margin-top: 10%;
+    margin-left: 4%;
+    float: left;
+    font-size: 25px;
+    width: 200px;
+}
+.botton{
+    margin-top: 3%;
+    margin-left: 4%;
+    background-color: rgb(164, 78, 245);
+    border-radius: 20px;
+    height: 20px;
+}
+.bottonlabel{
+    margin-right: 70px;
+}
