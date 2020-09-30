@@ -3,6 +3,19 @@ import { Storage } from 'aws-amplify';
 import { File as CustomFile } from '../types';
 
 
+
+export const getSharedFile = () => {
+    console.log("click")
+    return (dispatch: any) => {
+        Storage.list("Bullet_001.png", {
+            level: 'protected',
+            identityId: "eu-west-1:5b985e2e-00a5-4eea-9749-9544871be12e"
+        })
+        .then(result => console.log(result))
+        .catch(err => console.log(err));
+    }
+}
+
 //Recupera los N ficheros mas recientes
 export const recoverRecentFiles = (maxFiles: number) => {
     return (dispatch: any) => {

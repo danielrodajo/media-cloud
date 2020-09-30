@@ -9,10 +9,23 @@ export const signIn = (username: string, password: string) => {
             Auth.currentAuthenticatedUser({
                 bypassCache: false 
             })
-            .then(data => dispatch({
-                type: types.AUTH_SIGNIN,
-                payload: data
-            }))
+            .then(data => {
+                Auth.currentUserCredentials()
+                .then(e => {
+                    data = {...data, identityId: e.identityId}
+                    dispatch({
+                        type: types.AUTH_SIGNIN,
+                        payload: data
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                    dispatch({
+                        type: types.AUTH_SIGNIN_NOK,
+                        payload: err
+                    })
+                });
+            })
         })         
         .catch(err => {
             console.log(err);

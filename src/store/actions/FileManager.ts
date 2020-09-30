@@ -6,10 +6,9 @@ function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
 }
 
+
 //Subida de un fichero
 export const uploadFile = (name: string, file: File) => {
-    console.log(name)
-    console.log(file)
     return (dispatch: any) => {
         dispatch({type: types.UPLOAD_FILE});
         Storage.put(name, file, {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonPage, IonContent, IonText, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonRippleEffect, IonNav, IonItem, IonIcon, IonToggle } from '@ionic/react';
+import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
     const toggleDarkModeHandler = () => {
         document.body.classList.toggle("dark");
     };
-    
+
     return (
         <React.Fragment>
             <IonPage>
@@ -37,7 +37,7 @@ const Profile: React.FC = () => {
                         <IonLabel>
                             Sobre nosotros
                         </IonLabel>
-                    </IonItem>            
+                    </IonItem>           
                 </IonContent>
             </IonPage>
         </React.Fragment>

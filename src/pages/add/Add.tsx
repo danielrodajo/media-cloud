@@ -22,6 +22,7 @@ const Add: React.FC<props> = props => {
 
     //Agregamos Hook para tomar una foto y guardarla
     const { photo, setPhoto, takePhoto } = usePhotoGallery();
+    
     const [ file, setFile ] = useState<File | null>();
     const [ creatingFolder,setCreatingFolder ] = useState(false);
     const [ folderName, setFolderName ] = useState("");
@@ -46,6 +47,7 @@ const Add: React.FC<props> = props => {
     const currentPath = useSelector((state: RootState) => state.FolderReducer.currentPath);
 
 
+    //Prepara la carpeta para crearla, ajustando la ruta completa y reseteando los valores 
     const submitFolder = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
         event.preventDefault();
         createFolder(currentPath+"/"+folderName);
