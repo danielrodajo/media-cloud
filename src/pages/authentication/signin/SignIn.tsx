@@ -39,11 +39,11 @@ const SignIn: React.FC<props> = props => {
                             {(messageError) ? <span>{messageError.message}</span> : null}
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
-                                <IonInput ref={inputEmail} type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
+                                <IonInput autocomplete="username" ref={inputEmail} type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
                             </IonItem>
                             <IonItem lines="inset" className="ion-margin-bottom">
                                 <IonLabel position="floating">Contraseña</IonLabel>
-                                <IonInput ref={inputPass} type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>    
+                                <IonInput autocomplete="current-password" ref={inputPass} type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>    
                             </IonItem>
 
                             <IonButton expand="block" onClick={handleSignIn}>Iniciar Sesión</IonButton>

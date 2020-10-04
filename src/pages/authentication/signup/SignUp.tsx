@@ -37,15 +37,15 @@ const SignUp: React.FC<props> = props => {
                             {(messageError) ? <span>{messageError.message}</span> : null}
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
-                                <IonInput type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
+                                <IonInput autocomplete="email" type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
                             </IonItem>
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Nombre</IonLabel>
-                                <IonInput type="text" name="username" value={props.userData.username} onIonChange={props.handleFormInput}></IonInput>    
+                                <IonInput autocomplete="name" type="text" name="username" value={props.userData.username} onIonChange={props.handleFormInput}></IonInput>    
                             </IonItem>
                             <IonItem lines="inset" className="ion-margin-bottom">
                                 <IonLabel position="floating">Contraseña</IonLabel>
-                                <IonInput type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>
+                                <IonInput autocomplete="current-password" type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>
                             </IonItem>
 
                             <IonButton expand="block" color="secondary" onClick={handleSignUp}>Registrarse</IonButton>

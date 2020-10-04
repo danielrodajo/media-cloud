@@ -4,7 +4,9 @@ import logo from "../../images/lightlogobg.png";
 import './Toolbar.css'
 import SignOut from '../../pages/authentication/signout/SignOut';
 
-const Toolbar: React.FC = () => {
+
+
+const Toolbar: React.FC= () => {
     return ( 
         <IonHeader>
             <IonToolbar>
