@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
@@ -6,8 +6,11 @@ import 'react-circular-progressbar/dist/styles.css';
 import './Profile.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { informationCircleOutline, moonOutline } from 'ionicons/icons';
+import { informationCircleOutline, moonOutline, settingsOutline } from 'ionicons/icons';
+import AboutUs from './aboutus/AboutUs';
 import './Profile.css';
+import Settings from './settings/Settings';
+import SignOut from '../authentication/signout/SignOut';
 
 const Profile: React.FC = () => {
     
@@ -15,9 +18,13 @@ const Profile: React.FC = () => {
     const toggleDarkModeHandler = () => {
         document.body.classList.toggle("dark");
     };
+    const [ showModalAboutus, setShowModalAboutus ] = useState(false);
+    const [ showModalSettings, setShowModalSettings ] = useState(false);
 
     return (
         <React.Fragment>
+            <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
+            <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
             <IonPage>
                 <IonContent>
                     <Toolbar />
@@ -32,12 +39,19 @@ const Profile: React.FC = () => {
                         <IonLabel>Modo oscuro</IonLabel>
                         <IonToggle slot="end" name="darkMode" onIonChange={toggleDarkModeHandler}/>
                     </IonItem>
-                    <IonItem button href="/profile/aboutus">
+                    <IonItem button onClick={() => setShowModalSettings(true)}>
+                        <IonIcon slot="start" icon={settingsOutline}/>
+                        <IonLabel>
+                            Ajustes
+                        </IonLabel>
+                    </IonItem>
+                    <IonItem button onClick={() => setShowModalAboutus(true)}>
                         <IonIcon slot="start" icon={informationCircleOutline}/>
                         <IonLabel>
                             Sobre nosotros
                         </IonLabel>
-                    </IonItem>           
+                    </IonItem>
+                    <SignOut/>             
                 </IonContent>
             </IonPage>
         </React.Fragment>
