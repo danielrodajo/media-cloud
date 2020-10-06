@@ -1,4 +1,4 @@
-import { IonIcon, IonItem, IonLabel, IonModal, IonToggle } from '@ionic/react'
+import { IonCol, IonGrid, IonIcon, IonItem, IonLabel, IonModal, IonRow, IonToggle } from '@ionic/react'
 import { arrowBackOutline, moonOutline } from 'ionicons/icons';
 import React from 'react'
 
@@ -15,16 +15,22 @@ const Settings: React.FC<props> = props => {
 
     return (
         <React.Fragment>
-            <IonModal isOpen={props.showModal} cssClass="fullheight">
+            <IonModal isOpen={props.showModal}>
                 <IonItem button onClick={() => props.setShowModal(false)}>
                     <IonIcon slot="start" icon={arrowBackOutline}/>
                     <IonLabel>App theme</IonLabel>
                 </IonItem>
-                <IonItem>
-                    <IonIcon slot="start" icon={moonOutline} />
-                    <IonLabel>Dark Mode</IonLabel>
-                    <IonToggle slot="end" name="darkMode" onIonChange={toggleDarkModeHandler}/>
-                </IonItem>
+                <IonGrid className="ion-no-margin">
+                    <IonRow>
+                        <IonCol size='12'>                            
+                            <IonItem>
+                                <IonIcon slot="start" icon={moonOutline} />
+                                <IonLabel>Dark Mode</IonLabel>
+                                <IonToggle slot="end" name="darkMode" onIonChange={toggleDarkModeHandler}/>
+                            </IonItem>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
             </IonModal>
         </React.Fragment>
     )

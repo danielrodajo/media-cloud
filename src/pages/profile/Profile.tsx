@@ -10,6 +10,7 @@ import { informationCircleOutline, moonOutline, settingsOutline } from 'ionicons
 import AboutUs from './aboutus/AboutUs';
 import './Profile.css';
 import Settings from './settings/Settings';
+import SignOut from '../authentication/signout/SignOut';
 
 const Profile: React.FC = () => {
     
@@ -38,18 +39,19 @@ const Profile: React.FC = () => {
                         <IonLabel>Modo oscuro</IonLabel>
                         <IonToggle slot="end" name="darkMode" onIonChange={toggleDarkModeHandler}/>
                     </IonItem>
+                    <IonItem button onClick={() => setShowModalSettings(true)}>
+                        <IonIcon slot="start" icon={settingsOutline}/>
+                        <IonLabel>
+                            Ajustes
+                        </IonLabel>
+                    </IonItem>
                     <IonItem button onClick={() => setShowModalAboutus(true)}>
                         <IonIcon slot="start" icon={informationCircleOutline}/>
                         <IonLabel>
                             Sobre nosotros
                         </IonLabel>
                     </IonItem>
-                    <IonItem button onClick={() => setShowModalSettings(true)}>
-                        <IonIcon slot="start" icon={settingsOutline}/>
-                        <IonLabel>
-                            Ajustes
-                        </IonLabel>
-                    </IonItem>            
+                    <SignOut/>             
                 </IonContent>
             </IonPage>
         </React.Fragment>
