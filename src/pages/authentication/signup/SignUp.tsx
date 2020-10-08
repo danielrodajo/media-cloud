@@ -20,7 +20,40 @@ const SignUp: React.FC<props> = props => {
     const handleSignUp = (event: any) => {
         event.preventDefault();
         dispatch(actions.signUp(props.userData.email, props.userData.username, props.userData.password));
-      };
+    };
+
+    const errorManagement = (messageError: string) => {
+
+        let message = "";
+
+        switch (messageError) {
+            case "Username should be an email.":
+                message = "El correo no es valido.";
+                break;
+
+            case "1 validation error detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6":
+                message = "Contraseña no valida,debe tener 6 caracteres o mas.";
+                break;
+            
+        }
+ 
+        return message;
+    }
+
+    const disableButton = (inputEmail: string, inputName: string, inputPass: string) => {
+
+        let disable = true;
+
+        if (inputEmail !== ""){
+            if(inputPass !== ""){
+                if(inputName !== ""){
+                    disable = false;
+                }
+            }
+        }
+
+        return disable;
+    }
 
 
     return (
@@ -34,7 +67,11 @@ const SignUp: React.FC<props> = props => {
                         </IonCardHeader>
 
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
-                            {(messageError) ? <span>{messageError.message}</span> : null}
+                            {(messageError) ? 
+                            <IonItem lines="none">
+                                <IonLabel>{errorManagement(messageError.message)}</IonLabel>
+                            </IonItem> 
+                            : null}
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
                                 <IonInput type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
@@ -48,7 +85,7 @@ const SignUp: React.FC<props> = props => {
                                 <IonInput type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>
                             </IonItem>
 
-                            <IonButton expand="block" color="secondary" onClick={handleSignUp}>Registrarse</IonButton>
+                            <IonButton expand="block" color="secondary" onClick={handleSignUp} disabled={disableButton(props.userData.email, props.userData.username, props.userData.password)}>Registrarse</IonButton>
                             <IonButton expand="block" onClick={() => {dispatch(actions.switchComponent("signin"))}}>Volver a Iniciar Sesión</IonButton>
                         </IonCardContent>
                     </IonCard>         

@@ -65,10 +65,6 @@ const SignIn: React.FC<props> = props => {
                         <IonCardHeader>        
                             <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
                         </IonCardHeader>
-
-                        
-                        {console.log(inputEmail)};
-
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
                             {(messageError) ? 
                             <IonItem lines="none">
