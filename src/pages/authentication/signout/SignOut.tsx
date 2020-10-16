@@ -3,7 +3,7 @@ import * as actions from '../../../store/actions/index';
 import { useDispatch } from 'react-redux';
 import { logOutOutline } from 'ionicons/icons';
 import './SignOut.css';
-import { IonItem, IonIcon, IonAlert } from '@ionic/react';
+import { IonItem, IonIcon, IonAlert, IonLabel } from '@ionic/react';
 
 const SignOut = () => {
     const dispatch = useDispatch();
@@ -30,8 +30,9 @@ const SignOut = () => {
                     },
                 ]}
             />
-            <IonItem className="ion-float-right" button onClick={() => setShowAlert(true)} lines="none">
-                <IonIcon icon={logOutOutline}/>
+            <IonItem button onClick={() => setShowAlert(true)}>
+                <IonIcon className="ion-icon-red" slot="start" icon={logOutOutline}/>
+                <IonLabel color="danger">Cerrar Sesion</IonLabel>
             </IonItem> 
         </React.Fragment>
          
