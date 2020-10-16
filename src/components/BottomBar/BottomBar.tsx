@@ -5,6 +5,9 @@ import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutl
 import Home from '../../pages/home/Home';
 import Add from '../../pages/add/Add';
 import Profile from '../../pages/profile/Profile';
+import Theme from '../../pages/profile/theme/Theme';
+import AboutUs from '../../pages/profile/aboutus/AboutUs';
+import Search from '../../pages/search/Search';
 
  
 const BottomBar: React.FC = () => {
@@ -27,7 +30,7 @@ const BottomBar: React.FC = () => {
         <IonTabs onIonTabsDidChange={handleActiveButton}>
           <IonRouterOutlet>
             <Route path="/home" component={Home} exact />
-            <Route path="/search" exact />
+            <Route path="/search" component={Search} exact />
             <Route path="/shared" exact />
             <Route path="/profile" component={Profile} exact />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
@@ -37,7 +40,7 @@ const BottomBar: React.FC = () => {
               <IonIcon icon={homeOutline}/> 
               <IonLabel>Inicio</IonLabel>
             </IonTabButton>
-            <IonTabButton layout={(activeTab === "") ? "icon-top" : "label-hide"}>
+            <IonTabButton tab="Search" href="/search" layout={(activeTab === "Search") ? "icon-top" : "label-hide"}>
               <IonIcon icon={searchOutline}/> 
               <IonLabel>Busqueda</IonLabel>
             </IonTabButton>

@@ -1,16 +1,45 @@
-type Task 
+type User 
   @model 
 {
   id: ID!
-  title: String!
-  description: String
-  status: String
+  name: String!
+  darkMode: Boolean!
+  friends: [Friend] @connection(name:"UserFriends")
+  sharedFiles: [SharedFileToUser] @connection(name:"UserSharedFileToUser")
+  mySharedFiles: [SharedFile] @connection(name:"OwnerSharedFiles")
+  toPetition: FriendRequest @connection(name:"UserToPetition")
+  fromPetition: FriendRequest @connection(name:"UserFromPetition")
 }
 
-
-type PrivateNote
+type Friend
   @model
 {
   id: ID!
-  content: String!
+  name: String!
+  user: User! @connection(name:"UserFriends")
+}
+
+type FriendRequest
+  @model
+{
+  id: ID!
+  processed: Boolean!
+  to: User! @connection(name:"UserToPetition")
+  from: User! @connection(name:"UserFromPetition")
+}
+
+type SharedFile
+  @model
+{
+  path: ID!
+  owner: User! @connection(name:"OwnerSharedFiles")
+  Sharers: [SharedFileToUser]! @connection(name:"FileSharedFileToUser")
+}
+
+type SharedFileToUser
+  @model
+{
+  id: ID!
+  sharedFile: SharedFile! @connection(name:"FileSharedFileToUser")
+  sharer: User! @connection(name:"UserSharedFileToUser")
 }

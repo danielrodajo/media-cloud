@@ -3,7 +3,9 @@ import { IonToolbar, IonHeader, IonImg } from '@ionic/react';
 import logo from "../../images/lightlogobg.png";
 import './Toolbar.css'
 
-const Toolbar: React.FC = () => {
+
+
+const Toolbar: React.FC= () => {
     return ( 
         <IonHeader>
             <IonToolbar>
