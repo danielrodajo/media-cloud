@@ -19,7 +19,7 @@ const SignUp: React.FC<props> = props => {
 
     const handleSignUp = (event: any) => {
         event.preventDefault();
-        dispatch(actions.signUp(props.userData.email, props.userData.username, props.userData.password));
+        dispatch(actions.signUp(props.userData.email, props.userData.username.toLocaleLowerCase(), props.userData.password));
       };
 
 

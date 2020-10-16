@@ -30,6 +30,34 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      toPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
+      }
+      fromPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
+      }
     }
   }
 `;
@@ -60,6 +88,34 @@ export const updateUser = /* GraphQL */ `
           path
         }
         nextToken
+      }
+      toPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
+      }
+      fromPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
       }
     }
   }
@@ -92,6 +148,34 @@ export const deleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      toPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
+      }
+      fromPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
+      }
     }
   }
 `;
@@ -103,20 +187,6 @@ export const createFriend = /* GraphQL */ `
     createFriend(input: $input, condition: $condition) {
       id
       name
-      friend {
-        id
-        name
-        darkMode
-        friends {
-          nextToken
-        }
-        sharedFiles {
-          nextToken
-        }
-        mySharedFiles {
-          nextToken
-        }
-      }
     }
   }
 `;
@@ -128,20 +198,6 @@ export const updateFriend = /* GraphQL */ `
     updateFriend(input: $input, condition: $condition) {
       id
       name
-      friend {
-        id
-        name
-        darkMode
-        friends {
-          nextToken
-        }
-        sharedFiles {
-          nextToken
-        }
-        mySharedFiles {
-          nextToken
-        }
-      }
     }
   }
 `;
@@ -153,20 +209,6 @@ export const deleteFriend = /* GraphQL */ `
     deleteFriend(input: $input, condition: $condition) {
       id
       name
-      friend {
-        id
-        name
-        darkMode
-        friends {
-          nextToken
-        }
-        sharedFiles {
-          nextToken
-        }
-        mySharedFiles {
-          nextToken
-        }
-      }
     }
   }
 `;
@@ -191,6 +233,14 @@ export const createFriendRequest = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
       from {
         id
@@ -204,6 +254,14 @@ export const createFriendRequest = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
     }
@@ -230,6 +288,14 @@ export const updateFriendRequest = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
       from {
         id
@@ -243,6 +309,14 @@ export const updateFriendRequest = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
     }
@@ -269,6 +343,14 @@ export const deleteFriendRequest = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
       from {
         id
@@ -282,6 +364,14 @@ export const deleteFriendRequest = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
     }
@@ -306,6 +396,14 @@ export const createSharedFile = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
       Sharers {
@@ -337,6 +435,14 @@ export const updateSharedFile = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
       Sharers {
         items {
@@ -366,6 +472,14 @@ export const deleteSharedFile = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
       Sharers {
@@ -408,6 +522,14 @@ export const createSharedFileToUser = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
     }
   }
@@ -443,6 +565,14 @@ export const updateSharedFileToUser = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
     }
   }
@@ -477,6 +607,14 @@ export const deleteSharedFileToUser = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
     }

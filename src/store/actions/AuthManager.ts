@@ -1,5 +1,24 @@
 import { Auth } from "aws-amplify";
 import * as types from './ActionTypes';
+import * as Mutations from '../../graphql/mutations';
+import * as Queries from '../../graphql/queries';
+import {API, graphqlOperation} from 'aws-amplify';
+
+async function addIfNewUser(userData: any) {
+    try {
+        const user:any = await API.graphql(graphqlOperation(Queries.getUser, {id: userData.identityId}));
+        if (user.data.getUser === null) {
+            API.graphql(graphqlOperation(Mutations.createUser, {input: {
+                id: userData.identityId,
+                darkMode: false,
+                name: userData.attributes.name
+            }}));
+            console.log("NUEVO USUARIO AGREGADO");
+        }
+      }catch (error) {
+        console.log(error)
+      }
+}
 
 //Iniciar sesion
 export const signIn = (username: string, password: string) => {
@@ -13,6 +32,9 @@ export const signIn = (username: string, password: string) => {
                 Auth.currentUserCredentials()
                 .then(e => {
                     data = {...data, identityId: e.identityId}
+
+                    addIfNewUser(data);
+
                     dispatch({
                         type: types.AUTH_SIGNIN,
                         payload: data

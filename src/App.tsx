@@ -49,12 +49,14 @@ const App: React.FC<{
         darkMode: true
       }}));
       */
+     const user:any = await API.graphql(graphqlOperation(Queries.getUser, {id: "d"}));
+      console.log(user.data.getUser);
       //console.log(await API.graphql(graphqlOperation(Queries.listUsers)))
       //console.log("USUARIO CREADO")
-      await API.graphql(graphqlOperation(Mutations.updateUser, {input: {
-        id: "335b17db-32b9-4734-8ee2-066a82f520cc",
-        friends: []
-      }}))
+      //await API.graphql(graphqlOperation(Mutations.updateUser, {input: {
+      //  id: "335b17db-32b9-4734-8ee2-066a82f520cc",
+      //  friends: []
+      //}}))
       //const user: any  = await API.graphql(graphqlOperation(Queries.getUser, {id: "daxniel"}));
       //console.log(user);
       //await API.graphql(graphqlOperation(Mutations.updateUser, {input: {id: user.data.getUser.id, darkMode: true}}))

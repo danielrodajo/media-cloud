@@ -27,6 +27,34 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      toPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
+      }
+      fromPetition {
+        id
+        processed
+        to {
+          id
+          name
+          darkMode
+        }
+        from {
+          id
+          name
+          darkMode
+        }
+      }
     }
   }
 `;
@@ -50,6 +78,14 @@ export const listUsers = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
       nextToken
     }
@@ -60,20 +96,6 @@ export const getFriend = /* GraphQL */ `
     getFriend(id: $id) {
       id
       name
-      friend {
-        id
-        name
-        darkMode
-        friends {
-          nextToken
-        }
-        sharedFiles {
-          nextToken
-        }
-        mySharedFiles {
-          nextToken
-        }
-      }
     }
   }
 `;
@@ -87,11 +109,6 @@ export const listFriends = /* GraphQL */ `
       items {
         id
         name
-        friend {
-          id
-          name
-          darkMode
-        }
       }
       nextToken
     }
@@ -115,6 +132,14 @@ export const getFriendRequest = /* GraphQL */ `
         mySharedFiles {
           nextToken
         }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
       }
       from {
         id
@@ -128,6 +153,14 @@ export const getFriendRequest = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
     }
@@ -174,6 +207,14 @@ export const getSharedFile = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
       Sharers {
@@ -234,6 +275,14 @@ export const getSharedFileToUser = /* GraphQL */ `
         }
         mySharedFiles {
           nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
         }
       }
     }

@@ -36,7 +36,7 @@ const SignIn: React.FC<props> = props => {
                         </IonCardHeader>
 
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
-                            {(messageError) ? <span>{messageError.message}</span> : null}
+                            {(messageError) ? <span>{messageError.code}</span> : null}
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
                                 <IonInput autocomplete="username" ref={inputEmail} type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    

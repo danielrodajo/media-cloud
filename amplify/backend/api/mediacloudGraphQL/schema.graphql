@@ -4,9 +4,11 @@ type User
   id: ID!
   name: String!
   darkMode: Boolean!
-  friends: [Friend] @connection(name: "UserFriend")
-  sharedFiles: [SharedFileToUser] @connection(name: "UserSharedFileToUser")
-  mySharedFiles: [SharedFile] @connection(name: "OwnerSharedFiles")
+  friends: [Friend] @connection(name:"UserFriends")
+  sharedFiles: [SharedFileToUser] @connection(name:"UserSharedFileToUser")
+  mySharedFiles: [SharedFile] @connection(name:"OwnerSharedFiles")
+  toPetition: FriendRequest @connection(name:"UserToPetition")
+  fromPetition: FriendRequest @connection(name:"UserFromPetition")
 }
 
 type Friend
@@ -14,7 +16,7 @@ type Friend
 {
   id: ID!
   name: String!
-  friend: User @connection(name: "UserFriend")
+  user: User! @connection(name:"UserFriends")
 }
 
 type FriendRequest
@@ -22,22 +24,22 @@ type FriendRequest
 {
   id: ID!
   processed: Boolean!
-  to: User! @connection
-  from: User! @connection
+  to: User! @connection(name:"UserToPetition")
+  from: User! @connection(name:"UserFromPetition")
 }
 
 type SharedFile
   @model
 {
   path: ID!
-  owner: User! @connection(name: "OwnerSharedFiles")
-  Sharers: [SharedFileToUser]! @connection(name: "FileSharedFileToUser")
+  owner: User! @connection(name:"OwnerSharedFiles")
+  Sharers: [SharedFileToUser]! @connection(name:"FileSharedFileToUser")
 }
 
 type SharedFileToUser
   @model
 {
   id: ID!
-  sharedFile: SharedFile! @connection(name: "FileSharedFileToUser")
-  sharer: User! @connection(name: "UserSharedFileToUser")
+  sharedFile: SharedFile! @connection(name:"FileSharedFileToUser")
+  sharer: User! @connection(name:"UserSharedFileToUser")
 }
