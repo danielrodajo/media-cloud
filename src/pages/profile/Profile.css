@@ -6,6 +6,7 @@
     float: left;
 }
 .namelabel{
+    font-variant: small-caps;
     margin-top: 10%;
     margin-left: 4%;
     float: left;

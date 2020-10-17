@@ -12,11 +12,16 @@ import './Profile.css';
 import Settings from './settings/Settings';
 import SignOut from '../authentication/signout/SignOut';
 
-const Profile: React.FC = () => {
-    
+interface props {
+    darkMode: boolean,
+    setDarkMode: (value: boolean) => void
+}
+
+const Profile: React.FC<props> = props => {
     const user = useSelector((state: RootState) => state.AuthReducer.user);
-    const toggleDarkModeHandler = () => {
-        document.body.classList.toggle("dark");
+
+    const toggleDarkModeHandler = (e: CustomEvent) => {
+        props.setDarkMode(e.detail.checked);
     };
     const [ showModalAboutus, setShowModalAboutus ] = useState(false);
     const [ showModalSettings, setShowModalSettings ] = useState(false);
@@ -37,7 +42,7 @@ const Profile: React.FC = () => {
                     <IonItem>
                         <IonIcon slot="start" icon={moonOutline} />
                         <IonLabel>Modo oscuro</IonLabel>
-                        <IonToggle slot="end" name="darkMode" onIonChange={toggleDarkModeHandler}/>
+                        <IonToggle slot="end" name="darkMode" checked={props.darkMode} onIonChange={toggleDarkModeHandler}/>
                     </IonItem>
                     <IonItem button onClick={() => setShowModalSettings(true)}>
                         <IonIcon slot="start" icon={settingsOutline}/>

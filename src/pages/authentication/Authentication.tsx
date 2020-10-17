@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Verify from './verify/Verify';
 import { IonPage, IonContent } from '@ionic/react';
 import { useSelector } from 'react-redux';
@@ -9,6 +9,10 @@ import ForgotPassword from './forgotpassword/ForgotPassword';
 import ForgotPasswordSubmit from './forgotpasswordsubmit/ForgotPasswordSubmit';
 
 const Authentication: React.FC = () => {
+
+    useEffect(() => {
+        document.body.classList.toggle("dark", false);
+    });
 
     const status = useSelector((state: RootState) => state.AuthReducer.status);
 

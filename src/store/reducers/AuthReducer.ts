@@ -1,6 +1,7 @@
 import * as types from '../actions/ActionTypes';
 import { updateObject } from '../../shared/utility';
 import { AuthState } from '../types';
+import { userInfo } from 'os';
 
 const initialState: AuthState = {
     user: null,
@@ -94,6 +95,10 @@ const switchComponent = (state: AuthState, payload: string) => {
     })
 }
 
+const switchDarkMode = (state: AuthState, payload: boolean) => {
+    state.user.attributes['custom:darkMode'] = payload
+    return updateObject(state, {})
+}
 
 const reducer = ( state = initialState, action: types.ActionTypes ): AuthState => {
     switch (action.type) {
@@ -109,6 +114,7 @@ const reducer = ( state = initialState, action: types.ActionTypes ): AuthState =
         case types.AUTH_FORGOT_PASSWORD_SUBMIT: return forgotPasswordSubmit(state, action.payload);
         case types.AUTH_FORGOT_PASSWORD_SUBMIT_NOK: return forgotPasswordSubmitFail(state, action.payload);
         case types.AUTH_SWITCH_COMPONENT: return switchComponent(state, action.payload);
+        case types.SWITCH_DARKMODE: return switchDarkMode(state, action.payload);
         default: return state;
     }
 }

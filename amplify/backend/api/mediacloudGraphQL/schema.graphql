@@ -3,12 +3,11 @@ type User
 {
   id: ID!
   name: String!
-  darkMode: Boolean!
-  friends: [Friend] @connection(name:"UserFriends")
   sharedFiles: [SharedFileToUser] @connection(name:"UserSharedFileToUser")
   mySharedFiles: [SharedFile] @connection(name:"OwnerSharedFiles")
   toPetition: FriendRequest @connection(name:"UserToPetition")
   fromPetition: FriendRequest @connection(name:"UserFromPetition")
+  friends: [Friend] @connection(name:"UserFriends")
 }
 
 type Friend

@@ -55,6 +55,7 @@ export const AUTH_SWITCH_COMPONENT = 'AUTH_CHANGE_COMPONENT';
 export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';
 export const AUTH_SIGNOUT_NOK = 'AUTH_SIGNOUT_NOK';
 
+export const SWITCH_DARKMODE = 'SWITCH_DARKMODE';
 
 interface ChangeFolderAction {
     type: typeof CHANGE_FOLDER,
@@ -197,8 +198,12 @@ interface SwitchComponentAction {
     payload: any
 }
 
+interface SwitchDarkModeAction {
+    type: typeof SWITCH_DARKMODE
+    payload: any
+}
 
 export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
-                            AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction
+                            AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction
