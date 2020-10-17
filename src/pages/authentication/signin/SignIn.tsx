@@ -24,7 +24,7 @@ const SignIn: React.FC<props> = props => {
     const handleSignIn = (event: FormEvent<HTMLIonButtonElement>) => {
         event.preventDefault();
         dispatch(actions.signIn((inputEmail.current as unknown as HTMLIonInputElement).value+"", (inputPass.current as unknown as HTMLIonInputElement).value+""));
-      };
+    };
 
     return (
         <IonContent className="ion-padding" color="light">

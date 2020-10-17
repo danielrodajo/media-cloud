@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Link } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
 import Home from '../../pages/home/Home';
@@ -17,7 +17,9 @@ interface props {
  
 const BottomBar: React.FC<props> = props => {
 
-  const dispatch = useDispatch();
+    var firstLoad = true;
+
+    const dispatch = useDispatch();
 
     //Indicador de si mostrar ventana de añadir o no
     const [ showModal, setShowModal ] = useState(false);
@@ -33,7 +35,6 @@ const BottomBar: React.FC<props> = props => {
     const switchDarkMode = (value: string) => dispatch(actions.switchDarkMode(value));
 
     const darkMode = useSelector((state: RootState) => state.AuthReducer.user.attributes['custom:darkMode']);
-    const user = useSelector((state: RootState) => state.AuthReducer.user);
     
     const setDarkMode = (darkMode: boolean) => {
       //Actualizamos en AWS Cognito
@@ -58,6 +59,13 @@ const BottomBar: React.FC<props> = props => {
 
     return ( 
       <React.Fragment>
+        {
+          firstLoad ? (() => {
+            console.log("FIRST")
+            firstLoad = false;
+            return <Link to="/home" />
+          }) : console.log("NADA")
+        }
         <Add showModal={showModal} setShowModal={setShowModal} />
         <IonTabs onIonTabsDidChange={handleActiveButton}>
           <IonRouterOutlet>

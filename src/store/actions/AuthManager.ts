@@ -18,8 +18,6 @@ async function addIfNewUser(userData: any) {
       }
 }
 
-let currentUserId: any;
-
 //Iniciar sesion
 export const signIn = (username: string, password: string) => {
     return (dispatch: any) => {
@@ -32,7 +30,6 @@ export const signIn = (username: string, password: string) => {
                 Auth.currentUserCredentials()
                 .then(e => {
                     data = {...data, identityId: e.identityId}
-                    currentUserId = e.identityId;
                     addIfNewUser(data);
 
                     dispatch({
@@ -193,7 +190,6 @@ export const authCheckState = () => {
             Auth.currentUserCredentials()
             .then(e => {
                 data = {...data, identityId: e.identityId}
-                currentUserId = e.identityId;
                 dispatch({
                     type: types.AUTH_SIGNIN,
                     payload: data

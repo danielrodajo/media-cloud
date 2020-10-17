@@ -25,7 +25,7 @@ const SignOut = () => {
                     text: "Si",
                     role: "accept",
                     handler: () => {
-                        dispatch(actions.signOut())
+                       dispatch(actions.signOut())
                     },
                     },
                 ]}
