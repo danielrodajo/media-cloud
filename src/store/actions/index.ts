@@ -18,6 +18,7 @@ export {
     forgotPasswordSubmit,
     switchComponent,
     authCheckState,
+    switchDarkMode,
 } from './AuthManager';
 
 export {

@@ -5,14 +5,12 @@
 export type CreateUserInput = {
   id?: string | null,
   name: string,
-  darkMode: boolean,
   userToPetitionId?: string | null,
   userFromPetitionId?: string | null,
 };
 
 export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
-  darkMode?: ModelBooleanInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
@@ -58,17 +56,9 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type UpdateUserInput = {
   id: string,
   name?: string | null,
-  darkMode?: boolean | null,
   userToPetitionId?: string | null,
   userFromPetitionId?: string | null,
 };
@@ -80,7 +70,7 @@ export type DeleteUserInput = {
 export type CreateFriendInput = {
   id?: string | null,
   name: string,
-  userFriendsId?: string | null,
+  friendUserId: string,
 };
 
 export type ModelFriendConditionInput = {
@@ -93,7 +83,7 @@ export type ModelFriendConditionInput = {
 export type UpdateFriendInput = {
   id: string,
   name?: string | null,
-  userFriendsId?: string | null,
+  friendUserId?: string | null,
 };
 
 export type DeleteFriendInput = {
@@ -112,6 +102,13 @@ export type ModelFriendRequestConditionInput = {
   and?: Array< ModelFriendRequestConditionInput | null > | null,
   or?: Array< ModelFriendRequestConditionInput | null > | null,
   not?: ModelFriendRequestConditionInput | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateFriendRequestInput = {
@@ -187,7 +184,6 @@ export type DeleteSharedFileToUserInput = {
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  darkMode?: ModelBooleanInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -233,16 +229,6 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string,
     name: string,
-    darkMode: boolean,
-    friends:  {
-      __typename: "ModelFriendConnection",
-      items:  Array< {
-        __typename: "Friend",
-        id: string,
-        name: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     sharedFiles:  {
       __typename: "ModelSharedFileToUserConnection",
       items:  Array< {
@@ -267,13 +253,11 @@ export type CreateUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null,
     fromPetition:  {
@@ -284,14 +268,21 @@ export type CreateUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
+    } | null,
+    friends:  {
+      __typename: "ModelFriendConnection",
+      items:  Array< {
+        __typename: "Friend",
+        id: string,
+        name: string,
+      } | null > | null,
+      nextToken: string | null,
     } | null,
   } | null,
 };
@@ -306,16 +297,6 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string,
     name: string,
-    darkMode: boolean,
-    friends:  {
-      __typename: "ModelFriendConnection",
-      items:  Array< {
-        __typename: "Friend",
-        id: string,
-        name: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     sharedFiles:  {
       __typename: "ModelSharedFileToUserConnection",
       items:  Array< {
@@ -340,13 +321,11 @@ export type UpdateUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null,
     fromPetition:  {
@@ -357,14 +336,21 @@ export type UpdateUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
+    } | null,
+    friends:  {
+      __typename: "ModelFriendConnection",
+      items:  Array< {
+        __typename: "Friend",
+        id: string,
+        name: string,
+      } | null > | null,
+      nextToken: string | null,
     } | null,
   } | null,
 };
@@ -379,16 +365,6 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string,
     name: string,
-    darkMode: boolean,
-    friends:  {
-      __typename: "ModelFriendConnection",
-      items:  Array< {
-        __typename: "Friend",
-        id: string,
-        name: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     sharedFiles:  {
       __typename: "ModelSharedFileToUserConnection",
       items:  Array< {
@@ -413,13 +389,11 @@ export type DeleteUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null,
     fromPetition:  {
@@ -430,14 +404,21 @@ export type DeleteUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
+    } | null,
+    friends:  {
+      __typename: "ModelFriendConnection",
+      items:  Array< {
+        __typename: "Friend",
+        id: string,
+        name: string,
+      } | null > | null,
+      nextToken: string | null,
     } | null,
   } | null,
 };
@@ -452,6 +433,33 @@ export type CreateFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      sharedFiles:  {
+        __typename: "ModelSharedFileToUserConnection",
+        nextToken: string | null,
+      } | null,
+      mySharedFiles:  {
+        __typename: "ModelSharedFileConnection",
+        nextToken: string | null,
+      } | null,
+      toPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      fromPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
+    },
   } | null,
 };
 
@@ -465,6 +473,33 @@ export type UpdateFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      sharedFiles:  {
+        __typename: "ModelSharedFileToUserConnection",
+        nextToken: string | null,
+      } | null,
+      mySharedFiles:  {
+        __typename: "ModelSharedFileConnection",
+        nextToken: string | null,
+      } | null,
+      toPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      fromPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
+    },
   } | null,
 };
 
@@ -478,6 +513,33 @@ export type DeleteFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      sharedFiles:  {
+        __typename: "ModelSharedFileToUserConnection",
+        nextToken: string | null,
+      } | null,
+      mySharedFiles:  {
+        __typename: "ModelSharedFileConnection",
+        nextToken: string | null,
+      } | null,
+      toPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      fromPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
+    },
   } | null,
 };
 
@@ -495,11 +557,6 @@ export type CreateFriendRequestMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -517,17 +574,16 @@ export type CreateFriendRequestMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     from:  {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -545,6 +601,10 @@ export type CreateFriendRequestMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -564,11 +624,6 @@ export type UpdateFriendRequestMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -586,17 +641,16 @@ export type UpdateFriendRequestMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     from:  {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -614,6 +668,10 @@ export type UpdateFriendRequestMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -633,11 +691,6 @@ export type DeleteFriendRequestMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -655,17 +708,16 @@ export type DeleteFriendRequestMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     from:  {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -683,6 +735,10 @@ export type DeleteFriendRequestMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -701,11 +757,6 @@ export type CreateSharedFileMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -723,6 +774,10 @@ export type CreateSharedFileMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     Sharers:  {
@@ -749,11 +804,6 @@ export type UpdateSharedFileMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -771,6 +821,10 @@ export type UpdateSharedFileMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     Sharers:  {
@@ -797,11 +851,6 @@ export type DeleteSharedFileMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -819,6 +868,10 @@ export type DeleteSharedFileMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     Sharers:  {
@@ -848,7 +901,6 @@ export type CreateSharedFileToUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -859,11 +911,6 @@ export type CreateSharedFileToUserMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -881,6 +928,10 @@ export type CreateSharedFileToUserMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -902,7 +953,6 @@ export type UpdateSharedFileToUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -913,11 +963,6 @@ export type UpdateSharedFileToUserMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -935,6 +980,10 @@ export type UpdateSharedFileToUserMutation = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -956,7 +1005,6 @@ export type DeleteSharedFileToUserMutation = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -967,11 +1015,6 @@ export type DeleteSharedFileToUserMutation = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -990,6 +1033,10 @@ export type DeleteSharedFileToUserMutation = {
         id: string,
         processed: boolean,
       } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
     },
   } | null,
 };
@@ -1003,16 +1050,6 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     name: string,
-    darkMode: boolean,
-    friends:  {
-      __typename: "ModelFriendConnection",
-      items:  Array< {
-        __typename: "Friend",
-        id: string,
-        name: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     sharedFiles:  {
       __typename: "ModelSharedFileToUserConnection",
       items:  Array< {
@@ -1037,13 +1074,11 @@ export type GetUserQuery = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null,
     fromPetition:  {
@@ -1054,14 +1089,21 @@ export type GetUserQuery = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
+    } | null,
+    friends:  {
+      __typename: "ModelFriendConnection",
+      items:  Array< {
+        __typename: "Friend",
+        id: string,
+        name: string,
+      } | null > | null,
+      nextToken: string | null,
     } | null,
   } | null,
 };
@@ -1079,11 +1121,6 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1102,6 +1139,10 @@ export type ListUsersQuery = {
         id: string,
         processed: boolean,
       } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -1116,6 +1157,33 @@ export type GetFriendQuery = {
     __typename: "Friend",
     id: string,
     name: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      sharedFiles:  {
+        __typename: "ModelSharedFileToUserConnection",
+        nextToken: string | null,
+      } | null,
+      mySharedFiles:  {
+        __typename: "ModelSharedFileConnection",
+        nextToken: string | null,
+      } | null,
+      toPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      fromPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
+    },
   } | null,
 };
 
@@ -1132,6 +1200,11 @@ export type ListFriendsQuery = {
       __typename: "Friend",
       id: string,
       name: string,
+      user:  {
+        __typename: "User",
+        id: string,
+        name: string,
+      },
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -1150,11 +1223,6 @@ export type GetFriendRequestQuery = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1172,17 +1240,16 @@ export type GetFriendRequestQuery = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     from:  {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1200,6 +1267,10 @@ export type GetFriendRequestQuery = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -1222,13 +1293,11 @@ export type ListFriendRequestsQuery = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null > | null,
     nextToken: string | null,
@@ -1247,11 +1316,6 @@ export type GetSharedFileQuery = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1269,6 +1333,10 @@ export type GetSharedFileQuery = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     Sharers:  {
@@ -1298,7 +1366,6 @@ export type ListSharedFilesQuery = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -1324,7 +1391,6 @@ export type GetSharedFileToUserQuery = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -1335,11 +1401,6 @@ export type GetSharedFileToUserQuery = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1357,6 +1418,10 @@ export type GetSharedFileToUserQuery = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -1382,7 +1447,6 @@ export type ListSharedFileToUsersQuery = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null > | null,
     nextToken: string | null,
@@ -1394,16 +1458,6 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
-    darkMode: boolean,
-    friends:  {
-      __typename: "ModelFriendConnection",
-      items:  Array< {
-        __typename: "Friend",
-        id: string,
-        name: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     sharedFiles:  {
       __typename: "ModelSharedFileToUserConnection",
       items:  Array< {
@@ -1428,13 +1482,11 @@ export type OnCreateUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null,
     fromPetition:  {
@@ -1445,14 +1497,21 @@ export type OnCreateUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
+    } | null,
+    friends:  {
+      __typename: "ModelFriendConnection",
+      items:  Array< {
+        __typename: "Friend",
+        id: string,
+        name: string,
+      } | null > | null,
+      nextToken: string | null,
     } | null,
   } | null,
 };
@@ -1462,16 +1521,6 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
-    darkMode: boolean,
-    friends:  {
-      __typename: "ModelFriendConnection",
-      items:  Array< {
-        __typename: "Friend",
-        id: string,
-        name: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     sharedFiles:  {
       __typename: "ModelSharedFileToUserConnection",
       items:  Array< {
@@ -1496,13 +1545,11 @@ export type OnUpdateUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null,
     fromPetition:  {
@@ -1513,14 +1560,21 @@ export type OnUpdateUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
+    } | null,
+    friends:  {
+      __typename: "ModelFriendConnection",
+      items:  Array< {
+        __typename: "Friend",
+        id: string,
+        name: string,
+      } | null > | null,
+      nextToken: string | null,
     } | null,
   } | null,
 };
@@ -1530,16 +1584,6 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
-    darkMode: boolean,
-    friends:  {
-      __typename: "ModelFriendConnection",
-      items:  Array< {
-        __typename: "Friend",
-        id: string,
-        name: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     sharedFiles:  {
       __typename: "ModelSharedFileToUserConnection",
       items:  Array< {
@@ -1564,13 +1608,11 @@ export type OnDeleteUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
     } | null,
     fromPetition:  {
@@ -1581,14 +1623,21 @@ export type OnDeleteUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       from:  {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
+    } | null,
+    friends:  {
+      __typename: "ModelFriendConnection",
+      items:  Array< {
+        __typename: "Friend",
+        id: string,
+        name: string,
+      } | null > | null,
+      nextToken: string | null,
     } | null,
   } | null,
 };
@@ -1598,6 +1647,33 @@ export type OnCreateFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      sharedFiles:  {
+        __typename: "ModelSharedFileToUserConnection",
+        nextToken: string | null,
+      } | null,
+      mySharedFiles:  {
+        __typename: "ModelSharedFileConnection",
+        nextToken: string | null,
+      } | null,
+      toPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      fromPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
+    },
   } | null,
 };
 
@@ -1606,6 +1682,33 @@ export type OnUpdateFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      sharedFiles:  {
+        __typename: "ModelSharedFileToUserConnection",
+        nextToken: string | null,
+      } | null,
+      mySharedFiles:  {
+        __typename: "ModelSharedFileConnection",
+        nextToken: string | null,
+      } | null,
+      toPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      fromPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
+    },
   } | null,
 };
 
@@ -1614,6 +1717,33 @@ export type OnDeleteFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      sharedFiles:  {
+        __typename: "ModelSharedFileToUserConnection",
+        nextToken: string | null,
+      } | null,
+      mySharedFiles:  {
+        __typename: "ModelSharedFileConnection",
+        nextToken: string | null,
+      } | null,
+      toPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      fromPetition:  {
+        __typename: "FriendRequest",
+        id: string,
+        processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
+      } | null,
+    },
   } | null,
 };
 
@@ -1626,11 +1756,6 @@ export type OnCreateFriendRequestSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1648,17 +1773,16 @@ export type OnCreateFriendRequestSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     from:  {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1676,6 +1800,10 @@ export type OnCreateFriendRequestSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -1690,11 +1818,6 @@ export type OnUpdateFriendRequestSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1712,17 +1835,16 @@ export type OnUpdateFriendRequestSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     from:  {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1740,6 +1862,10 @@ export type OnUpdateFriendRequestSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -1754,11 +1880,6 @@ export type OnDeleteFriendRequestSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1776,17 +1897,16 @@ export type OnDeleteFriendRequestSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     from:  {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1804,6 +1924,10 @@ export type OnDeleteFriendRequestSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -1817,11 +1941,6 @@ export type OnCreateSharedFileSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1839,6 +1958,10 @@ export type OnCreateSharedFileSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     Sharers:  {
@@ -1860,11 +1983,6 @@ export type OnUpdateSharedFileSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1882,6 +2000,10 @@ export type OnUpdateSharedFileSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     Sharers:  {
@@ -1903,11 +2025,6 @@ export type OnDeleteSharedFileSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1925,6 +2042,10 @@ export type OnDeleteSharedFileSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
     Sharers:  {
@@ -1949,7 +2070,6 @@ export type OnCreateSharedFileToUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -1960,11 +2080,6 @@ export type OnCreateSharedFileToUserSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -1982,6 +2097,10 @@ export type OnCreateSharedFileToUserSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -1998,7 +2117,6 @@ export type OnUpdateSharedFileToUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -2009,11 +2127,6 @@ export type OnUpdateSharedFileToUserSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -2031,6 +2144,10 @@ export type OnUpdateSharedFileToUserSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,
@@ -2047,7 +2164,6 @@ export type OnDeleteSharedFileToUserSubscription = {
         __typename: "User",
         id: string,
         name: string,
-        darkMode: boolean,
       },
       Sharers:  {
         __typename: "ModelSharedFileToUserConnection",
@@ -2058,11 +2174,6 @@ export type OnDeleteSharedFileToUserSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      darkMode: boolean,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
       sharedFiles:  {
         __typename: "ModelSharedFileToUserConnection",
         nextToken: string | null,
@@ -2080,6 +2191,10 @@ export type OnDeleteSharedFileToUserSubscription = {
         __typename: "FriendRequest",
         id: string,
         processed: boolean,
+      } | null,
+      friends:  {
+        __typename: "ModelFriendConnection",
+        nextToken: string | null,
       } | null,
     },
   } | null,

@@ -10,15 +10,15 @@ async function addIfNewUser(userData: any) {
         if (user.data.getUser === null) {
             API.graphql(graphqlOperation(Mutations.createUser, {input: {
                 id: userData.identityId,
-                darkMode: false,
                 name: userData.attributes.name
             }}));
-            console.log("NUEVO USUARIO AGREGADO");
         }
       }catch (error) {
-        console.log(error)
+        console.log(error);
       }
 }
+
+let currentUserId: any;
 
 //Iniciar sesion
 export const signIn = (username: string, password: string) => {
@@ -32,7 +32,7 @@ export const signIn = (username: string, password: string) => {
                 Auth.currentUserCredentials()
                 .then(e => {
                     data = {...data, identityId: e.identityId}
-
+                    currentUserId = e.identityId;
                     addIfNewUser(data);
 
                     dispatch({
@@ -50,11 +50,18 @@ export const signIn = (username: string, password: string) => {
             })
         })         
         .catch(err => {
-            console.log(err);
-            dispatch({
-                type: types.AUTH_SIGNIN_NOK,
-                payload: err
-            })
+            if (err.code === "UserNotConfirmedException") {
+                dispatch({
+                    type: types.AUTH_SWITCH_COMPONENT,
+                    payload: "verify"
+                });
+            } else {
+                console.log(err);
+                dispatch({
+                    type: types.AUTH_SIGNIN_NOK,
+                    payload: err
+                })
+            }
         });
     }
 }
@@ -67,7 +74,8 @@ export const signUp = (username: string, nickname: string, password: string) => 
             username,
             password,
             attributes: { 
-                name: nickname
+                name: nickname,
+                "custom:darkMode": "0"
               // agregar mas atributos personalizados
             },
             validationData: []
@@ -167,6 +175,13 @@ export const switchComponent = (component: string) => {
     }
 }
 
+export const switchDarkMode = (darkmode: any) => {
+    return {
+        type: types.SWITCH_DARKMODE,
+        payload: darkmode
+    }
+}
+
 
 //Revisa si te logeaste antes, para acceder directamente a la aplicacion
 export const authCheckState = () => {
@@ -174,10 +189,23 @@ export const authCheckState = () => {
         Auth.currentAuthenticatedUser({
             bypassCache: false 
         })
-        .then(data => dispatch({
-            type: types.AUTH_SIGNIN,
-            payload: data
-        }))
-        .catch(err => console.log(err))
+        .then(data => {
+            Auth.currentUserCredentials()
+            .then(e => {
+                data = {...data, identityId: e.identityId}
+                currentUserId = e.identityId;
+                dispatch({
+                    type: types.AUTH_SIGNIN,
+                    payload: data
+                })
+            })           
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.AUTH_SIGNIN_NOK,
+                payload: err
+            })
+        });
     }
 }

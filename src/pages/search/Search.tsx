@@ -35,7 +35,7 @@ const Search: React.FC = () => {
 
     useEffect(() => {
         if (searchText) 
-            searchUsers(searchText!)
+            searchUsers(searchText.toLowerCase()!)
         else
             setUsers([])
     }, [searchText]);

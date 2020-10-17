@@ -10,7 +10,6 @@ interface props {
 const Settings: React.FC<props> = props => {
 
     const toggleDarkModeHandler = () => {
-        document.body.classList.toggle("dark");
     };
 
     return (

@@ -41,6 +41,7 @@ const App: React.FC<{
   isAuthenticated: boolean
 }> = props => {
 
+  //NO ELIMINAR DE MOMENTO, LO TENGO DE REFERENCIA 
   async function createCustomUser() {
     try {
       /*
@@ -79,7 +80,7 @@ const App: React.FC<{
 
   if (props.isAuthenticated) {
     routes = (
-      <BottomBar />
+      <BottomBar default="Home"/>
     )
   }
 

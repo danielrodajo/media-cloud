@@ -7,14 +7,6 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       name
-      darkMode
-      friends {
-        items {
-          id
-          name
-        }
-        nextToken
-      }
       sharedFiles {
         items {
           id
@@ -33,12 +25,10 @@ export const getUser = /* GraphQL */ `
         to {
           id
           name
-          darkMode
         }
         from {
           id
           name
-          darkMode
         }
       }
       fromPetition {
@@ -47,13 +37,18 @@ export const getUser = /* GraphQL */ `
         to {
           id
           name
-          darkMode
         }
         from {
           id
           name
-          darkMode
         }
+      }
+      friends {
+        items {
+          id
+          name
+        }
+        nextToken
       }
     }
   }
@@ -68,10 +63,6 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         name
-        darkMode
-        friends {
-          nextToken
-        }
         sharedFiles {
           nextToken
         }
@@ -86,6 +77,9 @@ export const listUsers = /* GraphQL */ `
           id
           processed
         }
+        friends {
+          nextToken
+        }
       }
       nextToken
     }
@@ -96,6 +90,27 @@ export const getFriend = /* GraphQL */ `
     getFriend(id: $id) {
       id
       name
+      user {
+        id
+        name
+        sharedFiles {
+          nextToken
+        }
+        mySharedFiles {
+          nextToken
+        }
+        toPetition {
+          id
+          processed
+        }
+        fromPetition {
+          id
+          processed
+        }
+        friends {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -109,6 +124,10 @@ export const listFriends = /* GraphQL */ `
       items {
         id
         name
+        user {
+          id
+          name
+        }
       }
       nextToken
     }
@@ -122,10 +141,6 @@ export const getFriendRequest = /* GraphQL */ `
       to {
         id
         name
-        darkMode
-        friends {
-          nextToken
-        }
         sharedFiles {
           nextToken
         }
@@ -139,15 +154,14 @@ export const getFriendRequest = /* GraphQL */ `
         fromPetition {
           id
           processed
+        }
+        friends {
+          nextToken
         }
       }
       from {
         id
         name
-        darkMode
-        friends {
-          nextToken
-        }
         sharedFiles {
           nextToken
         }
@@ -161,6 +175,9 @@ export const getFriendRequest = /* GraphQL */ `
         fromPetition {
           id
           processed
+        }
+        friends {
+          nextToken
         }
       }
     }
@@ -179,12 +196,10 @@ export const listFriendRequests = /* GraphQL */ `
         to {
           id
           name
-          darkMode
         }
         from {
           id
           name
-          darkMode
         }
       }
       nextToken
@@ -198,10 +213,6 @@ export const getSharedFile = /* GraphQL */ `
       owner {
         id
         name
-        darkMode
-        friends {
-          nextToken
-        }
         sharedFiles {
           nextToken
         }
@@ -215,6 +226,9 @@ export const getSharedFile = /* GraphQL */ `
         fromPetition {
           id
           processed
+        }
+        friends {
+          nextToken
         }
       }
       Sharers {
@@ -238,7 +252,6 @@ export const listSharedFiles = /* GraphQL */ `
         owner {
           id
           name
-          darkMode
         }
         Sharers {
           nextToken
@@ -257,7 +270,6 @@ export const getSharedFileToUser = /* GraphQL */ `
         owner {
           id
           name
-          darkMode
         }
         Sharers {
           nextToken
@@ -266,10 +278,6 @@ export const getSharedFileToUser = /* GraphQL */ `
       sharer {
         id
         name
-        darkMode
-        friends {
-          nextToken
-        }
         sharedFiles {
           nextToken
         }
@@ -283,6 +291,9 @@ export const getSharedFileToUser = /* GraphQL */ `
         fromPetition {
           id
           processed
+        }
+        friends {
+          nextToken
         }
       }
     }
@@ -307,7 +318,6 @@ export const listSharedFileToUsers = /* GraphQL */ `
         sharer {
           id
           name
-          darkMode
         }
       }
       nextToken
