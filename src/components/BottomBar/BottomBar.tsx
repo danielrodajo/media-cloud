@@ -12,6 +12,7 @@ import { Auth, API, graphqlOperation } from 'aws-amplify';
 import * as actions from "../../store/actions/index";
 import * as Subscriptions from '../../graphql/subscriptions';
 import { Observable } from 'redux';
+import Friends from '../../pages/friends/Friends';
 
 interface props {
   default: string;
@@ -95,7 +96,7 @@ const BottomBar: React.FC<props> = props => {
           <IonRouterOutlet>
             <Route path="/home" component={Home} exact />
             <Route path="/search" component={Search} exact />
-            <Route path="/shared" exact />
+            <Route path="/friends" component={Friends} exact />
             <Route path="/profile" render={() => <Profile handleSignOut={handleSignOut} darkMode={darkMode === "1"} setDarkMode={setDarkMode}/>} exact />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
@@ -111,9 +112,9 @@ const BottomBar: React.FC<props> = props => {
             <IonTabButton>
               <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)} /> 
             </IonTabButton>
-            <IonTabButton layout={(activeTab === "") ? "icon-top" : "label-hide"}>
+            <IonTabButton tab="Friends" href="/friends" layout={(activeTab === "Friends") ? "icon-top" : "label-hide"}>
               <IonIcon icon={peopleOutline}/> 
-              <IonLabel>Compartido</IonLabel>
+              <IonLabel>Mis Amigos</IonLabel>
             </IonTabButton>
             <IonTabButton tab="Profile" href="/profile" layout={(activeTab === "Profile") ? "icon-top" : "label-hide"}>
               <IonIcon icon={personOutline}/> 
