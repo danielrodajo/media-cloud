@@ -14,7 +14,10 @@ export interface Props {
 const ModalNotifications: React.SFC<Props> = props => {
 
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
-    
+
+    const handleCheckPetition = () => {}
+    const handleDenyPetition = () => {}
+
     return (
         <IonModal isOpen={props.showModal} onDidDismiss={e => props.setShowModal(false)}>
             <IonHeader>
@@ -30,9 +33,9 @@ const ModalNotifications: React.SFC<Props> = props => {
             <IonContent>
             {
                 (notifications && notifications.length > 0) ?
-                    notifications.map((notification: any) => <Notification notification={notification}/>) 
+                    notifications.map((notification: any) => <Notification notification={notification} handleCheckPetition={handleCheckPetition} handleDenyPetition={handleDenyPetition}/>) 
                 : 
-                    <IonText>No tienes notificaciones pendientes.</IonText>
+                    <IonText className="no-notifications-text">No tienes notificaciones pendientes.</IonText>
             }
             </IonContent>
         </IonModal>
