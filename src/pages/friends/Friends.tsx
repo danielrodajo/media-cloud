@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import Friend from '../../components/Friend/Friend';
+import { API, graphqlOperation } from 'aws-amplify';
+import * as Mutations from '../../graphql/mutations';
 
 export interface FriendsProps {
     
@@ -26,6 +28,18 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const recoverFriendsError = useSelector((state: RootState) => state.FriendsReducer.recoverFriendsError);
 
+    const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
+
+    const handleDeleteFriend = (friendId: string) => {
+        (API.graphql(graphqlOperation(Mutations.deleteFriend, {input: {id: friendId}})) as Promise<any>)
+        .then(() => (
+            API.graphql(graphqlOperation(Mutations.deleteFriend, {input: {id: user.identityId}})) as Promise<any>)
+            .then(() => {
+                deleteFriend(friendId);
+            })
+        ).catch(err => console.log(err))
+    }
+
     useEffect(() => {
         onGetFriends(user.identityId);
     }, [onGetFriends])
@@ -44,7 +58,10 @@ const Friends: React.SFC<FriendsProps> = () => {
                         </IonItem>
                     {recoverFriendsError ? <span>{recoverFriendsError.message}</span> : null}
                     {
-                        friends.map((friend:any) => <Friend key={friend.id} friend={friend}/>)
+                        friends.length > 0 ?
+                        friends.map((friend:any) => <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
+                        :
+                        <IonText>No tienes contactos agregados.</IonText>
                     }
                     </React.Fragment>
                 )

@@ -19,3 +19,21 @@ export const getFriends = (userId: string) => {
         }))
     }
 }
+
+export const deleteFriend = (friendId: string) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.DELETE_FRIEND_OK,
+            payload: friendId
+        });  
+    }
+}
+
+export const addFriend = (friend: any) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.ADD_FRIEND_OK,
+            payload: friend
+        });
+    }
+}
