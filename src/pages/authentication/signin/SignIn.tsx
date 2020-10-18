@@ -36,7 +36,7 @@ const SignIn: React.FC<props> = props => {
                 break;
 
             case "NotAuthorizedException":
-                message = "Usuario y/o contraseña no valida.";
+                message = "Usuario y/o contraseña incorrecto.";
                 break;
             
         }

@@ -34,6 +34,10 @@ const SignUp: React.FC<props> = props => {
             case "1 validation error detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6":
                 message = "Contraseña no valida,debe tener 6 caracteres o mas.";
                 break;
+
+            case "An account with the given email already exists.":
+                message = "Este correo ya esta registrado";
+                break;
             
         }
  
