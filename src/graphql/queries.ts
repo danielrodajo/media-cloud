@@ -20,28 +20,18 @@ export const getUser = /* GraphQL */ `
         nextToken
       }
       toPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       fromPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       friends {
         items {
@@ -70,12 +60,10 @@ export const listUsers = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -100,12 +88,10 @@ export const getFriend = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -148,12 +134,10 @@ export const getFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -169,12 +153,10 @@ export const getFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -220,12 +202,10 @@ export const getSharedFile = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -285,12 +265,10 @@ export const getSharedFileToUser = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken

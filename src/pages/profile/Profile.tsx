@@ -14,7 +14,8 @@ import SignOut from '../authentication/signout/SignOut';
 
 interface props {
     darkMode: boolean,
-    setDarkMode: (value: boolean) => void
+    setDarkMode: (value: boolean) => void,
+    handleSignOut: () => void
 }
 
 const Profile: React.FC<props> = props => {
@@ -56,7 +57,7 @@ const Profile: React.FC<props> = props => {
                             Sobre nosotros
                         </IonLabel>
                     </IonItem>
-                    <SignOut/>             
+                    <SignOut handleSignOut={props.handleSignOut}/>             
                 </IonContent>
             </IonPage>
         </React.Fragment>

@@ -57,6 +57,54 @@ export const AUTH_SIGNOUT_NOK = 'AUTH_SIGNOUT_NOK';
 
 export const SWITCH_DARKMODE = 'SWITCH_DARKMODE';
 
+export const RECOVER_NOTIFICATION = "RECOVER_NOTIFICATION";
+export const RECOVER_NOTIFICATION_OK = "RECOVER_NOTIFICATION_OK";
+export const RECOVER_NOTIFICATION_NOK = "RECOVER_NOTIFICATION_NOK";
+
+export const SAVE_NOTIFICATION = "SAVE_NOTIFICATION";
+export const SAVE_NOTIFICATION_OK = "SAVE_NOTIFICATION_OK";
+export const SAVE_NOTIFICATION_NOK = "SAVE_NOTIFICATION_NOK";
+
+export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
+export const DELETE_NOTIFICATION_OK = "DELETE_NOTIFICATION_OK";
+export const DELETE_NOTIFICATION_NOK = "DELETE_NOTIFICATION_NOK";
+
+interface DeleteNotificationAction {
+    type: typeof DELETE_NOTIFICATION
+}
+interface DeleteNotificationOkAction {
+    type: typeof DELETE_NOTIFICATION_OK,
+    payload: any
+}
+interface DeleteNotificationNokAction {
+    type: typeof DELETE_NOTIFICATION_NOK,
+    payload: any
+}
+
+interface SaveNotificationAction {
+    type: typeof SAVE_NOTIFICATION
+}
+interface SaveNotificationOkAction {
+    type: typeof SAVE_NOTIFICATION_OK,
+    payload: any
+}
+interface SaveNotificationNokAction {
+    type: typeof SAVE_NOTIFICATION_NOK,
+    payload: any
+}
+
+interface RecoverNotificationAction {
+    type: typeof RECOVER_NOTIFICATION
+}
+interface RecoverNotificationOkAction {
+    type: typeof RECOVER_NOTIFICATION_OK
+    payload: any
+}
+interface RecoverNotificationNokAction {
+    type: typeof RECOVER_NOTIFICATION_NOK
+    payload: any
+}
+
 interface ChangeFolderAction {
     type: typeof CHANGE_FOLDER,
     payload: string
@@ -206,4 +254,5 @@ interface SwitchDarkModeAction {
 export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
-                            AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction
+                            AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
+                            RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction 

@@ -13,6 +13,12 @@ export interface File {
     name: string;
 }
 
+export interface NotificationState {
+    notifications: any | null;
+    recoverNotificationError: Object | null;
+    saveNotificationError: Object | null;
+}
+
 export interface AuthState {
     user: any | null;
     status: string;

@@ -26,3 +26,9 @@ export {
     removeFolder,
     changeFolder,
 } from './FolderManager';
+
+export {
+    recoverNotifications,
+    saveNotification,
+    deleteNotification,
+} from './NotificationManager';
