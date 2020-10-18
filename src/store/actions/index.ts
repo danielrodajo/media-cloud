@@ -32,3 +32,7 @@ export {
     saveNotification,
     deleteNotification,
 } from './NotificationManager';
+
+export {
+    getFriends,
+} from './FriendsManager';

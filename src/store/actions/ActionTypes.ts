@@ -69,6 +69,22 @@ export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const DELETE_NOTIFICATION_OK = "DELETE_NOTIFICATION_OK";
 export const DELETE_NOTIFICATION_NOK = "DELETE_NOTIFICATION_NOK";
 
+export const RECOVER_FRIENDS = "RECOVER_FRIENDS";
+export const RECOVER_FRIENDS_OK = "RECOVER_FRIENDS_OK";
+export const RECOVER_FRIENDS_NOK = "RECOVER_FRIENDS_NOK";
+
+interface RecoverFriendsAction {
+    type: typeof RECOVER_FRIENDS
+}
+interface RecoverFriendsOkAction {
+    type: typeof RECOVER_FRIENDS_OK,
+    payload: any
+}
+interface RecoverFriendsNokAction {
+    type: typeof RECOVER_FRIENDS_NOK,
+    payload: any
+}
+
 interface DeleteNotificationAction {
     type: typeof DELETE_NOTIFICATION
 }
@@ -255,4 +271,5 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
-                            RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction 
+                            RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
+                            RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction

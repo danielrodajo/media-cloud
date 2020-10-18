@@ -32,10 +32,10 @@ const ModalNotifications: React.SFC<Props> = props => {
     const handleCheckPetition = (notification: any) => {
         //Puesto que GraphQL no admite de momento relaciones a sí mismas, se tiene que crear una entidad Friend secundaria para hacer este proceso
         //Primero se crea un amigo de A a B
-        (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.from.id, id: notification.to.id, name: notification.to.name}})) as Promise<any>)
+        (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.from.id, id: notification.to.id+notification.from.id, name: notification.to.name}})) as Promise<any>)
         .then((e:any) => {
             //Se crea el amigo de B a A
-            (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.to.id, id: notification.from.id, name: notification.from.name}})) as Promise<any>)
+            (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.to.id, id: notification.from.id+notification.to.id, name: notification.from.name}})) as Promise<any>)
             .then((e:any) => {
                 //Finalmente, se hace el mismo proceso de "denegarla" (eliminarla de la store de Redux y checkearla)
                 handleDenyPetition(notification.id);

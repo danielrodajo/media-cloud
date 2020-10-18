@@ -13,6 +13,12 @@ export interface File {
     name: string;
 }
 
+export interface FriendsState {
+    friends: any | null;
+    recoverFriendsError: Object | null;
+    downloadingFriends: boolean;
+}
+
 export interface NotificationState {
     notifications: any | null;
     recoverNotificationError: Object | null;

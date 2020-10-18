@@ -23,6 +23,7 @@ export const uploadFile = (name: string, file: File) => {
             }
         })
         .then((result: any) => {
+            console.log(result.key)
             //Agregar al objeto recuperado su URL
             Storage.get(result.key)
             .then((result2: any) => {
