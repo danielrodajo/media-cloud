@@ -1,0 +1,59 @@
+import * as types from '../actions/ActionTypes';
+import { updateObject } from '../../shared/utility';
+import { NotificationState } from '../types';
+
+const initialState: NotificationState = {
+    notifications: [],
+    recoverNotificationError: null,
+    saveNotificationError: null,
+}
+
+const recoverNotifications = (state: NotificationState) => {
+    return updateObject( state, {
+    });
+}
+
+const recoverNotificationsSuccess = (state: NotificationState, payload: any[]) => {
+    return updateObject( state, {
+        notifications: payload,
+    });
+}
+
+const recoverNotificationsFail = (state: NotificationState, payload: Error) => {
+    return updateObject( state, {
+        recoverNotificationError: payload,
+    })
+}
+
+const saveNotification = (state: NotificationState) => {
+    return updateObject( state, {
+    });
+}
+
+const saveNotificationSuccess = (state: NotificationState, payload: any) => {
+    return updateObject( state, {
+        notifications: (state.notifications.filter((notification: any) => notification.id === payload.id) !== null) 
+        ? [payload].concat(state.notifications) : state.notifications
+    });
+}
+
+const saveNotificationFail = (state: NotificationState, payload:Error) => {
+    return updateObject( state, {
+        saveNotificationFail: payload
+    });
+}
+
+
+const reducer = ( state = initialState, action: types.ActionTypes ) => {
+    switch (action.type) {
+        case types.RECOVER_NOTIFICATION: return recoverNotifications(state);
+        case types.RECOVER_NOTIFICATION_OK: return recoverNotificationsSuccess(state, action.payload);
+        case types.RECOVER_NOTIFICATION_NOK: return recoverNotificationsFail(state, action.payload);
+        case types.SAVE_NOTIFICATION: return saveNotification(state);
+        case types.SAVE_NOTIFICATION_OK: return saveNotificationSuccess(state, action.payload);
+        case types.SAVE_NOTIFICATION_NOK: return saveNotificationFail(state, action.payload);
+        default: return state;
+    }
+}
+
+export default reducer;

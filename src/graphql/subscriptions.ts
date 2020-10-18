@@ -2,6 +2,52 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
+export const onCreateCustomFriendRequest = /* GraphQL */ `
+  subscription OnCreateCustomFriendRequest {
+    onCreateCustomFriendRequest {
+      id
+      processed
+      to {
+        id
+        name
+        sharedFiles {
+          nextToken
+        }
+        mySharedFiles {
+          nextToken
+        }
+        toPetition {
+          nextToken
+        }
+        fromPetition {
+          nextToken
+        }
+        friends {
+          nextToken
+        }
+      }
+      from {
+        id
+        name
+        sharedFiles {
+          nextToken
+        }
+        mySharedFiles {
+          nextToken
+        }
+        toPetition {
+          nextToken
+        }
+        fromPetition {
+          nextToken
+        }
+        friends {
+          nextToken
+        }
+      }
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -20,28 +66,18 @@ export const onCreateUser = /* GraphQL */ `
         nextToken
       }
       toPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       fromPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       friends {
         items {
@@ -71,28 +107,18 @@ export const onUpdateUser = /* GraphQL */ `
         nextToken
       }
       toPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       fromPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       friends {
         items {
@@ -122,28 +148,18 @@ export const onDeleteUser = /* GraphQL */ `
         nextToken
       }
       toPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       fromPetition {
-        id
-        processed
-        to {
+        items {
           id
-          name
+          processed
         }
-        from {
-          id
-          name
-        }
+        nextToken
       }
       friends {
         items {
@@ -170,12 +186,10 @@ export const onCreateFriend = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -199,12 +213,10 @@ export const onUpdateFriend = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -228,12 +240,10 @@ export const onDeleteFriend = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -257,12 +267,10 @@ export const onCreateFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -278,12 +286,10 @@ export const onCreateFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -307,12 +313,10 @@ export const onUpdateFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -328,12 +332,10 @@ export const onUpdateFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -357,12 +359,10 @@ export const onDeleteFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -378,12 +378,10 @@ export const onDeleteFriendRequest = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -406,12 +404,10 @@ export const onCreateSharedFile = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -440,12 +436,10 @@ export const onUpdateSharedFile = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -474,12 +468,10 @@ export const onDeleteSharedFile = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -518,12 +510,10 @@ export const onCreateSharedFileToUser = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -556,12 +546,10 @@ export const onUpdateSharedFileToUser = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken
@@ -594,12 +582,10 @@ export const onDeleteSharedFileToUser = /* GraphQL */ `
           nextToken
         }
         toPetition {
-          id
-          processed
+          nextToken
         }
         fromPetition {
-          id
-          processed
+          nextToken
         }
         friends {
           nextToken

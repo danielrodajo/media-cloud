@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import * as actions from '../../../store/actions/index';
-import { useDispatch } from 'react-redux';
 import { logOutOutline } from 'ionicons/icons';
 import './SignOut.css';
 import { IonItem, IonIcon, IonAlert, IonLabel } from '@ionic/react';
 
-const SignOut = () => {
-    const dispatch = useDispatch();
+interface props {
+    handleSignOut: () => void
+}
 
-    //Datos del usuario activo
-    //const user = useSelector((state: RootState) => state.AuthReducer.user);
+const SignOut: React.FC<props> = props => {
 
     const [showAlert, setShowAlert] = useState(false);
 
@@ -25,7 +23,7 @@ const SignOut = () => {
                     text: "Si",
                     role: "accept",
                     handler: () => {
-                       dispatch(actions.signOut())
+                       props.handleSignOut();
                     },
                     },
                 ]}

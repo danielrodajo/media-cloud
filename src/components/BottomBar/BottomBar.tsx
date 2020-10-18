@@ -8,8 +8,10 @@ import Profile from '../../pages/profile/Profile';
 import Search from '../../pages/search/Search';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { Auth } from 'aws-amplify';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 import * as actions from "../../store/actions/index";
+import * as Subscriptions from '../../graphql/subscriptions';
+import { Observable } from 'redux';
 
 interface props {
   default: string;
@@ -17,9 +19,10 @@ interface props {
  
 const BottomBar: React.FC<props> = props => {
 
-    var firstLoad = true;
 
     const dispatch = useDispatch();
+
+    const user = useSelector((state: RootState) => state.AuthReducer.user);
 
     //Indicador de si mostrar ventana de añadir o no
     const [ showModal, setShowModal ] = useState(false);
@@ -31,8 +34,32 @@ const BottomBar: React.FC<props> = props => {
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
     }
+    
+    const subscription = (API.graphql(
+      graphqlOperation(Subscriptions.onCreateCustomFriendRequest)
+    ) as unknown as Observable<any>).subscribe({
+        next: (data) => {
+          console.log(data)
+          const toUserId = data.value.data.onCreateCustomFriendRequest.to.id;
+          const processed = data.value.data.onCreateCustomFriendRequest.processed;
+
+          console.log(toUserId)
+          console.log(processed)
+          if (toUserId === user.identityId && !processed) {
+            console.log("EXECUTED")
+            saveNotification(data.value.data.onCreateCustomFriendRequest);
+          }
+        }
+    });
+
+    const handleSignOut = () => {
+      subscription.unsubscribe();
+      dispatch(actions.signOut());
+    }
 
     const switchDarkMode = (value: string) => dispatch(actions.switchDarkMode(value));
+    const getNotifications = (id: string) => dispatch(actions.recoverNotifications(id));
+    const saveNotification = (notification: object) => dispatch(actions.saveNotification(notification))
 
     const darkMode = useSelector((state: RootState) => state.AuthReducer.user.attributes['custom:darkMode']);
     
@@ -53,26 +80,23 @@ const BottomBar: React.FC<props> = props => {
     }
 
     useEffect(() => {
+      getNotifications(user.identityId);
+    }, []);
+
+    useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
 
 
     return ( 
       <React.Fragment>
-        {
-          firstLoad ? (() => {
-            console.log("FIRST")
-            firstLoad = false;
-            return <Link to="/home" />
-          }) : console.log("NADA")
-        }
         <Add showModal={showModal} setShowModal={setShowModal} />
         <IonTabs onIonTabsDidChange={handleActiveButton}>
           <IonRouterOutlet>
             <Route path="/home" component={Home} exact />
             <Route path="/search" component={Search} exact />
             <Route path="/shared" exact />
-            <Route path="/profile" render={() => <Profile darkMode={darkMode === "1"} setDarkMode={setDarkMode}/>} exact />
+            <Route path="/profile" render={() => <Profile handleSignOut={handleSignOut} darkMode={darkMode === "1"} setDarkMode={setDarkMode}/>} exact />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">

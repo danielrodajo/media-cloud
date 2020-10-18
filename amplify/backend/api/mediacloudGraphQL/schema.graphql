@@ -5,8 +5,8 @@ type User
   name: String!
   sharedFiles: [SharedFileToUser] @connection(name:"UserSharedFileToUser")
   mySharedFiles: [SharedFile] @connection(name:"OwnerSharedFiles")
-  toPetition: FriendRequest @connection(name:"UserToPetition")
-  fromPetition: FriendRequest @connection(name:"UserFromPetition")
+  toPetition: [FriendRequest] @connection(name:"UserToPetition")
+  fromPetition: [FriendRequest] @connection(name:"UserFromPetition")
   friends: [Friend] @connection(name:"UserFriends")
 }
 
@@ -41,4 +41,9 @@ type SharedFileToUser
   id: ID!
   sharedFile: SharedFile! @connection(name:"FileSharedFileToUser")
   sharer: User! @connection(name:"UserSharedFileToUser")
+}
+
+type Subscription {
+  onCreateCustomFriendRequest: FriendRequest
+  @aws_subscribe(mutations: ["createFriendRequest"])
 }
