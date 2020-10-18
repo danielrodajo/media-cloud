@@ -32,7 +32,7 @@ const saveNotification = (state: NotificationState) => {
 
 const saveNotificationSuccess = (state: NotificationState, payload: any) => {
     return updateObject( state, {
-        notifications: (state.notifications.filter((notification: any) => notification.id === payload.id) !== null) 
+        notifications: (state.notifications.filter((notification: any) => notification.id === payload.id).length === 0) 
         ? [payload].concat(state.notifications) : state.notifications
     });
 }
@@ -43,6 +43,11 @@ const saveNotificationFail = (state: NotificationState, payload:Error) => {
     });
 }
 
+const deleteNotification = (state: NotificationState, payload:string) => {
+    return updateObject( state, {
+        notifications: state.notifications.filter((notification: any) => notification.id !== payload)
+    });
+}
 
 const reducer = ( state = initialState, action: types.ActionTypes ) => {
     switch (action.type) {
@@ -52,6 +57,7 @@ const reducer = ( state = initialState, action: types.ActionTypes ) => {
         case types.SAVE_NOTIFICATION: return saveNotification(state);
         case types.SAVE_NOTIFICATION_OK: return saveNotificationSuccess(state, action.payload);
         case types.SAVE_NOTIFICATION_NOK: return saveNotificationFail(state, action.payload);
+        case types.DELETE_NOTIFICATION_OK: return deleteNotification(state, action.payload);
         default: return state;
     }
 }

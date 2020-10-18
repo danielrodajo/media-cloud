@@ -65,6 +65,22 @@ export const SAVE_NOTIFICATION = "SAVE_NOTIFICATION";
 export const SAVE_NOTIFICATION_OK = "SAVE_NOTIFICATION_OK";
 export const SAVE_NOTIFICATION_NOK = "SAVE_NOTIFICATION_NOK";
 
+export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
+export const DELETE_NOTIFICATION_OK = "DELETE_NOTIFICATION_OK";
+export const DELETE_NOTIFICATION_NOK = "DELETE_NOTIFICATION_NOK";
+
+interface DeleteNotificationAction {
+    type: typeof DELETE_NOTIFICATION
+}
+interface DeleteNotificationOkAction {
+    type: typeof DELETE_NOTIFICATION_OK,
+    payload: any
+}
+interface DeleteNotificationNokAction {
+    type: typeof DELETE_NOTIFICATION_NOK,
+    payload: any
+}
+
 interface SaveNotificationAction {
     type: typeof SAVE_NOTIFICATION
 }
@@ -239,4 +255,4 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
-                            RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction
+                            RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction 

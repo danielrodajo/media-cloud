@@ -2,9 +2,12 @@ import React from 'react';
 import './ModalNotifications.scss';
 import { IonModal, IonContent, IonHeader, IonToolbar, IonIcon, IonItem, IonText } from '@ionic/react';
 import { arrowDown } from 'ionicons/icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import Notification from './Notification/Notification';
+import { API, graphqlOperation } from 'aws-amplify';
+import * as Mutations from '../../graphql/mutations';
+import * as actions from "../../store/actions/index";
 
 export interface Props {
     showModal: boolean;
@@ -13,10 +16,34 @@ export interface Props {
  
 const ModalNotifications: React.SFC<Props> = props => {
 
+    const dispatch = useDispatch();
+
+    const deleteNotification = (notifId: string) => dispatch(actions.deleteNotification(notifId));
+
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
 
-    const handleCheckPetition = () => {}
-    const handleDenyPetition = () => {}
+    const handleDenyPetition = (notificationId: string) => {
+        (API.graphql(graphqlOperation(Mutations.updateFriendRequest, {input: {id: notificationId, processed: true}})) as Promise<any>)
+        .then(e => {
+            deleteNotification(notificationId);
+        })
+    }
+    
+    const handleCheckPetition = (notification: any) => {
+        //Puesto que GraphQL no admite de momento relaciones a sí mismas, se tiene que crear una entidad Friend secundaria para hacer este proceso
+        //Primero se crea un amigo de A a B
+        (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.from.id, id: notification.to.id, name: notification.to.name}})) as Promise<any>)
+        .then((e:any) => {
+            //Se crea el amigo de B a A
+            (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.to.id, id: notification.from.id, name: notification.from.name}})) as Promise<any>)
+            .then((e:any) => {
+                //Finalmente, se hace el mismo proceso de "denegarla" (eliminarla de la store de Redux y checkearla)
+                handleDenyPetition(notification.id);
+            })
+        })
+
+        
+    }
 
     return (
         <IonModal isOpen={props.showModal} onDidDismiss={e => props.setShowModal(false)}>
@@ -33,7 +60,7 @@ const ModalNotifications: React.SFC<Props> = props => {
             <IonContent>
             {
                 (notifications && notifications.length > 0) ?
-                    notifications.map((notification: any) => <Notification notification={notification} handleCheckPetition={handleCheckPetition} handleDenyPetition={handleDenyPetition}/>) 
+                    notifications.map((notification: any) => <Notification key={notification.id} notification={notification} handleCheckPetition={handleCheckPetition} handleDenyPetition={handleDenyPetition}/>) 
                 : 
                     <IonText className="no-notifications-text">No tienes notificaciones pendientes.</IonText>
             }

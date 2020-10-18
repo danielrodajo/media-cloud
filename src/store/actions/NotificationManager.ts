@@ -7,7 +7,7 @@ export const recoverNotifications = (idUser: String) => {
         dispatch({
             type: types.RECOVER_NOTIFICATION
         });
-        (API.graphql(graphqlOperation(Queries.listFriendRequests, {filter: {id: {beginsWith: idUser}}})) as Promise<any>)
+        (API.graphql(graphqlOperation(Queries.listFriendRequests, {filter: {id: {beginsWith: idUser}, processed: {eq: false}}})) as Promise<any>)
         .then((result: any) => {
             dispatch({
                 type: types.RECOVER_NOTIFICATION_OK,
@@ -27,5 +27,14 @@ export const saveNotification = (notification: Object) => {
             type: types.SAVE_NOTIFICATION_OK,
             payload: notification
         });
+    }
+}
+
+export const deleteNotification = (notificationId: string) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.DELETE_NOTIFICATION_OK,
+            payload: notificationId
+        })
     }
 }

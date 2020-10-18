@@ -29,5 +29,6 @@ export {
 
 export {
     recoverNotifications,
-    saveNotification
+    saveNotification,
+    deleteNotification,
 } from './NotificationManager';
