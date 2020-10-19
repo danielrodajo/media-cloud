@@ -22,7 +22,6 @@ type FriendRequest
   @model
 {
   id: ID!
-  processed: Boolean!
   to: User! @connection(name:"UserToPetition")
   from: User! @connection(name:"UserFromPetition")
 }
@@ -41,9 +40,4 @@ type SharedFileToUser
   id: ID!
   sharedFile: SharedFile! @connection(name:"FileSharedFileToUser")
   sharer: User! @connection(name:"UserSharedFileToUser")
-}
-
-type Subscription {
-  onCreateCustomFriendRequest: FriendRequest
-  @aws_subscribe(mutations: ["createFriendRequest"])
 }

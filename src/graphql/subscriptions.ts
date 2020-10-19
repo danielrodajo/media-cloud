@@ -2,52 +2,6 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
-export const onCreateCustomFriendRequest = /* GraphQL */ `
-  subscription OnCreateCustomFriendRequest {
-    onCreateCustomFriendRequest {
-      id
-      processed
-      to {
-        id
-        name
-        sharedFiles {
-          nextToken
-        }
-        mySharedFiles {
-          nextToken
-        }
-        toPetition {
-          nextToken
-        }
-        fromPetition {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-      }
-      from {
-        id
-        name
-        sharedFiles {
-          nextToken
-        }
-        mySharedFiles {
-          nextToken
-        }
-        toPetition {
-          nextToken
-        }
-        fromPetition {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-      }
-    }
-  }
-`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -68,14 +22,12 @@ export const onCreateUser = /* GraphQL */ `
       toPetition {
         items {
           id
-          processed
         }
         nextToken
       }
       fromPetition {
         items {
           id
-          processed
         }
         nextToken
       }
@@ -109,14 +61,12 @@ export const onUpdateUser = /* GraphQL */ `
       toPetition {
         items {
           id
-          processed
         }
         nextToken
       }
       fromPetition {
         items {
           id
-          processed
         }
         nextToken
       }
@@ -150,14 +100,12 @@ export const onDeleteUser = /* GraphQL */ `
       toPetition {
         items {
           id
-          processed
         }
         nextToken
       }
       fromPetition {
         items {
           id
-          processed
         }
         nextToken
       }
@@ -256,7 +204,6 @@ export const onCreateFriendRequest = /* GraphQL */ `
   subscription OnCreateFriendRequest {
     onCreateFriendRequest {
       id
-      processed
       to {
         id
         name
@@ -302,7 +249,6 @@ export const onUpdateFriendRequest = /* GraphQL */ `
   subscription OnUpdateFriendRequest {
     onUpdateFriendRequest {
       id
-      processed
       to {
         id
         name
@@ -348,7 +294,6 @@ export const onDeleteFriendRequest = /* GraphQL */ `
   subscription OnDeleteFriendRequest {
     onDeleteFriendRequest {
       id
-      processed
       to {
         id
         name

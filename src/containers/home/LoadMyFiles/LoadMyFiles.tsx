@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import CustomSpinner from '../CustomSpinner/CustomSpinner';
+import CustomSpinner from '../../../components/CustomSpinner/CustomSpinner';
 import { IonAlert, IonGrid, IonRow, IonCol, IonItem, IonIcon, IonTitle } from '@ionic/react';
-import FolderBox from '../FolderBox/FolderBox';
-import { File as CustomFile } from "../../store/types";
-import FileBox from '../FileBox/FileBox';
+import FolderBox from '../../../components/FolderBox/FolderBox';
+import { File as CustomFile } from "../../../store/types";
+import FileBox from '../../../components/FileBox/FileBox';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
-import * as actions from "../../store/actions/index";
+import { RootState } from '../../../store/store';
+import * as actions from "../../../store/actions/index";
 import { returnUpBackOutline, trashOutline } from "ionicons/icons";
 
 const LoadMyFiles = () => {

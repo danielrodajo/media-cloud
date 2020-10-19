@@ -73,6 +73,38 @@ export const RECOVER_FRIENDS = "RECOVER_FRIENDS";
 export const RECOVER_FRIENDS_OK = "RECOVER_FRIENDS_OK";
 export const RECOVER_FRIENDS_NOK = "RECOVER_FRIENDS_NOK";
 
+export const DELETE_FRIEND = "DELETE_FRIEND";
+export const DELETE_FRIEND_OK = "DELETE_FRIEND_OK";
+export const DELETE_FRIEND_NOK = "DELETE_FRIEND_NOK";
+
+export const ADD_FRIEND = "ADD_FRIEND";
+export const ADD_FRIEND_OK = "ADD_FRIEND_OK";
+export const ADD_FRIEND_NOK = "ADD_FRIEND_NOK";
+
+interface addFriendAction {
+    type: typeof ADD_FRIEND
+}
+interface addFriendOkAction {
+    type: typeof ADD_FRIEND_OK
+    payload: any
+}
+interface addFriendNokAction {
+    type: typeof ADD_FRIEND_NOK
+    payload: any
+}
+
+interface deleteFriendAction {
+    type: typeof DELETE_FRIEND
+}
+interface deleteFriendOkAction {
+    type: typeof DELETE_FRIEND_OK
+    payload: any
+}
+interface deleteFriendNokAction {
+    type: typeof DELETE_FRIEND_NOK
+    payload: any
+}
+
 interface RecoverFriendsAction {
     type: typeof RECOVER_FRIENDS
 }
@@ -272,4 +304,4 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
                             RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
-                            RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction
+                            RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction

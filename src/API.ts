@@ -88,28 +88,18 @@ export type DeleteFriendInput = {
 
 export type CreateFriendRequestInput = {
   id?: string | null,
-  processed: boolean,
   friendRequestToId: string,
   friendRequestFromId: string,
 };
 
 export type ModelFriendRequestConditionInput = {
-  processed?: ModelBooleanInput | null,
   and?: Array< ModelFriendRequestConditionInput | null > | null,
   or?: Array< ModelFriendRequestConditionInput | null > | null,
   not?: ModelFriendRequestConditionInput | null,
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type UpdateFriendRequestInput = {
   id: string,
-  processed?: boolean | null,
   friendRequestToId?: string | null,
   friendRequestFromId?: string | null,
 };
@@ -195,7 +185,6 @@ export type ModelFriendFilterInput = {
 
 export type ModelFriendRequestFilterInput = {
   id?: ModelIDInput | null,
-  processed?: ModelBooleanInput | null,
   and?: Array< ModelFriendRequestFilterInput | null > | null,
   or?: Array< ModelFriendRequestFilterInput | null > | null,
   not?: ModelFriendRequestFilterInput | null,
@@ -246,7 +235,6 @@ export type CreateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -255,7 +243,6 @@ export type CreateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -302,7 +289,6 @@ export type UpdateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -311,7 +297,6 @@ export type UpdateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -358,7 +343,6 @@ export type DeleteUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -367,7 +351,6 @@ export type DeleteUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -506,7 +489,6 @@ export type CreateFriendRequestMutation = {
   createFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
-    processed: boolean,
     to:  {
       __typename: "User",
       id: string,
@@ -569,7 +551,6 @@ export type UpdateFriendRequestMutation = {
   updateFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
-    processed: boolean,
     to:  {
       __typename: "User",
       id: string,
@@ -632,7 +613,6 @@ export type DeleteFriendRequestMutation = {
   deleteFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
-    processed: boolean,
     to:  {
       __typename: "User",
       id: string,
@@ -1001,7 +981,6 @@ export type GetUserQuery = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1010,7 +989,6 @@ export type GetUserQuery = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1132,7 +1110,6 @@ export type GetFriendRequestQuery = {
   getFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
-    processed: boolean,
     to:  {
       __typename: "User",
       id: string,
@@ -1198,7 +1175,6 @@ export type ListFriendRequestsQuery = {
     items:  Array< {
       __typename: "FriendRequest",
       id: string,
-      processed: boolean,
       to:  {
         __typename: "User",
         id: string,
@@ -1359,64 +1335,6 @@ export type ListSharedFileToUsersQuery = {
   } | null,
 };
 
-export type OnCreateCustomFriendRequestSubscription = {
-  onCreateCustomFriendRequest:  {
-    __typename: "FriendRequest",
-    id: string,
-    processed: boolean,
-    to:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      sharedFiles:  {
-        __typename: "ModelSharedFileToUserConnection",
-        nextToken: string | null,
-      } | null,
-      mySharedFiles:  {
-        __typename: "ModelSharedFileConnection",
-        nextToken: string | null,
-      } | null,
-      toPetition:  {
-        __typename: "ModelFriendRequestConnection",
-        nextToken: string | null,
-      } | null,
-      fromPetition:  {
-        __typename: "ModelFriendRequestConnection",
-        nextToken: string | null,
-      } | null,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    from:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      sharedFiles:  {
-        __typename: "ModelSharedFileToUserConnection",
-        nextToken: string | null,
-      } | null,
-      mySharedFiles:  {
-        __typename: "ModelSharedFileConnection",
-        nextToken: string | null,
-      } | null,
-      toPetition:  {
-        __typename: "ModelFriendRequestConnection",
-        nextToken: string | null,
-      } | null,
-      fromPetition:  {
-        __typename: "ModelFriendRequestConnection",
-        nextToken: string | null,
-      } | null,
-      friends:  {
-        __typename: "ModelFriendConnection",
-        nextToken: string | null,
-      } | null,
-    },
-  } | null,
-};
-
 export type OnCreateUserSubscription = {
   onCreateUser:  {
     __typename: "User",
@@ -1443,7 +1361,6 @@ export type OnCreateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1452,7 +1369,6 @@ export type OnCreateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1494,7 +1410,6 @@ export type OnUpdateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1503,7 +1418,6 @@ export type OnUpdateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1545,7 +1459,6 @@ export type OnDeleteUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1554,7 +1467,6 @@ export type OnDeleteUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
-        processed: boolean,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1673,7 +1585,6 @@ export type OnCreateFriendRequestSubscription = {
   onCreateFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
-    processed: boolean,
     to:  {
       __typename: "User",
       id: string,
@@ -1731,7 +1642,6 @@ export type OnUpdateFriendRequestSubscription = {
   onUpdateFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
-    processed: boolean,
     to:  {
       __typename: "User",
       id: string,
@@ -1789,7 +1699,6 @@ export type OnDeleteFriendRequestSubscription = {
   onDeleteFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
-    processed: boolean,
     to:  {
       __typename: "User",
       id: string,

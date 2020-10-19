@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { IonToolbar, IonHeader, IonImg, IonIcon, IonItem, IonBadge } from '@ionic/react';
 import logo from "../../images/lightlogobg.png";
 import './Toolbar.scss'
-import { notifications, personAdd } from 'ionicons/icons';
+import { notifications } from 'ionicons/icons';
 import ModalNotifications from '../ModalNotifications/ModalNotifications';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';

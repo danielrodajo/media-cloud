@@ -35,4 +35,6 @@ export {
 
 export {
     getFriends,
+    deleteFriend,
+    addFriend,
 } from './FriendsManager';

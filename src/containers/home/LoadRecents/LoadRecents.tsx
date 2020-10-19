@@ -1,10 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
-import CustomSpinner from '../CustomSpinner/CustomSpinner';
-import { File as CustomFile } from "../../store/types";
-import FileBox from '../FileBox/FileBox';
+import CustomSpinner from '../../../components/CustomSpinner/CustomSpinner';
+import { File as CustomFile } from "../../../store/types";
+import FileBox from '../../../components/FileBox/FileBox';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
-import * as actions from "../../store/actions/index";
+import { RootState } from '../../../store/store';
+import * as actions from "../../../store/actions/index";
 
 interface props {
     maxFiles: number
@@ -24,7 +24,7 @@ const LoadRecents: React.FC<props> = props => {
     });
 
 
-    const onGetFiles = useCallback(() => dispatch(actions.recoverRecentFiles(props.maxFiles)), [dispatch]);
+    const onGetFiles = useCallback((maxFiles: number) => dispatch(actions.recoverRecentFiles(maxFiles)), [dispatch]);
 
     const recoverError = useSelector(
         (state: RootState) => state.FileReducer.recoverError
@@ -36,7 +36,7 @@ const LoadRecents: React.FC<props> = props => {
     );
 
     useEffect(() => {
-        onGetFiles();
+        onGetFiles(props.maxFiles);
     }, [props.maxFiles, onGetFiles]);
 
 

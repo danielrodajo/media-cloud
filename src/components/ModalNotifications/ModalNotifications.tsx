@@ -23,11 +23,13 @@ const ModalNotifications: React.SFC<Props> = props => {
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
 
     const handleDenyPetition = (notificationId: string) => {
-        (API.graphql(graphqlOperation(Mutations.updateFriendRequest, {input: {id: notificationId, processed: true}})) as Promise<any>)
+        (API.graphql(graphqlOperation(Mutations.deleteFriendRequest, {input: {id: notificationId}})) as Promise<any>)
         .then(e => {
             deleteNotification(notificationId);
         })
     }
+
+    const addFriend = (friend: any) => dispatch(actions.addFriend(friend));
     
     const handleCheckPetition = (notification: any) => {
         //Puesto que GraphQL no admite de momento relaciones a sí mismas, se tiene que crear una entidad Friend secundaria para hacer este proceso
@@ -37,12 +39,15 @@ const ModalNotifications: React.SFC<Props> = props => {
             //Se crea el amigo de B a A
             (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.to.id, id: notification.from.id+notification.to.id, name: notification.from.name}})) as Promise<any>)
             .then((e:any) => {
+                //Agregamos localmente el nuevo amigo
+                addFriend({
+                    id: notification.from.id,
+                    name: notification.from.name
+                });
                 //Finalmente, se hace el mismo proceso de "denegarla" (eliminarla de la store de Redux y checkearla)
                 handleDenyPetition(notification.id);
             })
-        })
-
-        
+        })   
     }
 
     return (
