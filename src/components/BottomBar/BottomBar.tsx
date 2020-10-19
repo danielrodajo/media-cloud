@@ -136,7 +136,7 @@ const BottomBar: React.FC<props> = props => {
               <IonLabel>Busqueda</IonLabel>
             </IonTabButton>
             <IonTabButton>
-              <IonItem button onClick={() => setShowModal(true)} >
+              <IonItem lines="none" button onClick={() => setShowModal(true)} >
                   <IonIcon icon={addCircleOutline}/> 
               </IonItem>
             </IonTabButton>
