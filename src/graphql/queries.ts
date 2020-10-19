@@ -22,14 +22,12 @@ export const getUser = /* GraphQL */ `
       toPetition {
         items {
           id
-          processed
         }
         nextToken
       }
       fromPetition {
         items {
           id
-          processed
         }
         nextToken
       }
@@ -123,7 +121,6 @@ export const getFriendRequest = /* GraphQL */ `
   query GetFriendRequest($id: ID!) {
     getFriendRequest(id: $id) {
       id
-      processed
       to {
         id
         name
@@ -174,7 +171,6 @@ export const listFriendRequests = /* GraphQL */ `
     listFriendRequests(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        processed
         to {
           id
           name

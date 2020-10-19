@@ -30,7 +30,7 @@ const Home: React.FC = () => {
         </IonSegment>
         {
           currentSegment === "recents" 
-          ? <LoadRecents maxFiles={10} />
+          ? <LoadRecents maxFiles={8} />
           : <LoadMyFiles />
         }
       </IonContent>

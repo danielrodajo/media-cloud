@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem } from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
@@ -20,7 +20,6 @@ interface props {
  
 const BottomBar: React.FC<props> = props => {
 
-
     const dispatch = useDispatch();
 
     const user = useSelector((state: RootState) => state.AuthReducer.user);
@@ -35,22 +34,48 @@ const BottomBar: React.FC<props> = props => {
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
     }
+
+    const getFriends = (userId: string) => dispatch(actions.getFriends(userId));
+
+    const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
     
     //Subscripcion que está a la escucha de nuevas notificaciones y, en caso de ser suyas, las agrega
     const subscriptionCreateFR = (API.graphql(
-      graphqlOperation(Subscriptions.onCreateCustomFriendRequest)
+      graphqlOperation(Subscriptions.onCreateFriendRequest)
     ) as unknown as Observable<any>).subscribe({
         next: (data) => {
-          const toUserId = data.value.data.onCreateCustomFriendRequest.to.id;
-          const processed = data.value.data.onCreateCustomFriendRequest.processed;
-          if (toUserId === user.identityId && !processed) {
-            saveNotification(data.value.data.onCreateCustomFriendRequest);
+          const toUserId = data.value.data.onCreateFriendRequest.to.id;
+          if (toUserId === user.identityId) {
+            saveNotification(data.value.data.onCreateFriendRequest);
           }
         }
     });
 
+    const subscriptionCreateFriend = (API.graphql(graphqlOperation(Subscriptions.onCreateFriend)
+    ) as unknown as Observable<any>).subscribe({
+      next: (data) => {
+        const userId = data.value.data.onCreateFriend.user.id;
+        if (userId === user.identityId) {
+          getFriends(userId);
+        }
+      }
+    });
+
+    const subscriptionDeleteFriend = (API.graphql(graphqlOperation(Subscriptions.onDeleteFriend)
+    ) as unknown as Observable<any>).subscribe({
+      next: (data) => {
+        const friendId = data.value.data.onDeleteFriend.user.id;
+        const userId = data.value.data.onDeleteFriend.id.split(friendId)[0];
+        if (userId === user.identityId) {
+          deleteFriend(friendId+userId);
+        }
+      }
+    });
+
     const handleSignOut = () => {
       subscriptionCreateFR.unsubscribe();
+      subscriptionCreateFriend.unsubscribe();
+      subscriptionDeleteFriend.unsubscribe();
       dispatch(actions.signOut());
     }
 
@@ -79,9 +104,15 @@ const BottomBar: React.FC<props> = props => {
     getNotifications(user.identityId);
 
 
+    //Poner/Quitar modo oscuro
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
+
+    useEffect(() => {
+      getFriends(user.identityId);
+    }, [])
+    
 
 
     return ( 

@@ -25,14 +25,12 @@ export const createUser = /* GraphQL */ `
       toPetition {
         items {
           id
-          processed
         }
         nextToken
       }
       fromPetition {
         items {
           id
-          processed
         }
         nextToken
       }
@@ -69,14 +67,12 @@ export const updateUser = /* GraphQL */ `
       toPetition {
         items {
           id
-          processed
         }
         nextToken
       }
       fromPetition {
         items {
           id
-          processed
         }
         nextToken
       }
@@ -113,14 +109,12 @@ export const deleteUser = /* GraphQL */ `
       toPetition {
         items {
           id
-          processed
         }
         nextToken
       }
       fromPetition {
         items {
           id
-          processed
         }
         nextToken
       }
@@ -231,7 +225,6 @@ export const createFriendRequest = /* GraphQL */ `
   ) {
     createFriendRequest(input: $input, condition: $condition) {
       id
-      processed
       to {
         id
         name
@@ -280,7 +273,6 @@ export const updateFriendRequest = /* GraphQL */ `
   ) {
     updateFriendRequest(input: $input, condition: $condition) {
       id
-      processed
       to {
         id
         name
@@ -329,7 +321,6 @@ export const deleteFriendRequest = /* GraphQL */ `
   ) {
     deleteFriendRequest(input: $input, condition: $condition) {
       id
-      processed
       to {
         id
         name

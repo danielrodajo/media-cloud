@@ -4,7 +4,7 @@ import DefaultAvatar from '../../default-images/default-avatar.png';
 import { personAddOutline } from 'ionicons/icons';
 
 interface props {
-    user: any,
+    friend: any,
     handleSendPetition: (friend: String) => void
 }
 
@@ -18,13 +18,13 @@ const UserSearch: React.FC<props> = props => {
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}
                 cssClass="my-custom-class"
-                header={"¿Quieres agregar a "+props.user.name+"?"}
+                header={"¿Quieres agregar a "+props.friend.name+"?"}
                 buttons={["No",
                     {
                     text: "Si",
                     role: "accept",
                     handler: () => {
-                        props.handleSendPetition(props.user.id);
+                        props.handleSendPetition(props.friend.id);
                     },
                     },
                 ]}
@@ -33,7 +33,7 @@ const UserSearch: React.FC<props> = props => {
                 <IonAvatar slot="start">
                     <IonImg src={DefaultAvatar} />
                 </IonAvatar>
-                <IonLabel>{props.user.name}</IonLabel>
+                <IonLabel>{props.friend.name}</IonLabel>
                 <IonIcon icon={personAddOutline}/>
             </IonItem>
         </React.Fragment>

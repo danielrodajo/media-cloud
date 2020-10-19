@@ -23,7 +23,7 @@ const ModalNotifications: React.SFC<Props> = props => {
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
 
     const handleDenyPetition = (notificationId: string) => {
-        (API.graphql(graphqlOperation(Mutations.updateFriendRequest, {input: {id: notificationId, processed: true}})) as Promise<any>)
+        (API.graphql(graphqlOperation(Mutations.deleteFriendRequest, {input: {id: notificationId}})) as Promise<any>)
         .then(e => {
             deleteNotification(notificationId);
         })
@@ -43,14 +43,11 @@ const ModalNotifications: React.SFC<Props> = props => {
                 addFriend({
                     id: notification.from.id,
                     name: notification.from.name
-
                 });
                 //Finalmente, se hace el mismo proceso de "denegarla" (eliminarla de la store de Redux y checkearla)
                 handleDenyPetition(notification.id);
             })
-        })
-
-        
+        })   
     }
 
     return (
