@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import './Friends.scss';
 import { IonPage, IonContent, IonText, IonItem } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
@@ -20,7 +20,7 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const user = useSelector((state: RootState) => state.AuthReducer.user);
 
-    const [downloading, setDownloading] = useState(false);
+    const downloading = useSelector((state: RootState) => state.FriendsReducer.downloadingFriends);
 
     const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 

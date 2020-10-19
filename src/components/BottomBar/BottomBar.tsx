@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect, Route, Link } from 'react-router-dom';
-import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
+import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem } from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
 import Home from '../../containers/home/Home';
 import Add from '../../containers/add/Add';
@@ -107,7 +107,9 @@ const BottomBar: React.FC<props> = props => {
               <IonLabel>Busqueda</IonLabel>
             </IonTabButton>
             <IonTabButton>
-              <IonIcon icon={addCircleOutline} onClick={() => setShowModal(true)} /> 
+              <IonItem button onClick={() => setShowModal(true)} >
+                  <IonIcon icon={addCircleOutline}/> 
+              </IonItem>
             </IonTabButton>
             <IonTabButton tab="Friends" href="/friends" layout={(activeTab === "Friends") ? "icon-top" : "label-hide"}>
               <IonIcon icon={peopleOutline}/> 
