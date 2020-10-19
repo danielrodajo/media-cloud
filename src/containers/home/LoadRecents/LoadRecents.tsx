@@ -24,7 +24,7 @@ const LoadRecents: React.FC<props> = props => {
     });
 
 
-    const onGetFiles = useCallback(() => dispatch(actions.recoverRecentFiles(props.maxFiles)), [dispatch]);
+    const onGetFiles = useCallback((maxFiles: number) => dispatch(actions.recoverRecentFiles(maxFiles)), [dispatch]);
 
     const recoverError = useSelector(
         (state: RootState) => state.FileReducer.recoverError
@@ -36,7 +36,7 @@ const LoadRecents: React.FC<props> = props => {
     );
 
     useEffect(() => {
-        onGetFiles();
+        onGetFiles(props.maxFiles);
     }, [props.maxFiles, onGetFiles]);
 
 

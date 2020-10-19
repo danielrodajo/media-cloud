@@ -1,7 +1,6 @@
 import * as types from '../actions/ActionTypes';
 import { updateObject } from '../../shared/utility';
 import { AuthState } from '../types';
-import { userInfo } from 'os';
 
 const initialState: AuthState = {
     user: null,

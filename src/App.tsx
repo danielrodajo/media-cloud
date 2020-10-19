@@ -22,14 +22,13 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 import BottomBar from './components/BottomBar/BottomBar';
-import Amplify, {Storage, API, graphqlOperation} from 'aws-amplify';
+import Amplify, {Storage} from 'aws-amplify';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import awsconfig from './aws-exports';
 import { RootState } from './store/store';
 import * as actions from './store/actions/index';
 import Authentication from './containers/authentication/Authentication';
-import * as Queries from './graphql/queries';
 
 
 Amplify.configure(awsconfig);
@@ -41,29 +40,29 @@ const App: React.FC<{
 }> = props => {
 
   //NO ELIMINAR DE MOMENTO, LO TENGO DE REFERENCIA 
-  async function createCustomUser() {
+  /*async function distintasOperativasConGraphQL() {
     try {
-      /*
+      
       await API.graphql(graphqlOperation(Mutations.createUser, {input: {
         id: "daniel",
         darkMode: true
       }}));
-      */
+      
      const user:any = await API.graphql(graphqlOperation(Queries.getUser, {id: "d"}));
       console.log(user.data.getUser);
-      //console.log(await API.graphql(graphqlOperation(Queries.listUsers)))
-      //console.log("USUARIO CREADO")
-      //await API.graphql(graphqlOperation(Mutations.updateUser, {input: {
-      //  id: "335b17db-32b9-4734-8ee2-066a82f520cc",
-      //  friends: []
-      //}}))
-      //const user: any  = await API.graphql(graphqlOperation(Queries.getUser, {id: "daxniel"}));
-      //console.log(user);
-      //await API.graphql(graphqlOperation(Mutations.updateUser, {input: {id: user.data.getUser.id, darkMode: true}}))
+      console.log(await API.graphql(graphqlOperation(Queries.listUsers)))
+      console.log("USUARIO CREADO")
+      await API.graphql(graphqlOperation(Mutations.updateUser, {input: {
+        id: "335b17db-32b9-4734-8ee2-066a82f520cc",
+        friends: []
+      }}))
+      const user: any  = await API.graphql(graphqlOperation(Queries.getUser, {id: "daxniel"}));
+      console.log(user);
+      await API.graphql(graphqlOperation(Mutations.updateUser, {input: {id: user.data.getUser.id, darkMode: true}}))
     }catch (error) {
       console.log(error)
     }
-  }
+  }*/
   
 
   const { onTryAutoSignup } = props;

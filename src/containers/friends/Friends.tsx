@@ -42,7 +42,7 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     useEffect(() => {
         onGetFriends(user.identityId);
-    }, [onGetFriends])
+    }, [user.identityId, onGetFriends])
 
     return (
         <IonPage>

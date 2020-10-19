@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IonPage, IonContent, IonToast } from '@ionic/react';
 import ToolbarSearch from '../../components/ToolBarSearch/ToolBarSearch';
-import JsonUsers from '../../testing/Users.json';
 import UserSearch from '../../components/UserSearch/UserSearch';
 import * as Mutations from '../../graphql/mutations';
 import * as Queries from '../../graphql/queries';

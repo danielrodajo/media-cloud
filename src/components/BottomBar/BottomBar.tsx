@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect, Route, Link } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem } from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
 import Home from '../../containers/home/Home';
@@ -36,6 +36,7 @@ const BottomBar: React.FC<props> = props => {
       setActiveTab(event.detail.tab);
     }
     
+    //Subscripcion que está a la escucha de nuevas notificaciones y, en caso de ser suyas, las agrega
     const subscriptionCreateFR = (API.graphql(
       graphqlOperation(Subscriptions.onCreateCustomFriendRequest)
     ) as unknown as Observable<any>).subscribe({
@@ -47,8 +48,6 @@ const BottomBar: React.FC<props> = props => {
           }
         }
     });
-
-    //const subscriptionCreateFriend = (API.graphql);
 
     const handleSignOut = () => {
       subscriptionCreateFR.unsubscribe();
@@ -72,14 +71,13 @@ const BottomBar: React.FC<props> = props => {
           });
       })
 
-     
       //Actualizamos en Redux Local
       switchDarkMode((darkMode ? "1" : "0"));
     }
 
-    useEffect(() => {
-      getNotifications(user.identityId);
-    }, []);
+    //Descargamos notificaciones iniciales
+    getNotifications(user.identityId);
+
 
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
