@@ -8,8 +8,8 @@ import {
 import React, { useState } from "react";
 import "./Home.scss";
 import Toolbar from "../../components/ToolBar/Toolbar";
-import LoadRecents from "../../components/LoadRecents/LoadRecents";
-import LoadMyFiles from "../../components/LoadMyFiles/LoadMyFiles";
+import LoadRecents from "./LoadRecents/LoadRecents";
+import LoadMyFiles from "./LoadMyFiles/LoadMyFiles";
 
 const Home: React.FC = () => {
 

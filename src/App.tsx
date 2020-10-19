@@ -28,7 +28,7 @@ import { connect } from 'react-redux';
 import awsconfig from './aws-exports';
 import { RootState } from './store/store';
 import * as actions from './store/actions/index';
-import Authentication from './pages/authentication/Authentication';
+import Authentication from './containers/authentication/Authentication';
 import * as Queries from './graphql/queries';
 
 

@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { Redirect, Route, Link } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
-import Home from '../../pages/home/Home';
-import Add from '../../pages/add/Add';
-import Profile from '../../pages/profile/Profile';
-import Search from '../../pages/search/Search';
+import Home from '../../containers/home/Home';
+import Add from '../../containers/add/Add';
+import Profile from '../../containers/profile/Profile';
+import Search from '../../containers/search/Search';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import * as actions from "../../store/actions/index";
 import * as Subscriptions from '../../graphql/subscriptions';
 import { Observable } from 'redux';
-import Friends from '../../pages/friends/Friends';
+import Friends from '../../containers/friends/Friends';
 
 interface props {
   default: string;
@@ -36,25 +36,22 @@ const BottomBar: React.FC<props> = props => {
       setActiveTab(event.detail.tab);
     }
     
-    const subscription = (API.graphql(
+    const subscriptionCreateFR = (API.graphql(
       graphqlOperation(Subscriptions.onCreateCustomFriendRequest)
     ) as unknown as Observable<any>).subscribe({
         next: (data) => {
-          console.log(data)
           const toUserId = data.value.data.onCreateCustomFriendRequest.to.id;
           const processed = data.value.data.onCreateCustomFriendRequest.processed;
-
-          console.log(toUserId)
-          console.log(processed)
           if (toUserId === user.identityId && !processed) {
-            console.log("EXECUTED")
             saveNotification(data.value.data.onCreateCustomFriendRequest);
           }
         }
     });
 
+    //const subscriptionCreateFriend = (API.graphql);
+
     const handleSignOut = () => {
-      subscription.unsubscribe();
+      subscriptionCreateFR.unsubscribe();
       dispatch(actions.signOut());
     }
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
-import CustomSpinner from '../CustomSpinner/CustomSpinner';
-import { File as CustomFile } from "../../store/types";
-import FileBox from '../FileBox/FileBox';
+import CustomSpinner from '../../../components/CustomSpinner/CustomSpinner';
+import { File as CustomFile } from "../../../store/types";
+import FileBox from '../../../components/FileBox/FileBox';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
-import * as actions from "../../store/actions/index";
+import { RootState } from '../../../store/store';
+import * as actions from "../../../store/actions/index";
 
 interface props {
     maxFiles: number
