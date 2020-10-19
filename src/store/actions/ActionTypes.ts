@@ -53,6 +53,7 @@ export const AUTH_VERIFY_NOK = 'AUTH_VERIFY_NOK';
 export const AUTH_SWITCH_COMPONENT = 'AUTH_CHANGE_COMPONENT';
 
 export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';
+export const AUTH_SIGNOUT_OK = 'AUTH_SIGNOUT_OK';
 export const AUTH_SIGNOUT_NOK = 'AUTH_SIGNOUT_NOK';
 
 export const SWITCH_DARKMODE = 'SWITCH_DARKMODE';
@@ -238,6 +239,9 @@ interface RemoveFileNokAction {
 
 interface AuthSignUpAction {
     type: typeof AUTH_SIGNUP
+}
+interface AuthSignUpOkAction {
+    type: typeof AUTH_SIGNUP_OK
     payload: AuthState
 }
 interface AuthSignUpNokAction {
@@ -247,6 +251,9 @@ interface AuthSignUpNokAction {
 
 interface AuthSignInAction {
     type: typeof AUTH_SIGNIN
+}
+interface AuthSignInOkAction {
+    type: typeof AUTH_SIGNIN_OK
     payload: any
 }
 interface AuthSignInNokAction {
@@ -256,6 +263,9 @@ interface AuthSignInNokAction {
 
 interface AuthForgotPasswordAction {
     type: typeof AUTH_FORGOT_PASSWORD
+}
+interface AuthForgotPasswordOkAction {
+    type: typeof AUTH_FORGOT_PASSWORD_OK
     payload: string
 }
 interface AuthForgotPasswordNokAction {
@@ -265,6 +275,9 @@ interface AuthForgotPasswordNokAction {
 
 interface AuthForgotPasswordSubmitAction {
     type: typeof AUTH_FORGOT_PASSWORD_SUBMIT
+}
+interface AuthForgotPasswordSubmitOkAction {
+    type: typeof AUTH_FORGOT_PASSWORD_SUBMIT_OK
     payload: any
 }
 interface AuthForgotPasswordSubmitNokAction {
@@ -275,6 +288,9 @@ interface AuthForgotPasswordSubmitNokAction {
 interface AuthSignOutAction {
     type: typeof AUTH_SIGNOUT
 }
+interface AuthSignOutOkAction {
+    type: typeof AUTH_SIGNOUT_OK
+}
 interface AuthSignOutNokAction {
     type: typeof AUTH_SIGNOUT_NOK
     payload: any
@@ -282,6 +298,9 @@ interface AuthSignOutNokAction {
 
 interface VerifyAction {
     type: typeof AUTH_VERIFY
+}
+interface VerifyOkAction {
+    type: typeof AUTH_VERIFY_OK
     payload: number
 }
 interface VerifyNokAction {
@@ -301,7 +320,7 @@ interface SwitchDarkModeAction {
 
 export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
-                            AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
-                            AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
+                            AuthSignInAction|AuthSignInOkAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutOkAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpOkAction|AuthSignUpNokAction | VerifyAction|VerifyOkAction|VerifyNokAction | SwitchComponentAction |
+                            AuthForgotPasswordAction|AuthForgotPasswordOkAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitOkAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
                             RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
                             RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction

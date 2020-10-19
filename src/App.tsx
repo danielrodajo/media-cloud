@@ -24,11 +24,12 @@ import './theme/variables.css';
 import BottomBar from './components/BottomBar/BottomBar';
 import Amplify, {Storage} from 'aws-amplify';
 import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import awsconfig from './aws-exports';
 import { RootState } from './store/store';
 import * as actions from './store/actions/index';
 import Authentication from './containers/authentication/Authentication';
+import AuthLoading from './components/AuthLoading/AuthLoading';
 
 
 Amplify.configure(awsconfig);
@@ -82,9 +83,12 @@ const App: React.FC<{
     )
   }
 
+  const loadingAuth = useSelector((state: RootState) => state.AuthReducer.loading);
+
   return (
   <IonApp>
     <IonReactRouter>
+      {loadingAuth ? <AuthLoading showLoading={loadingAuth}/> : null}
       {routes}
     </IonReactRouter>
   </IonApp>

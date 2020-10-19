@@ -21,6 +21,9 @@ async function addIfNewUser(userData: any) {
 //Iniciar sesion
 export const signIn = (username: string, password: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_SIGNIN
+        });
         Auth.signIn({ username, password })
         .then(() => {
             Auth.currentAuthenticatedUser({
@@ -31,9 +34,8 @@ export const signIn = (username: string, password: string) => {
                 .then(e => {
                     data = {...data, identityId: e.identityId}
                     addIfNewUser(data);
-
                     dispatch({
-                        type: types.AUTH_SIGNIN,
+                        type: types.AUTH_SIGNIN_OK,
                         payload: data
                     })
                 })
@@ -67,6 +69,9 @@ export const signIn = (username: string, password: string) => {
 //Registrar usuario
 export const signUp = (username: string, nickname: string, password: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_SIGNUP
+        });
         Auth.signUp({
             username,
             password,
@@ -78,7 +83,7 @@ export const signUp = (username: string, nickname: string, password: string) => 
             validationData: []
           })
             .then(()=> dispatch({
-                type: types.AUTH_SIGNUP,
+                type: types.AUTH_SIGNUP_OK,
                 payload: "verify"
             })) 
             .catch(err => {
@@ -95,11 +100,14 @@ export const signUp = (username: string, nickname: string, password: string) => 
 //Verificar creacion de usuario
 export const verify = (username: string, code: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_VERIFY
+        });
         Auth.confirmSignUp(username, code, {
             forceAliasCreation: true
           })
             .then(() => dispatch({
-                type: types.AUTH_VERIFY,
+                type: types.AUTH_VERIFY_OK,
                 payload: "signin"
             }))
             .catch(err => {
@@ -114,9 +122,12 @@ export const verify = (username: string, code: string) => {
 
 export const forgotPassword = (username: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_FORGOT_PASSWORD
+        })
         Auth.forgotPassword(username)
         .then(() => dispatch({
-            type: types.AUTH_FORGOT_PASSWORD,
+            type: types.AUTH_FORGOT_PASSWORD_OK,
             payload: "fpsubmit"
         }))
         .catch(err => {
@@ -131,9 +142,12 @@ export const forgotPassword = (username: string) => {
 
 export const forgotPasswordSubmit = (username: string, password: string, code: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_FORGOT_PASSWORD_SUBMIT
+        })
         Auth.forgotPasswordSubmit(username, code, password)
         .then(() => dispatch({
-            type: types.AUTH_FORGOT_PASSWORD_SUBMIT,
+            type: types.AUTH_FORGOT_PASSWORD_SUBMIT_OK,
             payload: "signin"
         }))
         .catch(err => {
@@ -149,9 +163,12 @@ export const forgotPasswordSubmit = (username: string, password: string, code: s
 //Cerrar sesion
 export const signOut = () => { 
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_SIGNOUT
+        })
         Auth.signOut({ global: true })
             .then(() => dispatch({
-                type: types.AUTH_SIGNOUT
+                type: types.AUTH_SIGNOUT_OK
             }))
             .catch(err => {
                 console.log(err);

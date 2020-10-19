@@ -27,6 +27,7 @@ export interface NotificationState {
 
 export interface AuthState {
     user: any | null;
+    loading: boolean;
     status: string;
     signUpError: Object | null;
     signInError: Object | null;
