@@ -10,6 +10,7 @@ const initialState: NotificationState = {
 
 const recoverNotifications = (state: NotificationState) => {
     return updateObject( state, {
+        recoverNotificationError: null
     });
 }
 
@@ -27,6 +28,7 @@ const recoverNotificationsFail = (state: NotificationState, payload: Error) => {
 
 const saveNotification = (state: NotificationState) => {
     return updateObject( state, {
+        saveNotificationError: null
     });
 }
 

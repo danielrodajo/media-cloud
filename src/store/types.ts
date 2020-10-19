@@ -38,7 +38,6 @@ export interface AuthState {
 
 export interface FileState {
     files: File[];
-    createFolderError: Object | null;
     recoverError: Object | null;
     uploadError: Object | null;
     removeError: Object | null;

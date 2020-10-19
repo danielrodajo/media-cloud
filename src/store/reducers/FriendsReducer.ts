@@ -10,6 +10,7 @@ const initialState: FriendsState = {
 
 const getFriends = (state: FriendsState) => {
     return updateObject( state, {
+        recoverFriendsError: null,
         downloadingFriends: true
     })
 }
