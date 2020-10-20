@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FileBox.css';
+import './FileBox.scss';
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect } from '@ionic/react';
 import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
 import { formatDisplayImage } from '../../shared/utility';
@@ -24,9 +24,10 @@ const FileBox: React.FC<props> = props => {
                 </IonCardHeader>
 
                 <IonCardContent>
-                    <IonCardSubtitle className="ion-text-center">
+                    <IonCardSubtitle className="ion-text-center hide-overflow-text">
                     {
-                        (props.file.name.length > 17) ? props.file.name.substring(0,14)+"..." : props.file.name
+                        //(props.file.name.length > 17) ? props.file.name.substring(0,14)+"..." : props.file.name
+                        props.file.name
                     }
                     </IonCardSubtitle>
                 </IonCardContent>

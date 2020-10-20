@@ -208,7 +208,7 @@ export const authCheckState = () => {
             .then(e => {
                 data = {...data, identityId: e.identityId}
                 dispatch({
-                    type: types.AUTH_SIGNIN,
+                    type: types.AUTH_SIGNIN_OK,
                     payload: data
                 })
             })           

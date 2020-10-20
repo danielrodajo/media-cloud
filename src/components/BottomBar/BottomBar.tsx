@@ -103,15 +103,13 @@ const BottomBar: React.FC<props> = props => {
     //Descargamos notificaciones iniciales
     getNotifications(user.identityId);
 
+    //Descargamos amigos iniciales
+    getFriends(user.identityId);
 
     //Poner/Quitar modo oscuro
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
-
-    useEffect(() => {
-      getFriends(user.identityId);
-    }, [])
     
 
 

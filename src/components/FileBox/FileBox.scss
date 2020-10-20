@@ -2,10 +2,10 @@
     height: 20vw;
 }
 
-.hide-text {
+.hide-overflow-text {
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: clip;
+    text-overflow: ellipsis;
 }
 
 .my-card {

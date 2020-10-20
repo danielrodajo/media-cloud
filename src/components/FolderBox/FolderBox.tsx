@@ -26,9 +26,9 @@ const FolderBox: React.FC<props> = props => {
                 </IonCardHeader>
 
                 <IonCardContent>
-                    <IonCardSubtitle className="ion-text-center">
+                    <IonCardSubtitle className="ion-text-center hide-overflow-text">
                     {
-                        (formatName(props.path).length > 17) ? formatName(props.path).substring(0,14)+"..." : formatName(props.path)
+                        formatName(props.path)
                     }
                     </IonCardSubtitle>
                 </IonCardContent>

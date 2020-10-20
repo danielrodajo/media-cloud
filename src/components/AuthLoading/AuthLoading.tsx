@@ -12,6 +12,7 @@ const AuthLoading: React.SFC<AuthLoadingProps> = props => {
         cssClass='my-custom-class'
         isOpen={props.showLoading}
         message={'Por favor, espera...'}
+        duration={10000}
       />
     );
 }
