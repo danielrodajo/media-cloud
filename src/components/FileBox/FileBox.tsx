@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './FileBox.scss';
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect } from '@ionic/react';
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect, IonSpinner } from '@ionic/react';
 import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
 import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
+import DefaultFile from '../../default-images/default-file.png';
 
 interface props {
     file: File;
@@ -14,13 +15,16 @@ interface props {
 const FileBox: React.FC<props> = props => {
 
     const [showPopover, setShowPopover] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     return (
         <React.Fragment>
             <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} file={props.file}/>
             <IonCard className="my-card ion-activatable ripple-parent" onClick={() => setShowPopover(true)}>
                 <IonCardHeader>
-                    <IonImg className="default-img" src={formatDisplayImage(props.file.name, props.file.url)} />  
+                    <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
+                    <IonImg className={loading ? "hide-img" : "default-img"} onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
+                     src={formatDisplayImage(props.file.name, props.file.url)} />  
                 </IonCardHeader>
 
                 <IonCardContent>

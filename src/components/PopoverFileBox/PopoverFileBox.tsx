@@ -1,7 +1,7 @@
-import React from 'react';
-import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { cloudDownloadOutline, trashOutline } from 'ionicons/icons';
-import './PopoverFileBox.css';
+import './PopoverFileBox.scss';
 import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
 
@@ -19,6 +19,7 @@ const PopoverFileBox: React.FC<props> = props => {
         props.remove(props.file.key);
         props.setShowPopover(false);
      }
+     const [loading, setLoading] = useState(true);
 
     return (
         <IonPopover
@@ -27,8 +28,10 @@ const PopoverFileBox: React.FC<props> = props => {
             onDidDismiss={e => props.setShowPopover(false)}
         >
             <IonCard>
-                <IonCardHeader>
-                    <IonImg className="popover-img" src={formatDisplayImage(props.file.name, props.file.url)} />  
+                <IonCardHeader className="center-spinner">
+                    <IonSpinner color="tertiary" className={!loading ? "hide-img" : "popover-spinner"} />
+                    <IonImg  onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
+                     className={loading ? "hide-img" : "popover-img"} src={formatDisplayImage(props.file.name, props.file.url)} />  
                 </IonCardHeader>
 
                 <IonCardContent>

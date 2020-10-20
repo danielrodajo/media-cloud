@@ -124,7 +124,7 @@ const LoadMyFiles = () => {
                         </IonCol>
                         <IonCol size="8">
                           <IonItem lines="none">
-                            <IonTitle className="ion-text-center">
+                            <IonTitle className="ion-text-center hide-overflow-text">
                               {currentPath.substring(1, currentPath.length)}
                             </IonTitle>
                           </IonItem>
