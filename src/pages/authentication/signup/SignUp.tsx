@@ -1,6 +1,6 @@
 import React from 'react';
 import './SignUp.css';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
@@ -73,9 +73,9 @@ const SignUp: React.FC<props> = props => {
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
                             {(messageError) ? 
                             <IonItem lines="none">
-                                <IonLabel>{errorManagement(messageError.message)}</IonLabel>
+                                <IonText>{errorManagement(messageError.message)}</IonText>
                             </IonItem> 
-                            : null}
+                            : <IonItem lines="none"><IonText><br/></IonText></IonItem>}
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
                                 <IonInput type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    

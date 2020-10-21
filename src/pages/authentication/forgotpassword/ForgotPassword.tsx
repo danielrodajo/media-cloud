@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
 import './ForgotPassword.css';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
@@ -56,9 +56,9 @@ const ForgotPassword: React.FC<props> = props => {
                             Se le enviará un mensaje al correo de <br/>su cuenta para recuperar la contraseña.
                             {(messageError) ? 
                             <IonItem lines="none">
-                                <IonLabel>{errorManagement(messageError.code)}</IonLabel>
+                                <IonText>{errorManagement(messageError.code)}</IonText>
                             </IonItem> 
-                            : null}
+                            : <IonItem lines="none"><IonText><br/></IonText></IonItem>}
                             <IonItem lines="inset" className="ion-margin-bottom">
                                 <IonLabel position="floating">Introduzca su Email</IonLabel>
                                 <IonInput type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>

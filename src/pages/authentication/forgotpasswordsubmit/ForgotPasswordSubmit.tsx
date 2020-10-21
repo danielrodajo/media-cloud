@@ -31,7 +31,7 @@ const ForgotPasswordSubmit: React.FC<props> = props => {
                         </IonCardHeader>
 
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center ion-margin-top">
-                            {(messageError) ? <span>{messageError.message}</span> : null}
+                            {(messageError) ? <span>{messageError.message}</span> : }
                             Se le enviará un mensaje al correo de <br/>su cuenta para recuperar la contraseña.
                             <IonItem lines="inset" className="ion-margin-bottom">
                                 <IonLabel position="floating">Introducir Pin</IonLabel>

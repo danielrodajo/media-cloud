@@ -36,7 +36,7 @@ const SignIn: React.FC<props> = props => {
                 break;
 
             case "NotAuthorizedException":
-                message = "Usuario y/o contraseña incorrecto.";
+                message = 'Usuario y/o contraseña erroneos.'
                 break;
             
         }
@@ -59,8 +59,8 @@ const SignIn: React.FC<props> = props => {
 
     return (
         <IonContent className="ion-padding" color="light">
-            <IonGrid className="max-height">
-                <IonRow className="ion-justify-content-center max-height">
+            <IonGrid className="max-height max-width">
+                <IonRow className="ion-justify-content-center max-height max-width">
                     <IonCard>
                         <IonCardHeader>        
                             <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
@@ -68,9 +68,9 @@ const SignIn: React.FC<props> = props => {
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
                             {(messageError) ? 
                             <IonItem lines="none">
-                                <IonLabel>{errorManagement(messageError.name)}</IonLabel>
+                                <IonText>{errorManagement(messageError.name)}</IonText>
                             </IonItem> 
-                            : null}
+                            : <IonItem lines="none"><IonText><br/></IonText></IonItem> }
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
                                 <IonInput ref={inputEmail} type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
