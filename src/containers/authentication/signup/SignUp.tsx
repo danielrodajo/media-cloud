@@ -23,40 +23,22 @@ const SignUp: React.FC<props> = props => {
     };
 
     const errorManagement = (messageError: string) => {
-
-        let message = "";
-
         switch (messageError) {
             case "Username should be an email.":
-                message = "El correo no es valido.";
-                break;
+                return "El correo no es valido.";
 
             case "1 validation error detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6":
-                message = "Contraseña no valida,debe tener 6 caracteres o mas.";
-                break;
+                return "Contraseña no valida,debe tener 6 caracteres o mas.";
 
             case "An account with the given email already exists.":
-                message = "Este correo ya esta registrado";
-                break;
+                return "Este correo ya esta registrado";
             
+            default: return "Ha surgido un error inesperado.";
         }
- 
-        return message;
     }
 
     const disableButton = (inputEmail: string, inputName: string, inputPass: string) => {
-
-        let disable = true;
-
-        if (inputEmail !== ""){
-            if(inputPass !== ""){
-                if(inputName !== ""){
-                    disable = false;
-                }
-            }
-        }
-
-        return disable;
+        return !(inputEmail !== "" && inputPass !== "" && inputName !== "");
     }
 
 

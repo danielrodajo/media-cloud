@@ -27,34 +27,19 @@ const SignIn: React.FC<props> = props => {
     };
 
     const errorManagement = (name: string) => {
-
-        let message = "";
-
         switch (name) {
             case "UserNotFoundException":
-                message = "Este usuario no existe.";
-                break;
+                return "Este usuario no existe.";
 
             case "NotAuthorizedException":
-                message = 'Usuario y/o contraseña erroneos.'
-                break;
-            
+                return 'Usuario y/o contraseña erroneos.';
+                
+            default: return "Ha surgido un error inesperado.";
         }
- 
-        return message;
     }
 
     const disableButton = (inputEmail: string, inputPass: string) => {
-
-        let disable = true;
-
-        if (inputEmail !== ""){
-            if(inputPass !== ""){
-                disable = false;
-            }
-        }
-
-        return disable;
+        return !(inputEmail != "" && inputPass !== "");
     }
 
     return (
