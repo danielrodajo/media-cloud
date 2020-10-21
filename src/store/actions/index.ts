@@ -18,6 +18,7 @@ export {
     forgotPasswordSubmit,
     switchComponent,
     authCheckState,
+    switchDarkMode,
 } from './AuthManager';
 
 export {
@@ -25,3 +26,15 @@ export {
     removeFolder,
     changeFolder,
 } from './FolderManager';
+
+export {
+    recoverNotifications,
+    saveNotification,
+    deleteNotification,
+} from './NotificationManager';
+
+export {
+    getFriends,
+    deleteFriend,
+    addFriend,
+} from './FriendsManager';

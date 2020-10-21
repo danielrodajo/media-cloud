@@ -13,9 +13,9 @@ const DisplaySelectFile: React.FC<props> = props => {
         <IonGrid className="ion-no-margin ion-margin-start">
             <IonRow>
                 <IonCol size="6">
-                    <IonText className="fullheight xc">
+                    <IonText className="fullheight xc hide-overflow-text">
                         {
-                            (props.file.name.length > 25) ? props.file.name.substring(0,22)+"..." : props.file.name
+                            props.file.name
                         }
                     </IonText>
                 </IonCol>

@@ -53,8 +53,106 @@ export const AUTH_VERIFY_NOK = 'AUTH_VERIFY_NOK';
 export const AUTH_SWITCH_COMPONENT = 'AUTH_CHANGE_COMPONENT';
 
 export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';
+export const AUTH_SIGNOUT_OK = 'AUTH_SIGNOUT_OK';
 export const AUTH_SIGNOUT_NOK = 'AUTH_SIGNOUT_NOK';
 
+export const SWITCH_DARKMODE = 'SWITCH_DARKMODE';
+
+export const RECOVER_NOTIFICATION = "RECOVER_NOTIFICATION";
+export const RECOVER_NOTIFICATION_OK = "RECOVER_NOTIFICATION_OK";
+export const RECOVER_NOTIFICATION_NOK = "RECOVER_NOTIFICATION_NOK";
+
+export const SAVE_NOTIFICATION = "SAVE_NOTIFICATION";
+export const SAVE_NOTIFICATION_OK = "SAVE_NOTIFICATION_OK";
+export const SAVE_NOTIFICATION_NOK = "SAVE_NOTIFICATION_NOK";
+
+export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
+export const DELETE_NOTIFICATION_OK = "DELETE_NOTIFICATION_OK";
+export const DELETE_NOTIFICATION_NOK = "DELETE_NOTIFICATION_NOK";
+
+export const RECOVER_FRIENDS = "RECOVER_FRIENDS";
+export const RECOVER_FRIENDS_OK = "RECOVER_FRIENDS_OK";
+export const RECOVER_FRIENDS_NOK = "RECOVER_FRIENDS_NOK";
+
+export const DELETE_FRIEND = "DELETE_FRIEND";
+export const DELETE_FRIEND_OK = "DELETE_FRIEND_OK";
+export const DELETE_FRIEND_NOK = "DELETE_FRIEND_NOK";
+
+export const ADD_FRIEND = "ADD_FRIEND";
+export const ADD_FRIEND_OK = "ADD_FRIEND_OK";
+export const ADD_FRIEND_NOK = "ADD_FRIEND_NOK";
+
+interface addFriendAction {
+    type: typeof ADD_FRIEND
+}
+interface addFriendOkAction {
+    type: typeof ADD_FRIEND_OK
+    payload: any
+}
+interface addFriendNokAction {
+    type: typeof ADD_FRIEND_NOK
+    payload: any
+}
+
+interface deleteFriendAction {
+    type: typeof DELETE_FRIEND
+}
+interface deleteFriendOkAction {
+    type: typeof DELETE_FRIEND_OK
+    payload: any
+}
+interface deleteFriendNokAction {
+    type: typeof DELETE_FRIEND_NOK
+    payload: any
+}
+
+interface RecoverFriendsAction {
+    type: typeof RECOVER_FRIENDS
+}
+interface RecoverFriendsOkAction {
+    type: typeof RECOVER_FRIENDS_OK,
+    payload: any
+}
+interface RecoverFriendsNokAction {
+    type: typeof RECOVER_FRIENDS_NOK,
+    payload: any
+}
+
+interface DeleteNotificationAction {
+    type: typeof DELETE_NOTIFICATION
+}
+interface DeleteNotificationOkAction {
+    type: typeof DELETE_NOTIFICATION_OK,
+    payload: any
+}
+interface DeleteNotificationNokAction {
+    type: typeof DELETE_NOTIFICATION_NOK,
+    payload: any
+}
+
+interface SaveNotificationAction {
+    type: typeof SAVE_NOTIFICATION
+}
+interface SaveNotificationOkAction {
+    type: typeof SAVE_NOTIFICATION_OK,
+    payload: any
+}
+interface SaveNotificationNokAction {
+    type: typeof SAVE_NOTIFICATION_NOK,
+    payload: any
+}
+
+interface RecoverNotificationAction {
+    type: typeof RECOVER_NOTIFICATION
+}
+interface RecoverNotificationOkAction {
+    type: typeof RECOVER_NOTIFICATION_OK
+    payload: any
+}
+interface RecoverNotificationNokAction {
+    type: typeof RECOVER_NOTIFICATION_NOK
+    payload: any
+}
 
 interface ChangeFolderAction {
     type: typeof CHANGE_FOLDER,
@@ -141,6 +239,9 @@ interface RemoveFileNokAction {
 
 interface AuthSignUpAction {
     type: typeof AUTH_SIGNUP
+}
+interface AuthSignUpOkAction {
+    type: typeof AUTH_SIGNUP_OK
     payload: AuthState
 }
 interface AuthSignUpNokAction {
@@ -150,6 +251,9 @@ interface AuthSignUpNokAction {
 
 interface AuthSignInAction {
     type: typeof AUTH_SIGNIN
+}
+interface AuthSignInOkAction {
+    type: typeof AUTH_SIGNIN_OK
     payload: any
 }
 interface AuthSignInNokAction {
@@ -159,6 +263,9 @@ interface AuthSignInNokAction {
 
 interface AuthForgotPasswordAction {
     type: typeof AUTH_FORGOT_PASSWORD
+}
+interface AuthForgotPasswordOkAction {
+    type: typeof AUTH_FORGOT_PASSWORD_OK
     payload: string
 }
 interface AuthForgotPasswordNokAction {
@@ -168,6 +275,9 @@ interface AuthForgotPasswordNokAction {
 
 interface AuthForgotPasswordSubmitAction {
     type: typeof AUTH_FORGOT_PASSWORD_SUBMIT
+}
+interface AuthForgotPasswordSubmitOkAction {
+    type: typeof AUTH_FORGOT_PASSWORD_SUBMIT_OK
     payload: any
 }
 interface AuthForgotPasswordSubmitNokAction {
@@ -178,6 +288,9 @@ interface AuthForgotPasswordSubmitNokAction {
 interface AuthSignOutAction {
     type: typeof AUTH_SIGNOUT
 }
+interface AuthSignOutOkAction {
+    type: typeof AUTH_SIGNOUT_OK
+}
 interface AuthSignOutNokAction {
     type: typeof AUTH_SIGNOUT_NOK
     payload: any
@@ -185,6 +298,9 @@ interface AuthSignOutNokAction {
 
 interface VerifyAction {
     type: typeof AUTH_VERIFY
+}
+interface VerifyOkAction {
+    type: typeof AUTH_VERIFY_OK
     payload: number
 }
 interface VerifyNokAction {
@@ -197,8 +313,14 @@ interface SwitchComponentAction {
     payload: any
 }
 
+interface SwitchDarkModeAction {
+    type: typeof SWITCH_DARKMODE
+    payload: any
+}
 
 export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
-                            AuthSignInAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpNokAction | VerifyAction|VerifyNokAction | SwitchComponentAction |
-                            AuthForgotPasswordAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitNokAction
+                            AuthSignInAction|AuthSignInOkAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutOkAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpOkAction|AuthSignUpNokAction | VerifyAction|VerifyOkAction|VerifyNokAction | SwitchComponentAction |
+                            AuthForgotPasswordAction|AuthForgotPasswordOkAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitOkAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
+                            RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
+                            RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction

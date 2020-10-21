@@ -1,9 +1,29 @@
 import { Auth } from "aws-amplify";
 import * as types from './ActionTypes';
+import * as Mutations from '../../graphql/mutations';
+import * as Queries from '../../graphql/queries';
+import {API, graphqlOperation} from 'aws-amplify';
+
+async function addIfNewUser(userData: any) {
+    try {
+        const user:any = await API.graphql(graphqlOperation(Queries.getUser, {id: userData.identityId}));
+        if (user.data.getUser === null) {
+            API.graphql(graphqlOperation(Mutations.createUser, {input: {
+                id: userData.identityId,
+                name: userData.attributes.name
+            }}));
+        }
+      }catch (error) {
+        console.log(error);
+      }
+}
 
 //Iniciar sesion
 export const signIn = (username: string, password: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_SIGNIN
+        });
         Auth.signIn({ username, password })
         .then(() => {
             Auth.currentAuthenticatedUser({
@@ -13,8 +33,9 @@ export const signIn = (username: string, password: string) => {
                 Auth.currentUserCredentials()
                 .then(e => {
                     data = {...data, identityId: e.identityId}
+                    addIfNewUser(data);
                     dispatch({
-                        type: types.AUTH_SIGNIN,
+                        type: types.AUTH_SIGNIN_OK,
                         payload: data
                     })
                 })
@@ -28,11 +49,18 @@ export const signIn = (username: string, password: string) => {
             })
         })         
         .catch(err => {
-            console.log(err);
-            dispatch({
-                type: types.AUTH_SIGNIN_NOK,
-                payload: err
-            })
+            if (err.code === "UserNotConfirmedException") {
+                dispatch({
+                    type: types.AUTH_SWITCH_COMPONENT,
+                    payload: "verify"
+                });
+            } else {
+                console.log(err);
+                dispatch({
+                    type: types.AUTH_SIGNIN_NOK,
+                    payload: err
+                })
+            }
         });
     }
 }
@@ -41,17 +69,21 @@ export const signIn = (username: string, password: string) => {
 //Registrar usuario
 export const signUp = (username: string, nickname: string, password: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_SIGNUP
+        });
         Auth.signUp({
             username,
             password,
             attributes: { 
-                name: nickname
+                name: nickname,
+                "custom:darkMode": "0"
               // agregar mas atributos personalizados
             },
             validationData: []
           })
             .then(()=> dispatch({
-                type: types.AUTH_SIGNUP,
+                type: types.AUTH_SIGNUP_OK,
                 payload: "verify"
             })) 
             .catch(err => {
@@ -68,11 +100,14 @@ export const signUp = (username: string, nickname: string, password: string) => 
 //Verificar creacion de usuario
 export const verify = (username: string, code: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_VERIFY
+        });
         Auth.confirmSignUp(username, code, {
             forceAliasCreation: true
           })
             .then(() => dispatch({
-                type: types.AUTH_VERIFY,
+                type: types.AUTH_VERIFY_OK,
                 payload: "signin"
             }))
             .catch(err => {
@@ -87,9 +122,12 @@ export const verify = (username: string, code: string) => {
 
 export const forgotPassword = (username: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_FORGOT_PASSWORD
+        })
         Auth.forgotPassword(username)
         .then(() => dispatch({
-            type: types.AUTH_FORGOT_PASSWORD,
+            type: types.AUTH_FORGOT_PASSWORD_OK,
             payload: "fpsubmit"
         }))
         .catch(err => {
@@ -104,9 +142,12 @@ export const forgotPassword = (username: string) => {
 
 export const forgotPasswordSubmit = (username: string, password: string, code: string) => {
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_FORGOT_PASSWORD_SUBMIT
+        })
         Auth.forgotPasswordSubmit(username, code, password)
         .then(() => dispatch({
-            type: types.AUTH_FORGOT_PASSWORD_SUBMIT,
+            type: types.AUTH_FORGOT_PASSWORD_SUBMIT_OK,
             payload: "signin"
         }))
         .catch(err => {
@@ -122,9 +163,12 @@ export const forgotPasswordSubmit = (username: string, password: string, code: s
 //Cerrar sesion
 export const signOut = () => { 
     return (dispatch: any) => {
+        dispatch({
+            type: types.AUTH_SIGNOUT
+        })
         Auth.signOut({ global: true })
             .then(() => dispatch({
-                type: types.AUTH_SIGNOUT
+                type: types.AUTH_SIGNOUT_OK
             }))
             .catch(err => {
                 console.log(err);
@@ -145,6 +189,13 @@ export const switchComponent = (component: string) => {
     }
 }
 
+export const switchDarkMode = (darkmode: any) => {
+    return {
+        type: types.SWITCH_DARKMODE,
+        payload: darkmode
+    }
+}
+
 
 //Revisa si te logeaste antes, para acceder directamente a la aplicacion
 export const authCheckState = () => {
@@ -152,10 +203,22 @@ export const authCheckState = () => {
         Auth.currentAuthenticatedUser({
             bypassCache: false 
         })
-        .then(data => dispatch({
-            type: types.AUTH_SIGNIN,
-            payload: data
-        }))
-        .catch(err => console.log(err))
+        .then(data => {
+            Auth.currentUserCredentials()
+            .then(e => {
+                data = {...data, identityId: e.identityId}
+                dispatch({
+                    type: types.AUTH_SIGNIN_OK,
+                    payload: data
+                })
+            })           
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.AUTH_SIGNIN_NOK,
+                payload: err
+            })
+        });
     }
 }

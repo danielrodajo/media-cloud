@@ -1,0 +1,25 @@
+.default-img {
+    height: 20vw;
+}
+
+.default-spinner {
+    height: 18.9vw;
+}
+
+.hide-overflow-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.my-card {
+    margin-left: 3vw;
+    margin-right: 1vw;
+    width: 45% !important;
+    float: left;
+}
+
+.hide-img {
+    opacity: 0;
+    position: absolute;
+}

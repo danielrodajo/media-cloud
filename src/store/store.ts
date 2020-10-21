@@ -3,8 +3,10 @@ import thunk from 'redux-thunk';
 import FileReducer from './reducers/FileReducer';
 import AuthReducer from './reducers/AuthReducer';
 import FolderReducer from './reducers/FolderReducer';
+import NotificationReducer from './reducers/NotificationReducer';
+import FriendsReducer from './reducers/FriendsReducer';
 import * as types from './actions/ActionTypes';
-import { FileState, AuthState, FolderState } from './types';
+import { FileState, AuthState, FolderState, NotificationState, FriendsState } from './types';
 
 declare global {
     interface Window {
@@ -16,9 +18,11 @@ const appReducer = combineReducers({
     FileReducer : FileReducer,
     AuthReducer : AuthReducer,
     FolderReducer: FolderReducer,
+    NotificationReducer: NotificationReducer,
+    FriendsReducer: FriendsReducer,
 });
 
-const rootReducer = (state: CombinedState<{ FileReducer: FileState; AuthReducer: AuthState; FolderReducer: FolderState }> | undefined, action: AnyAction) => {
+const rootReducer = (state: CombinedState<{ FileReducer: FileState; AuthReducer: AuthState; FolderReducer: FolderState; NotificationReducer: NotificationState; FriendsReducer: FriendsState }> | undefined, action: AnyAction) => {
     if (action.type === types.AUTH_SIGNOUT) {
         state = undefined;
     }

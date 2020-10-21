@@ -30,6 +30,7 @@ const recoverFail = (state: FolderState, payload: Error) => {
 
 const createFolder = (state: FolderState) => {
     return updateObject( state, {
+        createFolderError: null,
         creating: true,
         createSuccess: false,
     });

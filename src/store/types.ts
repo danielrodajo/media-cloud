@@ -13,8 +13,21 @@ export interface File {
     name: string;
 }
 
+export interface FriendsState {
+    friends: any | null;
+    recoverFriendsError: Object | null;
+    downloadingFriends: boolean;
+}
+
+export interface NotificationState {
+    notifications: any | null;
+    recoverNotificationError: Object | null;
+    saveNotificationError: Object | null;
+}
+
 export interface AuthState {
     user: any | null;
+    loading: boolean;
     status: string;
     signUpError: Object | null;
     signInError: Object | null;
@@ -26,7 +39,6 @@ export interface AuthState {
 
 export interface FileState {
     files: File[];
-    createFolderError: Object | null;
     recoverError: Object | null;
     uploadError: Object | null;
     removeError: Object | null;
