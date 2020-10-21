@@ -16,7 +16,7 @@ const Popover: React.FC<props> = props => (
     <IonPopover
         isOpen={props.uploading}
         backdropDismiss={false}
-        cssClass='my-custom-class'
+        cssClass='my-custom-popover-upload-class'
     >
     {
         (!props.success) 

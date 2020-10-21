@@ -10,6 +10,7 @@ import "./Home.scss";
 import Toolbar from "../../components/ToolBar/Toolbar";
 import LoadRecents from "./LoadRecents/LoadRecents";
 import LoadMyFiles from "./LoadMyFiles/LoadMyFiles";
+import LoadShareFilesWithMe from "./LoadShareFilesWithMe/LoadShareFilesWithMe";
 
 const Home: React.FC = () => {
 
@@ -27,11 +28,19 @@ const Home: React.FC = () => {
           <IonSegmentButton className="my-custom-segment-button" value="my-files">
             <IonLabel>Mis archivos</IonLabel>
           </IonSegmentButton>
+          <IonSegmentButton className="my-custom-segment-button" value="my-sharefiles">
+            <IonLabel>Compartido</IonLabel>
+          </IonSegmentButton>
         </IonSegment>
         {
+          //Adaptacion de un if-else if-else
           currentSegment === "recents" 
           ? <LoadRecents maxFiles={8} />
-          : <LoadMyFiles />
+          : (
+            currentSegment === "my-files"
+            ? <LoadMyFiles /> 
+            : <LoadShareFilesWithMe />
+          )
         }
       </IonContent>
     </IonPage>

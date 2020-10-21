@@ -4,7 +4,6 @@ import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRip
 import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
 import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
-import DefaultFile from '../../default-images/default-file.png';
 
 interface props {
     file: File;

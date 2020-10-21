@@ -5,7 +5,6 @@ import { File as CustomFile } from '../types';
 
 
 export const getSharedFile = () => {
-    console.log("click")
     return (dispatch: any) => {
         Storage.list("Bullet_001.png", {
             level: 'protected',
@@ -112,3 +111,4 @@ export const recoverFiles = (path: string) => {
         });
     }
 }
+

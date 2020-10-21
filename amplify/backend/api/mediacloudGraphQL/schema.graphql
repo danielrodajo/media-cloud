@@ -31,7 +31,7 @@ type SharedFile
 {
   path: ID!
   owner: User! @connection(name:"OwnerSharedFiles")
-  Sharers: [SharedFileToUser]! @connection(name:"FileSharedFileToUser")
+  Sharers: [SharedFileToUser] @connection(name:"FileSharedFileToUser")
 }
 
 type SharedFileToUser

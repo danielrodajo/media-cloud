@@ -25,6 +25,7 @@ export interface NotificationState {
     saveNotificationError: Object | null;
 }
 
+
 export interface AuthState {
     user: any | null;
     loading: boolean;
@@ -46,6 +47,12 @@ export interface FileState {
     uploadSuccess: boolean;
     loadedFile: number;
     totalFile: number;
+    downloading: boolean;
+}
+
+export interface ShareFileState {
+    files: any | null;
+    recoverError: Object | null;
     downloading: boolean;
 }
 

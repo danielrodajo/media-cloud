@@ -37,4 +37,10 @@ export {
     getFriends,
     deleteFriend,
     addFriend,
-} from './FriendsManager';
+} from './FriendManager';
+
+export {
+    sharingFile,
+    stopSharingFile,
+    recoverShareFiles,
+} from './ShareFileManager';
