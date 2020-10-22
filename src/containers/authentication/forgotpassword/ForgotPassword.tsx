@@ -25,7 +25,7 @@ const ForgotPassword: React.FC<props> = props => {
 
         let message = "Ha surgido un error inesperado.";
 
-        if ( code = "UserNotFoundException"){
+        if ( code === "UserNotFoundException"){
             message = "Este usuario no existe."
         }
  
