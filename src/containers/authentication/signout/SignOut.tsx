@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { logOutOutline } from 'ionicons/icons';
 import './SignOut.css';
 import { IonItem, IonIcon, IonAlert, IonLabel } from '@ionic/react';
+import { useHistory } from 'react-router';
 
 interface props {
     handleSignOut: () => void
@@ -10,6 +11,12 @@ interface props {
 const SignOut: React.FC<props> = props => {
 
     const [showAlert, setShowAlert] = useState(false);
+
+    const history = useHistory();
+
+    const handleClick = () => {
+        history.push("/home");
+    }
 
     return (
         <React.Fragment>
@@ -24,6 +31,7 @@ const SignOut: React.FC<props> = props => {
                     role: "accept",
                     handler: () => {
                        props.handleSignOut();
+                       handleClick();
                     },
                     },
                 ]}

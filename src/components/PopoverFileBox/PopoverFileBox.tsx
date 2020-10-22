@@ -28,14 +28,15 @@ const PopoverFileBox: React.FC<props> = props => {
             onDidDismiss={e => props.setShowPopover(false)}
         >
             <IonCard>
-                <IonCardHeader className="center-spinner">
-                    <IonSpinner color="tertiary" className={!loading ? "hide-img" : "popover-spinner"} />
-                    <IonImg  onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
+                <IonSpinner color="tertiary" className={!loading ? "hide-img" : "popover-spinner"} />
+                <IonImg  onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
                      className={loading ? "hide-img" : "popover-img"} src={formatDisplayImage(props.file.name, props.file.url)} />  
+                
+                <IonCardHeader className="center-spinner">
+                    <IonCardSubtitle className="ion-text-center">{props.file.name}</IonCardSubtitle>
                 </IonCardHeader>
 
                 <IonCardContent>
-                    <IonCardSubtitle className="ion-text-center">{props.file.name}</IonCardSubtitle>
                     <IonGrid>
                         <IonRow className="ion-text-center">
                             <IonCol>
