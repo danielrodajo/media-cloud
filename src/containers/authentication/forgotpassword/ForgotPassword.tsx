@@ -65,7 +65,7 @@ const ForgotPassword: React.FC<props> = props => {
                             </IonItem>
 
                             <IonButton expand="block" onClick={handlePassword} disabled={disableButton(props.userData.email)}>Siguiente</IonButton>
-                            <IonButton expand="block" color="secondary"  onClick={() => dispatch(actions.switchComponent("signin"))}>Volver a Iniciar Sesión</IonButton>
+                            <IonButton expand="block" color="tertiary"  onClick={() => dispatch(actions.switchComponent("signin"))}>Volver a Iniciar Sesión</IonButton>
                         </IonCardContent>
                     </IonCard>         
                 </IonRow>

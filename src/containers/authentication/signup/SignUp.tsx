@@ -71,8 +71,8 @@ const SignUp: React.FC<props> = props => {
                                 <IonInput autocomplete="current-password" type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>
                             </IonItem>
 
-                            <IonButton expand="block" color="secondary" onClick={handleSignUp} disabled={disableButton(props.userData.email, props.userData.username, props.userData.password)}>Registrarse</IonButton>
-                            <IonButton expand="block" onClick={() => {dispatch(actions.switchComponent("signin"))}}>Volver a Iniciar Sesión</IonButton>
+                            <IonButton expand="block" onClick={handleSignUp} disabled={disableButton(props.userData.email, props.userData.username, props.userData.password)}>Registrarse</IonButton>
+                            <IonButton expand="block" color="tertiary" onClick={() => {dispatch(actions.switchComponent("signin"))}}>Volver a Iniciar Sesión</IonButton>
                         </IonCardContent>
                     </IonCard>         
                 </IonRow>

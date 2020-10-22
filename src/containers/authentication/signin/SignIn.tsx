@@ -67,7 +67,7 @@ const SignIn: React.FC<props> = props => {
                             </IonItem>
 
                             <IonButton expand="block" onClick={handleSignIn} disabled={disableButton(props.userData.email, props.userData.password)}>Iniciar Sesión</IonButton>
-                            <IonButton expand="block" color="secondary"  onClick={() => {dispatch(actions.switchComponent("signup"))}}>Registrarse</IonButton>
+                            <IonButton expand="block" color="tertiary"  onClick={() => {dispatch(actions.switchComponent("signup"))}}>Registrarse</IonButton>
                             <IonItem className="ion-margin-top" lines="none">
                                 <IonText className="ion-text-center">¿Has olvidado tu contraseña?<br/> <IonButton onClick={() => {dispatch(actions.switchComponent("forgotpass"))}} className="forgot-password-link">Pulsa aquí.</IonButton></IonText>
                             </IonItem>
