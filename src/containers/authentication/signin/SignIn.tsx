@@ -33,7 +33,8 @@ const SignIn: React.FC<props> = props => {
 
             case "NotAuthorizedException":
                 return 'Usuario y/o contraseña erroneos.';
-                
+            case undefined:
+                return "";
             default: return "Ha surgido un error inesperado.";
         }
     }

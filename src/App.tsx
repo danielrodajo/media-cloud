@@ -72,24 +72,17 @@ const App: React.FC<{
     onTryAutoSignup();
   }, [onTryAutoSignup]);
 
-  let routes = (
-    <Authentication />
-  );
-  
-
-  if (props.isAuthenticated) {
-    routes = (
-      <BottomBar default="Home"/>
-    )
-  }
-
   const loadingAuth = useSelector((state: RootState) => state.AuthReducer.loading);
 
   return (
   <IonApp>
     <IonReactRouter>
       {loadingAuth ? <AuthLoading showLoading={loadingAuth}/> : null}
-      {routes}
+      {
+        props.isAuthenticated ?
+        <BottomBar default="Home"/>
+        : <Authentication />
+      }
     </IonReactRouter>
   </IonApp>
   )
