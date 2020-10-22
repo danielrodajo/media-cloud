@@ -15,7 +15,7 @@ const SignOut: React.FC<props> = props => {
     const history = useHistory();
 
     const handleClick = () => {
-        history.push("/home");
+        history.push("/");
     }
 
     return (
