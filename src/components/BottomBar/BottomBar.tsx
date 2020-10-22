@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link, Redirect, Route } from 'react-router-dom';
-import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem } from '@ionic/react';
+import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem, IonRedirect } from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
 import Home from '../../containers/home/Home';
 import Add from '../../containers/add/Add';
@@ -110,14 +110,12 @@ const BottomBar: React.FC<props> = props => {
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
-    
-
 
     return ( 
       <React.Fragment>
         <Add showModal={showModal} setShowModal={setShowModal} />
         <IonTabs onIonTabsDidChange={handleActiveButton}>
-          <IonRouterOutlet>      
+          <IonRouterOutlet>     
             <Route path="/home" component={Home} exact />
             <Route path="/search" component={Search} exact />
             <Route path="/friends" component={Friends} exact />
