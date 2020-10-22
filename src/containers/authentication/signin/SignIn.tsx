@@ -39,7 +39,7 @@ const SignIn: React.FC<props> = props => {
     }
 
     const disableButton = (inputEmail: string, inputPass: string) => {
-        return !(inputEmail != "" && inputPass !== "");
+        return !(inputEmail !== "" && inputPass !== "");
     }
 
     return (

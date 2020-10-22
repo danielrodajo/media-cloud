@@ -38,6 +38,7 @@ export const signIn = (username: string, password: string) => {
                         type: types.AUTH_SIGNIN_OK,
                         payload: data
                     })
+                    window.location.href = "/home";
                 })
                 .catch(err => {
                     console.log(err);
