@@ -2,16 +2,19 @@ import * as types from './ActionTypes';
 import { Storage, API, graphqlOperation } from 'aws-amplify';
 import * as Mutations from '../../graphql/mutations';
 
+//Poner el fichero en ESTADO COMPARTIDO
 export const sharingFile = (filePath: any, userId: String) => {
     return (dispatch: any) => {
         dispatch({
             type: types.SHARING_FILE
         });
         //Generamos registro de que el fichero de un usuario es para compartir
-        (API.graphql(graphqlOperation(Mutations.createSharedFile, {input: {path: filePath, sharedFileOwnerId: userId}})) as Promise<any>)
+        (API.graphql(graphqlOperation(Mutations.createSharedFile, {input: {id: userId+filePath, path: filePath, sharedFileOwnerId: userId}})) as Promise<any>)
         .then(() => {
+            console.log("ESTADO COMPARTIDO");
             dispatch({
-                type: types.SHARING_FILE_OK
+                type: types.SHARING_FILE_OK,
+                payload: filePath
             })
         })
         .catch((err:any) => {
@@ -23,14 +26,17 @@ export const sharingFile = (filePath: any, userId: String) => {
     }
 }
 
+//Dar acceso a un amigo a un fichero nuestro que esté en ESTADO COMPARTIDO
 export const shareFileToFriend = () => {
 
 }
 
+//Dejar de dar acceso a un amigo a un fichero nuestro que esté en ESTADO COMPARTIDO
 export const stopSharingFileToFriend = () => {
     
 }
 
+//Quitar al fichero el ESTADO COMPARTIDO
 export const stopSharingFile = () => {
     return (dispatch: any) => {
         dispatch({

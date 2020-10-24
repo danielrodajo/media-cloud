@@ -18,6 +18,7 @@ export const createUser = /* GraphQL */ `
       }
       mySharedFiles {
         items {
+          id
           path
         }
         nextToken
@@ -60,6 +61,7 @@ export const updateUser = /* GraphQL */ `
       }
       mySharedFiles {
         items {
+          id
           path
         }
         nextToken
@@ -102,6 +104,7 @@ export const deleteUser = /* GraphQL */ `
       }
       mySharedFiles {
         items {
+          id
           path
         }
         nextToken
@@ -368,6 +371,7 @@ export const createSharedFile = /* GraphQL */ `
     $condition: ModelSharedFileConditionInput
   ) {
     createSharedFile(input: $input, condition: $condition) {
+      id
       path
       owner {
         id
@@ -403,6 +407,7 @@ export const updateSharedFile = /* GraphQL */ `
     $condition: ModelSharedFileConditionInput
   ) {
     updateSharedFile(input: $input, condition: $condition) {
+      id
       path
       owner {
         id
@@ -438,6 +443,7 @@ export const deleteSharedFile = /* GraphQL */ `
     $condition: ModelSharedFileConditionInput
   ) {
     deleteSharedFile(input: $input, condition: $condition) {
+      id
       path
       owner {
         id
@@ -475,6 +481,7 @@ export const createSharedFileToUser = /* GraphQL */ `
     createSharedFileToUser(input: $input, condition: $condition) {
       id
       sharedFile {
+        id
         path
         owner {
           id
@@ -514,6 +521,7 @@ export const updateSharedFileToUser = /* GraphQL */ `
     updateSharedFileToUser(input: $input, condition: $condition) {
       id
       sharedFile {
+        id
         path
         owner {
           id
@@ -553,6 +561,7 @@ export const deleteSharedFileToUser = /* GraphQL */ `
     deleteSharedFileToUser(input: $input, condition: $condition) {
       id
       sharedFile {
+        id
         path
         owner {
           id

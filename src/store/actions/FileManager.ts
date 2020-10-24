@@ -32,6 +32,7 @@ export const uploadFile = (name: string, file: File) => {
                     url: result2,
                     eTag: "",
                     size: file.size,
+                    shared: false,
                     name: slices[slices.length-1]
                 };
                 dispatch({
@@ -40,15 +41,14 @@ export const uploadFile = (name: string, file: File) => {
                 });
 
                 (async () => {
+                    //Delay para que se realice la animacion de subida
                     await delay(2000);
 
                     dispatch({
                         type: types.UPLOAD_FILE_OK,
                     });
-                })();
-                
-            });
-            
+                })();              
+            });           
         }).catch(err => {
             console.log(err);
             dispatch({

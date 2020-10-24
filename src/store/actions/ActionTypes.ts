@@ -101,7 +101,7 @@ interface sharingFileOkAction {
     type: typeof SHARING_FILE_OK,
     payload: any
 }
-interface sharingFileSuccessAction {
+interface sharingFileNokAction {
     type: typeof SHARING_FILE_NOK,
     payload: any
 }
@@ -372,4 +372,4 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             AuthForgotPasswordAction|AuthForgotPasswordOkAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitOkAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
                             RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
                             RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction |
-                            RecoverShareFilesAction|RecoverShareFilesOkAction|RecoverShareFilesNokAction | sharingFileAction|sharingFileOkAction|stopSharingFileNokAction | stopSharingFileAction|stopSharingFileOkAction|stopSharingFileNokAction
+                            RecoverShareFilesAction|RecoverShareFilesOkAction|RecoverShareFilesNokAction | sharingFileAction|sharingFileOkAction|sharingFileNokAction | stopSharingFileAction|stopSharingFileOkAction|stopSharingFileNokAction

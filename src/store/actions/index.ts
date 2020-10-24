@@ -6,7 +6,6 @@ export {
 export {
     recoverFiles,
     recoverRecentFiles,
-    getSharedFile,
 } from './RecoverManager';
 
 export {

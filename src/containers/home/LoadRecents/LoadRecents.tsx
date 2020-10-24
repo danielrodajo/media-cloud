@@ -8,6 +8,7 @@ import * as actions from "../../../store/actions/index";
 
 interface props {
     maxFiles: number
+    user: any
 }
 
 const LoadRecents: React.FC<props> = props => {
@@ -24,7 +25,7 @@ const LoadRecents: React.FC<props> = props => {
     });
 
 
-    const onGetFiles = useCallback((maxFiles: number) => dispatch(actions.recoverRecentFiles(maxFiles)), [dispatch]);
+    const onGetFiles = useCallback((maxFiles: number) => dispatch(actions.recoverRecentFiles(props.user.identityId, maxFiles)), [dispatch]);
 
     const recoverError = useSelector(
         (state: RootState) => state.FileReducer.recoverError

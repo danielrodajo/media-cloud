@@ -15,6 +15,7 @@ export const getUser = /* GraphQL */ `
       }
       mySharedFiles {
         items {
+          id
           path
         }
         nextToken
@@ -187,6 +188,7 @@ export const listFriendRequests = /* GraphQL */ `
 export const getSharedFile = /* GraphQL */ `
   query GetSharedFile($id: ID!) {
     getSharedFile(id: $id) {
+      id
       path
       owner {
         id
@@ -224,6 +226,7 @@ export const listSharedFiles = /* GraphQL */ `
   ) {
     listSharedFiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         path
         owner {
           id
@@ -242,6 +245,7 @@ export const getSharedFileToUser = /* GraphQL */ `
     getSharedFileToUser(id: $id) {
       id
       sharedFile {
+        id
         path
         owner {
           id
@@ -287,6 +291,7 @@ export const listSharedFileToUsers = /* GraphQL */ `
       items {
         id
         sharedFile {
+          id
           path
         }
         sharer {

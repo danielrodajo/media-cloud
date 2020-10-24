@@ -9,7 +9,11 @@ import { RootState } from '../../../store/store';
 import * as actions from "../../../store/actions/index";
 import { returnUpBackOutline, trashOutline } from "ionicons/icons";
 
-const LoadMyFiles = () => {
+interface props {
+  user: any
+}
+
+const LoadMyFiles:React.FC<props> = props => {
 
     const dispatch = useDispatch();
 
@@ -51,7 +55,7 @@ const LoadMyFiles = () => {
     const changeFolder = (path: string) => dispatch(actions.changeFolder(path));
 
     const onGetFiles = useCallback(
-        (path) => dispatch(actions.recoverFiles(path)),
+        (path) => dispatch(actions.recoverFiles(props.user.identityId, path)),
         [dispatch]
     );
     const recoverError = useSelector(

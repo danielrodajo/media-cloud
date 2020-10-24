@@ -15,6 +15,7 @@ export const onCreateUser = /* GraphQL */ `
       }
       mySharedFiles {
         items {
+          id
           path
         }
         nextToken
@@ -54,6 +55,7 @@ export const onUpdateUser = /* GraphQL */ `
       }
       mySharedFiles {
         items {
+          id
           path
         }
         nextToken
@@ -93,6 +95,7 @@ export const onDeleteUser = /* GraphQL */ `
       }
       mySharedFiles {
         items {
+          id
           path
         }
         nextToken
@@ -338,6 +341,7 @@ export const onDeleteFriendRequest = /* GraphQL */ `
 export const onCreateSharedFile = /* GraphQL */ `
   subscription OnCreateSharedFile {
     onCreateSharedFile {
+      id
       path
       owner {
         id
@@ -370,6 +374,7 @@ export const onCreateSharedFile = /* GraphQL */ `
 export const onUpdateSharedFile = /* GraphQL */ `
   subscription OnUpdateSharedFile {
     onUpdateSharedFile {
+      id
       path
       owner {
         id
@@ -402,6 +407,7 @@ export const onUpdateSharedFile = /* GraphQL */ `
 export const onDeleteSharedFile = /* GraphQL */ `
   subscription OnDeleteSharedFile {
     onDeleteSharedFile {
+      id
       path
       owner {
         id
@@ -436,6 +442,7 @@ export const onCreateSharedFileToUser = /* GraphQL */ `
     onCreateSharedFileToUser {
       id
       sharedFile {
+        id
         path
         owner {
           id
@@ -472,6 +479,7 @@ export const onUpdateSharedFileToUser = /* GraphQL */ `
     onUpdateSharedFileToUser {
       id
       sharedFile {
+        id
         path
         owner {
           id
@@ -508,6 +516,7 @@ export const onDeleteSharedFileToUser = /* GraphQL */ `
     onDeleteSharedFileToUser {
       id
       sharedFile {
+        id
         path
         owner {
           id

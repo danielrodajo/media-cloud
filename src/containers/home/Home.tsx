@@ -11,11 +11,15 @@ import Toolbar from "../../components/ToolBar/Toolbar";
 import LoadRecents from "./LoadRecents/LoadRecents";
 import LoadMyFiles from "./LoadMyFiles/LoadMyFiles";
 import LoadShareFilesWithMe from "./LoadShareFilesWithMe/LoadShareFilesWithMe";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const Home: React.FC = () => {
 
   //Inicializamos en el segmento por defecto
   const [ currentSegment, setCurrentSegment ] = useState<string | undefined>("recents");
+
+  const user = useSelector((state: RootState) => state.AuthReducer.user);
 
   return (
     <IonPage>
@@ -35,11 +39,11 @@ const Home: React.FC = () => {
         {
           //Adaptacion de un if-else if-else
           currentSegment === "recents" 
-          ? <LoadRecents maxFiles={8} />
+          ? <LoadRecents user={user} maxFiles={8} />
           : (
             currentSegment === "my-files"
-            ? <LoadMyFiles /> 
-            : <LoadShareFilesWithMe />
+            ? <LoadMyFiles user={user} /> 
+            : <LoadShareFilesWithMe user={user} />
           )
         }
       </IonContent>

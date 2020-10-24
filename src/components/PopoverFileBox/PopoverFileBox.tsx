@@ -4,8 +4,9 @@ import { cloudDownloadOutline, trashOutline, shareSocialOutline } from 'ionicons
 import './PopoverFileBox.scss';
 import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../store/actions/index";
+import { RootState } from '../../store/store';
 
 interface props {
     showPopover: boolean; 
@@ -25,11 +26,14 @@ const PopoverFileBox: React.FC<props> = props => {
     }
     const [loading, setLoading] = useState(true);
 
-    const getShareFiles = (filePaths: any, friendId: String) => dispatch(actions.recoverShareFiles(filePaths, friendId));
+    const shareFile = (filePath: any, userId: String) => dispatch(actions.sharingFile(filePath, userId));
+
+    const user = useSelector((state:RootState) => state.AuthReducer.user);
+
+    const sharing = useSelector((state: RootState) => state.FileReducer.sharing);
 
     const handleShareFile = () => {
-        //const filePaths = ["001.jpg", "Anteproyecto (1).pdf", "DARDE_DANIEL RS.pdf", "chrome.dll"];
-        //getShareFiles(filePaths, "eu-west-1:13b39c87-3384-4c6f-ac60-f8991d63cf43");
+        shareFile(props.file.key, user.identityId);
     }
 
     return (
@@ -41,7 +45,7 @@ const PopoverFileBox: React.FC<props> = props => {
             <IonCard className="my-custom-ion-card">
                 <IonCardHeader className="center-spinner">
                     <IonSpinner color="tertiary" className={!loading ? "hide-img" : "popover-spinner"} />
-                    <IonImg  onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
+                    <IonImg onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
                      className={loading ? "hide-img" : "popover-img"} src={formatDisplayImage(props.file.name, props.file.url)} />  
                 </IonCardHeader>
 

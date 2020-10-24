@@ -29,7 +29,8 @@ type FriendRequest
 type SharedFile
   @model
 {
-  path: ID!
+  id: ID!
+  path: String! 
   owner: User! @connection(name:"OwnerSharedFiles")
   Sharers: [SharedFileToUser] @connection(name:"FileSharedFileToUser")
 }

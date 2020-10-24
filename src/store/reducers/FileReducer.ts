@@ -7,13 +7,34 @@ const initialState: FileState = {
     recoverError: null,
     uploadError: null,
     removeError: null,
+    sharingError: null,
     uploading: false,
     uploadSuccess: false,
     loadedFile: 0,
     totalFile: 0,
     downloading: false,
+    sharing: false,
 }
 
+const sharingFile = (state: FileState) => {
+    return updateObject( state, {
+        sharing: true,
+        sharingError: null
+    });
+}
+const sharingFileSuccess = (state: FileState, payload: any) => {
+    const file = state.files.find(file => file.key === payload);
+    file!.shared = true;
+    return updateObject( state, {
+        sharing: false
+    });
+}
+const sharingFileFail = (state: FileState, payload: any) => {
+    return updateObject( state, {
+        sharing: false,
+        sharingError: payload
+    });
+}
 
 const recoverFiles = (state: FileState) => {
     return updateObject( state, {
@@ -105,6 +126,9 @@ const reducer = ( state = initialState, action: types.ActionTypes ) => {
         case types.UPLOAD_FILE_NOK: return uploadFail(state, action.payload);
         case types.REMOVE_FILE: return removeFile(state, action.payload);
         case types.REMOVE_FILE_NOK: return removeFail(state, action.payload);
+        case types.SHARING_FILE: return sharingFile(state);
+        case types.SHARING_FILE_OK: return sharingFileSuccess(state, action.payload);
+        case types.SHARING_FILE_NOK: return sharingFileFail(state, action.payload);
         default: return state;
     }
 }
