@@ -66,7 +66,7 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     //Revisa si ya hay notificacion pendiente del usuario para ver si puede enviar otra mas
     const checkNotificationConditions = (friendId: String) => {
-        if (notifications.filter((notification: any) => notification.id.startsWith(friendId+NotificationType.SENDPETITION)).length > 0) {
+        if (notifications.filter((notification: any) => notification.from.id === friendId && notification.type === NotificationType.SENDPETITION).length > 0) {
             setMessageError("Ya tienes una petición de este usuario.");
             setErrorPetition(true);
             setShowToast(true);
@@ -81,12 +81,10 @@ const Friends: React.SFC<FriendsProps> = () => {
     }
 
     const generateFriendPetition = async (friendId: String) => {
-        console.log("GENERAR")
         if (checkNotificationConditions(friendId)) { 
             await generateNotification(user.identityId, friendId, NotificationType.SENDPETITION)
             .then(e => {
                 setShowToast(true);
-                console.log("GENERADO")
             })
             .catch(err => {
                 setMessageError("Se ha producido un error inesperado.");

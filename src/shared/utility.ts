@@ -39,7 +39,7 @@ export const formatDisplayImage = (name: string, source: string) => {
 
 export const generateNotification = async (userId: String, friendId: String, type: NotificationType) => {
     const friendRequestDetails = {
-        id: friendId+type+""+Date.now(), 
+        id: friendId+""+Date.now(), 
         friendRequestToId: friendId, 
         friendRequestFromId: userId,
         type: type,

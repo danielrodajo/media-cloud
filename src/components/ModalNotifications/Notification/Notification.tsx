@@ -20,7 +20,7 @@ const Notification: React.SFC<NotificationProps> = props => {
         case NotificationType.SENDSHAREFILE: 
             message = " ha compartido un fichero contigo."; break;
         case NotificationType.STOPSENDSHAREFILE:
-            message = " ha dejado de compartir un fichero contigo."; break;
+            message = " ya no comparte un fichero contigo."; break;
     }
 
     return (     
