@@ -11,7 +11,6 @@ export const sharingFile = (filePath: any, userId: String) => {
         //Generamos registro de que el fichero de un usuario es para compartir
         (API.graphql(graphqlOperation(Mutations.createSharedFile, {input: {id: userId+filePath, path: filePath, sharedFileOwnerId: userId}})) as Promise<any>)
         .then(() => {
-            console.log("ESTADO COMPARTIDO");
             dispatch({
                 type: types.SHARING_FILE_OK,
                 payload: filePath
@@ -26,24 +25,71 @@ export const sharingFile = (filePath: any, userId: String) => {
     }
 }
 
-//Dar acceso a un amigo a un fichero nuestro que esté en ESTADO COMPARTIDO
-export const shareFileToFriend = () => {
-
-}
-
-//Dejar de dar acceso a un amigo a un fichero nuestro que esté en ESTADO COMPARTIDO
-export const stopSharingFileToFriend = () => {
-    
-}
-
 //Quitar al fichero el ESTADO COMPARTIDO
-export const stopSharingFile = () => {
+export const stopSharingFile = (filePath: any, userId: String) => {
     return (dispatch: any) => {
         dispatch({
             type: types.STOP_SHARING_FILE
         });
+        (API.graphql(graphqlOperation(Mutations.deleteSharedFile, {input: {id: userId+filePath}})) as Promise<any>)
+        .then(() => {
+            dispatch({
+                type: types.STOP_SHARING_FILE_OK,
+                payload: filePath
+            })
+        })
+        .catch((err:any) => {
+            dispatch({
+                type: types.STOP_SHARING_FILE_NOK,
+                payload: err
+            })
+        });
     }
 }
+
+//Dar acceso a un amigo a un fichero nuestro que esté en ESTADO COMPARTIDO
+export const shareFileToFriend = (fileId: String, friendId: String) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.SHARE_FILE_WITH_FRIEND
+        });
+        (API.graphql(graphqlOperation(Mutations.createSharedFileToUser, 
+            {
+                input: {
+                    id: fileId+""+friendId,
+                    sharedFileToUserSharedFileId: fileId,  
+                    sharedFileToUserSharerId: friendId
+                }
+            }
+        )) as Promise<any>)
+        .then(() => dispatch({
+            type: types.SHARE_FILE_WITH_FRIEND_OK,
+        }))
+        .catch(err => dispatch({
+            type: types.SHARE_FILE_WITH_FRIEND_NOK,
+            payload: err
+        }));
+    }
+}
+
+//Dejar de dar acceso a un amigo a un fichero nuestro que esté en ESTADO COMPARTIDO
+export const stopSharingFileToFriend = (fileId: String, friendId: String) => {
+    console.log("PARAR COMPARTIR A AMIGO")
+    return (dispatch: any) => {
+        dispatch({
+            type: types.STOP_SHARE_FILE_WITH_FRIEND
+        });
+        (API.graphql(graphqlOperation(Mutations.deleteSharedFileToUser, {input: {id: fileId+""+friendId}})) as Promise<any>)
+        .then(() => dispatch({
+            type: types.STOP_SHARE_FILE_WITH_FRIEND_OK,
+        }))
+        .catch(err => dispatch({
+            type: types.STOP_SHARE_FILE_WITH_FRIEND_NOK,
+            payload: err
+        }));
+    }
+}
+
 
 export const recoverShareFiles = (filePaths: any, userId: String) => {
     return (dispatch: any) => {

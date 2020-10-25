@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner } from '@ionic/react';
+import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner, IonAlert } from '@ionic/react';
 import { cloudDownloadOutline, trashOutline, shareSocialOutline } from 'ionicons/icons';
 import './PopoverFileBox.scss';
 import { formatDisplayImage } from '../../shared/utility';
@@ -7,6 +7,7 @@ import { File } from '../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../store/actions/index";
 import { RootState } from '../../store/store';
+import ModalShareFriends from '../ModalShareFriends/ModalShareFriends';
 
 interface props {
     showPopover: boolean; 
@@ -18,26 +19,35 @@ interface props {
 
 const PopoverFileBox: React.FC<props> = props => {
 
-    const dispatch = useDispatch();
-
     const handleRemove = () => {
         props.remove(props.file.key);
         props.setShowPopover(false);
     }
     const [loading, setLoading] = useState(true);
 
-    const shareFile = (filePath: any, userId: String) => dispatch(actions.sharingFile(filePath, userId));
+    const [showAlert, setShowAlert] = useState(false);
 
-    const user = useSelector((state:RootState) => state.AuthReducer.user);
-
-    const sharing = useSelector((state: RootState) => state.FileReducer.sharing);
-
-    const handleShareFile = () => {
-        shareFile(props.file.key, user.identityId);
-    }
+    const [showFriendList, setShowFriendList] = useState(false);
 
     return (
-        <IonPopover
+        <React.Fragment>
+            <IonAlert
+                isOpen={showAlert}
+                onDidDismiss={() => setShowAlert(false)}
+                cssClass="my-custom-class"
+                header={"¿Quieres borrar este fichero?"}
+                buttons={["No",
+                    {
+                    text: "Si",
+                    role: "accept",
+                    handler: () => {
+                        handleRemove();
+                    },
+                    },
+                ]}
+            />
+            <ModalShareFriends file={props.file} show={showFriendList} setShow={setShowFriendList}/>
+            <IonPopover
             isOpen={props.showPopover}
             cssClass='my-custom-class'
             onDidDismiss={e => props.setShowPopover(false)}
@@ -59,12 +69,12 @@ const PopoverFileBox: React.FC<props> = props => {
                                 </IonButton>
                             </IonCol>
                             <IonCol>
-                                <IonButton color="success" onClick={handleShareFile}>
+                                <IonButton color="success" onClick={() => setShowFriendList(true)}>
                                     <IonIcon icon={shareSocialOutline}></IonIcon>
                                 </IonButton>
                             </IonCol>
                             <IonCol>
-                                <IonButton color="danger" onClick={handleRemove}>
+                                <IonButton color="danger" onClick={() => setShowAlert(true)}>
                                     <IonIcon icon={trashOutline}></IonIcon>
                                 </IonButton>
                             </IonCol>
@@ -73,6 +83,7 @@ const PopoverFileBox: React.FC<props> = props => {
                 </IonCardContent>
             </IonCard>
         </IonPopover>
+        </React.Fragment>  
     );
 }
 

@@ -15,6 +15,7 @@ type Friend
 {
   id: ID!
   name: String!
+  originalId: String!
   user: User! @connection(name:"UserFriends")
 }
 

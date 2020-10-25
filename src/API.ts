@@ -66,11 +66,13 @@ export type DeleteUserInput = {
 export type CreateFriendInput = {
   id?: string | null,
   name: string,
+  originalId: string,
   friendUserId: string,
 };
 
 export type ModelFriendConditionInput = {
   name?: ModelStringInput | null,
+  originalId?: ModelStringInput | null,
   and?: Array< ModelFriendConditionInput | null > | null,
   or?: Array< ModelFriendConditionInput | null > | null,
   not?: ModelFriendConditionInput | null,
@@ -79,6 +81,7 @@ export type ModelFriendConditionInput = {
 export type UpdateFriendInput = {
   id: string,
   name?: string | null,
+  originalId?: string | null,
   friendUserId?: string | null,
 };
 
@@ -180,6 +183,7 @@ export type ModelIDInput = {
 export type ModelFriendFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  originalId?: ModelStringInput | null,
   and?: Array< ModelFriendFilterInput | null > | null,
   or?: Array< ModelFriendFilterInput | null > | null,
   not?: ModelFriendFilterInput | null,
@@ -256,6 +260,7 @@ export type CreateUserMutation = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -311,6 +316,7 @@ export type UpdateUserMutation = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -366,6 +372,7 @@ export type DeleteUserMutation = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -382,6 +389,7 @@ export type CreateFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -420,6 +428,7 @@ export type UpdateFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -458,6 +467,7 @@ export type DeleteFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1011,6 +1021,7 @@ export type GetUserQuery = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1064,6 +1075,7 @@ export type GetFriendQuery = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1105,6 +1117,7 @@ export type ListFriendsQuery = {
       __typename: "Friend",
       id: string,
       name: string,
+      originalId: string,
       user:  {
         __typename: "User",
         id: string,
@@ -1396,6 +1409,7 @@ export type OnCreateUserSubscription = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1446,6 +1460,7 @@ export type OnUpdateUserSubscription = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1496,6 +1511,7 @@ export type OnDeleteUserSubscription = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1507,6 +1523,7 @@ export type OnCreateFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1540,6 +1557,7 @@ export type OnUpdateFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1573,6 +1591,7 @@ export type OnDeleteFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,

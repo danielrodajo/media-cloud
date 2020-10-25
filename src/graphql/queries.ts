@@ -36,6 +36,7 @@ export const getUser = /* GraphQL */ `
         items {
           id
           name
+          originalId
         }
         nextToken
       }
@@ -77,6 +78,7 @@ export const getFriend = /* GraphQL */ `
     getFriend(id: $id) {
       id
       name
+      originalId
       user {
         id
         name
@@ -109,6 +111,7 @@ export const listFriends = /* GraphQL */ `
       items {
         id
         name
+        originalId
         user {
           id
           name

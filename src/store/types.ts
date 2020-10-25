@@ -45,6 +45,7 @@ export interface FileState {
     uploadError: Object | null;
     removeError: Object | null;
     sharingError: Object | null;
+    stopSharingError: Object | null;
     uploading: boolean;
     uploadSuccess: boolean;
     loadedFile: number;
@@ -57,6 +58,9 @@ export interface ShareFileState {
     files: any | null;
     recoverError: Object | null;
     downloading: boolean;
+    sharingToUserOperation: boolean;
+    sharingToUserError: Object | null;
+    stopSharingToUserError: Object | null;
 }
 
 export interface FolderState {

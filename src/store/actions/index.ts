@@ -42,4 +42,6 @@ export {
     sharingFile,
     stopSharingFile,
     recoverShareFiles,
+    shareFileToFriend,
+    stopSharingFileToFriend,
 } from './ShareFileManager';
