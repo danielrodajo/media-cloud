@@ -92,6 +92,7 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
                 (friends && friends.length > 0) ?
                 friends.map((friend: any) => 
                 <ShareFriend 
+                    key={friend.id}
                     shared={sharers.includes(friend.originalId)} 
                     file={props.file} friend={friend} 
                     handleShare={handleShare}

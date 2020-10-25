@@ -1,10 +1,9 @@
 import * as types from '../actions/ActionTypes';
 import { updateObject } from '../../shared/utility';
 import { ShareFileState } from '../types';
-import { stopSharingFile } from '../actions';
 
 const initialState: ShareFileState = {
-    files: null,
+    files: [],
     recoverError: null,
     downloading: false,
     sharingToUserOperation: false,

@@ -32,19 +32,11 @@ const Home: React.FC = () => {
           <IonSegmentButton className="my-custom-segment-button" value="my-files">
             <IonLabel>Mis archivos</IonLabel>
           </IonSegmentButton>
-          <IonSegmentButton className="my-custom-segment-button" value="my-sharefiles">
-            <IonLabel>Compartido</IonLabel>
-          </IonSegmentButton>
         </IonSegment>
         {
-          //Adaptacion de un if-else if-else
           currentSegment === "recents" 
           ? <LoadRecents user={user} maxFiles={8} />
-          : (
-            currentSegment === "my-files"
-            ? <LoadMyFiles user={user} /> 
-            : <LoadShareFilesWithMe user={user} />
-          )
+          : <LoadMyFiles user={user} /> 
         }
       </IonContent>
     </IonPage>

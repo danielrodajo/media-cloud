@@ -1,6 +1,7 @@
 import * as types from './ActionTypes';
 import { Storage, API, graphqlOperation } from 'aws-amplify';
 import * as Mutations from '../../graphql/mutations';
+import * as Queries from '../../graphql/queries';
 
 //Poner el fichero en ESTADO COMPARTIDO
 export const sharingFile = (filePath: any, userId: String) => {
@@ -91,40 +92,69 @@ export const stopSharingFileToFriend = (fileId: String, friendId: String) => {
 }
 
 
-export const recoverShareFiles = (filePaths: any, userId: String) => {
+//Recupera los ficheros compartidos de un amigo al usuario
+export const recoverShareFiles = (userId: String, friendId: String) => {
     return (dispatch: any) => {
         dispatch({
             type: types.RECOVER_SHARE_FILES
         });
         const files: any = [];
-        filePaths.forEach((filePath: any, index: number) => {
-            Storage.list(filePath, {
-                level: 'protected',
-                identityId: userId
-            })
-            .then(async (file: any) => {
-                file = file[0]
-                const result = await Storage.get(file.key);
-                const slices = file.key.split("/");
-                file = { ...file, url: result+"", name: slices[slices.length-1] };
-                files.push(file);
+        const filePaths: any = [];
+        (API.graphql(graphqlOperation(Queries.getUser, {id: userId})) as Promise<any>)
+        .then((result: any) => {
+            result.data.getUser.sharedFiles.items.forEach((pivotTable: any, index: number) => {
+                (API.graphql(graphqlOperation(Queries.getSharedFileToUser, {id: pivotTable.id})) as Promise<any>)
+                .then((result2: any) => {
+                    filePaths.push(result2.data.getSharedFileToUser.sharedFile.path);
 
-                if (index === filePaths.length-1) {
-                    dispatch({
-                        type: types.RECOVER_SHARE_FILES_OK,
-                        payload: files 
-                    });
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                dispatch({
-                    type: types.RECOVER_SHARE_FILES_NOK,
-                    payload: err
+                    if (index+1 === result.data.getUser.sharedFiles.items.length) {
+                        filePaths.forEach((filePath: any, index: number) => {
+                            Storage.list(filePath, {
+                                level: 'protected',
+                                identityId: friendId
+                            })
+                            .then(async (file: any) => {
+                                file = file[0]
+                                const result = await Storage.get(file.key, {
+                                    level: 'protected',
+                                    identityId: friendId
+                                });
+                                const slices = file.key.split("/");
+                                file = { ...file, url: result+"", name: slices[slices.length-1] };
+                                files.push(file);
+                
+                                if (index === filePaths.length-1) {
+                                    dispatch({
+                                        type: types.RECOVER_SHARE_FILES_OK,
+                                        payload: files 
+                                    });
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                dispatch({
+                                    type: types.RECOVER_SHARE_FILES_NOK,
+                                    payload: err
+                                })
+                            });
+                        })
+                    }
                 })
+                .catch(err => {
+                    console.log(err);
+                    dispatch({
+                        type: types.RECOVER_SHARE_FILES_NOK,
+                        payload: err
+                    })
+                });
             });
-        });    
-        
-
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.RECOVER_SHARE_FILES_NOK,
+                payload: err
+            })
+        });   
     }
 }

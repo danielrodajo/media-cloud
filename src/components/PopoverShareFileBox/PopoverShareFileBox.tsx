@@ -1,49 +1,22 @@
+import './PopoverShareFileBox.scss';
 import React, { useState } from 'react';
 import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner, IonAlert } from '@ionic/react';
 import { cloudDownloadOutline, trashOutline, shareSocialOutline } from 'ionicons/icons';
-import './PopoverFileBox.scss';
 import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
-import ModalShareFriends from '../ModalShareFriends/ModalShareFriends';
 
-interface props {
+export interface PopoverShareFileBoxProps {
     showPopover: boolean; 
     setShowPopover: (value: boolean) => void;
     file: File;
-    remove: (value: string) => void;
-    removeError: Error
- }
+}
+ 
+const PopoverShareFileBox: React.SFC<PopoverShareFileBoxProps> = props => {
 
-const PopoverFileBox: React.FC<props> = props => {
-
-    const handleRemove = () => {
-        props.remove(props.file.key);
-        props.setShowPopover(false);
-    }
     const [loading, setLoading] = useState(true);
-
-    const [showAlert, setShowAlert] = useState(false);
-
-    const [showFriendList, setShowFriendList] = useState(false);
 
     return (
         <React.Fragment>
-            <IonAlert
-                isOpen={showAlert}
-                onDidDismiss={() => setShowAlert(false)}
-                cssClass="my-custom-class"
-                header={"¿Quieres borrar este fichero?"}
-                buttons={["No",
-                    {
-                    text: "Si",
-                    role: "accept",
-                    handler: () => {
-                        handleRemove();
-                    },
-                    },
-                ]}
-            />
-            <ModalShareFriends file={props.file} show={showFriendList} setShow={setShowFriendList}/>
             <IonPopover
             isOpen={props.showPopover}
             cssClass='my-custom-class'
@@ -65,16 +38,6 @@ const PopoverFileBox: React.FC<props> = props => {
                                     <IonIcon icon={cloudDownloadOutline}></IonIcon>
                                 </IonButton>
                             </IonCol>
-                            <IonCol>
-                                <IonButton color="success" onClick={() => setShowFriendList(true)}>
-                                    <IonIcon icon={shareSocialOutline}></IonIcon>
-                                </IonButton>
-                            </IonCol>
-                            <IonCol>
-                                <IonButton color="danger" onClick={() => setShowAlert(true)}>
-                                    <IonIcon icon={trashOutline}></IonIcon>
-                                </IonButton>
-                            </IonCol>
                         </IonRow>
                     </IonGrid>
                 </IonCardContent>
@@ -83,5 +46,5 @@ const PopoverFileBox: React.FC<props> = props => {
         </React.Fragment>  
     );
 }
-
-export default PopoverFileBox;
+ 
+export default PopoverShareFileBox;
