@@ -146,7 +146,8 @@ const uploadFail = (state: FileState, payload: Error) => {
 const removeFile = (state: FileState, payload: string) => {
     return updateObject( state, {
         removeError: null,
-        files: state.files.filter(file => file.key !== payload)
+        files: state.files.filter(file => file.key !== payload),
+        filterFiles: state.files.filter(file => file.key !== payload)
     })
 }
 

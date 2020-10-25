@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { IonPage, IonContent, IonToast } from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import ToolbarSearch from '../../components/ToolBarSearch/ToolBarSearch';
-import UserSearch from '../../components/UserSearch/UserSearch';
-import * as Mutations from '../../graphql/mutations';
-import * as Queries from '../../graphql/queries';
-import {API, graphqlOperation} from 'aws-amplify';
 import CustomSpinner from '../../components/CustomSpinner/CustomSpinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
@@ -28,6 +24,7 @@ const Search: React.FC = () => {
         return state.FileReducer.filterFiles;
     });
     const removeFile = (name: string) => dispatch(actions.removeFile(name));
+
     const removeError = useSelector(
         (state: RootState) => state.FileReducer.removeError
     );
@@ -35,7 +32,7 @@ const Search: React.FC = () => {
 
     useEffect(() => {
         onRecoverFilesByName(user.identityId, searchText);
-    }, [searchText]);
+    }, [searchText, onRecoverFilesByName, user.identityId]);
 
     return (
         <IonPage>
