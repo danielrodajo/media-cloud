@@ -23,12 +23,14 @@ export const onCreateUser = /* GraphQL */ `
       toPetition {
         items {
           id
+          type
         }
         nextToken
       }
       fromPetition {
         items {
           id
+          type
         }
         nextToken
       }
@@ -64,12 +66,14 @@ export const onUpdateUser = /* GraphQL */ `
       toPetition {
         items {
           id
+          type
         }
         nextToken
       }
       fromPetition {
         items {
           id
+          type
         }
         nextToken
       }
@@ -105,12 +109,14 @@ export const onDeleteUser = /* GraphQL */ `
       toPetition {
         items {
           id
+          type
         }
         nextToken
       }
       fromPetition {
         items {
           id
+          type
         }
         nextToken
       }
@@ -213,6 +219,7 @@ export const onCreateFriendRequest = /* GraphQL */ `
   subscription OnCreateFriendRequest {
     onCreateFriendRequest {
       id
+      type
       to {
         id
         name
@@ -258,6 +265,7 @@ export const onUpdateFriendRequest = /* GraphQL */ `
   subscription OnUpdateFriendRequest {
     onUpdateFriendRequest {
       id
+      type
       to {
         id
         name
@@ -303,6 +311,7 @@ export const onDeleteFriendRequest = /* GraphQL */ `
   subscription OnDeleteFriendRequest {
     onDeleteFriendRequest {
       id
+      type
       to {
         id
         name

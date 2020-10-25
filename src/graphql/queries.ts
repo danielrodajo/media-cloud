@@ -23,12 +23,14 @@ export const getUser = /* GraphQL */ `
       toPetition {
         items {
           id
+          type
         }
         nextToken
       }
       fromPetition {
         items {
           id
+          type
         }
         nextToken
       }
@@ -125,6 +127,7 @@ export const getFriendRequest = /* GraphQL */ `
   query GetFriendRequest($id: ID!) {
     getFriendRequest(id: $id) {
       id
+      type
       to {
         id
         name
@@ -175,6 +178,7 @@ export const listFriendRequests = /* GraphQL */ `
     listFriendRequests(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        type
         to {
           id
           name

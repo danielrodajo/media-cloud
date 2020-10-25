@@ -8,6 +8,9 @@ import Notification from './Notification/Notification';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as Mutations from '../../graphql/mutations';
 import * as actions from "../../store/actions/index";
+import FriendPetition from './FriendPetition/FriendPetition';
+import { NotificationType } from '../../API';
+import { generateNotification } from '../../shared/utility';
 
 export interface Props {
     showModal: boolean;
@@ -18,14 +21,26 @@ const ModalNotifications: React.SFC<Props> = props => {
 
     const dispatch = useDispatch();
 
+    const user = useSelector((state: RootState) => state.AuthReducer.user);
+
     const deleteNotification = (notifId: string) => dispatch(actions.deleteNotification(notifId));
 
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
 
-    const handleDenyPetition = (notificationId: string) => {
-        (API.graphql(graphqlOperation(Mutations.deleteFriendRequest, {input: {id: notificationId}})) as Promise<any>)
+    const handleCloseNotification = (notification: any) => {
+        (API.graphql(graphqlOperation(Mutations.deleteFriendRequest, {input: {id: notification.id}})) as Promise<any>)
         .then(e => {
-            deleteNotification(notificationId);
+            deleteNotification(notification.id);
+        })
+        .catch(err => console.log(err))
+    }
+
+    const handleDenyNotification = (notification: any) => {
+        (API.graphql(graphqlOperation(Mutations.deleteFriendRequest, {input: {id: notification.id}})) as Promise<any>)
+        .then(e => {
+            //Reenviamos peticion al otro usuario de que hemos denegado la peticion
+            generateNotification(user.identityId, notification.from.id, NotificationType.DENYPETITION);
+            deleteNotification(notification.id);
         })
     }
 
@@ -44,8 +59,11 @@ const ModalNotifications: React.SFC<Props> = props => {
                     id: notification.from.id,
                     name: notification.from.name
                 });
+
+                //Reenviamos peticion al otro usuario de que hemos aceptado la peticion
+                generateNotification(user.identityId, notification.from.id, NotificationType.ACCEPTPETITION);
                 //Finalmente, se hace el mismo proceso de "denegarla" (eliminarla de la store de Redux y checkearla)
-                handleDenyPetition(notification.id);
+                handleCloseNotification(notification);
             })
         })   
     }
@@ -65,7 +83,14 @@ const ModalNotifications: React.SFC<Props> = props => {
             <IonContent>
             {
                 (notifications && notifications.length > 0) ?
-                    notifications.map((notification: any) => <Notification key={notification.id} notification={notification} handleCheckPetition={handleCheckPetition} handleDenyPetition={handleDenyPetition}/>) 
+                    notifications.map((notification: any) => {
+                    switch (notification.type) {
+                        case NotificationType.SENDPETITION: 
+                            return <FriendPetition key={notification.id} notification={notification} handleCheckPetition={handleCheckPetition} handleDenyPetition={handleDenyNotification}/>;
+                        default:
+                            return <Notification key={notification.id} notification={notification} handleCloseNotification={handleCloseNotification}/>
+                    }             
+                }) 
                 : 
                     <IonText className="no-notifications-text">No tienes notificaciones pendientes.</IonText>
             }

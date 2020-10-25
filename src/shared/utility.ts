@@ -3,6 +3,9 @@ import word from '../default-images/word.jpg';
 import pdf from '../default-images/pdf.jpg';
 import excel from '../default-images/excel.jpg';
 import defaultFile from '../default-images/default-file.png';
+import { NotificationType } from '../API';
+import { API, graphqlOperation } from 'aws-amplify';
+import * as Mutations from '../graphql/mutations';
 
 export const updateObject = (oldObject: any, updatedProperties: any) => {
     return {
@@ -33,3 +36,18 @@ export const formatDisplayImage = (name: string, source: string) => {
         default: return defaultFile;
     }
 };
+
+export const generateNotification = async (userId: String, friendId: String, type: NotificationType) => {
+    const friendRequestDetails = {
+        id: friendId+type+""+Date.now(), 
+        friendRequestToId: friendId, 
+        friendRequestFromId: userId,
+        type: type,
+    }
+    await (API.graphql(graphqlOperation(Mutations.createFriendRequest, {input: friendRequestDetails})) as Promise<any>)
+    .then(e => {
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
