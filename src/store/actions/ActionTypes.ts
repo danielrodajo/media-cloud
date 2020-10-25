@@ -20,6 +20,10 @@ export const RECOVER_FILES = 'RECOVER_FILES';
 export const RECOVER_FILES_OK = 'RECOVER_FILES_OK';
 export const RECOVER_FILES_NOK = 'RECOVER_FILES_NOK';
 
+export const RECOVER_FILTER_FILES = 'RECOVER_FILTER_FILES';
+export const RECOVER_FILTER_FILES_OK = 'RECOVER_FILTER_FILES_OK';
+export const RECOVER_FILTER_FILES_NOK = 'RECOVER_FILTER_FILES_NOK';
+
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const UPLOADING_FILE = 'UPLOADING_FILE';
 export const UPLOAD_FILE_OK = 'UPLOAD_FILE_OK';
@@ -285,6 +289,18 @@ interface RecoverFilesNokAction {
     payload: any
 }
 
+interface RecoverFilterFilesAction {
+    type: typeof RECOVER_FILTER_FILES
+}
+interface RecoverFilterFilesOkAction {
+    type: typeof RECOVER_FILTER_FILES_OK,
+    payload: File[]
+}
+interface RecoverFilterFilesNokAction {
+    type: typeof RECOVER_FILTER_FILES_NOK
+    payload: any
+}
+
 interface UploadFileAction {
     type: typeof UPLOAD_FILE
 }
@@ -405,4 +421,4 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
                             RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction |
                             RecoverShareFilesAction|RecoverShareFilesOkAction|RecoverShareFilesNokAction | sharingFileAction|sharingFileOkAction|sharingFileNokAction | stopSharingFileAction|stopSharingFileOkAction|stopSharingFileNokAction |
-                            shareFileWithFriendAction|shareFileWithFriendOkAction|shareFileWithFriendNokAction | stopShareFileWithFriendAction|stopShareFileWithFriendOkAction|stopShareFileWithFriendNokAction
+                            shareFileWithFriendAction|shareFileWithFriendOkAction|shareFileWithFriendNokAction | stopShareFileWithFriendAction|stopShareFileWithFriendOkAction|stopShareFileWithFriendNokAction | RecoverFilterFilesAction|RecoverFilterFilesOkAction|RecoverFilterFilesNokAction

@@ -41,7 +41,9 @@ export interface AuthState {
 
 export interface FileState {
     files: File[];
+    filterFiles: File[];
     recoverError: Object | null;
+    recoverFilterError: Object | null;
     uploadError: Object | null;
     removeError: Object | null;
     sharingError: Object | null;

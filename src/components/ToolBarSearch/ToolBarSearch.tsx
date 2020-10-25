@@ -3,13 +3,14 @@ import { IonToolbar, IonSearchbar } from '@ionic/react';
 import './ToolBarSearch.scss'
 
 interface props {
-    result: (text: String) => void
+    result: (text: string) => void,
+    placeholder: string
 }
 
 const ToolbarSearch: React.FC<props> = props => {
     return ( 
         <IonToolbar>               
-            <IonSearchbar placeholder="Búsqueda de usuarios" onIonChange={e => props.result(e.detail.value!)}/>
+            <IonSearchbar placeholder={props.placeholder} onIonChange={e => props.result(e.detail.value!)}/>
         </IonToolbar>
     );
 }
