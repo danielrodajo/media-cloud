@@ -75,7 +75,6 @@ export const shareFileToFriend = (fileId: String, friendId: String) => {
 
 //Dejar de dar acceso a un amigo a un fichero nuestro que esté en ESTADO COMPARTIDO
 export const stopSharingFileToFriend = (fileId: String, friendId: String) => {
-    console.log("PARAR COMPARTIR A AMIGO")
     return (dispatch: any) => {
         dispatch({
             type: types.STOP_SHARE_FILE_WITH_FRIEND
@@ -98,55 +97,41 @@ export const recoverShareFiles = (userId: String, friendId: String) => {
         dispatch({
             type: types.RECOVER_SHARE_FILES
         });
-        const files: any = [];
-        const filePaths: any = [];
+        const files: any = []; //Ficheros a almacenar en la Store
+        const filePaths: any = []; //Rutas de los ficheros a almacenar en al Store
+
+        //Obtener usuario actual para ver los ficheros que estan compartidos con él
         (API.graphql(graphqlOperation(Queries.getUser, {id: userId})) as Promise<any>)
         .then((result: any) => {
-            result.data.getUser.sharedFiles.items.forEach((pivotTable: any, index: number) => {
-                (API.graphql(graphqlOperation(Queries.getSharedFileToUser, {id: pivotTable.id})) as Promise<any>)
-                .then((result2: any) => {
-                    filePaths.push(result2.data.getSharedFileToUser.sharedFile.path);
 
-                    if (index+1 === result.data.getUser.sharedFiles.items.length) {
-                        filePaths.forEach((filePath: any, index: number) => {
-                            Storage.list(filePath, {
-                                level: 'protected',
-                                identityId: friendId
-                            })
-                            .then(async (file: any) => {
-                                file = file[0]
-                                const result = await Storage.get(file.key, {
-                                    level: 'protected',
-                                    identityId: friendId
-                                });
-                                const slices = file.key.split("/");
-                                file = { ...file, url: result+"", name: slices[slices.length-1] };
-                                files.push(file);
-                
-                                if (index === filePaths.length-1) {
-                                    dispatch({
-                                        type: types.RECOVER_SHARE_FILES_OK,
-                                        payload: files 
-                                    });
-                                }
-                            })
-                            .catch(err => {
-                                console.log(err);
-                                dispatch({
-                                    type: types.RECOVER_SHARE_FILES_NOK,
-                                    payload: err
-                                })
-                            });
-                        })
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                    dispatch({
-                        type: types.RECOVER_SHARE_FILES_NOK,
-                        payload: err
+            //Iteramos cada uno de los ficheros compartidos
+            result.data.getUser.sharedFiles.items.forEach(async(pivotTable: any, index: number) => {
+                if (pivotTable.id.startsWith(friendId)) {       
+                    //Obtenemos de la tabla pivote la ruta del fichero
+                    await (API.graphql(graphqlOperation(Queries.getSharedFileToUser, {id: pivotTable.id})) as Promise<any>)
+                    .then((result2: any) => {
+                        filePaths.push(result2.data.getSharedFileToUser.sharedFile.path);
+                        console.log(filePaths)
+                        //Si ya hemos iterado todos los ficheros compartidos, los recuperamos
+                        if (index === result.data.getUser.sharedFiles.items.length-1) {
+                            console.log("FIN AQUI")
+                            console.log(filePaths)
+                            recoverFilesFromPaths(friendId, filePaths, files, dispatch); 
+                        }
                     })
-                });
+                    .catch(err => {
+                        console.log(err);
+                        dispatch({
+                            type: types.RECOVER_SHARE_FILES_NOK,
+                            payload: err
+                        })
+                    });
+                } else if (index === result.data.getUser.sharedFiles.items.length-1) {  
+                    console.log(index)
+                    console.log("fin")                     
+                    recoverFilesFromPaths(friendId, filePaths, files, dispatch);
+                }
+                
             });
         })
         .catch(err => {
@@ -157,4 +142,42 @@ export const recoverShareFiles = (userId: String, friendId: String) => {
             })
         });   
     }
+}
+
+
+//Extracto de la funcion de recoverShareFiles para acortar la longitud de esta 
+function recoverFilesFromPaths (friendId: String, filePaths: any, files: any, dispatch: any) {
+    console.log("EJECUTADO")
+    console.log(filePaths)
+    filePaths.forEach((filePath: any, index: number) => {
+        Storage.list(filePath, {
+            level: 'protected',
+            identityId: friendId
+        })
+        .then(async (file: any) => {
+            file = file[0];
+            if (!file)
+                return;
+            const result = await Storage.get(file.key, {
+                level: 'protected',
+                identityId: friendId
+            });
+            const slices = file.key.split("/");
+            file = { ...file, url: result+"", name: slices[slices.length-1] };
+            files.push(file);
+            if (index === filePaths.length-1) {
+                dispatch({
+                    type: types.RECOVER_SHARE_FILES_OK,
+                    payload: files 
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.RECOVER_SHARE_FILES_NOK,
+                payload: err
+            })
+        });
+    })
 }
