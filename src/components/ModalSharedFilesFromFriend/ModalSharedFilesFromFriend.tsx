@@ -44,13 +44,17 @@ const ModalSharedFilesFromFriend: React.SFC<ModalSharedFilesFromFriendProps> = p
             {
                 downloading ?
                 <CustomSpinner />
-                :
-                files.map((file: any) => 
+                : (
+                    files.length === 0 ? <IonText className="no-notifications-text">No tiene archivos compartidos contigo.</IonText>
+                    : 
+                    files.map((file: any) => 
                     <ShareFileBox
                       key={file.key}
                       file={file}
                     />
+                    )
                 )
+                
             }
             </IonContent>
         </IonModal>
