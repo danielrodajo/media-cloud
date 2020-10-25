@@ -56,7 +56,7 @@ const LoadMyFiles:React.FC<props> = props => {
 
     const onGetFiles = useCallback(
         (path) => dispatch(actions.recoverFiles(props.user.identityId, path)),
-        [dispatch]
+        [dispatch, props.user.identityId]
     );
     const recoverError = useSelector(
         (state: RootState) => state.FileReducer.recoverError

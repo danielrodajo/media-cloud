@@ -1,7 +1,7 @@
 import './PopoverShareFileBox.scss';
 import React, { useState } from 'react';
-import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner, IonAlert } from '@ionic/react';
-import { cloudDownloadOutline, trashOutline, shareSocialOutline } from 'ionicons/icons';
+import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner } from '@ionic/react';
+import { cloudDownloadOutline } from 'ionicons/icons';
 import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
 

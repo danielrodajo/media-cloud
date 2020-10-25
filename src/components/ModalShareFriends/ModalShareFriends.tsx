@@ -3,10 +3,9 @@ import './ModalShareFriends.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { IonModal, IonHeader, IonToolbar, IonText, IonItem, IonIcon, IonContent } from '@ionic/react';
-import { arrowDown, fileTray } from 'ionicons/icons';
+import { arrowDown } from 'ionicons/icons';
 import ShareFriend from './ShareFriend/ShareFriend';
 import { API, graphqlOperation } from 'aws-amplify';
-import * as Mutations from '../../graphql/mutations';
 import * as Queries from '../../graphql/queries';
 import * as actions from "../../store/actions/index";
 
@@ -70,11 +69,10 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
                     if (index+1 === pivotTable.data.getSharedFile.Sharers.items.length)
                         setSharers(sharers);        
                 });
-            }
-                
+            }      
         }
         fetchSharersFromFile();
-    }, []);
+    }, [props.file.key, user.identityId]);
     
 
     return (

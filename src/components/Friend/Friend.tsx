@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Friend.scss';
 import { IonItem, IonAvatar, IonLabel, IonImg, IonIcon, IonAlert } from '@ionic/react';
 import DefaultAvatar from '../../default-images/default-avatar.png';
-import { personRemove, shareSocialOutline, shareSocialSharp, shareSocial, document } from 'ionicons/icons';
+import { personRemove, shareSocial } from 'ionicons/icons';
 import ModalSharedFilesFromFriend from '../ModalSharedFilesFromFriend/ModalSharedFilesFromFriend';
 
 export interface FriendProps {

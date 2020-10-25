@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import './ModalSharedFilesFromFriend.scss';
 import { IonModal, IonHeader, IonToolbar, IonText, IonItem, IonIcon, IonContent } from '@ionic/react';
 import { arrowDown } from 'ionicons/icons';
@@ -17,7 +17,7 @@ export interface ModalSharedFilesFromFriendProps {
 const ModalSharedFilesFromFriend: React.SFC<ModalSharedFilesFromFriendProps> = props => {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.AuthReducer.user);
-    const recoverSharedFilesFromFriend = (userId: String, friendId: String) => dispatch(actions.recoverShareFiles(userId, friendId));
+    const recoverSharedFilesFromFriend = useCallback((userId: String, friendId: String) => dispatch(actions.recoverShareFiles(userId, friendId)), [dispatch]);
     const files = useSelector((state: RootState) => state.ShareFileReducer.files);
     const downloading = useSelector((state: RootState) => state.ShareFileReducer.downloading);
 
@@ -26,7 +26,7 @@ const ModalSharedFilesFromFriend: React.SFC<ModalSharedFilesFromFriendProps> = p
             recoverSharedFilesFromFriend(user.identityId, props.friend.originalId);
         }
             
-    }, [props.showModal]);
+    }, [props.showModal,user.identityId, props.friend.originalId, recoverSharedFilesFromFriend]);
 
     return (
         <IonModal isOpen={props.showModal} onDidDismiss={e => props.setShowModal(false)}>

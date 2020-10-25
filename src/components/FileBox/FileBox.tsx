@@ -4,7 +4,7 @@ import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRip
 import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
 import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
-import { shareSocialSharp, fileTray } from 'ionicons/icons';
+import { shareSocialSharp } from 'ionicons/icons';
 
 interface props {
     file: File;

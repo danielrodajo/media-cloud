@@ -102,36 +102,30 @@ export const recoverShareFiles = (userId: String, friendId: String) => {
 
         //Obtener usuario actual para ver los ficheros que estan compartidos con él
         (API.graphql(graphqlOperation(Queries.getUser, {id: userId})) as Promise<any>)
-        .then((result: any) => {
+        .then(async(result: any) => {
 
             //Iteramos cada uno de los ficheros compartidos
-            result.data.getUser.sharedFiles.items.forEach(async(pivotTable: any, index: number) => {
-                if (pivotTable.id.startsWith(friendId)) {       
-                    //Obtenemos de la tabla pivote la ruta del fichero
-                    await (API.graphql(graphqlOperation(Queries.getSharedFileToUser, {id: pivotTable.id})) as Promise<any>)
-                    .then((result2: any) => {
-                        filePaths.push(result2.data.getSharedFileToUser.sharedFile.path);
-                        console.log(filePaths)
-                        //Si ya hemos iterado todos los ficheros compartidos, los recuperamos
-                        if (index === result.data.getUser.sharedFiles.items.length-1) {
-                            console.log("FIN AQUI")
-                            console.log(filePaths)
-                            recoverFilesFromPaths(friendId, filePaths, files, dispatch); 
-                        }
+            const filterResult = result.data.getUser.sharedFiles.items.filter((result: any) => result.id.startsWith(friendId));
+            const promises:any = [];
+            filterResult.forEach((pivotTable: any) => {      
+                //Obtenemos de la tabla pivote la ruta del fichero
+                promises.push((API.graphql(graphqlOperation(Queries.getSharedFileToUser, {id: pivotTable.id})) as Promise<any>)
+                .then((result2: any) => {
+                    filePaths.push(result2.data.getSharedFileToUser.sharedFile.path);              
+                })
+                .catch(err => {
+                    console.log(err);
+                    dispatch({
+                        type: types.RECOVER_SHARE_FILES_NOK,
+                        payload: err
                     })
-                    .catch(err => {
-                        console.log(err);
-                        dispatch({
-                            type: types.RECOVER_SHARE_FILES_NOK,
-                            payload: err
-                        })
-                    });
-                } else if (index === result.data.getUser.sharedFiles.items.length-1) {  
-                    console.log(index)
-                    console.log("fin")                     
-                    recoverFilesFromPaths(friendId, filePaths, files, dispatch);
-                }
-                
+                }));        
+            });
+            await Promise.all(promises);
+            await recoverFilesFromPaths(friendId, filePaths, files, dispatch);    
+            dispatch({
+                type: types.RECOVER_SHARE_FILES_OK,
+                payload: files 
             });
         })
         .catch(err => {
@@ -146,31 +140,22 @@ export const recoverShareFiles = (userId: String, friendId: String) => {
 
 
 //Extracto de la funcion de recoverShareFiles para acortar la longitud de esta 
-function recoverFilesFromPaths (friendId: String, filePaths: any, files: any, dispatch: any) {
-    console.log("EJECUTADO")
-    console.log(filePaths)
-    filePaths.forEach((filePath: any, index: number) => {
-        Storage.list(filePath, {
+async function recoverFilesFromPaths (friendId: String, filePaths: any, files: any, dispatch: any) {
+    const promises: any = [];
+    filePaths.forEach((filePath: any) => {
+        promises.push(Storage.list(filePath, {
             level: 'protected',
             identityId: friendId
         })
         .then(async (file: any) => {
             file = file[0];
-            if (!file)
-                return;
             const result = await Storage.get(file.key, {
                 level: 'protected',
                 identityId: friendId
             });
             const slices = file.key.split("/");
             file = { ...file, url: result+"", name: slices[slices.length-1] };
-            files.push(file);
-            if (index === filePaths.length-1) {
-                dispatch({
-                    type: types.RECOVER_SHARE_FILES_OK,
-                    payload: files 
-                });
-            }
+            files.push(file);    
         })
         .catch(err => {
             console.log(err);
@@ -178,6 +163,7 @@ function recoverFilesFromPaths (friendId: String, filePaths: any, files: any, di
                 type: types.RECOVER_SHARE_FILES_NOK,
                 payload: err
             })
-        });
+        }));
     })
+    await Promise.all(promises);
 }

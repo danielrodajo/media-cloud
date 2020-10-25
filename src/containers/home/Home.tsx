@@ -10,7 +10,6 @@ import "./Home.scss";
 import Toolbar from "../../components/ToolBar/Toolbar";
 import LoadRecents from "./LoadRecents/LoadRecents";
 import LoadMyFiles from "./LoadMyFiles/LoadMyFiles";
-import LoadShareFilesWithMe from "./LoadShareFilesWithMe/LoadShareFilesWithMe";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
