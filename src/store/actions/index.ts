@@ -6,7 +6,6 @@ export {
 export {
     recoverFiles,
     recoverRecentFiles,
-    getSharedFile,
 } from './RecoverManager';
 
 export {
@@ -37,4 +36,12 @@ export {
     getFriends,
     deleteFriend,
     addFriend,
-} from './FriendsManager';
+} from './FriendManager';
+
+export {
+    sharingFile,
+    stopSharingFile,
+    recoverShareFiles,
+    shareFileToFriend,
+    stopSharingFileToFriend,
+} from './ShareFileManager';

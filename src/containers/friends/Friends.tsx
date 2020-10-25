@@ -20,13 +20,13 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const user = useSelector((state: RootState) => state.AuthReducer.user);
 
-    const downloading = useSelector((state: RootState) => state.FriendsReducer.downloadingFriends);
+    const downloading = useSelector((state: RootState) => state.FriendReducer.downloadingFriends);
 
     const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
-    const friends = useSelector((state: RootState) => state.FriendsReducer.friends);
+    const friends = useSelector((state: RootState) => state.FriendReducer.friends);
 
-    const recoverFriendsError = useSelector((state: RootState) => state.FriendsReducer.recoverFriendsError);
+    const recoverFriendsError = useSelector((state: RootState) => state.FriendReducer.recoverFriendsError);
 
     const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
 

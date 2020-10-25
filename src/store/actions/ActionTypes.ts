@@ -82,6 +82,86 @@ export const ADD_FRIEND = "ADD_FRIEND";
 export const ADD_FRIEND_OK = "ADD_FRIEND_OK";
 export const ADD_FRIEND_NOK = "ADD_FRIEND_NOK";
 
+export const RECOVER_SHARE_FILES = "RECOVER_SHARE_FILES";
+export const RECOVER_SHARE_FILES_OK = "RECOVER_SHARE_FILES_OK";
+export const RECOVER_SHARE_FILES_NOK = "RECOVER_SHARE_FILES_NOK";
+
+export const SHARING_FILE = "SHARE_FILE";
+export const SHARING_FILE_OK = "SHARE_FILE_OK";
+export const SHARING_FILE_NOK = "SHARE_FILE_NOK";
+
+export const STOP_SHARING_FILE = "STOP_SHARING_FILE";
+export const STOP_SHARING_FILE_OK = "STOP_SHARING_FILE_OK";
+export const STOP_SHARING_FILE_NOK = "STOP_SHARING_FILE_NOK";
+
+export const SHARE_FILE_WITH_FRIEND = "SHARE_FILE_WITH_FRIEND";
+export const SHARE_FILE_WITH_FRIEND_OK = "SHARE_FILE_WITH_FRIEND_OK";
+export const SHARE_FILE_WITH_FRIEND_NOK = "SHARE_FILE_WITH_FRIEND_NOK";
+
+export const STOP_SHARE_FILE_WITH_FRIEND = "STOP_SHARE_FILE_WITH_FRIEND";
+export const STOP_SHARE_FILE_WITH_FRIEND_OK = "STOP_SHARE_FILE_WITH_FRIEND_OK";
+export const STOP_SHARE_FILE_WITH_FRIEND_NOK = "STOP_SHARE_FILE_WITH_FRIEND_NOK"; 
+
+interface shareFileWithFriendAction {
+    type: typeof SHARE_FILE_WITH_FRIEND
+}
+interface shareFileWithFriendOkAction {
+    type: typeof SHARE_FILE_WITH_FRIEND_OK,
+    payload: any
+}
+interface shareFileWithFriendNokAction {
+    type: typeof SHARE_FILE_WITH_FRIEND_NOK,
+    payload: any
+}
+
+interface stopShareFileWithFriendAction {
+    type: typeof STOP_SHARE_FILE_WITH_FRIEND
+}
+interface stopShareFileWithFriendOkAction {
+    type: typeof STOP_SHARE_FILE_WITH_FRIEND_OK,
+    payload: any
+}
+interface stopShareFileWithFriendNokAction {
+    type: typeof STOP_SHARE_FILE_WITH_FRIEND_NOK,
+    payload: any
+}
+
+interface sharingFileAction {
+    type: typeof SHARING_FILE
+}
+interface sharingFileOkAction {
+    type: typeof SHARING_FILE_OK,
+    payload: any
+}
+interface sharingFileNokAction {
+    type: typeof SHARING_FILE_NOK,
+    payload: any
+}
+
+interface stopSharingFileAction {
+    type: typeof STOP_SHARING_FILE
+}
+interface stopSharingFileOkAction {
+    type: typeof STOP_SHARING_FILE_OK,
+    payload: any
+}
+interface stopSharingFileNokAction {
+    type: typeof STOP_SHARING_FILE_NOK,
+    payload: any
+}
+
+interface RecoverShareFilesAction {
+    type: typeof RECOVER_SHARE_FILES
+}
+interface RecoverShareFilesOkAction {
+    type: typeof RECOVER_SHARE_FILES_OK
+    payload: any
+}
+interface RecoverShareFilesNokAction {
+    type: typeof RECOVER_SHARE_FILES_NOK
+    payload: any
+}
+
 interface addFriendAction {
     type: typeof ADD_FRIEND
 }
@@ -323,4 +403,6 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             AuthSignInAction|AuthSignInOkAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutOkAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpOkAction|AuthSignUpNokAction | VerifyAction|VerifyOkAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordOkAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitOkAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
                             RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
-                            RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction
+                            RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction |
+                            RecoverShareFilesAction|RecoverShareFilesOkAction|RecoverShareFilesNokAction | sharingFileAction|sharingFileOkAction|sharingFileNokAction | stopSharingFileAction|stopSharingFileOkAction|stopSharingFileNokAction |
+                            shareFileWithFriendAction|shareFileWithFriendOkAction|shareFileWithFriendNokAction | stopShareFileWithFriendAction|stopShareFileWithFriendOkAction|stopShareFileWithFriendNokAction

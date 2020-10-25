@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Friend.scss';
 import { IonItem, IonAvatar, IonLabel, IonImg, IonIcon, IonAlert } from '@ionic/react';
 import DefaultAvatar from '../../default-images/default-avatar.png';
-import { personRemove } from 'ionicons/icons';
+import { personRemove, shareSocial } from 'ionicons/icons';
+import ModalSharedFilesFromFriend from '../ModalSharedFilesFromFriend/ModalSharedFilesFromFriend';
 
 export interface FriendProps {
     friend: any,
@@ -12,6 +13,7 @@ export interface FriendProps {
 const Friend: React.SFC<FriendProps> = props => {
 
     const [showAlert, setShowAlert] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <React.Fragment>
@@ -30,11 +32,15 @@ const Friend: React.SFC<FriendProps> = props => {
                     },
                 ]}
             />
+            <ModalSharedFilesFromFriend friend={props.friend} showModal={showModal} setShowModal={setShowModal}/>
             <IonItem>       
                 <IonAvatar slot="start">
                     <IonImg src={DefaultAvatar} />
                 </IonAvatar>
-                <IonLabel>{props.friend.name}</IonLabel>        
+                <IonLabel>{props.friend.name}</IonLabel>     
+                <IonItem button lines="none" onClick={() => {setShowModal(true)}}>      
+                    <IonIcon icon={shareSocial} color="success"/>
+                </IonItem>
                 <IonItem button lines="none" className="custom-notification-close" onClick={() => setShowAlert(true)}>
                     <IonIcon icon={personRemove} />
                 </IonItem>

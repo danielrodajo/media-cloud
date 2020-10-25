@@ -15,6 +15,7 @@ type Friend
 {
   id: ID!
   name: String!
+  originalId: String!
   user: User! @connection(name:"UserFriends")
 }
 
@@ -29,9 +30,10 @@ type FriendRequest
 type SharedFile
   @model
 {
-  path: ID!
+  id: ID!
+  path: String! 
   owner: User! @connection(name:"OwnerSharedFiles")
-  Sharers: [SharedFileToUser]! @connection(name:"FileSharedFileToUser")
+  Sharers: [SharedFileToUser] @connection(name:"FileSharedFileToUser")
 }
 
 type SharedFileToUser

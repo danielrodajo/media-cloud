@@ -10,11 +10,15 @@ import "./Home.scss";
 import Toolbar from "../../components/ToolBar/Toolbar";
 import LoadRecents from "./LoadRecents/LoadRecents";
 import LoadMyFiles from "./LoadMyFiles/LoadMyFiles";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const Home: React.FC = () => {
 
   //Inicializamos en el segmento por defecto
   const [ currentSegment, setCurrentSegment ] = useState<string | undefined>("recents");
+
+  const user = useSelector((state: RootState) => state.AuthReducer.user);
 
   return (
     <IonPage>
@@ -30,8 +34,8 @@ const Home: React.FC = () => {
         </IonSegment>
         {
           currentSegment === "recents" 
-          ? <LoadRecents maxFiles={8} />
-          : <LoadMyFiles />
+          ? <LoadRecents user={user} maxFiles={8} />
+          : <LoadMyFiles user={user} /> 
         }
       </IonContent>
     </IonPage>

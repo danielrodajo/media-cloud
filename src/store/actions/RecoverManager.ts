@@ -1,23 +1,10 @@
 import * as types from './ActionTypes';
-import { Storage } from 'aws-amplify';
+import { Storage, API, graphqlOperation } from 'aws-amplify';
 import { File as CustomFile } from '../types';
-
-
-
-export const getSharedFile = () => {
-    console.log("click")
-    return (dispatch: any) => {
-        Storage.list("Bullet_001.png", {
-            level: 'protected',
-            identityId: "eu-west-1:5b985e2e-00a5-4eea-9749-9544871be12e"
-        })
-        .then(result => console.log(result))
-        .catch(err => console.log(err));
-    }
-}
+import * as Queries from '../../graphql/queries';
 
 //Recupera los N ficheros mas recientes
-export const recoverRecentFiles = (maxFiles: number) => {
+export const recoverRecentFiles = (userId: String, maxFiles: number) => {
     return (dispatch: any) => {
         dispatch({
             type: types.RECOVER_FILES
@@ -31,11 +18,18 @@ export const recoverRecentFiles = (maxFiles: number) => {
             //En caso de introducir numero maximo de ficheros, cogemos esa cantidad del array total
             .slice(0, maxFiles);
 
-            //A cada fichero, recuperar su URL
+            //A cada fichero, recuperar su URL y agregarle el atributo shared
             let promises = files.map(async (file: CustomFile) => {
                 const result = await Storage.get(file.key);
                 const slices = file.key.split("/");
-                return file = { ...file, url: result+"", name: slices[slices.length-1] };
+                //Comprobamos si está compartido o no
+                const sharedFile: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: userId+file.key}));
+                return file = { 
+                    ...file, 
+                    shared: sharedFile.data.getSharedFile ? true : false, 
+                    url: result+"", 
+                    name: slices[slices.length-1] 
+                };
             });     
             //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
             Promise.all(promises)
@@ -59,7 +53,7 @@ export const recoverRecentFiles = (maxFiles: number) => {
 }
 
 //Recupera TODOS los ficheros del bucket del usuario autenticado
-export const recoverFiles = (path: string) => {
+export const recoverFiles = (userId: String, path: string) => {
     return (dispatch: any) => {  
         dispatch({
             type: types.RECOVER_FILES
@@ -91,7 +85,14 @@ export const recoverFiles = (path: string) => {
             let promises = files.map(async (file: CustomFile) => {
                 const result = await Storage.get(file.key);
                 const slices = file.key.split("/");
-                return file = { ...file, url: result+"", name: slices[slices.length-1] };
+                //Comprobamos si está compartido o no
+                const sharedFile: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: userId+file.key}));
+                return file = { 
+                    ...file, 
+                    url: result+"", 
+                    shared: sharedFile.data.getSharedFile ? true : false,  
+                    name: slices[slices.length-1] 
+                };
             });     
             //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
             Promise.all(promises)
@@ -112,3 +113,4 @@ export const recoverFiles = (path: string) => {
         });
     }
 }
+

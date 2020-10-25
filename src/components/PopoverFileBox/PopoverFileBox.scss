@@ -1,5 +1,5 @@
 .popover-img {
-    height: 40vw;
+    height: 50vw;
 }
 
 .popover-spinner {
@@ -8,4 +8,13 @@
 
 .center-spinner {
     text-align: center;
+}
+
+.my-custom-ion-card {
+}
+
+.my-custom-class .popover-content {
+    width: 80%;
+    top: 20%; 
+    left: 10%;
 }

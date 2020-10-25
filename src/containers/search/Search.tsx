@@ -21,7 +21,7 @@ const Search: React.FC = () => {
     const [users, setUsers] = useState([]);
 
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
-    const friends = useSelector((state: RootState) => state.FriendsReducer.friends);
+    const friends = useSelector((state: RootState) => state.FriendReducer.friends);
 
 
     //Revisa si ya hay notificacion pendiente del usuario para ver si puede enviar otra mas

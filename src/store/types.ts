@@ -11,6 +11,7 @@ export interface File {
     size: number;
     url: string;
     name: string;
+    shared: boolean;
 }
 
 export interface FriendsState {
@@ -24,6 +25,7 @@ export interface NotificationState {
     recoverNotificationError: Object | null;
     saveNotificationError: Object | null;
 }
+
 
 export interface AuthState {
     user: any | null;
@@ -42,11 +44,23 @@ export interface FileState {
     recoverError: Object | null;
     uploadError: Object | null;
     removeError: Object | null;
+    sharingError: Object | null;
+    stopSharingError: Object | null;
     uploading: boolean;
     uploadSuccess: boolean;
     loadedFile: number;
     totalFile: number;
     downloading: boolean;
+    sharing: boolean;
+}
+
+export interface ShareFileState {
+    files: any | null;
+    recoverError: Object | null;
+    downloading: boolean;
+    sharingToUserOperation: boolean;
+    sharingToUserError: Object | null;
+    stopSharingToUserError: Object | null;
 }
 
 export interface FolderState {

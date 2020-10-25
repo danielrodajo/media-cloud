@@ -66,11 +66,13 @@ export type DeleteUserInput = {
 export type CreateFriendInput = {
   id?: string | null,
   name: string,
+  originalId: string,
   friendUserId: string,
 };
 
 export type ModelFriendConditionInput = {
   name?: ModelStringInput | null,
+  originalId?: ModelStringInput | null,
   and?: Array< ModelFriendConditionInput | null > | null,
   or?: Array< ModelFriendConditionInput | null > | null,
   not?: ModelFriendConditionInput | null,
@@ -79,6 +81,7 @@ export type ModelFriendConditionInput = {
 export type UpdateFriendInput = {
   id: string,
   name?: string | null,
+  originalId?: string | null,
   friendUserId?: string | null,
 };
 
@@ -109,34 +112,20 @@ export type DeleteFriendRequestInput = {
 };
 
 export type CreateSharedFileInput = {
+  id?: string | null,
   path: string,
   sharedFileOwnerId: string,
 };
 
 export type ModelSharedFileConditionInput = {
-  path?: ModelIDInput | null,
+  path?: ModelStringInput | null,
   and?: Array< ModelSharedFileConditionInput | null > | null,
   or?: Array< ModelSharedFileConditionInput | null > | null,
   not?: ModelSharedFileConditionInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type UpdateSharedFileInput = {
+  id: string,
   path?: string | null,
   sharedFileOwnerId?: string | null,
 };
@@ -175,9 +164,26 @@ export type ModelUserFilterInput = {
   not?: ModelUserFilterInput | null,
 };
 
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type ModelFriendFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  originalId?: ModelStringInput | null,
   and?: Array< ModelFriendFilterInput | null > | null,
   or?: Array< ModelFriendFilterInput | null > | null,
   not?: ModelFriendFilterInput | null,
@@ -191,7 +197,8 @@ export type ModelFriendRequestFilterInput = {
 };
 
 export type ModelSharedFileFilterInput = {
-  path?: ModelIDInput | null,
+  id?: ModelIDInput | null,
+  path?: ModelStringInput | null,
   and?: Array< ModelSharedFileFilterInput | null > | null,
   or?: Array< ModelSharedFileFilterInput | null > | null,
   not?: ModelSharedFileFilterInput | null,
@@ -226,6 +233,7 @@ export type CreateUserMutation = {
       __typename: "ModelSharedFileConnection",
       items:  Array< {
         __typename: "SharedFile",
+        id: string,
         path: string,
       } | null > | null,
       nextToken: string | null,
@@ -252,6 +260,7 @@ export type CreateUserMutation = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -280,6 +289,7 @@ export type UpdateUserMutation = {
       __typename: "ModelSharedFileConnection",
       items:  Array< {
         __typename: "SharedFile",
+        id: string,
         path: string,
       } | null > | null,
       nextToken: string | null,
@@ -306,6 +316,7 @@ export type UpdateUserMutation = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -334,6 +345,7 @@ export type DeleteUserMutation = {
       __typename: "ModelSharedFileConnection",
       items:  Array< {
         __typename: "SharedFile",
+        id: string,
         path: string,
       } | null > | null,
       nextToken: string | null,
@@ -360,6 +372,7 @@ export type DeleteUserMutation = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -376,6 +389,7 @@ export type CreateFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -414,6 +428,7 @@ export type UpdateFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -452,6 +467,7 @@ export type DeleteFriendMutation = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -674,6 +690,7 @@ export type CreateSharedFileMutationVariables = {
 export type CreateSharedFileMutation = {
   createSharedFile:  {
     __typename: "SharedFile",
+    id: string,
     path: string,
     owner:  {
       __typename: "User",
@@ -719,6 +736,7 @@ export type UpdateSharedFileMutationVariables = {
 export type UpdateSharedFileMutation = {
   updateSharedFile:  {
     __typename: "SharedFile",
+    id: string,
     path: string,
     owner:  {
       __typename: "User",
@@ -764,6 +782,7 @@ export type DeleteSharedFileMutationVariables = {
 export type DeleteSharedFileMutation = {
   deleteSharedFile:  {
     __typename: "SharedFile",
+    id: string,
     path: string,
     owner:  {
       __typename: "User",
@@ -812,6 +831,7 @@ export type CreateSharedFileToUserMutation = {
     id: string,
     sharedFile:  {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
@@ -862,6 +882,7 @@ export type UpdateSharedFileToUserMutation = {
     id: string,
     sharedFile:  {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
@@ -912,6 +933,7 @@ export type DeleteSharedFileToUserMutation = {
     id: string,
     sharedFile:  {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
@@ -972,6 +994,7 @@ export type GetUserQuery = {
       __typename: "ModelSharedFileConnection",
       items:  Array< {
         __typename: "SharedFile",
+        id: string,
         path: string,
       } | null > | null,
       nextToken: string | null,
@@ -998,6 +1021,7 @@ export type GetUserQuery = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1051,6 +1075,7 @@ export type GetFriendQuery = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1092,6 +1117,7 @@ export type ListFriendsQuery = {
       __typename: "Friend",
       id: string,
       name: string,
+      originalId: string,
       user:  {
         __typename: "User",
         id: string,
@@ -1197,6 +1223,7 @@ export type GetSharedFileQueryVariables = {
 export type GetSharedFileQuery = {
   getSharedFile:  {
     __typename: "SharedFile",
+    id: string,
     path: string,
     owner:  {
       __typename: "User",
@@ -1245,6 +1272,7 @@ export type ListSharedFilesQuery = {
     __typename: "ModelSharedFileConnection",
     items:  Array< {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
@@ -1270,6 +1298,7 @@ export type GetSharedFileToUserQuery = {
     id: string,
     sharedFile:  {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
@@ -1323,6 +1352,7 @@ export type ListSharedFileToUsersQuery = {
       id: string,
       sharedFile:  {
         __typename: "SharedFile",
+        id: string,
         path: string,
       },
       sharer:  {
@@ -1352,6 +1382,7 @@ export type OnCreateUserSubscription = {
       __typename: "ModelSharedFileConnection",
       items:  Array< {
         __typename: "SharedFile",
+        id: string,
         path: string,
       } | null > | null,
       nextToken: string | null,
@@ -1378,6 +1409,7 @@ export type OnCreateUserSubscription = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1401,6 +1433,7 @@ export type OnUpdateUserSubscription = {
       __typename: "ModelSharedFileConnection",
       items:  Array< {
         __typename: "SharedFile",
+        id: string,
         path: string,
       } | null > | null,
       nextToken: string | null,
@@ -1427,6 +1460,7 @@ export type OnUpdateUserSubscription = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1450,6 +1484,7 @@ export type OnDeleteUserSubscription = {
       __typename: "ModelSharedFileConnection",
       items:  Array< {
         __typename: "SharedFile",
+        id: string,
         path: string,
       } | null > | null,
       nextToken: string | null,
@@ -1476,6 +1511,7 @@ export type OnDeleteUserSubscription = {
         __typename: "Friend",
         id: string,
         name: string,
+        originalId: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1487,6 +1523,7 @@ export type OnCreateFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1520,6 +1557,7 @@ export type OnUpdateFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1553,6 +1591,7 @@ export type OnDeleteFriendSubscription = {
     __typename: "Friend",
     id: string,
     name: string,
+    originalId: string,
     user:  {
       __typename: "User",
       id: string,
@@ -1755,6 +1794,7 @@ export type OnDeleteFriendRequestSubscription = {
 export type OnCreateSharedFileSubscription = {
   onCreateSharedFile:  {
     __typename: "SharedFile",
+    id: string,
     path: string,
     owner:  {
       __typename: "User",
@@ -1795,6 +1835,7 @@ export type OnCreateSharedFileSubscription = {
 export type OnUpdateSharedFileSubscription = {
   onUpdateSharedFile:  {
     __typename: "SharedFile",
+    id: string,
     path: string,
     owner:  {
       __typename: "User",
@@ -1835,6 +1876,7 @@ export type OnUpdateSharedFileSubscription = {
 export type OnDeleteSharedFileSubscription = {
   onDeleteSharedFile:  {
     __typename: "SharedFile",
+    id: string,
     path: string,
     owner:  {
       __typename: "User",
@@ -1878,6 +1920,7 @@ export type OnCreateSharedFileToUserSubscription = {
     id: string,
     sharedFile:  {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
@@ -1923,6 +1966,7 @@ export type OnUpdateSharedFileToUserSubscription = {
     id: string,
     sharedFile:  {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
@@ -1968,6 +2012,7 @@ export type OnDeleteSharedFileToUserSubscription = {
     id: string,
     sharedFile:  {
       __typename: "SharedFile",
+      id: string,
       path: string,
       owner:  {
         __typename: "User",
