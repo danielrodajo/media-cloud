@@ -4,7 +4,9 @@ import { FileState, File } from '../types';
 
 const initialState: FileState = {
     files: [],
+    filterFiles: [],
     recoverError: null,
+    recoverFilterError: null,
     uploadError: null,
     removeError: null,
     sharingError: null,
@@ -78,6 +80,27 @@ const recoverFail = (state: FileState, payload: Error) => {
     })
 }
 
+const recoverFilterFiles = (state: FileState) => {
+    return updateObject( state, {
+        downloading: true,
+        recoverFilterError: null
+    });
+}
+
+const recoverFilterFilesSuccess = (state: FileState, payload: File[]) => {
+    return updateObject( state, {
+        filterFiles: payload,
+        downloading: false
+    });
+}
+
+const recoverFilterFail = (state: FileState, payload: Error) => {
+    return updateObject( state, {
+        recoverFilterError: payload,
+        downloading: false
+    })
+}
+
 //Reseteamos valores de visualizacion de la subida
 const uploadFile = (state: FileState) => {
     return updateObject( state, {
@@ -140,6 +163,9 @@ const reducer = ( state = initialState, action: types.ActionTypes ) => {
         case types.RECOVER_FILES: return recoverFiles(state);
         case types.RECOVER_FILES_OK: return recoverFilesSuccess(state, action.payload);
         case types.RECOVER_FILES_NOK: return recoverFail(state, action.payload);
+        case types.RECOVER_FILTER_FILES: return recoverFilterFiles(state);
+        case types.RECOVER_FILTER_FILES_OK: return recoverFilterFilesSuccess(state, action.payload);
+        case types.RECOVER_FILTER_FILES_NOK: return recoverFilterFail(state, action.payload);
         case types.UPLOAD_FILE: return uploadFile(state);
         case types.UPLOADING_FILE: return uploadingFile(state, action.payload);
         case types.UPLOAD_FILE_OK_WAIT: return uploadFileSuccessWait(state, action.payload);

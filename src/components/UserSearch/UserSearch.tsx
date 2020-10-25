@@ -29,12 +29,14 @@ const UserSearch: React.FC<props> = props => {
                     },
                 ]}
             />
-            <IonItem button onClick={() => setShowAlert(true)}>
+            <IonItem>
                 <IonAvatar slot="start">
                     <IonImg src={DefaultAvatar} />
                 </IonAvatar>
                 <IonLabel>{props.friend.name}</IonLabel>
-                <IonIcon icon={personAddOutline}/>
+                <IonItem lines="none" button onClick={() => setShowAlert(true)}>
+                    <IonIcon icon={personAddOutline}/>
+                </IonItem>      
             </IonItem>
         </React.Fragment>
         

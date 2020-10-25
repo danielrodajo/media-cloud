@@ -114,3 +114,52 @@ export const recoverFiles = (userId: String, path: string) => {
     }
 }
 
+export const recoverFilesByName= (userId: String, name: string) => {
+    return (dispatch: any) => { 
+        dispatch({
+            type: types.RECOVER_FILTER_FILES
+        });
+        if (name === "") {
+            dispatch({
+                type: types.RECOVER_FILTER_FILES_OK,
+                payload: []
+            })
+            return;
+        }
+        Storage.list("", {level: 'protected'})
+        .then((result: any) => {
+            const files = result.filter((file: CustomFile) => (!file.key.endsWith('default')))
+            .filter((file: CustomFile) => file.key.includes(name));
+            let promises = files.map(async (file: CustomFile) => {
+                const result = await Storage.get(file.key);
+                const slices = file.key.split("/");
+                //Comprobamos si está compartido o no
+                const sharedFile: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: userId+file.key}));
+                return file = { 
+                    ...file, 
+                    shared: sharedFile.data.getSharedFile ? true : false, 
+                    url: result+"", 
+                    name: slices[slices.length-1] 
+                };
+            });  
+            
+            Promise.all(promises)
+            .then(result => {
+                dispatch({
+                    type: types.RECOVER_FILTER_FILES_OK,
+                    payload: result
+                })
+            });   
+        })
+        .catch((err) => {
+            console.log(err);
+            if (err.message !== "Cannot read property 'map' of undefined") {
+                dispatch({
+                    type: types.RECOVER_FILTER_FILES_NOK,
+                    payload: err
+                });
+            }       
+        });
+    }
+}
+
