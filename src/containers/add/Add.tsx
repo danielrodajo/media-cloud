@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonInput } from '@ionic/react';
+import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonInput, IonToast } from '@ionic/react';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,6 +9,7 @@ import Popover from './PopoverUpload/PopoverUpload';
 import UploadButton from '../../components/UploadButton/UploadButton';
 import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 import DisplaySelectFile from '../../components/DisplaySelectFile/DisplaySelectFile';
+import { Storage } from 'aws-amplify';
 
 
 interface props {
@@ -19,6 +20,9 @@ interface props {
 const Add: React.FC<props> = props => {
 
     const dispatch = useDispatch();
+
+    const [showToast, setShowToast] = useState(false);
+    const [showToast2, setShowToast2] = useState(false);
 
     //Agregamos Hook para tomar una foto y guardarla
     const { photo, setPhoto, takePhoto } = usePhotoGallery();
@@ -46,18 +50,35 @@ const Add: React.FC<props> = props => {
 
     const currentPath = useSelector((state: RootState) => state.FolderReducer.currentPath);
 
+     const checkIfFileExists = async (currentFile: any) => {
+        const result = await Storage.list(((currentPath === "") ? currentFile.name : currentPath+"/"+currentFile.name), {level: 'protected'});
+        return result.length !== 0;
+    }
+
+    const checkIfFolderExists = async (folderName: string) => {
+        const result = await Storage.list(currentPath+"/"+folderName+"/default", {level: 'protected'});
+        return result.length !== 0;
+    }
 
     //Prepara la carpeta para crearla, ajustando la ruta completa y reseteando los valores 
-    const submitFolder = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
+    const submitFolder = async(event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
         event.preventDefault();
+        if (await checkIfFolderExists(folderName)) {
+            setShowToast(true);
+            return;
+        }
         createFolder(currentPath+"/"+folderName);
         setFolderName("");
         setCreatingFolder(false);
         props.setShowModal(false);
     }
 
-    const submitFile = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
+    const submitFile = async(event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
         event.preventDefault();
+        if (await checkIfFileExists(file)) {
+            setShowToast(true);
+            return;
+        }
         const name = (file as File).name;   
         //Subir el fichero a S3
         uploadFile(((currentPath === "") ? name : currentPath+"/"+name), file as File);
@@ -66,8 +87,14 @@ const Add: React.FC<props> = props => {
         props.setShowModal(false);
     }
 
-    const submitPhoto = (event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
+    const submitPhoto = async(event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
         event.preventDefault(); 
+
+        if (await checkIfFileExists(photo)) {
+            setShowToast(true);
+            return;
+        }
+
         const name = (photo as File).name;  
         //Subir el fichero a S3
         uploadFile(((currentPath === "") ? name : currentPath+"/"+name), photo as File);
@@ -77,7 +104,19 @@ const Add: React.FC<props> = props => {
     }
 
     return (
-        <React.Fragment>            
+        <React.Fragment>   
+             <IonToast
+                isOpen={showToast}
+                onDidDismiss={() => setShowToast(false)}
+                message="Ya existe un fichero con ese nombre en esta carpeta."
+                duration={1500}
+            /> 
+            <IonToast
+               isOpen={showToast2}
+               onDidDismiss={() => setShowToast2(false)}
+               message="Ya existe una carpeta con ese nombre en esta carpeta."
+               duration={1500}
+           />          
             <Popover 
                 loadedFile = {loadedFile}
                 totalFile = {totalFile}

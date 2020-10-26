@@ -39,14 +39,15 @@ const FileBox: React.FC<props> = props => {
                 }
                 {
                     props.isAbsolutePath ? null
-                    : 
+                    : (
                         numberOfFolders().length > 0 ?
-                        <IonItem lines="none" className="file-box-folder-icon">
+                        <IonItem lines="none" className="file-box-input-folder-icon">
                         {
                             numberOfFolders().map(() => <IonIcon icon={folder} />)
                         }
                         </IonItem>
                         : null
+                    )
                 }
                 <IonCardHeader>
                     <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
