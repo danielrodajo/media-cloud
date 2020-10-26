@@ -48,6 +48,7 @@ const Search: React.FC = () => {
                     file={file}
                     remove={removeFile}
                     removeError={removeError}
+                    isAbsolutePath={false}
               />)           
             }
             </IonContent>

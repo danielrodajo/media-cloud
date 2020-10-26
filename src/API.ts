@@ -54,6 +54,15 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export enum NotificationType {
+  SENDPETITION = "SENDPETITION",
+  ACCEPTPETITION = "ACCEPTPETITION",
+  DENYPETITION = "DENYPETITION",
+  SENDSHAREFILE = "SENDSHAREFILE",
+  STOPSENDSHAREFILE = "STOPSENDSHAREFILE",
+}
+
+
 export type UpdateUserInput = {
   id: string,
   name?: string | null,
@@ -91,18 +100,26 @@ export type DeleteFriendInput = {
 
 export type CreateFriendRequestInput = {
   id?: string | null,
+  type: NotificationType,
   friendRequestToId: string,
   friendRequestFromId: string,
 };
 
 export type ModelFriendRequestConditionInput = {
+  type?: ModelNotificationTypeInput | null,
   and?: Array< ModelFriendRequestConditionInput | null > | null,
   or?: Array< ModelFriendRequestConditionInput | null > | null,
   not?: ModelFriendRequestConditionInput | null,
 };
 
+export type ModelNotificationTypeInput = {
+  eq?: NotificationType | null,
+  ne?: NotificationType | null,
+};
+
 export type UpdateFriendRequestInput = {
   id: string,
+  type?: NotificationType | null,
   friendRequestToId?: string | null,
   friendRequestFromId?: string | null,
 };
@@ -191,6 +208,7 @@ export type ModelFriendFilterInput = {
 
 export type ModelFriendRequestFilterInput = {
   id?: ModelIDInput | null,
+  type?: ModelNotificationTypeInput | null,
   and?: Array< ModelFriendRequestFilterInput | null > | null,
   or?: Array< ModelFriendRequestFilterInput | null > | null,
   not?: ModelFriendRequestFilterInput | null,
@@ -243,6 +261,7 @@ export type CreateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -251,6 +270,7 @@ export type CreateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -299,6 +319,7 @@ export type UpdateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -307,6 +328,7 @@ export type UpdateUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -355,6 +377,7 @@ export type DeleteUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -363,6 +386,7 @@ export type DeleteUserMutation = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -505,6 +529,7 @@ export type CreateFriendRequestMutation = {
   createFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
+    type: NotificationType,
     to:  {
       __typename: "User",
       id: string,
@@ -567,6 +592,7 @@ export type UpdateFriendRequestMutation = {
   updateFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
+    type: NotificationType,
     to:  {
       __typename: "User",
       id: string,
@@ -629,6 +655,7 @@ export type DeleteFriendRequestMutation = {
   deleteFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
+    type: NotificationType,
     to:  {
       __typename: "User",
       id: string,
@@ -1004,6 +1031,7 @@ export type GetUserQuery = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1012,6 +1040,7 @@ export type GetUserQuery = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1136,6 +1165,7 @@ export type GetFriendRequestQuery = {
   getFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
+    type: NotificationType,
     to:  {
       __typename: "User",
       id: string,
@@ -1201,6 +1231,7 @@ export type ListFriendRequestsQuery = {
     items:  Array< {
       __typename: "FriendRequest",
       id: string,
+      type: NotificationType,
       to:  {
         __typename: "User",
         id: string,
@@ -1392,6 +1423,7 @@ export type OnCreateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1400,6 +1432,7 @@ export type OnCreateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1443,6 +1476,7 @@ export type OnUpdateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1451,6 +1485,7 @@ export type OnUpdateUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1494,6 +1529,7 @@ export type OnDeleteUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1502,6 +1538,7 @@ export type OnDeleteUserSubscription = {
       items:  Array< {
         __typename: "FriendRequest",
         id: string,
+        type: NotificationType,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -1624,6 +1661,7 @@ export type OnCreateFriendRequestSubscription = {
   onCreateFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
+    type: NotificationType,
     to:  {
       __typename: "User",
       id: string,
@@ -1681,6 +1719,7 @@ export type OnUpdateFriendRequestSubscription = {
   onUpdateFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
+    type: NotificationType,
     to:  {
       __typename: "User",
       id: string,
@@ -1738,6 +1777,7 @@ export type OnDeleteFriendRequestSubscription = {
   onDeleteFriendRequest:  {
     __typename: "FriendRequest",
     id: string,
+    type: NotificationType,
     to:  {
       __typename: "User",
       id: string,

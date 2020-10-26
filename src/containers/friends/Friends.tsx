@@ -11,6 +11,8 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as Mutations from '../../graphql/mutations';
 import * as Queries from '../../graphql/queries';
 import UserSearch from '../../components/UserSearch/UserSearch';
+import { NotificationType } from '../../API';
+import { generateNotification } from '../../shared/utility';
 
 export interface FriendsProps {
     
@@ -64,7 +66,7 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     //Revisa si ya hay notificacion pendiente del usuario para ver si puede enviar otra mas
     const checkNotificationConditions = (friendId: String) => {
-        if (notifications.filter((notification: any) => notification.from.id === friendId).length > 0) {
+        if (notifications.filter((notification: any) => notification.from.id === friendId && notification.type === NotificationType.SENDPETITION).length > 0) {
             setMessageError("Ya tienes una petición de este usuario.");
             setErrorPetition(true);
             setShowToast(true);
@@ -74,26 +76,18 @@ const Friends: React.SFC<FriendsProps> = () => {
             setErrorPetition(true);
             setShowToast(true);
             return false;
-        }
+        } 
         return true;
     }
 
     const generateFriendPetition = async (friendId: String) => {
-        if (checkNotificationConditions(friendId)) {   
-            const friendRequestDetails = {
-                id: friendId+user.identityId, 
-                friendRequestToId: friendId, 
-                friendRequestFromId: user.identityId
-            }
-            await (API.graphql(graphqlOperation(Mutations.createFriendRequest, {input: friendRequestDetails})) as Promise<any>)
+        if (checkNotificationConditions(friendId)) { 
+            await generateNotification(user.identityId, friendId, NotificationType.SENDPETITION)
             .then(e => {
                 setShowToast(true);
             })
             .catch(err => {
-                if (err.errors[0].errorType === "DynamoDB:ConditionalCheckFailedException")
-                    setMessageError("Ya le has enviado una petición.");
-                else
-                    setMessageError("Se ha producido un error inesperado.");
+                setMessageError("Se ha producido un error inesperado.");
                 setErrorPetition(true);
                 setShowToast(true);
             })

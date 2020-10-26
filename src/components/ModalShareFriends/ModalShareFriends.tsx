@@ -8,6 +8,8 @@ import ShareFriend from './ShareFriend/ShareFriend';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as Queries from '../../graphql/queries';
 import * as actions from "../../store/actions/index";
+import { generateNotification } from '../../shared/utility';
+import { NotificationType } from '../../API';
 
 
 export interface ModalShareFriendsProps {
@@ -17,6 +19,7 @@ export interface ModalShareFriendsProps {
 }
  
 const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
+
     const dispatch = useDispatch();
 
     const user = useSelector((state:RootState) => state.AuthReducer.user);
@@ -39,6 +42,7 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
             shareFileWithFriend(user.identityId+fileId, friendId);
             if (!sharers.includes(friendId))
                 sharers.push(friendId);
+            generateNotification(user.identityId, friendId, NotificationType.SENDSHAREFILE);
         } else {
             stopShareFileWithFriend(user.identityId+fileId, friendId);
             const index = sharers.indexOf(friendId);
@@ -52,7 +56,7 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
                     stopShareFile(props.file.key, user.identityId);
                 }, millisecondsToWait);                
             }
-            
+            generateNotification(user.identityId, friendId, NotificationType.STOPSENDSHAREFILE);
         }
     }
 

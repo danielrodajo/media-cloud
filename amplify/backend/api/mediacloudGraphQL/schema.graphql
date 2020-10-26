@@ -23,6 +23,7 @@ type FriendRequest
   @model
 {
   id: ID!
+  type: NotificationType!
   to: User! @connection(name:"UserToPetition")
   from: User! @connection(name:"UserFromPetition")
 }
@@ -42,4 +43,12 @@ type SharedFileToUser
   id: ID!
   sharedFile: SharedFile! @connection(name:"FileSharedFileToUser")
   sharer: User! @connection(name:"UserSharedFileToUser")
+}
+
+enum NotificationType {
+  SENDPETITION,
+  ACCEPTPETITION,
+  DENYPETITION,
+  SENDSHAREFILE,
+  STOPSENDSHAREFILE,
 }
