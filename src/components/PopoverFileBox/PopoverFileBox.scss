@@ -10,11 +10,18 @@
     text-align: center;
 }
 
-.my-custom-ion-card {
-}
-
 .my-custom-class .popover-content {
     width: 80%;
     top: 20%; 
     left: 10%;
+}
+
+.hide-background{
+    --background: rgba(255, 255, 255, 0.233);
+}
+
+.my-custom-ion-card{
+    margin: 0%;
+    height: 100%;
+    width: 100%;
 }

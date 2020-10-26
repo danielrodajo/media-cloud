@@ -1,6 +1,6 @@
-import React, { FormEvent, useRef } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import './SignIn.scss';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText, IonToast } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
@@ -19,6 +19,8 @@ const SignIn: React.FC<props> = props => {
 
     const dispatch = useDispatch();
     const messageError: any = useSelector((state: RootState) => state.AuthReducer.signInError);
+
+    const [showToast, setShowToast] = useState(false);
 
 
     const handleSignIn = (event: FormEvent<HTMLIonButtonElement>) => {
@@ -52,11 +54,7 @@ const SignIn: React.FC<props> = props => {
                             <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
                         </IonCardHeader>
                         <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
-                            {(messageError) ? 
-                            <IonItem lines="none">
-                                <IonText>{errorManagement(messageError.name)}</IonText>
-                            </IonItem> 
-                            : <IonItem lines="none"><IonText><br/></IonText></IonItem> }
+                            {(messageError) ? setShowToast(true) : null}
                             <IonItem lines="inset">
                                 <IonLabel position="floating">Email</IonLabel>
                                 <IonInput autocomplete="username" ref={inputEmail} type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
