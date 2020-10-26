@@ -19,6 +19,7 @@ export interface ModalShareFriendsProps {
 }
  
 const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
+
     const dispatch = useDispatch();
 
     const user = useSelector((state:RootState) => state.AuthReducer.user);

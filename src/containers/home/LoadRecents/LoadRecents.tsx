@@ -58,6 +58,7 @@ const LoadRecents: React.FC<props> = props => {
                       file={file}
                       remove={removeFile}
                       removeError={removeError}
+                      isAbsolutePath={false}
                     />
                   )
                 }           
