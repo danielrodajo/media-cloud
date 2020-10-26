@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './FileBox.scss';
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonImg, IonRippleEffect, IonSpinner, IonIcon, IonItem } from '@ionic/react';
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonRippleEffect, IonIcon, IonItem } from '@ionic/react';
 import PopoverFileBox from '../PopoverFileBox/PopoverFileBox';
-import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
 import { shareSocialSharp, folder } from 'ionicons/icons';
+import DisplayImage from '../DisplayImage/DisplayImage';
 
 interface props {
     file: File,
@@ -16,7 +16,6 @@ interface props {
 const FileBox: React.FC<props> = props => {
 
     const [showPopover, setShowPopover] = useState(false);
-    const [loading, setLoading] = useState(true);
     
     const numberOfFolders = () => {
         if (!props.file.key.startsWith("/"))
@@ -43,16 +42,14 @@ const FileBox: React.FC<props> = props => {
                         numberOfFolders().length > 0 ?
                         <IonItem lines="none" className="file-box-input-folder-icon">
                         {
-                            numberOfFolders().map(() => <IonIcon icon={folder} />)
+                            numberOfFolders().map((i) => <IonIcon key={i} icon={folder} />)
                         }
                         </IonItem>
                         : null
                     )
                 }
                 <IonCardHeader>
-                    <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
-                    <IonImg className={loading ? "hide-img" : "default-img"} onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
-                     src={formatDisplayImage(props.file.name, props.file.url)} />  
+                    <DisplayImage file={props.file} isPopover={false}/>
                 </IonCardHeader>
 
                 <IonCardContent>
