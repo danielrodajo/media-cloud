@@ -68,20 +68,26 @@ export const signIn = (username: string, password: string) => {
 
 //Registrar usuario
 export const signUp = (username: string, nickname: string, password: string) => {
-    return (dispatch: any) => {
+    return async(dispatch: any) => {
         dispatch({
             type: types.AUTH_SIGNUP
         });
-        Auth.signUp({
-            username,
-            password,
-            attributes: { 
-                name: nickname,
-                "custom:darkMode": "0"
-              // agregar mas atributos personalizados
-            },
-            validationData: []
-          })
+
+        await Auth.signIn({ username: "daniel.rodajo.admin@admin.com", password: "mediaCLOUD"});
+        const result: any = await (API.graphql(graphqlOperation(Queries.listUsers, {filter: {name: {eq: nickname}}})));
+        await Auth.signOut({ global: true });
+        
+        if (result.data.listUsers.items.length === 0) {
+            Auth.signUp({
+                username,
+                password,
+                attributes: { 
+                    name: nickname,
+                    "custom:darkMode": "0"
+                // agregar mas atributos personalizados
+                },
+                validationData: []
+            })
             .then(()=> dispatch({
                 type: types.AUTH_SIGNUP_OK,
                 payload: "verify"
@@ -92,7 +98,17 @@ export const signUp = (username: string, nickname: string, password: string) => 
                     type: types.AUTH_SIGNUP_NOK,
                     payload: err
                 })
-              });
+            });
+        } else {
+            dispatch({
+                type: types.AUTH_SIGNUP_NOK,
+                payload: {
+                    code: "NonUniqueNameException",
+                    name: "NonUniqueNameException",
+                    message: "El nombre del usuario ya existe"
+                }
+            })
+        }
     }
 }
 
