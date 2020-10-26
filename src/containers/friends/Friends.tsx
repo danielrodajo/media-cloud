@@ -65,7 +65,7 @@ const Friends: React.SFC<FriendsProps> = () => {
     }, [searchText]);
 
     //Revisa si ya hay notificacion pendiente del usuario para ver si puede enviar otra mas
-    const checkNotificationConditions = (friendId: String) => {
+    const checkNotificationConditions = async(friendId: String) => {
         if (notifications.filter((notification: any) => notification.from.id === friendId && notification.type === NotificationType.SENDPETITION).length > 0) {
             setMessageError("Ya tienes una petición de este usuario.");
             setErrorPetition(true);
@@ -76,12 +76,29 @@ const Friends: React.SFC<FriendsProps> = () => {
             setErrorPetition(true);
             setShowToast(true);
             return false;
-        } 
+        } else {
+            const result: any = await API.graphql(graphqlOperation(Queries.listFriendRequests, {
+                filter: {
+                    id: {
+                        beginsWith: friendId+""+user.identityId
+                    },
+                    type: {
+                        eq: NotificationType.SENDPETITION
+                    }
+                }
+            }));
+            if (result.data.listFriendRequests.items.length !== 0) {
+                setMessageError("Ya le has enviado una petición.");
+                setErrorPetition(true);
+                setShowToast(true);
+                return false;
+            }
+        }
         return true;
     }
 
     const generateFriendPetition = async (friendId: String) => {
-        if (checkNotificationConditions(friendId)) { 
+        if (await checkNotificationConditions(friendId)) { 
             await generateNotification(user.identityId, friendId, NotificationType.SENDPETITION)
             .then(e => {
                 setShowToast(true);
