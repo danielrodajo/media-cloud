@@ -33,7 +33,7 @@ const Friend: React.SFC<FriendProps> = props => {
                 ]}
             />
             <ModalSharedFilesFromFriend friend={props.friend} showModal={showModal} setShowModal={setShowModal}/>
-            <IonItem>       
+            <IonItem className="darkmode">       
                 <IonAvatar slot="start">
                     <IonImg src={DefaultAvatar} />
                 </IonAvatar>
