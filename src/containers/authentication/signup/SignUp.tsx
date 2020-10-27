@@ -1,6 +1,6 @@
-import React from 'react';
-import './SignUp.css';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
+import './SignUp.scss';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonToast } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
@@ -16,6 +16,8 @@ const SignUp: React.FC<props> = props => {
 
     const dispatch = useDispatch();
     const messageError: any = useSelector((state: RootState) => state.AuthReducer.signUpError);
+
+    const [showToast, setShowToast] = useState(false);
 
     const handleSignUp = (event: any) => {
         event.preventDefault();
@@ -41,43 +43,49 @@ const SignUp: React.FC<props> = props => {
         return !(inputEmail !== "" && inputPass !== "" && inputName !== "");
     }
 
+    useEffect(() => {
+        if(messageError){
+            setShowToast(true);
+        }
+    }, [messageError])
 
     return (
-        
-        <IonContent className="ion-padding" color="light">
-            <IonGrid className="max-height">
-                <IonRow className="ion-justify-content-center max-height">
-                    <IonCard>
-                        <IonCardHeader>
-                            <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
-                        </IonCardHeader>
+        <React.Fragment>         
+            <IonToast 
+                isOpen={showToast}
+                onDidDismiss={() => setShowToast(false)}
+                message= {(messageError) ? errorManagement(messageError.message) : ""}
+                duration={500}/>
+            <IonContent className="ion-padding" color="light">
+                <IonGrid className="max-height">
+                    <IonRow className="ion-justify-content-center max-height">
+                        <IonCard>
+                            <IonCardHeader>
+                                <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
+                            </IonCardHeader>
 
-                        <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
-                            {(messageError) ? 
-                            <IonItem lines="none">
-                                <IonText>{errorManagement(messageError.message)}</IonText>
-                            </IonItem> 
-                            : <IonItem lines="none"><IonText><br/></IonText></IonItem>}
-                            <IonItem lines="inset">
-                                <IonLabel position="floating">Email</IonLabel>
-                                <IonInput autocomplete="email" type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
-                            </IonItem>
-                            <IonItem lines="inset">
-                                <IonLabel position="floating">Nombre</IonLabel>
-                                <IonInput autocomplete="name" type="text" name="username" value={props.userData.username} onIonChange={props.handleFormInput}></IonInput>    
-                            </IonItem>
-                            <IonItem lines="inset" className="ion-margin-bottom">
-                                <IonLabel position="floating">Contraseña</IonLabel>
-                                <IonInput autocomplete="current-password" type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>
-                            </IonItem>
+                            <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
+                                <IonItem lines="inset">
+                                    <IonLabel position="floating">Email</IonLabel>
+                                    <IonInput autocomplete="email" type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
+                                </IonItem>
+                                <IonItem lines="inset">
+                                    <IonLabel position="floating">Nombre</IonLabel>
+                                    <IonInput autocomplete="name" type="text" name="username" value={props.userData.username} onIonChange={props.handleFormInput}></IonInput>    
+                                </IonItem>
+                                <IonItem lines="inset" className="ion-margin-bottom">
+                                    <IonLabel position="floating">Contraseña</IonLabel>
+                                    <IonInput autocomplete="current-password" type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>
+                                </IonItem>
 
-                            <IonButton expand="block" onClick={handleSignUp} disabled={disableButton(props.userData.email, props.userData.username, props.userData.password)}>Registrarse</IonButton>
-                            <IonButton expand="block" color="tertiary" onClick={() => {dispatch(actions.switchComponent("signin"))}}>Volver a Iniciar Sesión</IonButton>
-                        </IonCardContent>
-                    </IonCard>         
-                </IonRow>
-            </IonGrid>
-        </IonContent>
+                                <IonButton expand="block" onClick={handleSignUp} disabled={disableButton(props.userData.email, props.userData.username, props.userData.password)}>Registrarse</IonButton>
+                                <IonButton expand="block" color="tertiary" onClick={() => {dispatch(actions.switchComponent("signin"))}}>Volver a Iniciar Sesión</IonButton>
+                            </IonCardContent>
+                        </IonCard>         
+                    </IonRow>
+                </IonGrid>
+            </IonContent>
+        </React.Fragment>
     );
 }
 

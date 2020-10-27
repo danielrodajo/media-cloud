@@ -214,11 +214,14 @@ export const authCheckState = () => {
             })           
         })
         .catch(err => {
-            console.log(err);
-            dispatch({
-                type: types.AUTH_SIGNIN_NOK,
-                payload: err
-            })
+            if (err !== 'not authenticated') {
+                console.log(err);
+                dispatch({
+                    type: types.AUTH_SIGNIN_NOK,
+                    payload: err
+                })
+            }
+
         });
     }
 }
