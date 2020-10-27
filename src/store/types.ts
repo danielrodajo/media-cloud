@@ -12,6 +12,7 @@ export interface File {
     url: string;
     name: string;
     shared: boolean;
+    sharers: any[];
 }
 
 export interface FriendsState {

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './ModalShareFriends.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { IonModal, IonHeader, IonToolbar, IonText, IonItem, IonIcon, IonContent } from '@ionic/react';
 import { arrowDown } from 'ionicons/icons';
 import ShareFriend from './ShareFriend/ShareFriend';
-import { API, graphqlOperation } from 'aws-amplify';
-import * as Queries from '../../graphql/queries';
 import * as actions from "../../store/actions/index";
 import { generateNotification } from '../../shared/utility';
 import { NotificationType } from '../../API';
@@ -24,6 +22,7 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
 
     const user = useSelector((state:RootState) => state.AuthReducer.user);
     const friends = useSelector((state: RootState) => state.FriendReducer.friends);
+    const sharers = (props.file.sharers ? props.file.sharers : []);
 
     //Accion para poner fichero en estado comparticion
     const shareFile = (filePath: any, userId: String) => dispatch(actions.sharingFile(filePath, userId));
@@ -33,6 +32,7 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
     const shareFileWithFriend = (fileId: String, friendId: String) => dispatch(actions.shareFileToFriend(fileId, friendId));
     const stopShareFileWithFriend = (fileId: String, friendId: String) => dispatch(actions.stopSharingFileToFriend(fileId, friendId));
 
+    //Funcion encargada del control de la comparticion
     const handleShare = (fileId: String, friendId: String, checked: boolean) => {
         if (!checked) {
             //Si no esta en estado compartido, se comparte
@@ -41,7 +41,7 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
 
             shareFileWithFriend(user.identityId+fileId, friendId);
             if (!sharers.includes(friendId))
-                sharers.push(friendId);
+            sharers.push(friendId);
             generateNotification(user.identityId, friendId, NotificationType.SENDSHAREFILE);
         } else {
             stopShareFileWithFriend(user.identityId+fileId, friendId);
@@ -59,25 +59,6 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
             generateNotification(user.identityId, friendId, NotificationType.STOPSENDSHAREFILE);
         }
     }
-
-    const [sharers, setSharers] = useState<any>([]); 
-
-    useEffect(() => {
-        async function fetchSharersFromFile() {
-            const pivotTable: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: user.identityId+props.file.key}));
-            if (pivotTable.data.getSharedFile !== null) {
-                const sharers: any[] = [];
-                pivotTable.data.getSharedFile.Sharers.items.forEach(async(sharer: any, index: number) => {
-                    const sharerDynamo: any = await API.graphql(graphqlOperation(Queries.getSharedFileToUser, {id: sharer.id}));
-                    sharers.push(sharerDynamo.data.getSharedFileToUser.sharer.id);
-                    if (index+1 === pivotTable.data.getSharedFile.Sharers.items.length)
-                        setSharers(sharers);        
-                });
-            }      
-        }
-        fetchSharersFromFile();
-    }, [props.file.key, user.identityId]);
-    
 
     return (
         <IonModal isOpen={props.show}>

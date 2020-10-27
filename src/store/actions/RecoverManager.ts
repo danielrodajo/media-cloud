@@ -10,28 +10,14 @@ export const recoverRecentFiles = (userId: String, maxFiles: number) => {
             type: types.RECOVER_FILES
         });
         Storage.list("", {level: 'protected'})
-        .then((result: any) => {
+        .then(async(result: any) => {
             const files = result.filter((file: CustomFile) => (!file.key.endsWith('default')))
             .sort(function (a: File, b: File) {
                 return b.lastModified - a.lastModified 
             })
             //En caso de introducir numero maximo de ficheros, cogemos esa cantidad del array total
             .slice(0, maxFiles);
-
-            //A cada fichero, recuperar su URL y agregarle el atributo shared
-            let promises = files.map(async (file: CustomFile) => {
-                const result = await Storage.get(file.key);
-                const slices = file.key.split("/");
-                //Comprobamos si está compartido o no
-                const sharedFile: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: userId+file.key}));
-                return file = { 
-                    ...file, 
-                    shared: sharedFile.data.getSharedFile ? true : false, 
-                    url: result+"", 
-                    name: slices[slices.length-1] 
-                };
-            });     
-            //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
+            let promises = await fillDataFiles(userId, files); 
             Promise.all(promises)
             .then(result => {
                 dispatch({
@@ -60,7 +46,7 @@ export const recoverFiles = (userId: String, path: string) => {
         });
         //Obtener todos los ficheros (nombre y eTag)
         Storage.list(path, {level: 'protected'})
-        .then((result: any) => {
+        .then(async (result: any) => {
             //Separamos ficheros de carpetas
             const folders = result.filter((file: CustomFile) => 
                 //Localizamos carpetas por su fichero default
@@ -80,21 +66,7 @@ export const recoverFiles = (userId: String, path: string) => {
             const files = result.filter((file: CustomFile) => (!file.key.endsWith('default') 
             && ((path === "" && !file.key.includes("/")) || (path !== "" && file.key.startsWith(path+"/") && file.key.split("/").length-1 === path.split("/").length))));
 
-
-            //A cada fichero, recuperar su URL
-            let promises = files.map(async (file: CustomFile) => {
-                const result = await Storage.get(file.key);
-                const slices = file.key.split("/");
-                //Comprobamos si está compartido o no
-                const sharedFile: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: userId+file.key}));
-                return file = { 
-                    ...file, 
-                    url: result+"", 
-                    shared: sharedFile.data.getSharedFile ? true : false,  
-                    name: slices[slices.length-1] 
-                };
-            });     
-            //Ejecutamos promesas recuperadas y almacenamos el resultado en la store
+            let promises = await fillDataFiles(userId, files); 
             Promise.all(promises)
             .then(result => {
                 dispatch({
@@ -127,22 +99,11 @@ export const recoverFilesByName= (userId: String, name: string) => {
             return;
         }
         Storage.list("", {level: 'protected'})
-        .then((result: any) => {
+        .then(async(result: any) => {
             const files = result.filter((file: CustomFile) => (!file.key.endsWith('default')))
             .filter((file: CustomFile) => file.key.includes(name));
-            let promises = files.map(async (file: CustomFile) => {
-                const result = await Storage.get(file.key);
-                const slices = file.key.split("/");
-                //Comprobamos si está compartido o no
-                const sharedFile: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: userId+file.key}));
-                return file = { 
-                    ...file, 
-                    shared: sharedFile.data.getSharedFile ? true : false, 
-                    url: result+"", 
-                    name: slices[slices.length-1] 
-                };
-            });  
-            
+
+            let promises = await fillDataFiles(userId, files);  
             Promise.all(promises)
             .then(result => {
                 dispatch({
@@ -163,3 +124,36 @@ export const recoverFilesByName= (userId: String, name: string) => {
     }
 }
 
+
+
+//FUNCIONES PARA ACORTAR EL TAMAÑO DE LAS FUNCIONES SUPERIORES PRINCIPALES
+async function fillDataFiles(userId: String, files: any) {
+    let promises = files.map(async (file: CustomFile) => {
+        const result = await Storage.get(file.key);
+        const slices = file.key.split("/");
+        //Comprobamos si está compartido o no
+         const sharers = await fetchSharersFromFile(userId, file);
+        return file = { 
+            ...file, 
+            sharers: sharers,
+            shared: sharers.length !== 0 ? true : false, 
+            url: result+"", 
+            name: slices[slices.length-1] 
+        };
+    });  
+    return promises;
+}
+
+async function fetchSharersFromFile(userId: String, file: any) {
+    const pivotTable: any = await API.graphql(graphqlOperation(Queries.getSharedFile, {id: userId+file.key}));
+    //Si el fichero esta compartido...
+    if (pivotTable.data.getSharedFile !== null) {
+        const sharers: any[] = [];
+        for (const sharer of pivotTable.data.getSharedFile.Sharers.items) {
+            const sharerDynamo: any = await API.graphql(graphqlOperation(Queries.getSharedFileToUser, {id: sharer.id}));
+            sharers.push(sharerDynamo.data.getSharedFileToUser.sharer.id);
+        }
+        return sharers;
+    }
+    return [];    
+}

@@ -30,6 +30,8 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const friends = useSelector((state: RootState) => state.FriendReducer.friends);
 
+    const files = useSelector((state: RootState) => state.FileReducer.files);
+
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
 
     const recoverFriendsError = useSelector((state: RootState) => state.FriendReducer.recoverFriendsError);
@@ -51,6 +53,9 @@ const Friends: React.SFC<FriendsProps> = () => {
                 deleteFriend(friendId);
             })
         ).catch(err => console.log(err))
+
+        //Realizar borrado de la comparticion de ficheros a este usuario y viceversa
+        
     }
 
     useEffect(() => {
