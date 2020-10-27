@@ -45,7 +45,8 @@ const Verify: React.FC<props> = props => {
                 isOpen={showToast}
                 onDidDismiss={() => setShowToast(false)}
                 message= {(messageError) ? errorManagement(messageError.code) : ""}
-                duration={500}/>
+                duration={500}
+                position="top"/>
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">
                     <IonRow className="ion-justify-content-center max-height">
