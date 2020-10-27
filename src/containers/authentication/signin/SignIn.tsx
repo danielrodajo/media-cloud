@@ -1,4 +1,6 @@
-import React, { FormEvent, useRef, useState } from 'react';
+
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
+
 import './SignIn.scss';
 import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText, IonToast } from '@ionic/react';
 import { UserData } from '../../../store/types';
@@ -28,15 +30,14 @@ const SignIn: React.FC<props> = props => {
         dispatch(actions.signIn((inputEmail.current as unknown as HTMLIonInputElement).value+"", (inputPass.current as unknown as HTMLIonInputElement).value+""));
     };
 
-    const errorManagement = (name: string) => {
+    const errorManagement = (name: string ) => {
         switch (name) {
             case "UserNotFoundException":
                 return "Este usuario no existe.";
-
             case "NotAuthorizedException":
-                return 'Usuario y/o contraseña erroneos.';
+                return "Usuario y/o contraseña erroneos.";
             case undefined:
-                return "";
+                return "Ha surgido un error inesperado";
             default: return "Ha surgido un error inesperado.";
         }
     }
@@ -45,35 +46,48 @@ const SignIn: React.FC<props> = props => {
         return !(inputEmail !== "" && inputPass !== "");
     }
 
-    return (
-        <IonContent className="ion-padding" color="light">
-            <IonGrid className="max-height max-width">
-                <IonRow className="ion-justify-content-center max-height max-width">
-                    <IonCard>
-                        <IonCardHeader>        
-                            <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
-                        </IonCardHeader>
-                        <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
-                            {(messageError) ? setShowToast(true) : null}
-                            <IonItem lines="inset">
-                                <IonLabel position="floating">Email</IonLabel>
-                                <IonInput autocomplete="username" ref={inputEmail} type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
-                            </IonItem>
-                            <IonItem lines="inset" className="ion-margin-bottom">
-                                <IonLabel position="floating">Contraseña</IonLabel>
-                                <IonInput autocomplete="current-password" ref={inputPass} type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>    
-                            </IonItem>
+    useEffect(() => {
+        if(messageError){
+            setShowToast(true);
+        }
+    }, [messageError])
 
-                            <IonButton expand="block" onClick={handleSignIn} disabled={disableButton(props.userData.email, props.userData.password)}>Iniciar Sesión</IonButton>
-                            <IonButton expand="block" color="tertiary"  onClick={() => {dispatch(actions.switchComponent("signup"))}}>Registrarse</IonButton>
-                            <IonItem className="ion-margin-top" lines="none">
-                                <IonText className="ion-text-center">¿Has olvidado tu contraseña?<br/> <IonButton onClick={() => {dispatch(actions.switchComponent("forgotpass"))}} className="forgot-password-link">Pulsa aquí.</IonButton></IonText>
-                            </IonItem>
-                        </IonCardContent>
-                    </IonCard>         
-                </IonRow>
-            </IonGrid>
-        </IonContent>
+    return (
+        <React.Fragment>         
+            <IonToast 
+            isOpen={showToast}
+            onDidDismiss={() => setShowToast(false)}
+            message= {(messageError) ? errorManagement(messageError.name) : ""}
+            duration={500}
+            position="top"/>
+            <IonContent className="ion-padding" color="light">  
+                <IonGrid className="max-height max-width">
+                    <IonRow className="ion-justify-content-center max-height max-width">
+                        <IonCard>
+                            <IonCardHeader>        
+                                <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
+                            </IonCardHeader>
+                            <IonCardContent className="ion-justify-content-center max-height ion-align-items-center">
+                                <IonItem lines="inset">
+                                    <IonLabel position="floating">Email</IonLabel>
+                                    <IonInput autocomplete="username" ref={inputEmail} type="email" name="email" value={props.userData.email} onIonChange={props.handleFormInput}></IonInput>    
+                                </IonItem>
+                                <IonItem lines="inset" className="ion-margin-bottom">
+                                    <IonLabel position="floating">Contraseña</IonLabel>
+                                    <IonInput autocomplete="current-password" ref={inputPass} type="password" name="password" value={props.userData.password}  onIonChange={props.handleFormInput}></IonInput>    
+                                </IonItem>
+                                <IonButton expand="block" onClick={handleSignIn} disabled={disableButton(props.userData.email, props.userData.password)}>Iniciar Sesión</IonButton>
+                                <IonButton expand="block" color="tertiary"  onClick={() => {dispatch(actions.switchComponent("signup"))}}>Registrarse</IonButton> 
+                                
+                                <IonItem className="ion-margin-top" lines="none">
+                                    <IonText className="ion-text-center">¿Has olvidado tu contraseña?<br/> <IonButton onClick={() => {dispatch(actions.switchComponent("forgotpass"))}} className="forgot-password-link">Pulsa aquí.</IonButton></IonText>
+                                </IonItem>
+                            </IonCardContent>
+                        </IonCard>         
+                    </IonRow>
+                </IonGrid>
+            </IonContent>
+        </React.Fragment>
     );
 }
 
