@@ -46,9 +46,9 @@ const PopoverFileBox: React.FC<props> = props => {
             <ModalShareFriends file={props.file} show={showFriendList} setShow={setShowFriendList}/>
             <IonPopover
             isOpen={props.showPopover}
-            cssClass='my-custom-class'
-            onDidDismiss={e => props.setShowPopover(false)}
-        >
+            cssClass='my-custom-class hide-background'
+            onDidDismiss={e => props.setShowPopover(false)}>
+
             <IonCard className="my-custom-ion-card">
                 <IonCardHeader className="center-spinner">
                     <IonSpinner color="tertiary" className={!loading ? "hide-img" : "popover-spinner"} />
