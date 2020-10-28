@@ -35,9 +35,11 @@ const BottomBar: React.FC<props> = props => {
       setActiveTab(event.detail.tab);
     }
 
+    const files = useSelector((state: RootState) => state.FileReducer.files);
+
     const getFriends = (userId: string) => dispatch(actions.getFriends(userId));
 
-    const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
+    const deleteFriend = (friendId: string, originalId: string, files: any) => dispatch(actions.deleteLocalFriend(friendId, originalId, files));
     
     //Subscripcion que está a la escucha de nuevas notificaciones y, en caso de ser suyas, las agrega
     const subscriptionCreateFR = (API.graphql(
@@ -67,7 +69,7 @@ const BottomBar: React.FC<props> = props => {
         const friendId = data.value.data.onDeleteFriend.user.id;
         const userId = data.value.data.onDeleteFriend.id.split(friendId)[0];
         if (userId === user.identityId) {
-          deleteFriend(friendId+userId);
+          deleteFriend(friendId+userId, friendId, files);
         }
       }
     });

@@ -13,6 +13,8 @@ import * as Queries from '../../graphql/queries';
 import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
+import CustomLoading from '../../components/CustomLoading/CustomLoading';
+import { File } from '../../store/types';
 
 export interface FriendsProps {
     
@@ -22,6 +24,8 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const dispatch = useDispatch();
 
+    const deleteFriend = (friendId: string, originalId: string, userId: string, files: any) => dispatch(actions.deleteFriend(friendId, originalId, userId, files));
+    
     const user = useSelector((state: RootState) => state.AuthReducer.user);
 
     const downloading = useSelector((state: RootState) => state.FriendReducer.downloadingFriends);
@@ -36,26 +40,18 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const recoverFriendsError = useSelector((state: RootState) => state.FriendReducer.recoverFriendsError);
 
-    const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
     
     const [searchText, setSearchText] = useState<String>();
     const [searching, setSearching] = useState(false);
     const [showToast, setShowToast] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [errorPetition, setErrorPetition] = useState(false);
     const [messageError, setMessageError] = useState("");
     const [users, setUsers] = useState([]);
 
-    const handleDeleteFriend = (friendId: string) => {
-        (API.graphql(graphqlOperation(Mutations.deleteFriend, {input: {id: friendId}})) as Promise<any>)
-        .then(() => (
-            API.graphql(graphqlOperation(Mutations.deleteFriend, {input: {id: user.identityId}})) as Promise<any>)
-            .then(() => {
-                deleteFriend(friendId);
-            })
-        ).catch(err => console.log(err))
-
-        //Realizar borrado de la comparticion de ficheros a este usuario y viceversa
-        
+    //Funcion para eliminar un amigo
+    const handleDeleteFriend = async(friendId: string, originalId: string) => {
+        deleteFriend(friendId, originalId, user.identityId, files);
     }
 
     useEffect(() => {
@@ -137,6 +133,7 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     return (
         <IonPage>
+            <CustomLoading showLoading={loading}/>
             <Toolbar />
             <IonSearchbar className="custom-ion-search-bar-friends" placeholder="Búsqueda de usuarios" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value!)}/>
             <IonContent className="my-custom-content">

@@ -19,6 +19,8 @@ export interface FriendsState {
     friends: any | null;
     recoverFriendsError: Object | null;
     downloadingFriends: boolean;
+    deleting: boolean;
+    deletingFriendError: Object | null;
 }
 
 export interface NotificationState {
