@@ -2,8 +2,8 @@ import React from 'react';
 import { IonPopover } from '@ionic/react';
 import './PopoverUpload.scss';
 import 'react-circular-progressbar/dist/styles.css';
-import LoadingAnimation from '../../../components/Animations/LoadingAnimation/LoadingAnimation';
-import DoneAnimation from '../../../components/Animations/DoneAnimation/DoneAnimation';
+import UploadAnimation from '../../../components/UploadAnimation/UploadAnimation';
+import DoneBoxAnimation from '../../../components/Animations/DoneBoxAnimation/DoneBoxAnimation';
 
 interface props {
     uploading: boolean;
@@ -24,8 +24,8 @@ const Popover: React.FC<props> = props => {
         >
         {
             (!props.success) 
-            ? <LoadingAnimation/>
-            : <DoneAnimation/>
+            ? <UploadAnimation percent={Math.floor((props.loadedFile/props.totalFile)*100)}/>
+            : <DoneBoxAnimation />
         }
         </IonPopover>
     )
