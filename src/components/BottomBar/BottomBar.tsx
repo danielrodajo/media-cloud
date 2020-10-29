@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useCallback} from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem} from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
@@ -35,9 +35,10 @@ const BottomBar: React.FC<props> = props => {
       setActiveTab(event.detail.tab);
     }
 
-    const getFriends = (userId: string) => dispatch(actions.getFriends(userId));
+    const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
     const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
+    const getFriends = (userId: string) => dispatch(actions.getFriends(userId));
     
     //Subscripcion que está a la escucha de nuevas notificaciones y, en caso de ser suyas, las agrega
     const subscriptionCreateFR = (API.graphql(
@@ -103,13 +104,14 @@ const BottomBar: React.FC<props> = props => {
     //Descargamos notificaciones iniciales
     getNotifications(user.identityId);
 
-    //Descargamos amigos iniciales
-    getFriends(user.identityId);
-
     //Poner/Quitar modo oscuro
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
+
+    useEffect(() => {
+      onGetFriends(user.identityId);
+  }, [user.identityId, onGetFriends])
 
     return ( 
       <React.Fragment>

@@ -14,8 +14,6 @@ interface props {
 
 const Popover: React.FC<props> = props => {
 
-    
-    
     return(
         <IonPopover
             isOpen={props.uploading}

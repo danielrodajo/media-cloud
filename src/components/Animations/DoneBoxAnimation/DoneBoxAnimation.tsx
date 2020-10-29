@@ -8,7 +8,9 @@ const DoneBoxAnimation: React.FC = () => {
   return (
     <React.Fragment>
         <DoneAnimation/>
-        <IonText className="format-text2">¡Completado!</IonText>
+        <div className="center-complete">
+          <IonText className="format-text2">¡Completado!</IonText>
+        </div>
     </React.Fragment>
   );
 };

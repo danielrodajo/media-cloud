@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Friends.scss';
 import { IonPage, IonContent, IonSearchbar, IonToast, IonGrid } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
@@ -27,8 +27,6 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const downloading = useSelector((state: RootState) => state.FriendReducer.downloadingFriends);
 
-    const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
-
     const friends = useSelector((state: RootState) => state.FriendReducer.friends);
 
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
@@ -53,10 +51,6 @@ const Friends: React.SFC<FriendsProps> = () => {
             })
         ).catch(err => console.log(err))
     }
-
-    useEffect(() => {
-        onGetFriends(user.identityId);
-    }, [user.identityId, onGetFriends])
 
     useEffect(() => {
         if (searchText) 
