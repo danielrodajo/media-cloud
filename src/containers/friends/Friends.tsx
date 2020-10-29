@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import './Friends.scss';
-import { IonPage, IonContent, IonText, IonSearchbar, IonToast } from '@ionic/react';
+import { IonPage, IonContent, IonText, IonSearchbar, IonToast, IonImg, IonGrid } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import CustomSpinner from '../../components/CustomSpinner/CustomSpinner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import * as Queries from '../../graphql/queries';
 import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
+import alone from "../../default-images/Alone-rafiki.png";
 
 export interface FriendsProps {
     
@@ -130,7 +131,10 @@ const Friends: React.SFC<FriendsProps> = () => {
                                 friends.length > 0 ?
                                 friends.map((friend:any) => <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
                                 :
-                                <IonText>No tienes contactos agregados.</IonText>
+                                <IonGrid>
+                                    <IonImg src={alone} alt="alone" className="img-custom" />
+                                    <IonText>Parece que no tienes a nadie agregado :(</IonText>
+                                </IonGrid>
                             }
                         </React.Fragment>
                     )
