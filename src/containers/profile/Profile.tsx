@@ -3,12 +3,11 @@ import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDiv
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
-import './Profile.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { informationCircleOutline, moonOutline, settingsOutline } from 'ionicons/icons';
 import AboutUs from './aboutus/AboutUs';
-import './Profile.css';
+import './Profile.scss';
 import Settings from './settings/Settings';
 import SignOut from '../authentication/signout/SignOut';
 
@@ -40,7 +39,7 @@ const Profile: React.FC<props> = props => {
                     <IonLabel className="namelabel">{user.attributes.name}</IonLabel>
                     <IonButton className="botton">Editar perfil</IonButton>
                     <IonItemDivider/>
-                    <IonItem>
+                    <IonItem className="darkmode">
                         <IonIcon slot="start" icon={moonOutline} />
                         <IonLabel>Modo oscuro</IonLabel>
                         <IonToggle slot="end" name="darkMode" checked={props.darkMode} onIonChange={toggleDarkModeHandler}/>

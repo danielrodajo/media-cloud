@@ -134,7 +134,7 @@ const Friends: React.SFC<FriendsProps> = () => {
         <IonPage>
             <CustomLoading showLoading={deleting}/>
             <Toolbar />
-            <IonSearchbar className="custom-ion-search-bar-friends" placeholder="Búsqueda de usuarios" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value!)}/>
+            <IonSearchbar className="custom-ion-search-bar-friends darkcolor" placeholder="Búsqueda de usuarios" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value!)}/>
             <IonContent className="my-custom-content">
             {
                 downloading || searching ?

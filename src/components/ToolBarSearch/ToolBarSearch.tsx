@@ -10,7 +10,7 @@ interface props {
 const ToolbarSearch: React.FC<props> = props => {
     return ( 
         <IonToolbar>               
-            <IonSearchbar placeholder={props.placeholder} onIonChange={e => props.result(e.detail.value!)}/>
+            <IonSearchbar className="darkcolor" placeholder={props.placeholder} onIonChange={e => props.result(e.detail.value!)}/>
         </IonToolbar>
     );
 }

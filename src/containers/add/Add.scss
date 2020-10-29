@@ -1,15 +1,19 @@
 .my-custom-modal-css .modal-wrapper {
-    height: 40%;
-    top: 60%;
-    position: absolute; 
-    display: block;  
- }
+  height: 40%;
+  top: 60%;
+  position: absolute; 
+  display: block;
+}
 
- .fullheight {
-    height: 100%;
-  }
-  
-  .xc {
-    display: flex;
-    align-items: center;
-  }
+.fullheight {
+  height: 100%;
+}
+
+.xc {
+  display: flex;
+  align-items: center;
+}
+
+body.dark .my-custom-modal-css .modal-wrapper {
+  background-color: #161616;
+}
