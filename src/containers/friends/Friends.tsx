@@ -14,6 +14,7 @@ import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
 import FriendsAnimation from '../../Animations/FriendsAnimation/FriendsAnimation';
+import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
 
 export interface FriendsProps {
     
@@ -115,7 +116,7 @@ const Friends: React.SFC<FriendsProps> = () => {
             <IonContent className="my-custom-content">
             {
                 downloading || searching ?
-                <CustomSpinner />
+                <CustomLoadingPage type={LoadingType.SearchFriends} />
                 : (
                     users.length === 0 
                     ? (

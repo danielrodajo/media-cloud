@@ -1,10 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
-import CustomSpinner from '../../../components/CustomSpinner/CustomSpinner';
 import { File as CustomFile } from "../../../store/types";
 import FileBox from '../../../components/FileBox/FileBox';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/store';
 import * as actions from "../../../store/actions/index";
+import CustomLoadingPage, { LoadingType } from '../../../components/CustomLoadingPage/CustomLoadingPage';
 
 interface props {
     maxFiles: number
@@ -46,7 +46,7 @@ const LoadRecents: React.FC<props> = props => {
         {
             //Mostrar Spinner mientras se descargan los ficheros
             downloading ? (
-              <CustomSpinner />
+              <CustomLoadingPage type={LoadingType.Files} />
             ) : (
               <React.Fragment>       
                 {recoverError ? <span>{recoverError.message}</span> : null}

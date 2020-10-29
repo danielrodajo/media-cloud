@@ -8,6 +8,7 @@ import './Search.scss';
 import FileBox from '../../components/FileBox/FileBox';
 import * as actions from "../../store/actions/index";
 import { File as CustomFile } from "../../store/types";
+import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
 
 const Search: React.FC = () => {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const Search: React.FC = () => {
                 <IonContent className="my-custom-content">
             {
                 downloading ? 
-                    <CustomSpinner /> 
+                <CustomLoadingPage type={LoadingType.SearchFiles} />
                 :              
                 files!.map((file:any) => 
                 <FileBox
