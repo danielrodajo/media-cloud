@@ -8,13 +8,11 @@ import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import Friend from '../../components/Friend/Friend';
 import { API, graphqlOperation } from 'aws-amplify';
-import * as Mutations from '../../graphql/mutations';
 import * as Queries from '../../graphql/queries';
 import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
 import CustomLoading from '../../components/CustomLoading/CustomLoading';
-import { File } from '../../store/types';
 
 export interface FriendsProps {
     
@@ -30,6 +28,8 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const downloading = useSelector((state: RootState) => state.FriendReducer.downloadingFriends);
 
+    const deleting = useSelector((state: RootState) => state.FriendReducer.deleting);
+
     const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
     const friends = useSelector((state: RootState) => state.FriendReducer.friends);
@@ -44,7 +44,6 @@ const Friends: React.SFC<FriendsProps> = () => {
     const [searchText, setSearchText] = useState<String>();
     const [searching, setSearching] = useState(false);
     const [showToast, setShowToast] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [errorPetition, setErrorPetition] = useState(false);
     const [messageError, setMessageError] = useState("");
     const [users, setUsers] = useState([]);
@@ -133,7 +132,7 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     return (
         <IonPage>
-            <CustomLoading showLoading={loading}/>
+            <CustomLoading showLoading={deleting}/>
             <Toolbar />
             <IonSearchbar className="custom-ion-search-bar-friends" placeholder="Búsqueda de usuarios" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value!)}/>
             <IonContent className="my-custom-content">

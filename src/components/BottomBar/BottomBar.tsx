@@ -40,42 +40,13 @@ const BottomBar: React.FC<props> = props => {
     const getFriends = (userId: string) => dispatch(actions.getFriends(userId));
 
     const deleteFriend = (friendId: string, originalId: string, files: any) => dispatch(actions.deleteLocalFriend(friendId, originalId, files));
-    
-    //Subscripcion que está a la escucha de nuevas notificaciones y, en caso de ser suyas, las agrega
-    const subscriptionCreateFR = (API.graphql(
-      graphqlOperation(Subscriptions.onCreateFriendRequest)
-    ) as unknown as Observable<any>).subscribe({
-        next: (data) => {
-          const toUserId = data.value.data.onCreateFriendRequest.to.id;
-          if (toUserId === user.identityId) {
-            saveNotification(data.value.data.onCreateFriendRequest);
-          }
-        }
-    });
-
-    const subscriptionCreateFriend = (API.graphql(graphqlOperation(Subscriptions.onCreateFriend)
-    ) as unknown as Observable<any>).subscribe({
-      next: (data) => {
-        const userId = data.value.data.onCreateFriend.user.id;
-        if (userId === user.identityId) {
-          getFriends(userId);
-        }
-      }
-    });
-
-    const subscriptionDeleteFriend = (API.graphql(graphqlOperation(Subscriptions.onDeleteFriend)
-    ) as unknown as Observable<any>).subscribe({
-      next: (data) => {
-        const friendId = data.value.data.onDeleteFriend.user.id;
-        const userId = data.value.data.onDeleteFriend.id.split(friendId)[0];
-        if (userId === user.identityId) {
-          deleteFriend(friendId+userId, friendId, files);
-        }
-      }
-    });
+  
+    const [subscriptionCreateFR, setSubscriptionCreateFR] = useState<any>(null);
+    const [subscriptionCreateFriend, setSubscriptionCreateFriend] = useState<any>(null);
+    const [subscriptionDeleteFriend, setSubscriptionDeleteFriend] = useState<any>(null);
 
     const handleSignOut = () => {
-      subscriptionCreateFR.unsubscribe();
+      subscriptionCreateFR!.unsubscribe();
       subscriptionCreateFriend.unsubscribe();
       subscriptionDeleteFriend.unsubscribe();
       dispatch(actions.signOut());
@@ -112,6 +83,39 @@ const BottomBar: React.FC<props> = props => {
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
+
+
+    //Iniciamos subscripciones
+    useEffect(() => {
+      setSubscriptionCreateFR((API.graphql(graphqlOperation(Subscriptions.onCreateFriendRequest) ) as unknown as Observable<any>)
+      .subscribe({
+        next: (data) => {
+          const toUserId = data.value.data.onCreateFriendRequest.to.id;
+          if (toUserId === user.identityId) {
+            saveNotification(data.value.data.onCreateFriendRequest);
+          }
+        }
+      }));
+      setSubscriptionCreateFriend((API.graphql(graphqlOperation(Subscriptions.onCreateFriend)) as unknown as Observable<any>)
+      .subscribe({
+        next: (data) => {
+          const userId = data.value.data.onCreateFriend.user.id;
+          if (userId === user.identityId) {
+            getFriends(userId);
+          }
+        }
+      }));
+      setSubscriptionDeleteFriend((API.graphql(graphqlOperation(Subscriptions.onDeleteFriend) ) as unknown as Observable<any>)
+      .subscribe({
+        next: (data) => {
+          const friendId = data.value.data.onDeleteFriend.user.id;
+          const userId = data.value.data.onDeleteFriend.id.split(friendId)[0];
+          if (userId === user.identityId) {
+            deleteFriend(friendId+userId, friendId, files);
+          }
+        }
+      }));
+    }, []);
 
     return ( 
       <React.Fragment>

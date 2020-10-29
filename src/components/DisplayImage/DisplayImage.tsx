@@ -9,7 +9,7 @@ export interface DisplayImageProps {
     isPopover: boolean
 }
  
-const DisplayImage: React.SFC<DisplayImageProps> = props => {
+const DisplayImage: React.FC<DisplayImageProps> = props => {
     
     const [loading, setLoading] = useState(true);
     const [errorloading, setErrorLoading] = useState(false);
