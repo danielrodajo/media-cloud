@@ -13,7 +13,7 @@ import * as Queries from '../../graphql/queries';
 import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
-import FriendsAnimation from '../../components/Animations/FriendsAnimation/FriendsAnimation';
+import FriendsAnimation from '../../Animations/FriendsAnimation/FriendsAnimation';
 
 export interface FriendsProps {
     

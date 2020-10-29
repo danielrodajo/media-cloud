@@ -1,6 +1,6 @@
 import React from 'react';
 import './UploadAnimation.scss';
-import LoadingAnimation from '../../components/Animations/LoadingAnimation/LoadingAnimation';
+import LoadingAnimation from '../../Animations/LoadingAnimation/LoadingAnimation';
 import { IonText } from '@ionic/react';
 
 export interface UploadAnimationProps {

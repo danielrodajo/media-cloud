@@ -3,7 +3,7 @@ import { IonPopover } from '@ionic/react';
 import './PopoverUpload.scss';
 import 'react-circular-progressbar/dist/styles.css';
 import UploadAnimation from '../../../components/UploadAnimation/UploadAnimation';
-import DoneBoxAnimation from '../../../components/Animations/DoneBoxAnimation/DoneBoxAnimation';
+import DoneBoxAnimation from '../../../components/DoneBoxAnimation/DoneBoxAnimation';
 
 interface props {
     uploading: boolean;

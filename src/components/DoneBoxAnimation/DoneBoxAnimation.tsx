@@ -1,6 +1,6 @@
 import React from 'react';
 import './DoneBoxAnimation.scss';
-import DoneAnimation from '../DoneAnimation/DoneAnimation';
+import DoneAnimation from '../../Animations/DoneAnimation/DoneAnimation';
 import { IonText } from '@ionic/react';
 
 const DoneBoxAnimation: React.FC = () => {
