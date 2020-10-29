@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner, IonAlert } from '@ionic/react';
+import { IonPopover, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonAlert } from '@ionic/react';
 import { cloudDownloadOutline, trashOutline, shareSocialOutline } from 'ionicons/icons';
 import './PopoverFileBox.scss';
-import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
 import ModalShareFriends from '../ModalShareFriends/ModalShareFriends';
+import DisplayImage from '../DisplayImage/DisplayImage';
 
 interface props {
     showPopover: boolean; 
@@ -20,7 +20,6 @@ const PopoverFileBox: React.FC<props> = props => {
         props.remove(props.file.key);
         props.setShowPopover(false);
     }
-    const [loading, setLoading] = useState(true);
 
     const [showAlert, setShowAlert] = useState(false);
 
@@ -48,15 +47,10 @@ const PopoverFileBox: React.FC<props> = props => {
             isOpen={props.showPopover}
             cssClass='my-custom-class hide-background'
             onDidDismiss={e => props.setShowPopover(false)}>
-
             <IonCard className="my-custom-ion-card">
                 <IonCardHeader className="center-spinner">
-                    <IonSpinner color="tertiary" className={!loading ? "hide-img" : "popover-spinner"} />
-                    <IonImg onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
-
-                     className={loading ? "hide-img" : "popover-img"} src={formatDisplayImage(props.file.name, props.file.url)} />  
+                    <DisplayImage file={props.file} isPopover={true} />
                 </IonCardHeader>
-
                 <IonCardContent>
                     <IonCardSubtitle className="ion-text-center">{props.file.name}</IonCardSubtitle>
                     <IonGrid>

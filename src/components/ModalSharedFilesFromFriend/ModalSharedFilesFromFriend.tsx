@@ -32,7 +32,7 @@ const ModalSharedFilesFromFriend: React.SFC<ModalSharedFilesFromFriendProps> = p
         <IonModal isOpen={props.showModal} onDidDismiss={e => props.setShowModal(false)}>
             <IonHeader>
                 <IonToolbar className="vertical-align">
-                    <IonItem>
+                    <IonItem lines="none">
                         <IonText className="custom-title-modal-shared-friend hide-overflow-text">
                             Archivos compartidos de <span className="custom-bold-modal-shared-friend">{props.friend.name}</span>
                         </IonText>

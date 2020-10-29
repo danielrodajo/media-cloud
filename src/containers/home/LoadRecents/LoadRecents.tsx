@@ -24,7 +24,6 @@ const LoadRecents: React.FC<props> = props => {
         return state.FileReducer.files;
     });
 
-
     const onGetFiles = useCallback((userId: String, maxFiles: number) => dispatch(actions.recoverRecentFiles(userId, maxFiles)), [dispatch]);
 
     const recoverError = useSelector(

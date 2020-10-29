@@ -35,6 +35,9 @@ const SignUp: React.FC<props> = props => {
             case "An account with the given email already exists.":
                 return "Este correo ya esta registrado";
             
+            case "El nombre del usuario ya existe":
+                return "Este nombre de usuario ya existe.";
+            
             default: return "Ha surgido un error inesperado.";
         }
     }
