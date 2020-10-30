@@ -1,7 +1,8 @@
 import React from 'react';
 import './UploadAnimation.scss';
-import LoadingAnimation from '../../Animations/LoadingAnimation/LoadingAnimation';
 import { IonText } from '@ionic/react';
+import loadingAnimation from '../../Animations/loadinganimation.json';
+import CustomAnimation from '../CustomAnimation';
 
 export interface UploadAnimationProps {
     percent: number
@@ -13,7 +14,7 @@ const UploadAnimation: React.SFC<UploadAnimationProps> = props => {
             <div className="center-percent">
                 <IonText className="format-percent">{props.percent}%</IonText>
             </div>      
-            <LoadingAnimation/>
+            <CustomAnimation json={loadingAnimation} loop={true}/>
             <IonText className="format-text">Subiendo</IonText>
         </React.Fragment>
      );

@@ -8,6 +8,7 @@ import { RootState } from '../../../store/store';
 import * as actions from "../../../store/actions/index";
 import { returnUpBackOutline, trashOutline } from "ionicons/icons";
 import CustomLoadingPage, { LoadingType } from '../../../components/CustomLoadingPage/CustomLoadingPage';
+import EmptyFolder from '../../../components/EmptyFolder/EmptyFolder';
 
 interface props {
   user: any
@@ -150,35 +151,43 @@ const LoadMyFiles:React.FC<props> = props => {
                 {recoverError ? <span>{recoverError.message}</span> : null}
     
                 {
-                  folders.map(folder => 
-                  <FolderBox
-                    key={folder.key}
-                    path={folder.key}
-                    onClick={changeFolder}
-                  />
-                  )
-                }
-                {
-                  files
-                  .sort(function (a: CustomFile, b: CustomFile) {
-                    if (a.key > b.key) {
-                      return 1;
-                    }
-                    if (a.key < b.key) {
-                      return -1;
-                    }
-                    return 0;
-                  })
-                  .map(file => 
-                    <FileBox
-                      key={file.key}
-                      file={file}
-                      remove={removeFile}
-                      removeError={removeError}
-                      isAbsolutePath={true}
+                  folders.length === 0 && files.length === 0 
+                  ? <EmptyFolder />
+                  :
+                  <React.Fragment>
+                  {
+                    folders.map(folder => 
+                    <FolderBox
+                      key={folder.key}
+                      path={folder.key}
+                      onClick={changeFolder}
                     />
-                  )
+                    )
+                  }
+                  {
+                    files
+                    .sort(function (a: CustomFile, b: CustomFile) {
+                      if (a.key > b.key) {
+                        return 1;
+                      }
+                      if (a.key < b.key) {
+                        return -1;
+                      }
+                      return 0;
+                    })
+                    .map(file => 
+                      <FileBox
+                        key={file.key}
+                        file={file}
+                        remove={removeFile}
+                        removeError={removeError}
+                        isAbsolutePath={true}
+                      />
+                    )
+                  }
+                  </React.Fragment>
                 }
+                
                 
               </React.Fragment>
             )}

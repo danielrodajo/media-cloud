@@ -13,8 +13,9 @@ import * as Queries from '../../graphql/queries';
 import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
-import FriendsAnimation from '../../Animations/FriendsAnimation/FriendsAnimation';
 import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
+import friendsAnimation from '../../Animations/friendsanimation.json';
+import CustomAnimation from '../../components/CustomAnimation';
 
 export interface FriendsProps {
     
@@ -127,7 +128,7 @@ const Friends: React.SFC<FriendsProps> = () => {
                                 friends.map((friend:any) => <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
                                 :
                                 <IonGrid className="format-animation">
-                                    <FriendsAnimation/>
+                                    <CustomAnimation json={friendsAnimation} loop={false}/>
                                 </IonGrid>
                             }
                         </React.Fragment>

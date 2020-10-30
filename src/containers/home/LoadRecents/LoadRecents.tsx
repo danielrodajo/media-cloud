@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/store';
 import * as actions from "../../../store/actions/index";
 import CustomLoadingPage, { LoadingType } from '../../../components/CustomLoadingPage/CustomLoadingPage';
+import EmptyFolderRecent from '../../../components/EmptyFolderRecent/EmptyFolderRecent';
 
 interface props {
     maxFiles: number
@@ -51,6 +52,9 @@ const LoadRecents: React.FC<props> = props => {
               <React.Fragment>       
                 {recoverError ? <span>{recoverError.message}</span> : null}
                 {
+                  files.length === 0 ? 
+                  <EmptyFolderRecent />
+                  :
                   files.slice(0, props.maxFiles)
                   .map(file => 
                     <FileBox
