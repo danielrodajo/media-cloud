@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useCallback} from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem} from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
@@ -84,6 +84,10 @@ const BottomBar: React.FC<props> = props => {
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
+    
+    useEffect(() => {
+      onGetFriends(user.identityId);
+  }, [user.identityId, onGetFriends])
 
     useEffect(() => {
       setSubscriptionCreateFR((API.graphql(graphqlOperation(Subscriptions.onCreateFriendRequest) ) as unknown as Observable<any>)

@@ -55,10 +55,6 @@ const Friends: React.SFC<FriendsProps> = () => {
     }
 
     useEffect(() => {
-        onGetFriends(user.identityId);
-    }, [user.identityId, onGetFriends])
-
-    useEffect(() => {
         if (searchText) 
             searchUsers(searchText.toLowerCase()!)
         else

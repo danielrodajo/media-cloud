@@ -1,9 +1,9 @@
 import React from 'react';
 import { IonPopover } from '@ionic/react';
 import './PopoverUpload.scss';
-import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import AnimatedCheckmark from '../../../components/AnimatedCheckmark/AnimatedCheckmark';
+import UploadAnimation from '../../../components/UploadAnimation/UploadAnimation';
+import DoneBoxAnimation from '../../../components/DoneBoxAnimation/DoneBoxAnimation';
 
 interface props {
     uploading: boolean;
@@ -20,8 +20,8 @@ const Popover: React.FC<props> = props => (
     >
     {
         (!props.success) 
-        ? <CircularProgressbar value={props.loadedFile/props.totalFile} maxValue={1} text={Math.floor((props.loadedFile/props.totalFile)*100)+"%"}  background={true} styles={{background: {fill: '#ffffff'}}}/> 
-        : <AnimatedCheckmark />
+        ? <UploadAnimation percent={Math.floor((props.loadedFile/props.totalFile)*100)}/>
+        : <DoneBoxAnimation />
     }
     </IonPopover>
 );
