@@ -34,7 +34,6 @@ const BottomBar: React.FC<props> = props => {
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
     }
-
     const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
     const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
@@ -74,7 +73,7 @@ const BottomBar: React.FC<props> = props => {
     });
 
     const handleSignOut = () => {
-      subscriptionCreateFR.unsubscribe();
+      subscriptionCreateFR!.unsubscribe();
       subscriptionCreateFriend.unsubscribe();
       subscriptionDeleteFriend.unsubscribe();
       dispatch(actions.signOut());
@@ -112,6 +111,38 @@ const BottomBar: React.FC<props> = props => {
     useEffect(() => {
       onGetFriends(user.identityId);
   }, [user.identityId, onGetFriends])
+
+    //Iniciamos subscripciones
+    useEffect(() => {
+      setSubscriptionCreateFR((API.graphql(graphqlOperation(Subscriptions.onCreateFriendRequest) ) as unknown as Observable<any>)
+      .subscribe({
+        next: (data) => {
+          const toUserId = data.value.data.onCreateFriendRequest.to.id;
+          if (toUserId === user.identityId) {
+            saveNotification(data.value.data.onCreateFriendRequest);
+          }
+        }
+      }));
+      setSubscriptionCreateFriend((API.graphql(graphqlOperation(Subscriptions.onCreateFriend)) as unknown as Observable<any>)
+      .subscribe({
+        next: (data) => {
+          const userId = data.value.data.onCreateFriend.user.id;
+          if (userId === user.identityId) {
+            getFriends(userId);
+          }
+        }
+      }));
+      setSubscriptionDeleteFriend((API.graphql(graphqlOperation(Subscriptions.onDeleteFriend) ) as unknown as Observable<any>)
+      .subscribe({
+        next: (data) => {
+          const friendId = data.value.data.onDeleteFriend.user.id;
+          const userId = data.value.data.onDeleteFriend.id.split(friendId)[0];
+          if (userId === user.identityId) {
+            deleteFriend(friendId+userId, friendId, files);
+          }
+        }
+      }));
+    }, []);
 
     return ( 
       <React.Fragment>

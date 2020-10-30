@@ -27,9 +27,7 @@ const FolderBox: React.FC<props> = props => {
 
                 <IonCardContent>
                     <IonCardSubtitle className="ion-text-center hide-overflow-text">
-                    {
-                        formatName(props.path)
-                    }
+                        {formatName(props.path)}
                     </IonCardSubtitle>
                 </IonCardContent>
                 <IonRippleEffect type="unbounded"></IonRippleEffect>

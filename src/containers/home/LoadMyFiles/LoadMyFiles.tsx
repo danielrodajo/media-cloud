@@ -74,7 +74,7 @@ const LoadMyFiles:React.FC<props> = props => {
     //);
 
     useEffect(() => {
-        onGetFiles(currentPath);
+          onGetFiles(currentPath);
     }, [currentPath, onGetFiles]);
 
     const handleRemoveFolder = (path: string) => {

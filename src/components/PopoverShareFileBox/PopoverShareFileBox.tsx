@@ -1,9 +1,9 @@
 import './PopoverShareFileBox.scss';
-import React, { useState } from 'react';
-import { IonPopover, IonCard, IonCardHeader, IonImg, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSpinner } from '@ionic/react';
+import React from 'react';
+import { IonPopover, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonGrid, IonRow, IonCol, IonButton, IonIcon } from '@ionic/react';
 import { cloudDownloadOutline } from 'ionicons/icons';
-import { formatDisplayImage } from '../../shared/utility';
 import { File } from '../../store/types';
+import DisplayImage from '../DisplayImage/DisplayImage';
 
 export interface PopoverShareFileBoxProps {
     showPopover: boolean; 
@@ -12,8 +12,6 @@ export interface PopoverShareFileBoxProps {
 }
  
 const PopoverShareFileBox: React.SFC<PopoverShareFileBoxProps> = props => {
-
-    const [loading, setLoading] = useState(true);
 
     return (
         <React.Fragment>
@@ -24,9 +22,7 @@ const PopoverShareFileBox: React.SFC<PopoverShareFileBoxProps> = props => {
         >
             <IonCard className="my-custom-ion-card">
                 <IonCardHeader className="center-spinner">
-                    <IonSpinner color="tertiary" className={!loading ? "hide-img" : "popover-spinner"} />
-                    <IonImg onIonImgDidLoad={() => setLoading(false)} onIonError={() => {console.log("ERROR CARGANDO"); setLoading(false);}} 
-                     className={loading ? "hide-img" : "popover-img"} src={formatDisplayImage(props.file.name, props.file.url)} />  
+                    <DisplayImage file={props.file} isPopover={true} />
                 </IonCardHeader>
 
                 <IonCardContent>

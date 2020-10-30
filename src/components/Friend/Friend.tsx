@@ -7,7 +7,7 @@ import ModalSharedFilesFromFriend from '../ModalSharedFilesFromFriend/ModalShare
 
 export interface FriendProps {
     friend: any,
-    handleDeleteFriend: (idFriend: string) => void 
+    handleDeleteFriend: (idFriend: string, originalId: string) => void 
 }
  
 const Friend: React.SFC<FriendProps> = props => {
@@ -27,7 +27,7 @@ const Friend: React.SFC<FriendProps> = props => {
                     text: "Si",
                     role: "accept",
                     handler: () => {
-                        props.handleDeleteFriend(props.friend.id)
+                        props.handleDeleteFriend(props.friend.id, props.friend.originalId)
                     },
                     },
                 ]}

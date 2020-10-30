@@ -15,15 +15,15 @@ const Search: React.FC = () => {
     const user = useSelector((state: RootState) => state.AuthReducer.user);
     const [searchText, setSearchText] = useState("");
 
+    const files: CustomFile[] = useSelector((state: RootState) => {
+        return state.FileReducer.filterFiles;
+    });
+
     const onRecoverFilesByName = useCallback((userId: String, name: string) => dispatch(actions.recoverFilesByName(userId, name)), [dispatch]);
 
     const downloading = useSelector(
         (state: RootState) => state.FileReducer.downloading
     );   
-
-    const files: CustomFile[] = useSelector((state: RootState) => {
-        return state.FileReducer.filterFiles;
-    });
     const removeFile = (name: string) => dispatch(actions.removeFile(name));
 
     const removeError = useSelector(

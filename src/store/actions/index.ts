@@ -36,6 +36,7 @@ export {
 export {
     getFriends,
     deleteFriend,
+    deleteLocalFriend,
     addFriend,
 } from './FriendManager';
 

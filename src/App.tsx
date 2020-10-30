@@ -29,7 +29,7 @@ import awsconfig from './aws-exports';
 import { RootState } from './store/store';
 import * as actions from './store/actions/index';
 import Authentication from './containers/authentication/Authentication';
-import AuthLoading from './components/AuthLoading/AuthLoading';
+import CustomLoading from './components/CustomLoading/CustomLoading';
 
 
 Amplify.configure(awsconfig);
@@ -39,32 +39,6 @@ const App: React.FC<{
   onTryAutoSignup: any
   isAuthenticated: boolean
 }> = props => {
-
-  //NO ELIMINAR DE MOMENTO, LO TENGO DE REFERENCIA 
-  /*async function distintasOperativasConGraphQL() {
-    try {
-      
-      await API.graphql(graphqlOperation(Mutations.createUser, {input: {
-        id: "daniel",
-        darkMode: true
-      }}));
-      
-     const user:any = await API.graphql(graphqlOperation(Queries.getUser, {id: "d"}));
-      console.log(user.data.getUser);
-      console.log(await API.graphql(graphqlOperation(Queries.listUsers)))
-      console.log("USUARIO CREADO")
-      await API.graphql(graphqlOperation(Mutations.updateUser, {input: {
-        id: "335b17db-32b9-4734-8ee2-066a82f520cc",
-        friends: []
-      }}))
-      const user: any  = await API.graphql(graphqlOperation(Queries.getUser, {id: "daxniel"}));
-      console.log(user);
-      await API.graphql(graphqlOperation(Mutations.updateUser, {input: {id: user.data.getUser.id, darkMode: true}}))
-    }catch (error) {
-      console.log(error)
-    }
-  }*/
-  
 
   const { onTryAutoSignup } = props;
   
@@ -77,7 +51,7 @@ const App: React.FC<{
   return (
   <IonApp>
     <IonReactRouter>
-      {loadingAuth ? <AuthLoading showLoading={loadingAuth}/> : null}
+      {loadingAuth ? <CustomLoading showLoading={loadingAuth}/> : null}
       {
         props.isAuthenticated ?
         <BottomBar default="Home"/>

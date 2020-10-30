@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ModalNotifications.scss';
 import { IonModal, IonContent, IonHeader, IonToolbar, IonIcon, IonItem, IonText } from '@ionic/react';
 import { arrowDown } from 'ionicons/icons';
@@ -29,6 +29,8 @@ const ModalNotifications: React.SFC<Props> = props => {
 
     const notifications = useSelector((state: RootState) => state.NotificationReducer.notifications);
 
+    const [uploading, setUploading] = useState(false);
+
     const handleCloseNotification = (notification: any) => {
         (API.graphql(graphqlOperation(Mutations.deleteFriendRequest, {input: {id: notification.id}})) as Promise<any>)
         .then(e => {
@@ -49,6 +51,7 @@ const ModalNotifications: React.SFC<Props> = props => {
     const addFriend = (friend: any) => dispatch(actions.addFriend(friend));
     
     const handleCheckPetition = (notification: any) => {
+        setUploading(true);
         //Puesto que GraphQL no admite de momento relaciones a sí mismas, se tiene que crear una entidad Friend secundaria para hacer este proceso
         //Primero se crea un amigo de A a B
         (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.from.id, id: notification.to.id+notification.from.id, name: notification.to.name, originalId: notification.to.id}})) as Promise<any>)
@@ -66,12 +69,23 @@ const ModalNotifications: React.SFC<Props> = props => {
                 generateNotification(user.identityId, notification.from.id, NotificationType.ACCEPTPETITION);
                 //Finalmente, se hace el mismo proceso de "denegarla" (eliminarla de la store de Redux y checkearla)
                 handleCloseNotification(notification);
+
+                setUploading(false);
             })
+            .catch(err => {
+                console.log(err);
+                setUploading(false);
+            });
         })   
+        .catch(err => {
+            console.log(err);
+            setUploading(false);
+        });
     }
 
     return (
         <IonModal isOpen={props.showModal} onDidDismiss={e => props.setShowModal(false)}>
+            {uploading ? <CustomLoading showLoading={uploading}/> : null}
             <IonHeader>
                 <IonToolbar className="vertical-align">
                     <IonText className="custom-title">
