@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Friends.scss';
-import { IonPage, IonContent, IonText, IonSearchbar, IonToast } from '@ionic/react';
+import { IonPage, IonContent, IonSearchbar, IonToast, IonGrid, IonText } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import CustomSpinner from '../../components/CustomSpinner/CustomSpinner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,9 @@ import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
 import CustomLoading from '../../components/CustomLoading/CustomLoading';
+import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
+import friendsAnimation from '../../Animations/friendsanimation.json';
+import CustomAnimation from '../../components/CustomAnimation';
 
 export interface FriendsProps {
     
@@ -29,8 +32,6 @@ const Friends: React.SFC<FriendsProps> = () => {
     const downloading = useSelector((state: RootState) => state.FriendReducer.downloadingFriends);
 
     const deleting = useSelector((state: RootState) => state.FriendReducer.deleting);
-
-    const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
     const friends = useSelector((state: RootState) => state.FriendReducer.friends);
 
@@ -52,10 +53,6 @@ const Friends: React.SFC<FriendsProps> = () => {
     const handleDeleteFriend = async(friendId: string, originalId: string) => {
         deleteFriend(friendId, originalId, user.identityId, files);
     }
-
-    useEffect(() => {
-        onGetFriends(user.identityId);
-    }, [user.identityId, onGetFriends])
 
     useEffect(() => {
         if (searchText) 
@@ -138,7 +135,7 @@ const Friends: React.SFC<FriendsProps> = () => {
             <IonContent className="my-custom-content">
             {
                 downloading || searching ?
-                <CustomSpinner />
+                <CustomLoadingPage type={LoadingType.SearchFriends} />
                 : (
                     users.length === 0 
                     ? (
@@ -148,7 +145,10 @@ const Friends: React.SFC<FriendsProps> = () => {
                                 friends.length > 0 ?
                                 friends.map((friend:any) => <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
                                 :
-                                <IonText>No tienes contactos agregados.</IonText>
+                                <div className="center-empty-friends-div">
+                                    <CustomAnimation json={friendsAnimation} loop={false}/>
+                                    <IonText className="format-text-notifications">No tienes amigos agregados todavia</IonText>
+                                </div>
                             }
                         </React.Fragment>
                     )
