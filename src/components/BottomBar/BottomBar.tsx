@@ -118,7 +118,7 @@ const BottomBar: React.FC<props> = props => {
         <Add showModal={showModal} setShowModal={setShowModal} />
         <IonTabs onIonTabsDidChange={handleActiveButton}>
           <IonRouterOutlet>     
-            <Route path="/home" component={Home} exact />
+            <Route path="/home" render={() => <Home showAddModal={setShowModal}/>} exact />
             <Route path="/search" component={Search} exact />
             <Route path="/friends" component={Friends} exact />
             <Route path="/profile" render={() => <Profile handleSignOut={handleSignOut} darkMode={darkMode === "1"} setDarkMode={setDarkMode}/>} exact />

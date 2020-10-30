@@ -8,8 +8,9 @@ import CustomLoadingPage, { LoadingType } from '../../../components/CustomLoadin
 import EmptyFolderRecent from '../../../components/EmptyFolderRecent/EmptyFolderRecent';
 
 interface props {
-    maxFiles: number
-    user: any
+    maxFiles: number,
+    user: any,
+    showAddModal: (value: boolean) => void
 }
 
 const LoadRecents: React.FC<props> = props => {
@@ -47,13 +48,13 @@ const LoadRecents: React.FC<props> = props => {
         {
             //Mostrar Spinner mientras se descargan los ficheros
             downloading ? (
-              <CustomLoadingPage type={LoadingType.Files} />
+              <CustomLoadingPage type={LoadingType.Files}/>
             ) : (
               <React.Fragment>       
                 {recoverError ? <span>{recoverError.message}</span> : null}
                 {
                   files.length === 0 ? 
-                  <EmptyFolderRecent />
+                  <EmptyFolderRecent showAddModal={props.showAddModal}/>
                   :
                   files.slice(0, props.maxFiles)
                   .map(file => 
