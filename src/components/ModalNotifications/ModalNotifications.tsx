@@ -11,8 +11,7 @@ import * as actions from "../../store/actions/index";
 import FriendPetition from './FriendPetition/FriendPetition';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
-import CustomAnimation from '../CustomAnimation';
-import emptyFolderAnimation from '../../Animations/nonotificationsanimation.json';
+import CustomLoading from '../CustomLoading/CustomLoading';
 
 export interface Props {
     showModal: boolean;
@@ -108,10 +107,7 @@ const ModalNotifications: React.SFC<Props> = props => {
                     }             
                 }) 
                 : 
-                    <div className="center-empty-notifications-div">
-                        <CustomAnimation json={emptyFolderAnimation} loop={true}/>
-                        <IonText className="format-text-notifications">No tienes notificaciones pendientes.</IonText>
-                    </div>
+                    <IonText className="no-notifications-text">No tienes notificaciones pendientes.</IonText>
             }
             </IonContent>
         </IonModal>
