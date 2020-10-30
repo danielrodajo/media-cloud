@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useCallback} from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem} from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
@@ -34,16 +34,43 @@ const BottomBar: React.FC<props> = props => {
     const handleActiveButton = (event: CustomEvent) => {
       setActiveTab(event.detail.tab);
     }
+    const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
-    const files = useSelector((state: RootState) => state.FileReducer.files);
-
+    const deleteFriend = (friendId: string) => dispatch(actions.deleteFriend(friendId));
     const getFriends = (userId: string) => dispatch(actions.getFriends(userId));
+    
+    //Subscripcion que está a la escucha de nuevas notificaciones y, en caso de ser suyas, las agrega
+    const subscriptionCreateFR = (API.graphql(
+      graphqlOperation(Subscriptions.onCreateFriendRequest)
+    ) as unknown as Observable<any>).subscribe({
+        next: (data) => {
+          const toUserId = data.value.data.onCreateFriendRequest.to.id;
+          if (toUserId === user.identityId) {
+            saveNotification(data.value.data.onCreateFriendRequest);
+          }
+        }
+    });
 
-    const deleteFriend = (friendId: string, originalId: string, files: any) => dispatch(actions.deleteLocalFriend(friendId, originalId, files));
-  
-    const [subscriptionCreateFR, setSubscriptionCreateFR] = useState<any>(null);
-    const [subscriptionCreateFriend, setSubscriptionCreateFriend] = useState<any>(null);
-    const [subscriptionDeleteFriend, setSubscriptionDeleteFriend] = useState<any>(null);
+    const subscriptionCreateFriend = (API.graphql(graphqlOperation(Subscriptions.onCreateFriend)
+    ) as unknown as Observable<any>).subscribe({
+      next: (data) => {
+        const userId = data.value.data.onCreateFriend.user.id;
+        if (userId === user.identityId) {
+          getFriends(userId);
+        }
+      }
+    });
+
+    const subscriptionDeleteFriend = (API.graphql(graphqlOperation(Subscriptions.onDeleteFriend)
+    ) as unknown as Observable<any>).subscribe({
+      next: (data) => {
+        const friendId = data.value.data.onDeleteFriend.user.id;
+        const userId = data.value.data.onDeleteFriend.id.split(friendId)[0];
+        if (userId === user.identityId) {
+          deleteFriend(friendId+userId);
+        }
+      }
+    });
 
     const handleSignOut = () => {
       subscriptionCreateFR!.unsubscribe();
@@ -76,14 +103,14 @@ const BottomBar: React.FC<props> = props => {
     //Descargamos notificaciones iniciales
     getNotifications(user.identityId);
 
-    //Descargamos amigos iniciales
-    getFriends(user.identityId);
-
     //Poner/Quitar modo oscuro
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
 
+    useEffect(() => {
+      onGetFriends(user.identityId);
+  }, [user.identityId, onGetFriends])
 
     //Iniciamos subscripciones
     useEffect(() => {
@@ -122,7 +149,7 @@ const BottomBar: React.FC<props> = props => {
         <Add showModal={showModal} setShowModal={setShowModal} />
         <IonTabs onIonTabsDidChange={handleActiveButton}>
           <IonRouterOutlet>     
-            <Route path="/home" component={Home} exact />
+            <Route path="/home" render={() => <Home showAddModal={setShowModal}/>} exact />
             <Route path="/search" component={Search} exact />
             <Route path="/friends" component={Friends} exact />
             <Route path="/profile" render={() => <Profile handleSignOut={handleSignOut} darkMode={darkMode === "1"} setDarkMode={setDarkMode}/>} exact />
