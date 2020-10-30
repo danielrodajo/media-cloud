@@ -13,6 +13,9 @@ import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
 import CustomLoading from '../../components/CustomLoading/CustomLoading';
+import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
+import friendsAnimation from '../../Animations/friendsanimation.json';
+import CustomAnimation from '../../components/CustomAnimation';
 
 export interface FriendsProps {
     
@@ -29,8 +32,6 @@ const Friends: React.SFC<FriendsProps> = () => {
     const downloading = useSelector((state: RootState) => state.FriendReducer.downloadingFriends);
 
     const deleting = useSelector((state: RootState) => state.FriendReducer.deleting);
-
-    const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
     const friends = useSelector((state: RootState) => state.FriendReducer.friends);
 

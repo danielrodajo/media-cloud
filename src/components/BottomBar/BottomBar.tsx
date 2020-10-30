@@ -38,6 +38,7 @@ const BottomBar: React.FC<props> = props => {
     const files = useSelector((state: RootState) => state.FileReducer.files);
 
     const getFriends = (userId: string) => dispatch(actions.getFriends(userId));
+    const onGetFriends = useCallback((userId: string) => dispatch(actions.getFriends(userId)), [dispatch]);
 
     const deleteFriend = (friendId: string, originalId: string, files: any) => dispatch(actions.deleteLocalFriend(friendId, originalId, files));
   
@@ -84,8 +85,6 @@ const BottomBar: React.FC<props> = props => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
 
-
-    //Iniciamos subscripciones
     useEffect(() => {
       setSubscriptionCreateFR((API.graphql(graphqlOperation(Subscriptions.onCreateFriendRequest) ) as unknown as Observable<any>)
       .subscribe({

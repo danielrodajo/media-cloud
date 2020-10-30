@@ -11,6 +11,8 @@ import * as actions from "../../store/actions/index";
 import FriendPetition from './FriendPetition/FriendPetition';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
+import CustomAnimation from '../CustomAnimation';
+import emptyFolderAnimation from '../../Animations/nonotificationsanimation.json';
 import CustomLoading from '../CustomLoading/CustomLoading';
 
 export interface Props {
