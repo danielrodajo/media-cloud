@@ -109,10 +109,7 @@ const ModalNotifications: React.SFC<Props> = props => {
                     }             
                 }) 
                 : 
-                    <div className="center-empty-notifications-div">
-                        <CustomAnimation json={emptyFolderAnimation} loop={true}/>
-                        <IonText className="format-text-notifications">No tienes notificaciones pendientes.</IonText>
-                    </div>
+                    <IonText className="no-notifications-text">No tienes notificaciones pendientes.</IonText>
             }
             </IonContent>
         </IonModal>

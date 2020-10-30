@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import './Friends.scss';
-import { IonPage, IonContent, IonSearchbar, IonToast, IonGrid, IonText } from '@ionic/react';
+import { IonPage, IonContent, IonText, IonSearchbar, IonToast } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import CustomSpinner from '../../components/CustomSpinner/CustomSpinner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,6 +53,10 @@ const Friends: React.SFC<FriendsProps> = () => {
     const handleDeleteFriend = async(friendId: string, originalId: string) => {
         deleteFriend(friendId, originalId, user.identityId, files);
     }
+
+    useEffect(() => {
+        onGetFriends(user.identityId);
+    }, [user.identityId, onGetFriends])
 
     useEffect(() => {
         if (searchText) 
@@ -135,7 +139,7 @@ const Friends: React.SFC<FriendsProps> = () => {
             <IonContent className="my-custom-content">
             {
                 downloading || searching ?
-                <CustomLoadingPage type={LoadingType.SearchFriends} />
+                <CustomSpinner />
                 : (
                     users.length === 0 
                     ? (
@@ -145,10 +149,7 @@ const Friends: React.SFC<FriendsProps> = () => {
                                 friends.length > 0 ?
                                 friends.map((friend:any) => <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
                                 :
-                                <div className="center-empty-friends-div">
-                                    <CustomAnimation json={friendsAnimation} loop={false}/>
-                                    <IonText className="format-text-notifications">No tienes amigos agregados todavia</IonText>
-                                </div>
+                                <IonText>No tienes contactos agregados.</IonText>
                             }
                         </React.Fragment>
                     )

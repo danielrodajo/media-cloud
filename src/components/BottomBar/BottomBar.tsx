@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from 'react'
+import React, { useState, useEffect} from 'react'
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, IonItem} from '@ionic/react';
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
@@ -77,13 +77,14 @@ const BottomBar: React.FC<props> = props => {
     //Descargamos notificaciones iniciales
     getNotifications(user.identityId);
 
+    //Descargamos amigos iniciales
+    getFriends(user.identityId);
+
     //Poner/Quitar modo oscuro
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
     }, [darkMode]);
 
-
-    //Iniciamos subscripciones
     useEffect(() => {
       setSubscriptionCreateFR((API.graphql(graphqlOperation(Subscriptions.onCreateFriendRequest) ) as unknown as Observable<any>)
       .subscribe({
@@ -114,17 +115,13 @@ const BottomBar: React.FC<props> = props => {
         }
       }));
     }, []);
-    
-    useEffect(() => {
-      onGetFriends(user.identityId);
-  }, [user.identityId, onGetFriends])
 
     return ( 
       <React.Fragment>
         <Add showModal={showModal} setShowModal={setShowModal} />
         <IonTabs onIonTabsDidChange={handleActiveButton}>
           <IonRouterOutlet>     
-            <Route path="/home" render={() => <Home showAddModal={setShowModal}/>} exact />
+            <Route path="/home" component={Home} exact />
             <Route path="/search" component={Search} exact />
             <Route path="/friends" component={Friends} exact />
             <Route path="/profile" render={() => <Profile handleSignOut={handleSignOut} darkMode={darkMode === "1"} setDarkMode={setDarkMode}/>} exact />
