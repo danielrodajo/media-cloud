@@ -18,9 +18,18 @@
     margin-top: 20%;
 }
 
-.format-animation{
-    height: 250px;
-    width: 250px;
-    padding-left: 5%;
-    padding-top: 25%;
+.center-empty-friends-div {
+    position: absolute;
+    top: 5%;
+    left: 23%;
+    width: 60%;
+    height: 20px;
+    text-align: center;
+}
+
+.format-text-notifications {
+    font-size: 5vw;
+    color: rgb(144, 19, 254);
+    font-family: 'Nunito', sans-serif;
+    margin: auto;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Friends.scss';
-import { IonPage, IonContent, IonSearchbar, IonToast, IonGrid } from '@ionic/react';
+import { IonPage, IonContent, IonSearchbar, IonToast, IonGrid, IonText } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import CustomSpinner from '../../components/CustomSpinner/CustomSpinner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -127,9 +127,10 @@ const Friends: React.SFC<FriendsProps> = () => {
                                 friends.length > 0 ?
                                 friends.map((friend:any) => <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
                                 :
-                                <IonGrid className="format-animation">
+                                <div className="center-empty-friends-div">
                                     <CustomAnimation json={friendsAnimation} loop={false}/>
-                                </IonGrid>
+                                    <IonText className="format-text-notifications">No tienes amigos agregados todavia</IonText>
+                                </div>
                             }
                         </React.Fragment>
                     )
