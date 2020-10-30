@@ -13,11 +13,7 @@ import LoadMyFiles from "./LoadMyFiles/LoadMyFiles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
-interface props {
-  showAddModal: (value: boolean) => void
-}
-
-const Home: React.FC<props> = props => {
+const Home: React.FC = () => {
 
   //Inicializamos en el segmento por defecto
   const [ currentSegment, setCurrentSegment ] = useState<string | undefined>("recents");
@@ -38,7 +34,7 @@ const Home: React.FC<props> = props => {
         </IonSegment>
         {
           currentSegment === "recents" 
-          ? <LoadRecents user={user} maxFiles={8} showAddModal={props.showAddModal}/>
+          ? <LoadRecents user={user} maxFiles={8} />
           : <LoadMyFiles user={user} /> 
         }
       </IonContent>
