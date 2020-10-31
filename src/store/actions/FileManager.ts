@@ -76,3 +76,68 @@ export  const removeFile = (name: string) => {
         })
     }
 }
+
+export const uploadUserImage = (userId: string, file: File) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.UPLOAD_USER_IMAGE
+        })
+        Storage.put(userId, file, {
+            level: 'public',
+            progressCallback(progress: any) {
+                dispatch({
+                    type: types.UPLOADING_USER_IMAGE,
+                    payload: {
+                        loaded: progress.loaded,
+                        total: progress.total
+                    }
+                });
+            }
+        })
+        .then((result: any) => {
+            //Agregar al objeto recuperado su URL
+            Storage.get(result.key, {level: 'public'})
+            .then((result2: any) => {
+                dispatch({
+                    type: types.UPLOAD_USER_IMAGE_OK_WAIT,
+                    payload: result2
+                });
+
+                (async () => {
+                    //Delay para que se realice la animacion de subida
+                    await delay(2000);
+
+                    dispatch({
+                        type: types.UPLOAD_USER_IMAGE_OK,
+                    });
+                })();              
+            });           
+        }).catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.UPLOAD_USER_IMAGE_NOK,
+                payload: err
+            });
+        });
+    }
+}
+
+export const removeUserImage = (userId: string) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.REMOVE_USER_IMAGE
+        })
+        Storage.remove(userId, {level: 'public'})
+        .then(() =>
+        dispatch({
+            type: types.REMOVE_USER_IMAGE_OK
+        })
+        ).catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.REMOVE_USER_IMAGE_NOK,
+                payload: err
+            });
+        })
+    }
+}

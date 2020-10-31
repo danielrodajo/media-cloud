@@ -106,6 +106,62 @@ export const STOP_SHARE_FILE_WITH_FRIEND = "STOP_SHARE_FILE_WITH_FRIEND";
 export const STOP_SHARE_FILE_WITH_FRIEND_OK = "STOP_SHARE_FILE_WITH_FRIEND_OK";
 export const STOP_SHARE_FILE_WITH_FRIEND_NOK = "STOP_SHARE_FILE_WITH_FRIEND_NOK"; 
 
+export const UPLOAD_USER_IMAGE = 'UPLOAD_USER_IMAGE';
+export const UPLOADING_USER_IMAGE = 'UPLOADING_USER_IMAGE';
+export const UPLOAD_USER_IMAGE_OK = 'UPLOAD_USER_IMAGE_OK';
+export const UPLOAD_USER_IMAGE_OK_WAIT = 'UPLOAD_USER_IMAGE_OK_WAIT';
+export const UPLOAD_USER_IMAGE_NOK = 'UPLOAD_USER_IMAGE_NOK';
+
+export const RECOVER_USER_IMAGE = 'RECOVER_USER_IMAGE';
+export const RECOVER_USER_IMAGE_OK = 'RECOVER_USER_IMAGE_OK';
+export const RECOVER_USER_IMAGE_NOK = 'RECOVER_USER_IMAGE_NOK';
+
+export const REMOVE_USER_IMAGE = 'REMOVE_USER_IMAGE';
+export const REMOVE_USER_IMAGE_OK = 'REMOVE_USER_IMAGE_OK';
+export const REMOVE_USER_IMAGE_NOK = 'REMOVE_USER_IMAGE_NOK';
+
+interface uploadUserImageAction {
+    type: typeof UPLOAD_USER_IMAGE
+}
+interface uploadingUserImageAction {
+    type: typeof UPLOADING_USER_IMAGE,
+    payload: any
+}
+interface uploadUserImageOkAction {
+    type: typeof UPLOAD_USER_IMAGE_OK
+}
+interface uploadUserImageOkWaitAction {
+    type: typeof UPLOAD_USER_IMAGE_OK_WAIT,
+    payload: any
+}
+interface uploadUserImageNokAction {
+    type: typeof UPLOAD_USER_IMAGE_NOK,
+    payload: any
+}
+
+interface recoverUserImageAction {
+    type: typeof RECOVER_USER_IMAGE
+}
+interface recoverUserImageOkAction {
+    type: typeof RECOVER_USER_IMAGE_OK,
+    payload: any
+}
+interface recoverUserImageNokAction {
+    type: typeof RECOVER_USER_IMAGE_NOK,
+    payload: any
+}
+
+interface removeUserImageAction {
+    type: typeof REMOVE_USER_IMAGE
+}
+interface removeUserImageOkAction {
+    type: typeof REMOVE_USER_IMAGE_OK
+}
+interface removeUserImageNokAction {
+    type: typeof REMOVE_USER_IMAGE_NOK,
+    payload: any
+}
+
 interface shareFileWithFriendAction {
     type: typeof SHARE_FILE_WITH_FRIEND
 }
@@ -421,4 +477,5 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             RecoverNotificationAction|RecoverNotificationNokAction|RecoverNotificationOkAction | SaveNotificationAction|SaveNotificationOkAction|SaveNotificationNokAction | DeleteNotificationAction|DeleteNotificationOkAction|DeleteNotificationNokAction |
                             RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction |
                             RecoverShareFilesAction|RecoverShareFilesOkAction|RecoverShareFilesNokAction | sharingFileAction|sharingFileOkAction|sharingFileNokAction | stopSharingFileAction|stopSharingFileOkAction|stopSharingFileNokAction |
-                            shareFileWithFriendAction|shareFileWithFriendOkAction|shareFileWithFriendNokAction | stopShareFileWithFriendAction|stopShareFileWithFriendOkAction|stopShareFileWithFriendNokAction | RecoverFilterFilesAction|RecoverFilterFilesOkAction|RecoverFilterFilesNokAction
+                            shareFileWithFriendAction|shareFileWithFriendOkAction|shareFileWithFriendNokAction | stopShareFileWithFriendAction|stopShareFileWithFriendOkAction|stopShareFileWithFriendNokAction | RecoverFilterFilesAction|RecoverFilterFilesOkAction|RecoverFilterFilesNokAction |
+                            uploadUserImageAction|uploadingUserImageAction|uploadUserImageOkWaitAction|uploadUserImageOkAction|uploadUserImageNokAction | removeUserImageAction|removeUserImageOkAction|removeUserImageNokAction | recoverUserImageAction|recoverUserImageOkAction|recoverUserImageNokAction

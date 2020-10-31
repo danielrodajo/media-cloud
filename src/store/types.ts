@@ -42,8 +42,20 @@ export interface AuthState {
     forgotPasswordSubmitError: Object | null;
 }
 
+export interface UserState {
+    userImage: File | null;
+    uploadError: Object | null;
+    removeError: Object | null;
+    recoverError: Object | null;
+    uploading: boolean;
+    uploadSuccess: boolean;
+    downloading: boolean;
+    loadedUserImage: number;
+    totalUserImage: number;
+}
+
 export interface FileState {
-    files: File[];
+    files: File[];  
     filterFiles: File[];
     recoverError: Object | null;
     recoverFilterError: Object | null;

@@ -125,6 +125,30 @@ export const recoverFilesByName= (userId: String, name: string) => {
 }
 
 
+export const recoverUserImage = (userId: string) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: types.RECOVER_USER_IMAGE
+        })
+        Storage.get(userId, {level: 'public'})
+        .then((result: any) => {
+            dispatch({
+                type: types.RECOVER_USER_IMAGE_OK,
+                payload: result
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: types.RECOVER_USER_IMAGE_NOK,
+                payload: err
+            });
+        });
+
+    }
+}
+
+
 
 //FUNCIONES PARA ACORTAR EL TAMAÑO DE LAS FUNCIONES SUPERIORES PRINCIPALES
 async function fillDataFiles(userId: String, files: any) {
@@ -157,3 +181,5 @@ async function fetchSharersFromFile(userId: String, file: any) {
     }
     return [];    
 }
+
+

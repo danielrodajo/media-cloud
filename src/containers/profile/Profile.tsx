@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle } from '@ionic/react';
+import React, { useState, useEffect } from 'react';
+import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { informationCircleOutline, moonOutline, settingsOutline } from 'ionicons/icons';
 import AboutUs from './aboutus/AboutUs';
 import './Profile.scss';
 import Settings from './settings/Settings';
 import SignOut from '../authentication/signout/SignOut';
+import { usePhotoGallery } from '../../hooks/usePhotoGallery';
+import * as actions from '../../store/actions/index';
+import Popover from '../add/PopoverUpload/PopoverUpload';
 
 interface props {
     darkMode: boolean,
@@ -18,7 +21,24 @@ interface props {
 }
 
 const Profile: React.FC<props> = props => {
+
+    const dispatch = useDispatch();
+
+    const uploadUserImage = (name: string, file: File) => dispatch(actions.uploadUserImage(name, file));
+    const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
+    const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
+    const success = useSelector((state: RootState) => state.UserReducer.uploadSuccess);
+    const downloading = useSelector((state: RootState) => state.UserReducer.downloading);
+
+    const loadedUserImage = useSelector((state: RootState) => state.UserReducer.loadedUserImage);
+    const totalUserImage = useSelector((state: RootState) => state.UserReducer.totalUserImage);
+
     const user = useSelector((state: RootState) => state.AuthReducer.user);
+
+    const userImage: any = useSelector((state: RootState) => state.UserReducer.userImage);
+    
+    //Agregamos Hook para tomar una foto y guardarla
+    const { photo, setPhoto, takePhoto } = usePhotoGallery();
 
     const toggleDarkModeHandler = (e: CustomEvent) => {
         props.setDarkMode(e.detail.checked);
@@ -26,16 +46,47 @@ const Profile: React.FC<props> = props => {
     const [ showModalAboutus, setShowModalAboutus ] = useState(false);
     const [ showModalSettings, setShowModalSettings ] = useState(false);
 
+    const submitPhoto = async() => {
+        //Subir el fichero a S3
+        uploadUserImage(user.identityId, photo as File);
+        //Vaciar campo despues de enviarlo
+        setPhoto(null);
+    }
+
+    useEffect(() => {
+        if (photo)
+            submitPhoto();
+    },[photo]);
+
     return (
         <React.Fragment>
+            {
+                (uploadError) ? <p>{uploadError}</p> : null
+            }       
+            <Popover 
+                loadedFile = {loadedUserImage}
+                totalFile = {totalUserImage}
+                uploading = {uploading}
+                success = {success}
+            />
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
             <IonPage>
                 <IonContent>
                     <Toolbar />
-                    <IonAvatar className="avatar">
-                        <IonImg src={userdefault} alt="user"/>
+                    <IonAvatar className="avatar center-spinner" onClick={takePhoto}>
+                        {
+                            downloading ? 
+                            <IonSpinner color="tertiary" className="default-spinner" />
+                            : <IonImg src={userImage ? userImage : userdefault} alt="user"/>
+                        }
+                        
                     </IonAvatar>
+                    {
+                        (photo) ?
+                        <IonText>Elegido</IonText>
+                        : null
+                    }
                     <IonLabel className="namelabel">{user.attributes.name}</IonLabel>
                     <IonButton className="botton">Editar perfil</IonButton>
                     <IonItemDivider/>

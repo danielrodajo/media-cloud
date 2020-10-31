@@ -1,12 +1,15 @@
 export {
     uploadFile,
     removeFile,
+    uploadUserImage,
+    removeUserImage,
 } from './FileManager';
 
 export {
     recoverFiles,
     recoverRecentFiles,
     recoverFilesByName,
+    recoverUserImage,
 } from './RecoverManager';
 
 export {

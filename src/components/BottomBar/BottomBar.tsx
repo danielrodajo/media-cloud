@@ -23,6 +23,7 @@ const BottomBar: React.FC<props> = props => {
     const dispatch = useDispatch();
 
     const user = useSelector((state: RootState) => state.AuthReducer.user);
+    const recoverUserImage = (userId: string) => dispatch(actions.recoverUserImage(userId)); 
 
     //Indicador de si mostrar ventana de añadir o no
     const [ showModal, setShowModal ] = useState(false);
@@ -74,9 +75,13 @@ const BottomBar: React.FC<props> = props => {
       switchDarkMode((darkMode ? "1" : "0"));
     }
 
-    //Descargamos notificaciones iniciales
-    getNotifications(user.identityId);
-
+    useEffect(() => {
+      //Descargamos notificaciones iniciales
+      getNotifications(user.identityId);
+      //Descargamos imagen de usuario
+      recoverUserImage(user.identityId);
+    }, [])
+    
     //Poner/Quitar modo oscuro
     useEffect(() => {
       document.body.classList.toggle("dark", darkMode === "1");
