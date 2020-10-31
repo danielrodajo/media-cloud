@@ -35,7 +35,7 @@ const uploadingUserImage = (state: UserState, payload: {
     });
 }
 
-const uploadUserImageSuccessWait = (state: UserState, payload: File) => {
+const uploadUserImageSuccessWait = (state: UserState, payload: any) => {
     return updateObject( state, {
         userImage: payload,
         uploadSuccess: true,

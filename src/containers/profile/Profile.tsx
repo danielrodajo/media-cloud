@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner } from '@ionic/react';
+import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner, IonAlert } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { informationCircleOutline, moonOutline, settingsOutline } from 'ionicons/icons';
+import { informationCircleOutline, moonOutline, settingsOutline, closeCircleOutline, closeCircleSharp } from 'ionicons/icons';
 import AboutUs from './aboutus/AboutUs';
 import './Profile.scss';
 import Settings from './settings/Settings';
@@ -24,7 +24,11 @@ const Profile: React.FC<props> = props => {
 
     const dispatch = useDispatch();
 
+    const [errorUserImage, setErrorUserImage] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+
     const uploadUserImage = (name: string, file: File) => dispatch(actions.uploadUserImage(name, file));
+    const removeUserImage = (name: string) => dispatch(actions.removeUserImage(name));
     const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
     const success = useSelector((state: RootState) => state.UserReducer.uploadSuccess);
@@ -54,12 +58,30 @@ const Profile: React.FC<props> = props => {
     }
 
     useEffect(() => {
-        if (photo)
+        console.log("CAMBIO")
+        if (photo) {
             submitPhoto();
-    },[photo]);
+        }
+        setErrorUserImage(false);
+    },[photo, userImage]);
 
     return (
         <React.Fragment>
+            <IonAlert
+                isOpen={showAlert}
+                onDidDismiss={() => setShowAlert(false)}
+                cssClass="my-custom-class"
+                header={"¿Quieres eliminar la foto de perfil?"}
+                buttons={["No",
+                    {
+                    text: "Si",
+                    role: "accept",
+                    handler: () => {
+                        removeUserImage(user.identityId)
+                    },
+                    },
+                ]}
+            />
             {
                 (uploadError) ? <p>{uploadError}</p> : null
             }       
@@ -74,13 +96,19 @@ const Profile: React.FC<props> = props => {
             <IonPage>
                 <IonContent>
                     <Toolbar />
-                    <IonAvatar className="avatar center-spinner" onClick={takePhoto}>
+                    <IonAvatar style={{"position": "relative"}} className="avatar center-spinner">
                         {
                             downloading ? 
                             <IonSpinner color="tertiary" className="default-spinner" />
-                            : <IonImg src={userImage ? userImage : userdefault} alt="user"/>
+                            : <IonImg onClick={takePhoto} src={!errorUserImage && userImage ? userImage : userdefault} alt="user" onIonError={() => {
+                                setErrorUserImage(true)
+                                console.log("ERROR")
+                            }}/>
                         }
-                        
+                        {
+                            !errorUserImage && userImage &&
+                            <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowAlert(true)}/>
+                        }
                     </IonAvatar>
                     {
                         (photo) ?

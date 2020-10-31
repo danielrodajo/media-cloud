@@ -14,13 +14,17 @@ export interface ShareFriendProps {
  
 const ShareFriend: React.SFC<ShareFriendProps> = props => {
 
+    const [errorUserImage, setErrorUserImage] = useState(false);
     const sharingFileToUser = useSelector((state: RootState) => state.ShareFileReducer.sharingToUser);
     const [checked, setChecked] = useState(props.shared);
 
     return (    
         <IonItem>       
             <IonAvatar slot="start">
-                <IonImg src={DefaultAvatar} />
+                <IonImg src={!errorUserImage ? props.friend.userImage : DefaultAvatar} alt="user" onIonError={() => {
+                    setErrorUserImage(true)
+                    console.log("ERROR")
+                }}/>
             </IonAvatar>
             <IonLabel>{props.friend.name}</IonLabel>   
             <IonToggle slot="end" name="sharedButton" checked={checked} disabled={sharingFileToUser} onIonChange={() => {

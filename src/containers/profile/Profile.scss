@@ -20,3 +20,11 @@
     border-radius: 20px;
     height: 20px;
 }
+
+.remove-user-image{
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    font-size: 1.3rem;
+    z-index: 20000000000000000000;
+}

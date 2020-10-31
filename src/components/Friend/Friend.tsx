@@ -14,6 +14,7 @@ const Friend: React.SFC<FriendProps> = props => {
 
     const [showAlert, setShowAlert] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [errorUserImage, setErrorUserImage] = useState(false);
 
     return (
         <React.Fragment>
@@ -33,10 +34,12 @@ const Friend: React.SFC<FriendProps> = props => {
                 ]}
             />
             <ModalSharedFilesFromFriend friend={props.friend} showModal={showModal} setShowModal={setShowModal}/>
-            <IonItem className="darkmode">       
-                <IonAvatar slot="start">
-                    <IonImg src={DefaultAvatar} />
-                </IonAvatar>
+            <IonItem className="darkmode">
+            <IonAvatar slot="start">
+                <IonImg src={!errorUserImage ? props.friend.userImage : DefaultAvatar} alt="user" onIonError={() => {
+                    setErrorUserImage(true)
+                }}/>
+            </IonAvatar>
                 <IonLabel>{props.friend.name}</IonLabel>     
                 <IonItem button lines="none" onClick={() => {setShowModal(true)}}>      
                     <IonIcon icon={shareSocial} color="success"/>
