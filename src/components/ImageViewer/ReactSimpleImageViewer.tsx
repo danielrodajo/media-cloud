@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, Content, Slide, Image, Close, Prev, Next } from './styles';
+import { Wrapper, Content, Slide, Image, Close } from './styles';
 
 interface IProps {
   src: string[];

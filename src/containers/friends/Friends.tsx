@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Friends.scss';
-import { IonPage, IonContent, IonSearchbar, IonToast, IonGrid, IonText } from '@ionic/react';
+import { IonPage, IonContent, IonSearchbar, IonToast, IonText } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
-import CustomSpinner from '../../components/CustomSpinner/CustomSpinner';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';

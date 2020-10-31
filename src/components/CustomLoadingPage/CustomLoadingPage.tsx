@@ -8,6 +8,14 @@ import searchFriendsAnimation from '../../Animations/searchfriendsanimation.json
 export interface CustomLoadingPageProps {
     type: LoadingType
 }
+
+
+export enum LoadingType {
+    Friends,
+    Files,
+    SearchFiles,
+    SearchFriends,
+}
  
 const CustomLoadingPage: React.SFC<CustomLoadingPageProps> = props => {
 
@@ -29,10 +37,3 @@ const CustomLoadingPage: React.SFC<CustomLoadingPageProps> = props => {
 }
  
 export default CustomLoadingPage;
-
-export enum LoadingType {
-    Friends,
-    Files,
-    SearchFiles,
-    SearchFriends,
-}

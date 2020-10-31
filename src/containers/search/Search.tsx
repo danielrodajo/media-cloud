@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { IonPage, IonContent } from '@ionic/react';
 import ToolbarSearch from '../../components/ToolBarSearch/ToolBarSearch';
-import CustomSpinner from '../../components/CustomSpinner/CustomSpinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import './Search.scss';
