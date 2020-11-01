@@ -12,7 +12,6 @@ export const getFriends = (userId: string) => {
         (API.graphql(graphqlOperation(Queries.getUser, {id: userId})) as Promise<any>)
         .then(async(result: any) => {
             const resultFriends = await recoverUserImageFriends(result.data.getUser.friends.items);
-            console.log(resultFriends);
             dispatch({
                 type: types.RECOVER_FRIENDS_OK,
                 payload: resultFriends
@@ -107,17 +106,16 @@ async function deleteCloudGrants(dispatch: any, userId: string, friendId: string
 
 async function recoverUserImageFriends(friends: any[]) {
     const result: any = [];
-    console.log("INCIO");
+    const keyList: any[] = await Storage.list('', {level: 'public'});
     for (var i=0; i<friends.length; i++) {
-        await Storage.get(friends[i].originalId, {level: 'public'})
-        .then((result2: any) => {
-            console.log("DURANTE");
-            console.log(friends[i].originalId)
-            console.log(result2);
-            result.push({...friends[i], userImage: result2})
-        })
+        if (keyList.find(item => item.key === friends[i].originalId)) {
+            await Storage.get(friends[i].originalId, {level: 'public'})
+            .then((result2: any) => {
+                result.push({...friends[i], userImage: result2})
+            })
+        } else {
+            result.push({...friends[i], userImage: null});
+        }
     }
-    console.log("FIN");
-    console.log(result);
     return result;
 }

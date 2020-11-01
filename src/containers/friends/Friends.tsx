@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import Friend from '../../components/Friend/Friend';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import * as Queries from '../../graphql/queries';
 import UserSearch from '../../components/UserSearch/UserSearch';
 import { NotificationType } from '../../API';
@@ -41,13 +41,14 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     const recoverFriendsError = useSelector((state: RootState) => state.FriendReducer.recoverFriendsError);
 
-    
+    const [keyList, setKeyList] = useState([]);
     const [searchText, setSearchText] = useState<String>();
     const [searching, setSearching] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [errorPetition, setErrorPetition] = useState(false);
     const [messageError, setMessageError] = useState("");
     const [users, setUsers] = useState([]);
+    const [isBusy, setBusy] = useState(false);
 
     //Funcion para eliminar un amigo
     const handleDeleteFriend = async(friendId: string, originalId: string) => {
@@ -55,11 +56,26 @@ const Friends: React.SFC<FriendsProps> = () => {
     }
 
     useEffect(() => {
-        if (searchText) 
+        if (searchText) {
+            setBusy(true);
             searchUsers(searchText.toLowerCase()!)
-        else
-            setUsers([])
+            Storage.list('', {level: 'public'})
+            .then(result => {
+                setKeyList(result);
+                setBusy(false);
+            })
+            .catch(err => {
+                console.log(err);
+                setBusy(false);
+            }); 
+        } else {
+            setUsers([]);
+            setKeyList([]);
+        }
     }, [searchText]);
+
+    useEffect(() => {
+    },[]);
 
     //Revisa si ya hay notificacion pendiente del usuario para ver si puede enviar otra mas
     const checkNotificationConditions = async(friendId: String) => {
@@ -116,8 +132,7 @@ const Friends: React.SFC<FriendsProps> = () => {
                     name: {
                         contains: name
                     }
-                },
-                limit: 10
+                }
             }));
             setSearching(false);
             setUsers(result.data.listUsers.items);
@@ -127,6 +142,27 @@ const Friends: React.SFC<FriendsProps> = () => {
           }
     }
 
+    let arrayLoading: any[] = [];
+
+    const setLoading = (value: boolean) => {
+        if (value)
+            arrayLoading.push(value);
+        else {
+            const index = arrayLoading.findIndex(function(element) {
+                return element
+            });
+            if (index !== -1)
+                arrayLoading[index] = false;
+        }
+    }
+
+    function areComponentsLoading(array: boolean[]) {
+        for (var i=0; i<array.length; i++) {
+            if (array[i]) return true;
+        }
+        return false;
+    }
+
     return (
         <IonPage>
             <CustomLoading showLoading={deleting}/>
@@ -134,7 +170,7 @@ const Friends: React.SFC<FriendsProps> = () => {
             <IonSearchbar className="custom-ion-search-bar-friends darkcolor" placeholder="Búsqueda de usuarios" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value!)}/>
             <IonContent className="my-custom-content">
             {
-                downloading || searching ?
+                downloading || searching || areComponentsLoading(arrayLoading) || isBusy ?
                 <CustomLoadingPage type={LoadingType.SearchFriends} />
                 : (
                     users.length === 0 
@@ -143,7 +179,7 @@ const Friends: React.SFC<FriendsProps> = () => {
                             {recoverFriendsError ? <span>{recoverFriendsError.message}</span> : null}
                             {
                                 friends.length > 0 ?
-                                friends.map((friend:any) => <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
+                                friends.map((friend:any) => <Friend setLoading={setLoading} handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
                                 :
                                 <div className="center-empty-friends-div">
                                     <CustomAnimation json={friendsAnimation} loop={false}/>
@@ -152,15 +188,16 @@ const Friends: React.SFC<FriendsProps> = () => {
                             }
                         </React.Fragment>
                     )
-                    : users!.filter((currentUser:any) => user.identityId !== currentUser.id).map((user:any) => {
+                    : users!.filter((currentUser:any) => user.identityId !== currentUser.id)
+                    .map((user:any) => {
                         let friend: any = null;
                         friends.forEach((currentFriend: any) => {
                             if (currentFriend.originalId === user.id) friend = currentFriend;
                         });
                         if (friend)
-                            return <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>;
+                            return <Friend setLoading={setLoading} handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
                         else
-                            return <UserSearch handleSendPetition={generateFriendPetition} key={user.id} friend={user}/>
+                            return <UserSearch hasUserImage={keyList.findIndex((item: any) => item.key === user.id) !== -1} setLoading={setLoading} handleSendPetition={generateFriendPetition} key={user.id} friend={user}/>
                     })
                 )     
             }

@@ -58,7 +58,6 @@ const Profile: React.FC<props> = props => {
     }
 
     useEffect(() => {
-        console.log("CAMBIO")
         if (photo) {
             submitPhoto();
         }

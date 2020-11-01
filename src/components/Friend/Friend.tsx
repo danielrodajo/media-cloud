@@ -7,14 +7,15 @@ import ModalSharedFilesFromFriend from '../ModalSharedFilesFromFriend/ModalShare
 
 export interface FriendProps {
     friend: any,
-    handleDeleteFriend: (idFriend: string, originalId: string) => void 
+    handleDeleteFriend: (idFriend: string, originalId: string) => void ,
+    setLoading: (value: boolean) => void
 }
  
 const Friend: React.SFC<FriendProps> = props => {
 
     const [showAlert, setShowAlert] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [errorUserImage, setErrorUserImage] = useState(false);
+    const [errorloading, setErrorLoading] = useState(false);
 
     return (
         <React.Fragment>
@@ -36,9 +37,10 @@ const Friend: React.SFC<FriendProps> = props => {
             <ModalSharedFilesFromFriend friend={props.friend} showModal={showModal} setShowModal={setShowModal}/>
             <IonItem className="darkmode">
             <IonAvatar slot="start">
-                <IonImg src={!errorUserImage ? props.friend.userImage : DefaultAvatar} alt="user" onIonError={() => {
-                    setErrorUserImage(true)
-                }}/>
+                <IonImg className={errorloading ? "hide-img" : "" } onIonImgDidLoad={() => props.setLoading(false)} 
+                onIonError={() => {props.setLoading(false); setErrorLoading(true)}} 
+                    src={props.friend.userImage ? props.friend.userImage : DefaultAvatar} />  
+                <IonImg className={errorloading ? "" : "hide-img"} src={DefaultAvatar}/>
             </IonAvatar>
                 <IonLabel>{props.friend.name}</IonLabel>     
                 <IonItem button lines="none" onClick={() => {setShowModal(true)}}>      
