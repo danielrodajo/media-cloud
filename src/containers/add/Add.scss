@@ -1,8 +1,14 @@
 .my-custom-modal-css .modal-wrapper {
-  height: 40%;
-  top: 60%;
+  height: 30%;
+  top: 70%;
   position: absolute; 
   display: block;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+body.dark .my-custom-modal-css .modal-wrapper ion-item {
+  --background: #262626;
 }
 
 .fullheight {
@@ -14,6 +20,22 @@
   align-items: center;
 }
 
+.custom-add-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.custom-add-title * {
+  font-size: 1.7rem;
+  margin: auto;
+}
+
 body.dark .my-custom-modal-css .modal-wrapper {
-  background-color: #161616;
+  background-color: #262626;
+}
+
+.custom-alert-folder-name .alert-wrapper {
+  max-width: 100% !important;
+  width: 75%;
 }
