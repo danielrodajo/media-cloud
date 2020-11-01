@@ -24,21 +24,20 @@ const Profile: React.FC<props> = props => {
 
     const dispatch = useDispatch();
 
-    const [errorUserImage, setErrorUserImage] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [errorloading, setErrorLoading] = useState(false);
 
     const uploadUserImage = (name: string, file: File) => dispatch(actions.uploadUserImage(name, file));
     const removeUserImage = (name: string) => dispatch(actions.removeUserImage(name));
+
     const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
     const success = useSelector((state: RootState) => state.UserReducer.uploadSuccess);
     const downloading = useSelector((state: RootState) => state.UserReducer.downloading);
-
     const loadedUserImage = useSelector((state: RootState) => state.UserReducer.loadedUserImage);
     const totalUserImage = useSelector((state: RootState) => state.UserReducer.totalUserImage);
-
     const user = useSelector((state: RootState) => state.AuthReducer.user);
-
     const userImage: any = useSelector((state: RootState) => state.UserReducer.userImage);
     
     //Agregamos Hook para tomar una foto y guardarla
@@ -64,7 +63,6 @@ const Profile: React.FC<props> = props => {
                 submitPhoto();
             }
         }
-        setErrorUserImage(false);
         return () => {isMounted = false}
     },[photo, userImage]);
 
@@ -103,14 +101,19 @@ const Profile: React.FC<props> = props => {
                         {
                             downloading ? 
                             <IonSpinner color="tertiary" className="default-spinner" />
-                            : <IonImg onClick={takePhoto} src={!errorUserImage && userImage ? userImage : userdefault} alt="user" onIonError={() => {
-                                setErrorUserImage(true);
-                            }}/>
-                        }
-                        {
-                            !errorUserImage && userImage &&
-                            <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowAlert(true)}/>
-                        }
+                            : 
+                            <React.Fragment>
+                                <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
+                                <IonImg onClick={takePhoto} className={loading || errorloading ? "hide-img" : "" } onIonImgDidLoad={() => setLoading(false)} 
+                                onIonError={() => {setLoading(false); setErrorLoading(true)}} src={userImage} />  
+                                <IonImg onClick={takePhoto} className={errorloading ? "" : "hide-img"} src={userdefault}/>
+                                {
+                                    !loading && userImage &&
+                                    <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowAlert(true)}/>
+                                }
+                            </React.Fragment>
+                            }
+                       
                     </IonAvatar>
                     {
                         (photo) ?

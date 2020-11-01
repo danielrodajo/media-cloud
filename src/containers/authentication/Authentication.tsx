@@ -12,7 +12,7 @@ const Authentication: React.FC = () => {
 
     useEffect(() => {
         document.body.classList.toggle("dark", false);
-    });
+    }, []);
 
     const status = useSelector((state: RootState) => state.AuthReducer.status);
 
