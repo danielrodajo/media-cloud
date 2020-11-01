@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ModalNotifications.scss';
 import { IonModal, IonContent, IonHeader, IonToolbar, IonIcon, IonItem, IonText } from '@ionic/react';
 import { arrowDown } from 'ionicons/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import Notification from './Notification/Notification';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import * as Mutations from '../../graphql/mutations';
 import * as actions from "../../store/actions/index";
 import FriendPetition from './FriendPetition/FriendPetition';
@@ -21,6 +21,8 @@ export interface Props {
 }
  
 const ModalNotifications: React.SFC<Props> = props => {
+
+    const [keyList, setKeyList] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -84,6 +86,18 @@ const ModalNotifications: React.SFC<Props> = props => {
         });
     }
 
+    useEffect(() => {
+        if (notifications.length > 0) {
+            Storage.list('', {level: 'public'})
+            .then(result => {
+                setKeyList(result);
+            })
+            .catch(err => {
+                console.log(err);
+            }); 
+        }
+    }, [notifications]);
+
     return (
         <IonModal isOpen={props.showModal} onDidDismiss={e => props.setShowModal(false)}>
             {uploading ? <CustomLoading showLoading={uploading}/> : null}
@@ -103,9 +117,9 @@ const ModalNotifications: React.SFC<Props> = props => {
                     notifications.map((notification: any) => {
                     switch (notification.type) {
                         case NotificationType.SENDPETITION: 
-                            return <FriendPetition key={notification.id} notification={notification} handleCheckPetition={handleCheckPetition} handleDenyPetition={handleDenyNotification}/>;
+                            return <FriendPetition hasUserImage={true} key={notification.id} notification={notification} handleCheckPetition={handleCheckPetition} handleDenyPetition={handleDenyNotification}/>;
                         default:
-                            return <Notification key={notification.id} notification={notification} handleCloseNotification={handleCloseNotification}/>
+                            return <Notification hasUserImage={true} key={notification.id} notification={notification} handleCloseNotification={handleCloseNotification}/>
                     }             
                 }) 
                 : 

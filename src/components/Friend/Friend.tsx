@@ -39,8 +39,8 @@ const Friend: React.FC<FriendProps> = props => {
                 <IonItem button lines="none" onClick={() => {setShowModal(true)}}>      
                     <IonIcon icon={shareSocial} color="success"/>
                 </IonItem>
-                <IonItem button lines="none" className="custom-notification-close" onClick={() => setShowAlert(true)}>
-                    <IonIcon icon={personRemove} />
+                <IonItem button lines="none" onClick={() => setShowAlert(true)}>
+                    <IonIcon icon={personRemove} color="danger"/>
                 </IonItem>
             </IonItem>
         </React.Fragment>
