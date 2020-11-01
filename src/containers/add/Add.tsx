@@ -1,14 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonIcon, IonInput, IonToast } from '@ionic/react';
+import React, { useRef, useState, ChangeEvent, useEffect } from 'react';
+import { IonItem, IonModal, IonGrid, IonRow, IonCol, IonToast, IonText, IonAlert } from '@ionic/react';
 import * as actions from '../../store/actions/index';
 import { RootState } from '../../store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { cloudUploadOutline, folderOutline, cameraOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
+import { cloudUploadOutline, folderOutline, cameraOutline } from 'ionicons/icons';
 import './Add.scss';
 import Popover from './PopoverUpload/PopoverUpload';
 import UploadButton from '../../components/UploadButton/UploadButton';
 import { usePhotoGallery } from '../../hooks/usePhotoGallery';
-import DisplaySelectFile from '../../components/DisplaySelectFile/DisplaySelectFile';
 import { Storage } from 'aws-amplify';
 
 
@@ -23,13 +22,10 @@ const Add: React.FC<props> = props => {
 
     const [showToast, setShowToast] = useState(false);
     const [showToast2, setShowToast2] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
     //Agregamos Hook para tomar una foto y guardarla
     const { photo, setPhoto, takePhoto } = usePhotoGallery();
-    
-    const [ file, setFile ] = useState<File | null>();
-    const [ creatingFolder,setCreatingFolder ] = useState(false);
-    const [ folderName, setFolderName ] = useState("");
 
     const createFolder = (name: string) => dispatch(actions.createFolder(name));
 
@@ -61,19 +57,17 @@ const Add: React.FC<props> = props => {
     }
 
     //Prepara la carpeta para crearla, ajustando la ruta completa y reseteando los valores 
-    const submitFolder = async(event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
-        event.preventDefault();
+    const submitFolder = async(folderName: string) => {
         if (await checkIfFolderExists(folderName)) {
-            setShowToast(true);
+            setShowToast2(true);
             return;
         }
         createFolder(currentPath+"/"+folderName);
-        setFolderName("");
-        setCreatingFolder(false);
+        setShowAlert(false);
         props.setShowModal(false);
     }
 
-    const submitFile = async(event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
+    const submitFile = async(event: ChangeEvent<HTMLInputElement>, file:any) => {
         event.preventDefault();
         if (await checkIfFileExists(file)) {
             setShowToast(true);
@@ -82,19 +76,14 @@ const Add: React.FC<props> = props => {
         const name = (file as File).name;   
         //Subir el fichero a S3
         uploadFile(((currentPath === "") ? name : currentPath+"/"+name), file as File);
-        //Vaciar campo despues de enviarlo
-        setFile(null);
         props.setShowModal(false);
     }
 
-    const submitPhoto = async(event: React.MouseEvent<HTMLIonItemElement, MouseEvent>) => {
-        event.preventDefault(); 
-
+    const submitPhoto = async() => {
         if (await checkIfFileExists(photo)) {
             setShowToast(true);
             return;
         }
-
         const name = (photo as File).name;  
         //Subir el fichero a S3
         uploadFile(((currentPath === "") ? name : currentPath+"/"+name), photo as File);
@@ -103,9 +92,34 @@ const Add: React.FC<props> = props => {
         props.setShowModal(false);
     }
 
+    useEffect(() => {
+        if (photo) submitPhoto();
+    }, [photo]);
+
     return (
-        <React.Fragment>   
-             <IonToast
+        <React.Fragment>  
+            <IonAlert
+                isOpen={showAlert}
+                onDidDismiss={() => setShowAlert(false)}
+                cssClass="my-custom-class"
+                header={"Nueva carpeta"}
+                inputs={[
+                    {
+                      name: 'folderName',
+                      type: 'text',
+                      placeholder: 'Carpeta sin título',
+                    }]}
+                buttons={["Cancelar",
+                    {
+                    text: "Crear",
+                    role: "accept",
+                    handler: (alertData) => {
+                        submitFolder(alertData.folderName);
+                    },
+                    },
+                ]}
+            />
+            <IonToast
                 isOpen={showToast}
                 onDidDismiss={() => setShowToast(false)}
                 message="Ya existe un fichero con ese nombre en esta carpeta."
@@ -130,7 +144,7 @@ const Add: React.FC<props> = props => {
                 type="file"
                 id="fileinput"
                 onChange = {(event) => {
-                    setFile((event.nativeEvent.target as HTMLInputElement).files?.item(0));
+                    submitFile(event, (event.nativeEvent.target as HTMLInputElement).files?.item(0));
                 }}
             />
 
@@ -138,61 +152,31 @@ const Add: React.FC<props> = props => {
             {
                 (uploadError) ? <p>{uploadError}</p> : null
             }
-            <IonGrid className="ion-no-margin ion-text-center">
-                <IonRow>
-                    <IonCol>
-                        <UploadButton icon={cameraOutline} onClick={takePhoto}>
-                            <br/>Subir<br/>Foto
-                        </UploadButton>
-                    </IonCol>
-                    <IonCol>
-                        <UploadButton icon={folderOutline} onClick={() => {setCreatingFolder(true)}}>
-                            <br/>Crear<br/>Carpeta
-                        </UploadButton>
-                    </IonCol>
-                    <IonCol>
-                        <UploadButton icon={cloudUploadOutline} onClick={() => {
-                            // @ts-ignore
-                            fileInput?.current?.click();
-                            }}>
-                            <br/>Subir<br/>Fichero
-                        </UploadButton>
-                    </IonCol>
-                </IonRow>
-            </IonGrid>
-            {
-                //En caso de seleccionar fichero, mostrar fila de confirmacion
-                (file) ?
-                <DisplaySelectFile file={file} submit={submitFile} reset={() => setFile(null)}/>        
-                : null
-            }
-            {
-                //En caso de hacer una foto, mostrar fila de confirmacion
-                (photo) ?
-                <DisplaySelectFile file={photo} submit={submitPhoto} reset={() => setPhoto(null)}/>
-                : null
-            }
-            {
-               (creatingFolder) ?             
-                <IonGrid className="ion-no-margin ion-margin-start">
+                <IonItem lines="none" style={{"width": "100%"}} className="custom-add-title">
+                    <IonText>Crear</IonText>
+                </IonItem>
+                <IonGrid className="ion-no-margin ion-text-center">
                     <IonRow>
-                        <IonCol size="6">
-                            <IonItem lines="none">
-                                <IonInput value={folderName} placeholder="Nombre carpeta" onIonChange={e => setFolderName(e.detail.value!)}></IonInput>
-                            </IonItem>       
+                        <IonCol>
+                            <UploadButton icon={cameraOutline} onClick={takePhoto}>
+                                <br/>Foto
+                            </UploadButton>
                         </IonCol>
                         <IonCol>
-                            <IonItem button onClick={submitFolder} className="ion-float-left" lines="none">
-                                <IonIcon icon={checkmarkOutline} />
-                            </IonItem>
-                            <IonItem button onClick={() => setCreatingFolder(false)} className="ion-float-left" lines="none">
-                                <IonIcon icon={closeOutline} />
-                            </IonItem>
+                            <UploadButton icon={folderOutline} onClick={() => {setShowAlert(true)}}>
+                                <br/>Carpeta
+                            </UploadButton>
+                        </IonCol>
+                        <IonCol>
+                            <UploadButton icon={cloudUploadOutline} onClick={() => {
+                                // @ts-ignore
+                                fileInput?.current?.click();
+                                }}>
+                                <br/>Fichero
+                            </UploadButton>
                         </IonCol>
                     </IonRow>
-                </IonGrid>     
-               : null
-            }
+                </IonGrid>
             </IonModal>
         </React.Fragment>
     );
