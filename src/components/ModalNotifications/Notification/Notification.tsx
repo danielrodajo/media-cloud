@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Notification.scss'
 import { IonItem, IonText, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/react';
-import { closeCircleOutline, closeSharp } from 'ionicons/icons';
+import { closeSharp } from 'ionicons/icons';
 import { NotificationType } from '../../../API';
 import UserImageAvatar from '../../../UserImageAvatar/UserImageAvatar';
 import { Storage } from 'aws-amplify';
@@ -71,7 +71,7 @@ const Notification: React.FC<NotificationProps> = props => {
                 </IonRow>
             </IonGrid>
             <IonItem button lines="none" className="custom-close" onClick={() => props.handleCloseNotification(props.notification)}>
-                <IonIcon icon={closeSharp} />
+                <IonIcon color="primary" icon={closeSharp} />
             </IonItem>    
         </IonItem>
     );

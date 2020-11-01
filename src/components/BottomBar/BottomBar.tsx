@@ -13,6 +13,7 @@ import * as actions from "../../store/actions/index";
 import * as Subscriptions from '../../graphql/subscriptions';
 import { Observable } from 'redux';
 import Friends from '../../containers/friends/Friends';
+import './BottomBar.scss';
 
 interface props {
   default: string;
