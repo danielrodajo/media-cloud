@@ -50,7 +50,7 @@ const Profile: React.FC<props> = props => {
     const [ showModalAboutus, setShowModalAboutus ] = useState(false);
     const [ showModalSettings, setShowModalSettings ] = useState(false);
 
-    const submitPhoto = async() => {
+    const submitPhoto = () => {
         //Subir el fichero a S3
         uploadUserImage(user.identityId, photo as File);
         //Vaciar campo despues de enviarlo
@@ -58,10 +58,14 @@ const Profile: React.FC<props> = props => {
     }
 
     useEffect(() => {
-        if (photo) {
-            submitPhoto();
+        let isMounted = true;
+        if (isMounted) {
+            if (photo) {
+                submitPhoto();
+            }
         }
         setErrorUserImage(false);
+        return () => {isMounted = false}
     },[photo, userImage]);
 
     return (

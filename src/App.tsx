@@ -43,7 +43,10 @@ const App: React.FC<{
   const { onTryAutoSignup } = props;
   
   useEffect(() => {
-    onTryAutoSignup();
+    let isMounted = true;
+    if (isMounted)
+      onTryAutoSignup();
+    return () => {isMounted = false}
   }, [onTryAutoSignup]);
 
   const loadingAuth = useSelector((state: RootState) => state.AuthReducer.loading);

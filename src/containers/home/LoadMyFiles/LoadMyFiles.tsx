@@ -74,7 +74,10 @@ const LoadMyFiles:React.FC<props> = props => {
     //);
 
     useEffect(() => {
+        let isMounted = true;
+        if (isMounted)
           onGetFiles(currentPath);
+        return () => {isMounted = false}
     }, [currentPath, onGetFiles]);
 
     const handleRemoveFolder = (path: string) => {

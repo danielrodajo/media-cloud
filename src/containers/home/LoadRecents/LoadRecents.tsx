@@ -38,7 +38,10 @@ const LoadRecents: React.FC<props> = props => {
     );
 
     useEffect(() => {
-        onGetFiles(props.user.identityId, props.maxFiles);
+        let isMounted = true;
+        if (isMounted)
+          onGetFiles(props.user.identityId, props.maxFiles);
+        return () => {isMounted = false};
     }, [props.maxFiles, onGetFiles, props.user.identityId]);
 
 
