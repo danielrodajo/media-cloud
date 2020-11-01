@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './ShareFriend';
-import { IonItem, IonAvatar, IonImg, IonLabel, IonToggle } from '@ionic/react';
-import DefaultAvatar from '../../../default-images/default-avatar.png';
+import { IonItem, IonLabel, IonToggle } from '@ionic/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
+import UserImageAvatar from '../../../UserImageAvatar/UserImageAvatar';
 
 export interface ShareFriendProps {
     friend: any,
@@ -14,18 +14,12 @@ export interface ShareFriendProps {
  
 const ShareFriend: React.SFC<ShareFriendProps> = props => {
 
-    const [errorUserImage, setErrorUserImage] = useState(false);
     const sharingFileToUser = useSelector((state: RootState) => state.ShareFileReducer.sharingToUser);
     const [checked, setChecked] = useState(props.shared);
 
     return (    
         <IonItem>       
-            <IonAvatar slot="start">
-                <IonImg src={!errorUserImage ? props.friend.userImage : DefaultAvatar} alt="user" onIonError={() => {
-                    setErrorUserImage(true)
-                    console.log("ERROR")
-                }}/>
-            </IonAvatar>
+            <UserImageAvatar urlImage={props.friend.userImage} />
             <IonLabel>{props.friend.name}</IonLabel>   
             <IonToggle slot="end" name="sharedButton" checked={checked} disabled={sharingFileToUser} onIonChange={() => {
                     setChecked(!checked);

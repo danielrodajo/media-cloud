@@ -106,6 +106,7 @@ export const generateNotification = async (userId: String, friendId: String, typ
         friendRequestToId: friendId, 
         friendRequestFromId: userId,
         type: type,
+        createdOn: new Date().toISOString(),
     }
     await (API.graphql(graphqlOperation(Mutations.createFriendRequest, {input: friendRequestDetails})) as Promise<any>)
     .then(e => {

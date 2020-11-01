@@ -24,6 +24,7 @@ export const getUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -31,6 +32,7 @@ export const getUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -128,6 +130,7 @@ export const getFriendRequest = /* GraphQL */ `
     getFriendRequest(id: $id) {
       id
       type
+      createdOn
       to {
         id
         name
@@ -179,6 +182,7 @@ export const listFriendRequests = /* GraphQL */ `
       items {
         id
         type
+        createdOn
         to {
           id
           name
