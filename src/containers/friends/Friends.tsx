@@ -141,26 +141,7 @@ const Friends: React.SFC<FriendsProps> = () => {
           }
     }
 
-    let arrayLoading: any[] = [];
 
-    const setLoading = (value: boolean) => {
-        if (value)
-            arrayLoading.push(value);
-        else {
-            const index = arrayLoading.findIndex(function(element) {
-                return element
-            });
-            if (index !== -1)
-                arrayLoading[index] = false;
-        }
-    }
-
-    function areComponentsLoading(array: boolean[]) {
-        for (var i=0; i<array.length; i++) {
-            if (array[i]) return true;
-        }
-        return false;
-    }
 
     return (
         <IonPage>
@@ -169,7 +150,7 @@ const Friends: React.SFC<FriendsProps> = () => {
             <IonSearchbar className="custom-ion-search-bar-friends darkcolor" placeholder="Búsqueda de usuarios" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value!)}/>
             <IonContent className="my-custom-content">
             {
-                downloading || searching || areComponentsLoading(arrayLoading) || isBusy ?
+                downloading || searching || isBusy ?
                 <CustomLoadingPage type={LoadingType.SearchFriends} />
                 : (
                     users.length === 0 
@@ -178,7 +159,9 @@ const Friends: React.SFC<FriendsProps> = () => {
                             {recoverFriendsError ? <span>{recoverFriendsError.message}</span> : null}
                             {
                                 friends.length > 0 ?
-                                friends.map((friend:any) => <Friend setLoading={setLoading} handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>)
+                                friends.map((friend:any) => {
+                                    return <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
+                                })
                                 :
                                 <div className="center-empty-friends-div">
                                     <CustomAnimation json={friendsAnimation} loop={false}/>
@@ -194,9 +177,9 @@ const Friends: React.SFC<FriendsProps> = () => {
                             if (currentFriend.originalId === user.id) friend = currentFriend;
                         });
                         if (friend)
-                            return <Friend setLoading={setLoading} handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
+                            return <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
                         else
-                            return <UserSearch hasUserImage={keyList.findIndex((item: any) => item.key === user.id) !== -1} setLoading={setLoading} handleSendPetition={generateFriendPetition} key={user.id} friend={user}/>
+                            return <UserSearch hasUserImage={keyList.findIndex((item: any) => item.key === user.id) !== -1} handleSendPetition={generateFriendPetition} key={user.id} friend={user}/>
                     })
                 )     
             }

@@ -24,6 +24,7 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -31,6 +32,7 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -67,6 +69,7 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -74,6 +77,7 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -110,6 +114,7 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -117,6 +122,7 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           type
+          createdOn
         }
         nextToken
       }
@@ -220,6 +226,7 @@ export const onCreateFriendRequest = /* GraphQL */ `
     onCreateFriendRequest {
       id
       type
+      createdOn
       to {
         id
         name
@@ -266,6 +273,7 @@ export const onUpdateFriendRequest = /* GraphQL */ `
     onUpdateFriendRequest {
       id
       type
+      createdOn
       to {
         id
         name
@@ -312,6 +320,7 @@ export const onDeleteFriendRequest = /* GraphQL */ `
     onDeleteFriendRequest {
       id
       type
+      createdOn
       to {
         id
         name

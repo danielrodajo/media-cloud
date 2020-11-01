@@ -24,6 +24,7 @@ type FriendRequest
 {
   id: ID!
   type: NotificationType!
+  createdOn: AWSDateTime!
   to: User! @connection(name:"UserToPetition")
   from: User! @connection(name:"UserFromPetition")
 }

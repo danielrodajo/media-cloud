@@ -106,6 +106,7 @@ export const generateNotification = async (userId: String, friendId: String, typ
         friendRequestToId: friendId, 
         friendRequestFromId: userId,
         type: type,
+        createdOn: new Date().toISOString(),
     }
     await (API.graphql(graphqlOperation(Mutations.createFriendRequest, {input: friendRequestDetails})) as Promise<any>)
     .then(e => {
@@ -113,4 +114,13 @@ export const generateNotification = async (userId: String, friendId: String, typ
     .catch(err => {
         console.log(err)
     })
+}
+
+export function parseDate(awsDate: string) {
+    var meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+    let date: string = awsDate.substring(0, 10);
+    let day = (date.substr(8, 2)[0] === "0" ? date.substr(9, 1) : date.substr(8, 2));
+    let month = meses[parseInt(date.substr(5, 2))-1];
+
+    return (day+" de "+month+" de "+date.substr(0, 4));
 }
