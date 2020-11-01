@@ -75,12 +75,11 @@ const BottomBar: React.FC<props> = props => {
       switchDarkMode((darkMode ? "1" : "0"));
     }
 
-    useEffect(() => {
-      //Descargamos notificaciones iniciales
-      getNotifications(user.identityId);
-      //Descargamos imagen de usuario
-      recoverUserImage(user.identityId);
-    }, [])
+    //Descargamos notificaciones iniciales
+    getNotifications(user.identityId);
+    //Descargamos imagen de usuario
+    recoverUserImage(user.identityId);
+
     
     //Poner/Quitar modo oscuro
     useEffect(() => {

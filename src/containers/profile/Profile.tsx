@@ -5,7 +5,7 @@ import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { informationCircleOutline, moonOutline, settingsOutline, closeCircleOutline, closeCircleSharp } from 'ionicons/icons';
+import { informationCircleOutline, moonOutline, settingsOutline, closeCircleSharp } from 'ionicons/icons';
 import AboutUs from './aboutus/AboutUs';
 import './Profile.scss';
 import Settings from './settings/Settings';
@@ -100,8 +100,7 @@ const Profile: React.FC<props> = props => {
                             downloading ? 
                             <IonSpinner color="tertiary" className="default-spinner" />
                             : <IonImg onClick={takePhoto} src={!errorUserImage && userImage ? userImage : userdefault} alt="user" onIonError={() => {
-                                setErrorUserImage(true)
-                                console.log("ERROR")
+                                setErrorUserImage(true);
                             }}/>
                         }
                         {

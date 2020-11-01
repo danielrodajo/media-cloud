@@ -36,7 +36,7 @@ export const updateObject = (oldObject: any, updatedProperties: any) => {
 //Devuelve una imagen por defecto en caso de no ser una imagen el propio fichero
 export const formatDisplayImage = (name: string, source: string) => {
     const extension = name.split('.').pop(); 
-    switch (extension) {
+    switch (extension?.toLowerCase()) {
         case "avi":
             return avi;
         case "cad":

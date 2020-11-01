@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { IonAvatar, IonLabel, IonItem, IonImg, IonIcon, IonAlert, IonSpinner } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonAvatar, IonLabel, IonItem, IonImg, IonIcon, IonAlert } from '@ionic/react';
 import DefaultAvatar from '../../default-images/default-avatar.png';
 import { personAddOutline } from 'ionicons/icons';
 import { Storage } from 'aws-amplify';
@@ -17,7 +17,7 @@ const UserSearch: React.FC<props> = props => {
     const [userImage, setUserImage] = useState(null);
     const [errorloading, setErrorLoading] = useState(false);
 
-    useEffect(() => {
+    const downloadUserImage = () => {
         props.setLoading(true);
         if (props.hasUserImage) {
             Storage.get(props.friend.id, {level: 'public'})
@@ -26,7 +26,9 @@ const UserSearch: React.FC<props> = props => {
             })
             .catch(err => console.log(err))
         } 
-    }, []);
+    };
+
+    downloadUserImage();
 
     return (
         <React.Fragment>

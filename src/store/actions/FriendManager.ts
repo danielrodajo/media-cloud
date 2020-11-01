@@ -107,7 +107,7 @@ async function deleteCloudGrants(dispatch: any, userId: string, friendId: string
 async function recoverUserImageFriends(friends: any[]) {
     const result: any = [];
     const keyList: any[] = await Storage.list('', {level: 'public'});
-    for (var i=0; i<friends.length; i++) {
+    for (let i=0; i<friends.length; i++) {
         if (keyList.find(item => item.key === friends[i].originalId)) {
             await Storage.get(friends[i].originalId, {level: 'public'})
             .then((result2: any) => {
