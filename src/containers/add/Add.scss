@@ -7,6 +7,10 @@
   border-top-right-radius: 10px;
 }
 
+body.dark .my-custom-modal-css .modal-wrapper ion-item {
+  --background: #262626;
+}
+
 .fullheight {
   height: 100%;
 }
@@ -28,5 +32,10 @@
 }
 
 body.dark .my-custom-modal-css .modal-wrapper {
-  background-color: #161616;
+  background-color: #262626;
+}
+
+.custom-alert-folder-name .alert-wrapper {
+  max-width: 100% !important;
+  width: 75%;
 }

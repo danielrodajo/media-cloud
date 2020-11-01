@@ -101,7 +101,7 @@ const Add: React.FC<props> = props => {
             <IonAlert
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}
-                cssClass="my-custom-class"
+                cssClass="custom-alert-folder-name"
                 header={"Nueva carpeta"}
                 inputs={[
                     {
@@ -152,7 +152,7 @@ const Add: React.FC<props> = props => {
             {
                 (uploadError) ? <p>{uploadError}</p> : null
             }
-                <IonItem lines="none" style={{"width": "100%"}} className="custom-add-title">
+                <IonItem style={{"width": "100%"}} className="ion-no-padding custom-add-title">
                     <IonText>Crear</IonText>
                 </IonItem>
                 <IonGrid className="ion-no-margin ion-text-center">
