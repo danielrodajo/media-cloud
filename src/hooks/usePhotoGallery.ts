@@ -18,8 +18,10 @@ export function usePhotoGallery() {
         //Configuramos la camara para que devuelva una URI, desde la camara con la maxima calidad 
         const cameraPhoto = await getPhoto({
             resultType: CameraResultType.Uri,
-            source: CameraSource.Camera,
+            source: CameraSource.Prompt,
             quality: 100,
+            promptLabelPhoto: "Buscar en la galería",
+            promptLabelPicture: "Usar cámara",
         });
         //Damos nombre
         const fileName = new Date().getTime() + '.jpeg';

@@ -1,5 +1,5 @@
 import * as types from './ActionTypes';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import * as Queries from '../../graphql/queries';
 import * as Mutations from '../../graphql/mutations';
 import { File } from '../types';
@@ -10,10 +10,11 @@ export const getFriends = (userId: string) => {
             type: types.RECOVER_FRIENDS
         });
         (API.graphql(graphqlOperation(Queries.getUser, {id: userId})) as Promise<any>)
-        .then((result: any) => {
+        .then(async(result: any) => {
+            const resultFriends = await recoverUserImageFriends(result.data.getUser.friends.items);
             dispatch({
                 type: types.RECOVER_FRIENDS_OK,
-                payload: result.data.getUser.friends.items
+                payload: resultFriends
             });
         }).catch((err: any) => dispatch({
             type: types.RECOVER_FRIENDS_NOK,
@@ -101,4 +102,20 @@ async function deleteCloudGrants(dispatch: any, userId: string, friendId: string
         type: types.DELETE_FRIEND_NOK,
         payload: err
     }));
+}
+
+async function recoverUserImageFriends(friends: any[]) {
+    const result: any = [];
+    const keyList: any[] = await Storage.list('', {level: 'public'});
+    for (var i=0; i<friends.length; i++) {
+        if (keyList.find(item => item.key === friends[i].originalId)) {
+            await Storage.get(friends[i].originalId, {level: 'public'})
+            .then((result2: any) => {
+                result.push({...friends[i], userImage: result2})
+            })
+        } else {
+            result.push({...friends[i], userImage: null});
+        }
+    }
+    return result;
 }

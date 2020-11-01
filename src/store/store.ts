@@ -6,8 +6,9 @@ import FolderReducer from './reducers/FolderReducer';
 import NotificationReducer from './reducers/NotificationReducer';
 import FriendReducer from './reducers/FriendReducer';
 import ShareFileReducer from './reducers/ShareFileReducer';
+import UserReducer from './reducers/UserReducer';
 import * as types from './actions/ActionTypes';
-import { FileState, AuthState, FolderState, NotificationState, FriendsState, ShareFileState } from './types';
+import { FileState, AuthState, FolderState, NotificationState, FriendsState, ShareFileState, UserState } from './types';
 
 declare global {
     interface Window {
@@ -22,9 +23,12 @@ const appReducer = combineReducers({
     NotificationReducer: NotificationReducer,
     FriendReducer: FriendReducer,
     ShareFileReducer: ShareFileReducer,
+    UserReducer: UserReducer
 });
 
-const rootReducer = (state: CombinedState<{ FileReducer: FileState; AuthReducer: AuthState; FolderReducer: FolderState; NotificationReducer: NotificationState; FriendReducer: FriendsState; ShareFileReducer: ShareFileState }> | undefined, action: AnyAction) => {
+const rootReducer = (state: CombinedState<{ FileReducer: FileState; AuthReducer: AuthState; FolderReducer: FolderState; 
+    NotificationReducer: NotificationState; FriendReducer: FriendsState; ShareFileReducer: 
+    ShareFileState; UserReducer: UserState }> | undefined, action: AnyAction) => {
     if (action.type === types.AUTH_SIGNOUT) {
         state = undefined;
     }
