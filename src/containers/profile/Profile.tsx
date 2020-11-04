@@ -13,6 +13,7 @@ import SignOut from '../authentication/signout/SignOut';
 import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 import * as actions from '../../store/actions/index';
 import Popover from '../add/PopoverUpload/PopoverUpload';
+import EditProfile from './editprofile/EditProfile';
 
 interface props {
     darkMode: boolean,
@@ -48,6 +49,7 @@ const Profile: React.FC<props> = props => {
     };
     const [ showModalAboutus, setShowModalAboutus ] = useState(false);
     const [ showModalSettings, setShowModalSettings ] = useState(false);
+    const [ showModalEditProfile, setShowModalEditProfile] = useState(false);
 
     const submitPhoto = () => {
         //Subir el fichero a S3
@@ -94,6 +96,7 @@ const Profile: React.FC<props> = props => {
             />
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
+            <EditProfile showModal={showModalEditProfile} setShowModal={setShowModalEditProfile}/>
             <IonPage>
                 <IonContent>
                     <Toolbar />
@@ -121,7 +124,7 @@ const Profile: React.FC<props> = props => {
                         : null
                     }
                     <IonLabel className="namelabel">{user.attributes.name}</IonLabel>
-                    <IonButton className="botton">Editar perfil</IonButton>
+                    <IonButton className="botton" onClick={() => setShowModalEditProfile(true)}>Editar perfil</IonButton>
                     <IonItemDivider/>
                     <IonItem className="darkmode">
                         <IonIcon slot="start" icon={moonOutline} />

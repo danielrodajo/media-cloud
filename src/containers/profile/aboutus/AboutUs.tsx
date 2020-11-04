@@ -10,9 +10,7 @@ interface props {
     setShowModal: (value: boolean) => void
 }
 
-const Info: React.FC<props> = props => {
-    
-    
+const Info: React.FC<props> = props => {    
     
     return (
         <React.Fragment>
@@ -20,7 +18,7 @@ const Info: React.FC<props> = props => {
                 <IonModal isOpen={props.showModal}>
                     <IonItem button onClick={() => props.setShowModal(false)}>
                         <IonIcon slot="start" icon={arrowBackOutline}/>
-                        <IonLabel>About us</IonLabel>
+                        <IonLabel>Sobre nosotros</IonLabel>
                     </IonItem> 
                     <IonGrid className="ion-no-margin">
                        <IonRow>
