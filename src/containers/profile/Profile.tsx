@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner, IonAlert } from '@ionic/react';
+import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner, IonAlert, IonList } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
@@ -96,7 +96,7 @@ const Profile: React.FC<props> = props => {
             />
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
-            <EditProfile showModal={showModalEditProfile} setShowModal={setShowModalEditProfile}/>
+            <EditProfile showModal={showModalEditProfile} setShowModal={setShowModalEditProfile} image={userImage} user={user}/>
             <IonPage>
                 <IonContent>
                     <Toolbar />
@@ -126,23 +126,25 @@ const Profile: React.FC<props> = props => {
                     <IonLabel className="namelabel">{user.attributes.name}</IonLabel>
                     <IonButton className="botton" onClick={() => setShowModalEditProfile(true)}>Editar perfil</IonButton>
                     <IonItemDivider/>
-                    <IonItem className="darkmode">
-                        <IonIcon slot="start" icon={moonOutline} />
-                        <IonLabel>Modo oscuro</IonLabel>
-                        <IonToggle slot="end" name="darkMode" checked={props.darkMode} onIonChange={toggleDarkModeHandler}/>
-                    </IonItem>
-                    <IonItem button onClick={() => setShowModalSettings(true)}>
-                        <IonIcon slot="start" icon={settingsOutline}/>
-                        <IonLabel>
-                            Ajustes
-                        </IonLabel>
-                    </IonItem>
-                    <IonItem button onClick={() => setShowModalAboutus(true)}>
-                        <IonIcon slot="start" icon={informationCircleOutline}/>
-                        <IonLabel>
-                            Sobre nosotros
-                        </IonLabel>
-                    </IonItem>
+                    <IonList>
+                        <IonItem className="darkmode">
+                            <IonIcon slot="start" icon={moonOutline} />
+                            <IonLabel>Modo oscuro</IonLabel>
+                            <IonToggle slot="end" name="darkMode" checked={props.darkMode} onIonChange={toggleDarkModeHandler}/>
+                        </IonItem>
+                        <IonItem button onClick={() => setShowModalSettings(true)}>
+                            <IonIcon slot="start" icon={settingsOutline}/>
+                            <IonLabel>
+                                Ajustes
+                            </IonLabel>
+                        </IonItem>
+                        <IonItem button onClick={() => setShowModalAboutus(true)}>
+                            <IonIcon slot="start" icon={informationCircleOutline}/>
+                            <IonLabel>
+                                Sobre nosotros
+                            </IonLabel>
+                        </IonItem>
+                    </IonList>
                     <SignOut handleSignOut={props.handleSignOut}/>             
                 </IonContent>
             </IonPage>
