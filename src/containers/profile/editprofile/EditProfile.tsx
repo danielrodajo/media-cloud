@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCol, IonGrid, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonModal, IonRow, IonText } from '@ionic/react';
+import { IonAvatar, IonButton, IonCol, IonGrid, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonModal, IonRow } from '@ionic/react';
 import { arrowBackOutline } from 'ionicons/icons';
 import React, { useRef } from 'react';
 import './EditProfile.scss'
@@ -13,7 +13,6 @@ interface props {
 const EditProfile: React.FC<props> = props => {
 
     const inputEmail = useRef(null);
-    const inputPassword = useRef(null);
     const inputUserName = useRef(null);
 
     console.log(props.user);
