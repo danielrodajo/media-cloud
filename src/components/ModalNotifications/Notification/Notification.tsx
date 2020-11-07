@@ -3,7 +3,7 @@ import './Notification.scss'
 import { IonItem, IonText, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/react';
 import { closeSharp } from 'ionicons/icons';
 import { NotificationType } from '../../../API';
-import UserImageAvatar from '../../../UserImageAvatar/UserImageAvatar';
+import UserImageAvatar from '../../UserImageAvatar/UserImageAvatar';
 import { Storage } from 'aws-amplify';
 import { parseDate } from '../../../shared/utility';
 

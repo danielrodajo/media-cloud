@@ -3,7 +3,7 @@ import './ShareFriend';
 import { IonItem, IonLabel, IonToggle } from '@ionic/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
-import UserImageAvatar from '../../../UserImageAvatar/UserImageAvatar';
+import UserImageAvatar from '../../UserImageAvatar/UserImageAvatar';
 
 export interface ShareFriendProps {
     friend: any,

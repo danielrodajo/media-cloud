@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './UserImageAvatar';
+import './UserImageAvatar.scss';
 import { IonAvatar, IonImg } from '@ionic/react';
-import DefaultAvatar from '../default-images/default-avatar.png';
+import DefaultAvatar from '../../default-images/default-avatar.png';
 
 export interface UserImageAvatarProps {
     urlImage: string,

@@ -3,7 +3,7 @@ import './Friend.scss';
 import { IonItem, IonLabel, IonIcon, IonAlert } from '@ionic/react';
 import { personRemove, shareSocial } from 'ionicons/icons';
 import ModalSharedFilesFromFriend from '../ModalSharedFilesFromFriend/ModalSharedFilesFromFriend';
-import UserImageAvatar from '../../UserImageAvatar/UserImageAvatar';
+import UserImageAvatar from '../UserImageAvatar/UserImageAvatar';
 
 export interface FriendProps {
     friend: any,

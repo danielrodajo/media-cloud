@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './FriendPetition.scss'
 import { IonItem, IonText, IonIcon, IonGrid, IonRow, IonCol, IonToast, IonAlert } from '@ionic/react';
 import { checkmarkCircleOutline, closeCircleOutline, checkmarkCircle, closeSharp, checkmark, checkmarkSharp } from 'ionicons/icons';
-import UserImageAvatar from '../../../UserImageAvatar/UserImageAvatar';
+import UserImageAvatar from '../../UserImageAvatar/UserImageAvatar';
 import { Storage } from 'aws-amplify';
 import { parseDate } from '../../../shared/utility';
 
