@@ -1,11 +1,7 @@
 import * as types from './ActionTypes';
 import { Storage } from 'aws-amplify';
 import { File as CustomFile } from '../types';
-
-function delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
-
+import { delay } from '../../shared/utility';
 
 //Subida de un fichero
 export const uploadFile = (name: string, file: File) => {
@@ -104,9 +100,6 @@ export const uploadUserImage = (userId: string, file: File) => {
                 });
 
                 (async () => {
-                    //Delay para que se realice la animacion de subida
-                    await delay(2000);
-
                     dispatch({
                         type: types.UPLOAD_USER_IMAGE_OK,
                     });

@@ -52,6 +52,7 @@ export interface UserState {
     uploading: boolean;
     uploadSuccess: boolean;
     downloading: boolean;
+    removing: boolean;
     loadedUserImage: number;
     totalUserImage: number;
 }

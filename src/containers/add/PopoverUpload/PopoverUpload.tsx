@@ -2,7 +2,7 @@ import React from 'react';
 import { IonPopover } from '@ionic/react';
 import './PopoverUpload.scss';
 import 'react-circular-progressbar/dist/styles.css';
-import UploadAnimation from '../../../components/UploadAnimation/UploadAnimation';
+import UploadAnimation from '../../../components/UploadAnimationWithPercent/UploadAnimationWithPercent';
 import DoneBoxAnimation from '../../../components/DoneBoxAnimation/DoneBoxAnimation';
 
 interface props {

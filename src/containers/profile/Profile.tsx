@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner, IonAlert, IonList } from '@ionic/react';
+import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonSpinner, IonAlert, IonList } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
@@ -11,8 +11,8 @@ import './Profile.scss';
 import Settings from './settings/Settings';
 import SignOut from '../authentication/signout/SignOut';
 import * as actions from '../../store/actions/index';
-import Popover from '../add/PopoverUpload/PopoverUpload';
 import EditProfile from './editprofile/EditProfile';
+import CustomLoading from '../../components/CustomLoading/CustomLoading';
 
 interface props {
     darkMode: boolean,
@@ -34,10 +34,9 @@ const Profile: React.FC<props> = props => {
 
     const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
-    const success = useSelector((state: RootState) => state.UserReducer.uploadSuccess);
     const downloading = useSelector((state: RootState) => state.UserReducer.downloading);
-    const loadedUserImage = useSelector((state: RootState) => state.UserReducer.loadedUserImage);
-    const totalUserImage = useSelector((state: RootState) => state.UserReducer.totalUserImage);
+    const changing = useSelector((state: RootState) => state.AuthReducer.changingUsername);
+    const removing = useSelector((state: RootState) => state.UserReducer.removing);
     const user = useSelector((state: RootState) => state.AuthReducer.user);
     const userImage: any = useSelector((state: RootState) => state.UserReducer.userImage);
 
@@ -62,6 +61,7 @@ const Profile: React.FC<props> = props => {
 
     return (
         <React.Fragment>
+            <CustomLoading showLoading={uploading || changing ||removing}/>
             <IonAlert
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}
@@ -79,14 +79,7 @@ const Profile: React.FC<props> = props => {
             />
             {
                 (uploadError) ? <p>{uploadError}</p> : null
-            }       
-            <Popover 
-                loadedFile = {loadedUserImage}
-                totalFile = {totalUserImage}
-                uploading = {uploading}
-                success = {success}
-                text = "Actualizando"
-            />
+            }     
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
             <EditProfile 

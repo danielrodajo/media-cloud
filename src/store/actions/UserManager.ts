@@ -5,10 +5,10 @@ export const editUsername = (name: string) => {
     return (dispatch: any) => {
         dispatch({
             type: types.EDIT_USERNAME
-        })
+        })     
         Auth.currentAuthenticatedUser({
             bypassCache: false 
-          })
+        })
         .then(data => {
             Auth.updateUserAttributes(data, {
             "name": name
