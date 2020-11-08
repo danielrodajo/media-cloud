@@ -96,7 +96,7 @@ const Profile: React.FC<props> = props => {
             />
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
-            <EditProfile showModal={showModalEditProfile} setShowModal={setShowModalEditProfile} image={userImage} user={user}/>
+            <EditProfile showModal={showModalEditProfile} setShowModal={setShowModalEditProfile} image={userImage} user={user} handleSaveChanges={() => {}}/>
             <IonPage>
                 <IonContent>
                     <Toolbar />

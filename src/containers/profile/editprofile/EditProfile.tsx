@@ -7,15 +7,14 @@ interface props {
     showModal: boolean,
     setShowModal: (value: boolean) => void,
     image: any,
-    user: any
+    user: any, 
+    handleSaveChanges: (name: string, image: any) => void
 }
 
 const EditProfile: React.FC<props> = props => {
 
     const inputEmail = useRef(null);
     const inputUserName = useRef(null);
-
-    console.log(props.user);
 
     return(
         <IonModal isOpen={props.showModal}>
@@ -30,18 +29,18 @@ const EditProfile: React.FC<props> = props => {
                     </IonAvatar>
                 </IonRow>
                 <IonRow className="ion-padding-top">
-                    <IonCol>
+                    <IonCol className="ion-no-padding">
                         <IonItem lines="inset" className="edit-item">
-                            <IonLabel position="floating">Nombre usuario</IonLabel>
-                            <IonInput autocomplete="name" ref={inputUserName} type="text" name="username" value={props.user.attributes.name} />
+                            <IonLabel position="floating">Correo electronico</IonLabel>
+                            <IonInput disabled={true} autocomplete="username" ref={inputEmail} type="email" name="email" value={props.user.attributes.email} />
                         </IonItem>
                     </IonCol>
                 </IonRow>
-                <IonRow className="ion-padding-top ion-padding-bottom">
-                    <IonCol>
+                <IonRow>
+                    <IonCol className="ion-no-padding">
                         <IonItem lines="inset" className="edit-item">
-                            <IonLabel position="floating">Correo electronico</IonLabel>
-                            <IonInput autocomplete="username" ref={inputEmail} type="email" name="email" value={props.user.attributes.email} />
+                            <IonLabel position="floating">Nombre usuario</IonLabel>
+                            <IonInput autocomplete="name" ref={inputUserName} type="text" name="username" value={props.user.attributes.name} />
                         </IonItem>
                     </IonCol>
                 </IonRow>
@@ -49,7 +48,7 @@ const EditProfile: React.FC<props> = props => {
                     <IonButton>Cambiar contraseña</IonButton>
                 </IonRow>
                 <IonRow className="ion-justify-content-center ion-padding-top">
-                    <IonButton>Guardar cambios</IonButton>
+                    <IonButton onClick={() => {}}>Guardar cambios</IonButton>
                 </IonRow>
             </IonGrid>
         </IonModal>
