@@ -205,10 +205,21 @@ export const switchComponent = (component: string) => {
     }
 }
 
-export const switchDarkMode = (darkmode: any) => {
-    return {
-        type: types.SWITCH_DARKMODE,
-        payload: darkmode
+export const switchDarkMode = (darkmode: boolean) => {
+    return (dispatch: any) => { 
+        //Actualizamos en AWS Cognito
+      Auth.currentAuthenticatedUser({
+        bypassCache: false 
+      })
+      .then(data => {
+          Auth.updateUserAttributes(data, {
+            "custom:darkMode": (darkmode ? "1" : "0")
+          });
+          dispatch({
+              type: types.SWITCH_DARKMODE,
+              payload: (darkmode ? "1" : "0")
+          })   
+      })
     }
 }
 

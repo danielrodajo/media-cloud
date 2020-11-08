@@ -136,6 +136,7 @@ const Add: React.FC<props> = props => {
                 totalFile = {totalFile}
                 uploading = {uploading}
                 success = {success}
+                text = "Subiendo"
             />
             
             <input

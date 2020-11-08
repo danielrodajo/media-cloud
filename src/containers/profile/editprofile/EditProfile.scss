@@ -1,6 +1,7 @@
 .edit-avatar{
     height: 100px;
     width: 100px;
+    position: relative;
 }
 
 .ion-padding-vertical {
@@ -8,4 +9,13 @@
     --padding-bottom: var(--ion-padding, 26px);
     padding-top: var(--ion-padding, 26px);
     padding-bottom: var(--ion-padding, 26px);
+}
+
+
+.remove-user-image{
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    font-size: 1.3rem;
+    z-index: 20000000000000000000;
 }

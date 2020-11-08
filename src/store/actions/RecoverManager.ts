@@ -131,10 +131,18 @@ export const recoverUserImage = (userId: string) => {
             type: types.RECOVER_USER_IMAGE
         })
         Storage.get(userId, {level: 'public'})
-        .then((result: any) => {
+        .then(async (result: any) => {
+            var http = new XMLHttpRequest();
+            http.open('GET', result, false);
+            http.send();
+            let objectURL = null;
+            if (http.status >= 200 && http.status < 300) {
+                const blob = await fetch(result).then(r => r.blob());
+                objectURL = URL.createObjectURL(blob);
+            }
             dispatch({
                 type: types.RECOVER_USER_IMAGE_OK,
-                payload: result
+                payload: objectURL
             })
         })
         .catch(err => {

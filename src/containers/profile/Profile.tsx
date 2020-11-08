@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner, IonAlert, IonList } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { informationCircleOutline, moonOutline, settingsOutline, closeCircleSharp } from 'ionicons/icons';
+import { informationCircleOutline, moonOutline, settingsOutline } from 'ionicons/icons';
 import AboutUs from './aboutus/AboutUs';
 import './Profile.scss';
 import Settings from './settings/Settings';
 import SignOut from '../authentication/signout/SignOut';
-import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 import * as actions from '../../store/actions/index';
 import Popover from '../add/PopoverUpload/PopoverUpload';
 import EditProfile from './editprofile/EditProfile';
@@ -31,6 +30,7 @@ const Profile: React.FC<props> = props => {
 
     const uploadUserImage = (name: string, file: File) => dispatch(actions.uploadUserImage(name, file));
     const removeUserImage = (name: string) => dispatch(actions.removeUserImage(name));
+    const editUsername = (name: string) => dispatch(actions.editUsername(name));
 
     const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
@@ -40,9 +40,6 @@ const Profile: React.FC<props> = props => {
     const totalUserImage = useSelector((state: RootState) => state.UserReducer.totalUserImage);
     const user = useSelector((state: RootState) => state.AuthReducer.user);
     const userImage: any = useSelector((state: RootState) => state.UserReducer.userImage);
-    
-    //Agregamos Hook para tomar una foto y guardarla
-    const { photo, setPhoto, takePhoto } = usePhotoGallery();
 
     const toggleDarkModeHandler = (e: CustomEvent) => {
         props.setDarkMode(e.detail.checked);
@@ -51,22 +48,17 @@ const Profile: React.FC<props> = props => {
     const [ showModalSettings, setShowModalSettings ] = useState(false);
     const [ showModalEditProfile, setShowModalEditProfile] = useState(false);
 
-    const submitPhoto = () => {
-        //Subir el fichero a S3
-        uploadUserImage(user.identityId, photo as File);
-        //Vaciar campo despues de enviarlo
-        setPhoto(null);
-    }
-
-    useEffect(() => {
-        let isMounted = true;
-        if (isMounted) {
-            if (photo) {
-                submitPhoto();
-            }
+    const editProfile = (name: string, file: any, deleting: boolean) => {
+        if (user.attributes.name !== name)
+            editUsername(name);
+        
+        if (userImage && deleting) {
+            removeUserImage(user.identityId);
+        } else if (file) {
+             //Subir el fichero a S3
+            uploadUserImage(user.identityId, file as File);
         }
-        return () => {isMounted = false}
-    },[photo, userImage]);
+    }
 
     return (
         <React.Fragment>
@@ -93,10 +85,16 @@ const Profile: React.FC<props> = props => {
                 totalFile = {totalUserImage}
                 uploading = {uploading}
                 success = {success}
+                text = "Actualizando"
             />
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
-            <EditProfile showModal={showModalEditProfile} setShowModal={setShowModalEditProfile} image={userImage} user={user} handleSaveChanges={() => {}}/>
+            <EditProfile 
+                showModal={showModalEditProfile} 
+                setShowModal={setShowModalEditProfile} 
+                image={userImage} user={user} 
+                handleSaveChanges={editProfile}
+            />
             <IonPage>
                 <IonContent>
                     <Toolbar />
@@ -105,24 +103,22 @@ const Profile: React.FC<props> = props => {
                             downloading ? 
                             <IonSpinner color="tertiary" className="default-spinner" />
                             : 
-                            <React.Fragment>
-                                <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
-                                <IonImg onClick={takePhoto} className={loading || errorloading ? "hide-img" : "" } onIonImgDidLoad={() => setLoading(false)} 
-                                onIonError={() => {setLoading(false); setErrorLoading(true)}} src={userImage} />  
-                                <IonImg onClick={takePhoto} className={errorloading ? "" : "hide-img"} src={userdefault}/>
+                                <React.Fragment>
                                 {
-                                    !loading && userImage &&
-                                    <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowAlert(true)}/>
-                                }
-                            </React.Fragment>
+                                    userImage ?
+                                    <React.Fragment>
+                                        <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
+                                        <IonImg className={loading || errorloading ? "hide-img" : "" } onIonImgDidLoad={() => setLoading(false)} 
+                                        onIonError={() => {setLoading(false); setErrorLoading(true)}} src={userImage} />  
+                                        <IonImg className={errorloading ? "" : "hide-img"} src={userdefault}/>
+                                    </React.Fragment>
+                                    :
+                                    <IonImg src={userdefault}/>
+                                }                              
+                                </React.Fragment>
                             }
                        
                     </IonAvatar>
-                    {
-                        (photo) ?
-                        <IonText>Elegido</IonText>
-                        : null
-                    }
                     <IonLabel className="namelabel">{user.attributes.name}</IonLabel>
                     <IonButton className="botton" onClick={() => setShowModalEditProfile(true)}>Editar perfil</IonButton>
                     <IonItemDivider/>

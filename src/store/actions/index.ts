@@ -50,3 +50,7 @@ export {
     shareFileToFriend,
     stopSharingFileToFriend,
 } from './ShareFileManager';
+
+export {
+    editUsername,
+} from './UserManager';

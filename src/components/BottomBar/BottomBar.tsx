@@ -55,26 +55,12 @@ const BottomBar: React.FC<props> = props => {
       dispatch(actions.signOut());
     }
 
-    const switchDarkMode = (value: string) => dispatch(actions.switchDarkMode(value));
+    const switchDarkMode = (value: boolean) => dispatch(actions.switchDarkMode(value));
     const getNotifications = (id: string) => dispatch(actions.recoverNotifications(id));
     const saveNotification = (notification: object) => dispatch(actions.saveNotification(notification))
 
     const darkMode = useSelector((state: RootState) => state.AuthReducer.user.attributes['custom:darkMode']);
-    
-    const setDarkMode = (darkMode: boolean) => {
-      //Actualizamos en AWS Cognito
-      Auth.currentAuthenticatedUser({
-        bypassCache: false 
-      })
-      .then(data => {
-          Auth.updateUserAttributes(data, {
-            "custom:darkMode": (darkMode ? "1" : "0")
-          });
-      })
 
-      //Actualizamos en Redux Local
-      switchDarkMode((darkMode ? "1" : "0"));
-    }
 
     useEffect(() => {
       //Descargamos notificaciones iniciales
@@ -135,7 +121,7 @@ const BottomBar: React.FC<props> = props => {
             <Route path="/home" render={() => <Home showAddModal={setShowModal}/>} exact />
             <Route path="/search" component={Search} exact />
             <Route path="/friends" component={Friends} exact />
-            <Route path="/profile" render={() => <Profile handleSignOut={handleSignOut} darkMode={darkMode === "1"} setDarkMode={setDarkMode}/>} exact />
+            <Route path="/profile" render={() => <Profile handleSignOut={handleSignOut} darkMode={darkMode === "1"} setDarkMode={switchDarkMode}/>} exact />
             <Route exact path="/" render={() => <Redirect to="/home" />} />    
           </IonRouterOutlet>
           <IonTabBar slot="bottom">

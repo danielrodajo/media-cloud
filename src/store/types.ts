@@ -31,6 +31,8 @@ export interface NotificationState {
 
 
 export interface AuthState {
+    changingUsername: boolean;
+    editUsernameError: Object | null;
     user: any | null;
     loading: boolean;
     status: string;
