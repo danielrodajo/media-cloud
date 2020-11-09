@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import './EditProfile.scss';
 import userdefault from "../../../images/unnamed.jpg";
 import { usePhotoGallery } from '../../../hooks/usePhotoGallery';
+import ChangePassword from './changepassword/ChangePassword';
 
 interface props {
     showModal: boolean,
@@ -26,7 +27,10 @@ const EditProfile: React.FC<props> = props => {
     const [deleteImage, setDeleteImage] = useState(false);
     const [currentImage, setCurrentImage] = useState(props.image);
 
-    const [showAlert, setShowAlert] = useState(false);
+    const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+    const [showChangeAlert, setShowChangeAlert] = useState(false);
+
+    const [showChangeModal, setShowChangeModal] = useState(false);
 
     useEffect(() => {
         if (photo) {
@@ -38,8 +42,8 @@ const EditProfile: React.FC<props> = props => {
     return(
         <React.Fragment>
             <IonAlert
-                isOpen={showAlert}
-                onDidDismiss={() => setShowAlert(false)}
+                isOpen={showDeleteAlert}
+                onDidDismiss={() => setShowDeleteAlert(false)}
                 cssClass="my-custom-class"
                 header={"¿Quieres eliminar la foto de perfil?"}
                 buttons={["No",
@@ -50,9 +54,25 @@ const EditProfile: React.FC<props> = props => {
                         setDeleteImage(true);
                         setPhoto(null);
                     },
-                    },
+                    }
                 ]}
             />
+            <IonAlert 
+                isOpen={showChangeAlert}
+                onDidDismiss={() => setShowChangeAlert(false)}
+                cssClass="my-custom-class"
+                header={"¿Quieres cambiar la contraseña?"}
+                buttons={["No",
+                    {
+                        text: "Si",
+                        role: "accept",
+                        handler: () => {
+                            setShowChangeModal(true)
+                        }
+                    }
+                ]}
+            />
+            <ChangePassword showModal={showChangeModal} setShowModal={setShowChangeModal}/>
             <IonModal isOpen={props.showModal}>
                 <IonItem button lines="none" onClick={() => props.setShowModal(false)}>
                     <IonIcon slot="start" icon={arrowBackOutline}/>
@@ -70,7 +90,7 @@ const EditProfile: React.FC<props> = props => {
                                 <IonImg onClick={takePhoto} className={errorloading || deleteImage ? "" : "hide-img"} src={userdefault}/>
                                 {
                                     !loading && !deleteImage && currentImage &&
-                                    <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowAlert(true)}/>
+                                    <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowDeleteAlert(true)}/>
                                 }
                             </React.Fragment>
                             :
@@ -87,7 +107,7 @@ const EditProfile: React.FC<props> = props => {
                             </IonItem>
                         </IonCol>
                     </IonRow>
-                    <IonRow className="ion-padding-top">
+                    <IonRow>
                         <IonCol>
                             <IonItem lines="inset" className="edit-item">
                                 <IonLabel position="floating">Nombre usuario</IonLabel>
@@ -96,10 +116,10 @@ const EditProfile: React.FC<props> = props => {
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center ion-padding-vertical">
-                        <IonButton>Cambiar contraseña</IonButton>
+                        <IonButton onClick={() => setShowChangeAlert(true)}>Cambiar contraseña</IonButton>
                     </IonRow>
-                    <IonRow className="ion-justify-content-center ion-padding-top">
-                        <IonButton onClick={() => props.handleSaveChanges(inputUserName.current!.value, photo, deleteImage)}>Guardar cambios</IonButton>
+                    <IonRow className="ion-justify-content-center">
+                        <IonButton onClick={() => {props.handleSaveChanges(inputUserName.current!.value, photo, deleteImage)}}>Guardar cambios</IonButton>
                     </IonRow>
                 </IonGrid>
             </IonModal>

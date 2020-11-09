@@ -5,10 +5,9 @@ import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { informationCircleOutline, moonOutline, settingsOutline } from 'ionicons/icons';
+import { informationCircleOutline, moonOutline } from 'ionicons/icons';
 import AboutUs from './aboutus/AboutUs';
 import './Profile.scss';
-import Settings from './settings/Settings';
 import SignOut from '../authentication/signout/SignOut';
 import * as actions from '../../store/actions/index';
 import EditProfile from './editprofile/EditProfile';
@@ -44,7 +43,6 @@ const Profile: React.FC<props> = props => {
         props.setDarkMode(e.detail.checked);
     };
     const [ showModalAboutus, setShowModalAboutus ] = useState(false);
-    const [ showModalSettings, setShowModalSettings ] = useState(false);
     const [ showModalEditProfile, setShowModalEditProfile] = useState(false);
 
     const editProfile = (name: string, file: any, deleting: boolean) => {
@@ -81,7 +79,6 @@ const Profile: React.FC<props> = props => {
                 (uploadError) ? <p>{uploadError}</p> : null
             }     
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
-            <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
             <EditProfile 
                 showModal={showModalEditProfile} 
                 setShowModal={setShowModalEditProfile} 
@@ -120,12 +117,6 @@ const Profile: React.FC<props> = props => {
                             <IonIcon slot="start" icon={moonOutline} />
                             <IonLabel>Modo oscuro</IonLabel>
                             <IonToggle slot="end" name="darkMode" checked={props.darkMode} onIonChange={toggleDarkModeHandler}/>
-                        </IonItem>
-                        <IonItem button onClick={() => setShowModalSettings(true)}>
-                            <IonIcon slot="start" icon={settingsOutline}/>
-                            <IonLabel>
-                                Ajustes
-                            </IonLabel>
                         </IonItem>
                         <IonItem button onClick={() => setShowModalAboutus(true)}>
                             <IonIcon slot="start" icon={informationCircleOutline}/>
