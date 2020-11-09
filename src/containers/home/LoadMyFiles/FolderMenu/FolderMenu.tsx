@@ -13,6 +13,10 @@ const FolderMenu: React.SFC<FolderMenuProps> = props => {
     
     const [showAlert, setShowAlert] = useState(false);
     const [showToast1, setShowToast1] = useState(false);
+
+    function parsePath(path: string) {
+        return path.replace(/\//g, " ❯ ");
+    }
     
     return ( 
         <React.Fragment>
@@ -32,15 +36,15 @@ const FolderMenu: React.SFC<FolderMenuProps> = props => {
                 },
             ]}
             />
-            <IonGrid>
             <IonToast
                 isOpen={showToast1}
                 onDidDismiss={() => setShowToast1(false)}
-                message={props.currentPath.substring(1, props.currentPath.length)}
+                message={parsePath(props.currentPath.substring(1, props.currentPath.length))}
                 duration={2000}
                 position="top"
             />
-                <IonRow className="ion-text-center">
+            <IonGrid>
+                <IonRow className="ion-text-center custom-folder-menu">
                     <IonCol size="2">
                         <IonItem
                             lines="none"
@@ -50,9 +54,9 @@ const FolderMenu: React.SFC<FolderMenuProps> = props => {
                         </IonItem>
                     </IonCol>
                     <IonCol size="8">
-                        <IonItem lines="none" onClick={() => setShowToast1(true)}>
-                            <IonTitle className="ion-text-center hide-overflow-text ion-no-padding">
-                            {props.currentPath.substring(1, props.currentPath.length)}
+                        <IonItem button lines="none" onClick={() => setShowToast1(true)}>
+                            <IonTitle className="custom-path ion-text-center hide-overflow-text ion-no-padding">
+                            {parsePath(props.currentPath.substring(1, props.currentPath.length))}
                             </IonTitle>
                         </IonItem>
                     </IonCol>
