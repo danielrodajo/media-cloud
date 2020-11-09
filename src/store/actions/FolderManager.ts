@@ -37,18 +37,26 @@ export const createFolder = (name: string) => {
 //Borra carpeta SOLO SI SE ENCUENTRA VACIA
 export const removeFolder = (name: string) => {
     return (dispatch: any) => {
-        Storage.remove(name)
-        .then(() =>
         dispatch({
-            type: types.REMOVE_FOLDER,
-            payload: name
+            type: types.REMOVE_FOLDER
         })
-        ).catch(err => {
+        const path = name.split("default")[0];
+        Storage.list(path, {level: 'protected'})
+        .then(async(result) => {
+            for (var i=0; i<result.length; i++) {
+                await Storage.remove(result[i].key);
+            }
+            dispatch({
+                type: types.REMOVE_FOLDER_OK,
+                payload: name
+            })
+        })
+        .catch(err => {
             console.log(err);
             dispatch({
                 type: types.REMOVE_FOLDER_NOK,
                 payload: err
             });
-        })
+        });
     }
 }

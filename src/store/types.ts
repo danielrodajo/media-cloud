@@ -86,4 +86,5 @@ export interface FolderState {
     createFolderError: Object | null;
     creating: boolean;
     createSuccess: boolean;
+    removing: boolean;
 }

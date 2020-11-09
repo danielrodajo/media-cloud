@@ -8,6 +8,7 @@ const initialState: FolderState = {
     createFolderError: null,
     creating: false,
     createSuccess: false,
+    removing: false,
 }
 
 const changeFolder = (state: FolderState, payload: string) => {
@@ -51,15 +52,24 @@ const createFolderFail = (state: FolderState, payload: Error) => {
     })
 }
 
-const removeFolder = (state: FolderState, payload: string) => {
+const removeFolder = (state: FolderState) => {
     return updateObject( state, {
-        folders: state.folders.filter(folder => folder.key !== payload)
+        removing: true,
+        removeError: null
+    })
+}
+
+const removeFolderSuccess = (state: FolderState, payload: string) => {
+    return updateObject( state, {
+        folders: state.folders.filter(folder => folder.key !== payload),
+        removing: false
     })
 }
 
 const removeFail = (state: FolderState, payload: Error) => {
     return updateObject( state, {
-        removeError: payload
+        removeError: payload,
+        removing: false
     })
 }
 
@@ -72,7 +82,8 @@ const reducer = ( state = initialState, action: types.ActionTypes ) => {
         case types.CREATE_FOLDER: return createFolder(state);
         case types.CREATE_FOLDER_OK: return createFolderSuccess(state, action.payload);
         case types.CREATE_FOLDER_NOK: return createFolderFail(state, action.payload);
-        case types.REMOVE_FOLDER: return removeFolder(state, action.payload);
+        case types.REMOVE_FOLDER: return removeFolder(state);
+        case types.REMOVE_FOLDER_OK: return removeFolderSuccess(state, action.payload);
         case types.REMOVE_FOLDER_NOK: return removeFail(state, action.payload);
         default: return state;
     }
