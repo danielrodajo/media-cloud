@@ -18,6 +18,9 @@
     width: 45% !important;
     float: left;
     height: 36vw;
+}
+
+body.dark .my-card {
     box-shadow: #6f00ff 0px 1px 1px -2px, 
     #6f00ff 0px 1px 1.5px 0px, 
     #6f00ff 0px 1px 3px 0px !important;
