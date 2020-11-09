@@ -18,6 +18,17 @@
     width: 45% !important;
     float: left;
     height: 36vw;
+    box-shadow: #333333 0px 1px 1px -2px, 
+    #333333 0px 1px 1.5px 0px, 
+    #333333 0px 1px 3px 0px !important;
+}
+
+body.dark .my-card {
+    margin-left: 3vw;
+    margin-right: 1vw;
+    width: 45% !important;
+    float: left;
+    height: 36vw;
     box-shadow: #6f00ff 0px 1px 1px -2px, 
     #6f00ff 0px 1px 1.5px 0px, 
     #6f00ff 0px 1px 3px 0px !important;
