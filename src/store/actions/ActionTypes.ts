@@ -325,7 +325,10 @@ interface CreateFolderActionNok {
 }
 
 interface RemoveFolderAction {
-    type: typeof REMOVE_FOLDER,
+    type: typeof REMOVE_FOLDER
+}
+interface RemoveFolderOkAction {
+    type: typeof REMOVE_FOLDER_OK,
     payload: string
 }
 interface RemoveFolderActionNok {
@@ -470,7 +473,7 @@ interface SwitchDarkModeAction {
     payload: any
 }
 
-export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderActionNok |
+export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFolderActionNok | RecoverFoldersAction|RecoverFoldersActionNok | CreateFolderAction|CreateFolderActionOk|CreateFolderActionNok | RemoveFolderAction|RemoveFolderOkAction|RemoveFolderActionNok |
                             RecoverFilesAction|RecoverFilesNokAction | UploadFileAction|UploadingFileAction|UploadFileokAction|UploadFileokWaitAction|UploadFileNokAction | RemoveFileAction|RemoveFileNokAction |
                             AuthSignInAction|AuthSignInOkAction|AuthSignInNokAction | AuthSignOutAction|AuthSignOutOkAction|AuthSignOutNokAction | AuthSignUpAction|AuthSignUpOkAction|AuthSignUpNokAction | VerifyAction|VerifyOkAction|VerifyNokAction | SwitchComponentAction |
                             AuthForgotPasswordAction|AuthForgotPasswordOkAction|AuthForgotPasswordNokAction | AuthForgotPasswordSubmitAction|AuthForgotPasswordSubmitOkAction|AuthForgotPasswordSubmitNokAction | SwitchDarkModeAction |
