@@ -1,3 +1,8 @@
 .custom-folder-menu {
     border-bottom: #6f00ff 2px solid;
 }
+
+body.dark .custom-folder-menu, body.dark .custom-folder-menu ion-col ion-item {
+    background: #0000 !important;
+    --background: #0000 !important;
+}

@@ -22,6 +22,7 @@ const Add: React.FC<props> = props => {
 
     const [showToast, setShowToast] = useState(false);
     const [showToast2, setShowToast2] = useState(false);
+    const [showToast3, setShowToast3] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
     //Agregamos Hook para tomar una foto y guardarla
@@ -113,8 +114,12 @@ const Add: React.FC<props> = props => {
                     {
                     text: "Crear",
                     role: "accept",
+                    
                     handler: (alertData) => {
-                        submitFolder(alertData.folderName);
+                        if (alertData.length > 0)
+                            submitFolder(alertData.folderName);
+                        else
+                            setShowToast3(true);
                     },
                     },
                 ]}
@@ -130,7 +135,13 @@ const Add: React.FC<props> = props => {
                onDidDismiss={() => setShowToast2(false)}
                message="Ya existe una carpeta con ese nombre en esta carpeta."
                duration={1500}
-           />          
+           />     
+           <IonToast
+               isOpen={showToast3}
+               onDidDismiss={() => setShowToast3(false)}
+               message="No ha introducido un nombre para la carpeta."
+               duration={1500}
+           />      
             <Popover 
                 loadedFile = {loadedFile}
                 totalFile = {totalFile}
