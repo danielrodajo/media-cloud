@@ -8,6 +8,8 @@ import ShareFriend from './ShareFriend/ShareFriend';
 import * as actions from "../../store/actions/index";
 import { generateNotification } from '../../shared/utility';
 import { NotificationType } from '../../API';
+import CustomAnimation from '../CustomAnimation';
+import ad from '../../Animations/nofriendsadded.json'
 
 
 export interface ModalShareFriendsProps {
@@ -81,7 +83,11 @@ const ModalShareFriends: React.SFC<ModalShareFriendsProps> = props => {
                     handleShare={handleShare}
                 />
                 ) 
-                : <IonText className="no-notifications-text">No tienes amigos agregados.</IonText>
+                : 
+                <div className="center-no-friends-div">
+                    <CustomAnimation json={ad} loop={false} />
+                    <IonText className="format-text-share">No tienes amigos agregados.</IonText>
+                </div> 
             }
             </IonContent>
         </IonModal>
