@@ -116,7 +116,7 @@ const Add: React.FC<props> = props => {
                     role: "accept",
                     
                     handler: (alertData) => {
-                        if (alertData.length > 0)
+                        if (alertData.folderName.length > 0)
                             submitFolder(alertData.folderName);
                         else
                             setShowToast3(true);

@@ -42,7 +42,7 @@ const Friends: React.SFC<FriendsProps> = () => {
     const recoverFriendsError = useSelector((state: RootState) => state.FriendReducer.recoverFriendsError);
 
     const [keyList, setKeyList] = useState([]);
-    const [searchText, setSearchText] = useState<String>();
+    const [searchText, setSearchText] = useState<String>("");
     const [searching, setSearching] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [errorPetition, setErrorPetition] = useState(false);

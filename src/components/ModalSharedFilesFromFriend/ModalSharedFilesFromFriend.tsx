@@ -8,7 +8,7 @@ import { RootState } from '../../store/store';
 import ShareFileBox from '../ShareFileBox/ShareFileBox';
 import CustomSpinner from '../CustomSpinner/CustomSpinner';
 import CustomAnimation from '../CustomAnimation';
-import noFriendsAnimation from '../../Animations/nofriendsanimation.json';
+import noFilesAnimation from '../../Animations/nofilefound.json';
 
 export interface ModalSharedFilesFromFriendProps {
     showModal: boolean;
@@ -52,7 +52,7 @@ const ModalSharedFilesFromFriend: React.SFC<ModalSharedFilesFromFriendProps> = p
                 : (
                     files.length === 0 ? 
                         <div className="center-empty-search-div">
-                            <CustomAnimation json={noFriendsAnimation} loop={false}/>
+                            <CustomAnimation json={noFilesAnimation} loop={false}/>
                             <IonText className="format-text-notifications">No ha compartido archivos contigo</IonText>
                         </div>
                     : 
