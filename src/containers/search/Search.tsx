@@ -9,7 +9,7 @@ import * as actions from "../../store/actions/index";
 import { File as CustomFile } from "../../store/types";
 import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
 import CustomAnimation from '../../components/CustomAnimation';
-import friendsAnimation from '../../Animations/4.json'
+import friendsAnimation from '../../Animations/nofilefound.json'
 
 const Search: React.FC = () => {
     const dispatch = useDispatch();
