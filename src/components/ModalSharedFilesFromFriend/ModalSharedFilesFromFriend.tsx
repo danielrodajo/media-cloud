@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import ShareFileBox from '../ShareFileBox/ShareFileBox';
 import CustomSpinner from '../CustomSpinner/CustomSpinner';
+import CustomAnimation from '../CustomAnimation';
+import noFilesAnimation from '../../Animations/nofilefound.json';
 
 export interface ModalSharedFilesFromFriendProps {
     showModal: boolean;
@@ -48,13 +50,17 @@ const ModalSharedFilesFromFriend: React.SFC<ModalSharedFilesFromFriendProps> = p
                 downloading ?
                 <CustomSpinner />
                 : (
-                    files.length === 0 ? <IonText className="no-notifications-text">No tiene archivos compartidos contigo.</IonText>
+                    files.length === 0 ? 
+                        <div className="center-empty-search-div">
+                            <CustomAnimation json={noFilesAnimation} loop={false}/>
+                            <IonText className="format-text-notifications">No ha compartido archivos contigo</IonText>
+                        </div>
                     : 
-                    files.map((file: any) => 
-                    <ShareFileBox
-                      key={file.key}
-                      file={file}
-                    />
+                        files.map((file: any) => 
+                        <ShareFileBox
+                        key={file.key}
+                        file={file}
+                        />
                     )
                 )
                 
