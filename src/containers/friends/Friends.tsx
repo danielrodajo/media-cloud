@@ -14,6 +14,7 @@ import { generateNotification } from '../../shared/utility';
 import CustomLoading from '../../components/CustomLoading/CustomLoading';
 import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
 import friendsAnimation from '../../Animations/friendsanimation.json';
+import noFriendsAnimation from '../../Animations/nofriendsanimation.json';
 import CustomAnimation from '../../components/CustomAnimation';
 
 export interface FriendsProps {
@@ -154,34 +155,42 @@ const Friends: React.SFC<FriendsProps> = () => {
                 <CustomLoadingPage type={LoadingType.SearchFriends} />
                 : (
                     users.length === 0 
-                    ? (
-                        <React.Fragment>
-                            {recoverFriendsError ? <span>{recoverFriendsError.message}</span> : null}
-                            {
-                                friends.length > 0 ?
-                                friends.map((friend:any) => {
-                                    return <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
-                                })
+                    ? 
+                        (
+                            <React.Fragment>
+                                {recoverFriendsError ? <span>{recoverFriendsError.message}</span> : null}
+                                {
+                                searchText === null || searchText === "" ?
+                                    friends.length > 0 ?
+                                        friends.map((friend:any) => {
+                                            return <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
+                                        })
+                                    :
+                                        <div className="center-empty-friends-div">
+                                            <CustomAnimation json={friendsAnimation} loop={false}/>
+                                            <IonText className="format-text-notifications">No tienes amigos agregados todavia</IonText>
+                                        </div>
                                 :
-                                <div className="center-empty-friends-div">
-                                    <CustomAnimation json={friendsAnimation} loop={false}/>
-                                    <IonText className="format-text-notifications">No tienes amigos agregados todavia</IonText>
-                                </div>
-                            }
-                        </React.Fragment>
-                    )
+                                    <div className="center-empty-search-div">
+                                        <CustomAnimation json={noFriendsAnimation} loop={false}/>
+                                        <IonText className="format-text-notifications">No existe ese usuario</IonText>
+                                    </div>
+
+                                }
+                            </React.Fragment>
+                        )
                     : users!.filter((currentUser:any) => user.identityId !== currentUser.id)
-                    .map((user:any) => {
-                        let friend: any = null;
-                        friends.forEach((currentFriend: any) => {
-                            if (currentFriend.originalId === user.id) friend = currentFriend;
-                        });
-                        if (friend)
-                            return <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
-                        else
-                            return <UserSearch hasUserImage={keyList.findIndex((item: any) => item.key === user.id) !== -1} handleSendPetition={generateFriendPetition} key={user.id} friend={user}/>
-                    })
-                )     
+                        .map((user:any) => {
+                            let friend: any = null;
+                            friends.forEach((currentFriend: any) => {
+                                if (currentFriend.originalId === user.id) friend = currentFriend;
+                            })
+                            if (friend)
+                                return <Friend handleDeleteFriend={handleDeleteFriend} key={friend.id} friend={friend}/>
+                            else
+                                return <UserSearch hasUserImage={keyList.findIndex((item: any) => item.key === user.id) !== -1} handleSendPetition={generateFriendPetition} key={user.id} friend={user}/>
+                    }) 
+                )
             }
             {
                 errorPetition ?

@@ -9,7 +9,8 @@ import * as actions from "../../store/actions/index";
 import { File as CustomFile } from "../../store/types";
 import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPage/CustomLoadingPage';
 import CustomAnimation from '../../components/CustomAnimation';
-import friendsAnimation from '../../Animations/nofilefound.json'
+import noFileFoundAnimation from '../../Animations/nofilefound.json'
+import startSearchAnimation from '../../Animations/startsearchanimation.json'
 
 const Search: React.FC = () => {
     const dispatch = useDispatch();
@@ -42,22 +43,28 @@ const Search: React.FC = () => {
                 <IonContent className="my-custom-content">
             {
                 downloading ? 
-                <CustomLoadingPage type={LoadingType.SearchFiles} />
+                    <CustomLoadingPage type={LoadingType.SearchFiles} />
                 :              
-                files.length > 0 ?
-                    files!.map((file:any) => 
-                        <FileBox
-                            key={file.key}
-                            file={file}
-                            remove={removeFile}
-                            removeError={removeError}
-                            isAbsolutePath={false}
-                    />)  
+                    searchText === "" ?
+                        <div className="center-empty-search-div">
+                            <CustomAnimation json={startSearchAnimation} loop={false}/>
+                            <IonText className="format-text-notifications">Busca un fichero</IonText>
+                        </div>
                     :
-                    <div className="center-empty-friends-div">
-                        <CustomAnimation json={friendsAnimation} loop={false}/>
-                        <IonText className="format-text-notifications">No existe ese fichero</IonText>
-                    </div>         
+                        files.length > 0 ?
+                            files!.map((file:any) => 
+                                <FileBox
+                                    key={file.key}
+                                    file={file}
+                                    remove={removeFile}
+                                    removeError={removeError}
+                                    isAbsolutePath={false}
+                            />)  
+                        :
+                            <div className="center-empty-search-div">
+                                <CustomAnimation json={noFileFoundAnimation} loop={false}/>
+                                <IonText className="format-text-notifications">No existe ese fichero</IonText>
+                            </div>         
             }
             {console.log(files)}
             </IonContent>
