@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { IonAlert, IonGrid, IonRow, IonCol, IonItem, IonIcon, IonTitle } from '@ionic/react';
+import React, { useEffect, useCallback } from 'react';
 import FolderBox from '../../../components/FolderBox/FolderBox';
 import { File as CustomFile } from "../../../store/types";
 import FileBox from '../../../components/FileBox/FileBox';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/store';
 import * as actions from "../../../store/actions/index";
-import { returnUpBackOutline, trashOutline } from "ionicons/icons";
 import CustomLoadingPage, { LoadingType } from '../../../components/CustomLoadingPage/CustomLoadingPage';
 import EmptyFolder from '../../../components/EmptyFolder/EmptyFolder';
+import FolderMenu from './FolderMenu/FolderMenu';
+import CustomLoading from '../../../components/CustomLoading/CustomLoading';
 
 interface props {
   user: any
@@ -17,11 +17,13 @@ interface props {
 const LoadMyFiles:React.FC<props> = props => {
 
     const dispatch = useDispatch();
-
-    const [showAlert, setShowAlert] = useState(false);
     
     const downloading = useSelector(
         (state: RootState) => state.FileReducer.downloading
+    );
+
+    const removing = useSelector(
+      (state: RootState) => state.FolderReducer.removing
     );
 
     const currentPath = useSelector(
@@ -69,9 +71,6 @@ const LoadMyFiles:React.FC<props> = props => {
     );
 
     const removeFolder = (name: string) => dispatch(actions.removeFolder(name));
-    //const removeFolderError = useSelector(
-    //  (state: RootState) => state.FolderReducer.removeError
-    //);
 
     useEffect(() => {
         let isMounted = true;
@@ -81,17 +80,19 @@ const LoadMyFiles:React.FC<props> = props => {
     }, [currentPath, onGetFiles]);
 
     const handleRemoveFolder = (path: string) => {
-        //Recuperamos todos los ficheros contenidos en la carpeta y lo borramos
-        const removeFiles = files.filter(file => file.key.startsWith(path.substring(0, path.length-8)));
-        removeFiles.forEach(file => removeFile(file.key));
         //Eliminamos carpeta
         removeFolder(path);
         //Volvemos a la carpeta padre despues de borrarla
         changeFolder(goBackPath(currentPath));
     };
 
+    const handleReturnFolder = (path: string) => {
+      changeFolder(goBackPath(path))
+    }
+
     return (
         <React.Fragment>
+          <CustomLoading showLoading={removing}/>
         {
             //Mostrar Spinner mientras se descargan los ficheros
             downloading ? (
@@ -100,58 +101,14 @@ const LoadMyFiles:React.FC<props> = props => {
               <React.Fragment>
                 {
                 //En caso de estar dentro de una carpeta, mostrar barra de retroceder, borrar y ver carpeta
-                currentPath !== "" ? (
-                  <React.Fragment>
-                    <IonAlert
-                      isOpen={showAlert}
-                      onDidDismiss={() => setShowAlert(false)}
-                      cssClass="my-custom-class"
-                      header={"¿Quieres borrar todo?"}
-                      subHeader={"NO BORRAR SI HAY OTRAS CARPETAS DENTRO"}
-                      message={"¿Deseas borrar la carpeta y todo su contenido?"}
-                      buttons={["Cancelar",
-                        {
-                          text: "Aceptar",
-                          role: "accept",
-                          handler: () => {
-                            handleRemoveFolder(currentPath + "/default");
-                          },
-                        },
-                      ]}
-                    />
-                    <IonGrid>
-                      <IonRow className="ion-text-center">
-                        <IonCol size="2">
-                          <IonItem
-                            lines="none"
-                            button
-                            onClick={(e) => changeFolder(goBackPath(currentPath))}
-                          >
-                            <IonIcon icon={returnUpBackOutline} />
-                          </IonItem>
-                        </IonCol>
-                        <IonCol size="8">
-                          <IonItem lines="none">
-                            <IonTitle className="ion-text-center hide-overflow-text">
-                              {currentPath.substring(1, currentPath.length)}
-                            </IonTitle>
-                          </IonItem>
-                        </IonCol>
-                        <IonCol size="2">
-                          <IonItem
-                            lines="none"
-                            button
-                            onClick={(e) => setShowAlert(true)}
-                          >
-                            <IonIcon icon={trashOutline} />
-                          </IonItem>
-                        </IonCol>
-                      </IonRow>
-                    </IonGrid>
-                  </React.Fragment>
-                ) : null}
+                currentPath !== "" && 
+                  <FolderMenu 
+                    currentPath={currentPath}
+                    handleRemoveFolder={handleRemoveFolder}
+                    handleReturnFolder={handleReturnFolder}
+                  />}
                 
-                {recoverError ? <span>{recoverError.message}</span> : null}
+                {recoverError && <span>{recoverError.message}</span>}
     
                 {
                   folders.length === 0 && files.length === 0 

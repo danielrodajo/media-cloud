@@ -169,15 +169,19 @@ export const recoverUserImage = (userId: string) => {
 //FUNCIONES PARA ACORTAR EL TAMAÑO DE LAS FUNCIONES SUPERIORES PRINCIPALES
 async function fillDataFiles(userId: String, files: any) {
     let promises = files.map(async (file: CustomFile) => {
-        const result = await Storage.get(file.key);
+        const result: any = await Storage.get(file.key);
         const slices = file.key.split("/");
         //Comprobamos si está compartido o no
-         const sharers = await fetchSharersFromFile(userId, file);
+        const sharers = await fetchSharersFromFile(userId, file);
+        //Se podría pasar el BLOB descargado, tarda más en mostrar pantalla pero muestra todos los ficheros del tirón
+        //const blob = await fetch(result).then(r => r.blob());
+        //const objectURL = URL.createObjectURL(blob);
         return file = { 
             ...file, 
             sharers: sharers,
             shared: sharers.length !== 0 ? true : false, 
-            url: result+"", 
+            //url: objectURL, 
+            url: result,
             name: slices[slices.length-1] 
         };
     });  
