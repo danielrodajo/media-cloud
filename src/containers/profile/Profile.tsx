@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonSpinner, IonAlert, IonList } from '@ionic/react';
+import React, { useState, useEffect } from 'react';
+import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonSpinner, IonAlert, IonList, IonToast } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
@@ -12,6 +12,7 @@ import SignOut from '../authentication/signout/SignOut';
 import * as actions from '../../store/actions/index';
 import EditProfile from './editprofile/EditProfile';
 import CustomLoading from '../../components/CustomLoading/CustomLoading';
+import { delay } from '../../shared/utility';
 
 interface props {
     darkMode: boolean,
@@ -26,10 +27,12 @@ const Profile: React.FC<props> = props => {
     const [showAlert, setShowAlert] = useState(false);
     const [loading, setLoading] = useState(true);
     const [errorloading, setErrorLoading] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     const uploadUserImage = (name: string, file: File) => dispatch(actions.uploadUserImage(name, file));
     const removeUserImage = (name: string) => dispatch(actions.removeUserImage(name));
     const editUsername = (name: string) => dispatch(actions.editUsername(name));
+    const changePasswordSubmitAction = (username: string, password: string, code: string) => dispatch(actions.forgotPasswordSubmit(username, password, code));
 
     const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
@@ -38,14 +41,16 @@ const Profile: React.FC<props> = props => {
     const removing = useSelector((state: RootState) => state.UserReducer.removing);
     const user = useSelector((state: RootState) => state.AuthReducer.user);
     const userImage: any = useSelector((state: RootState) => state.UserReducer.userImage);
+    const submitSuccess = useSelector((state: RootState) => state.AuthReducer.changePasswordSuccess);
 
     const toggleDarkModeHandler = (e: CustomEvent) => {
         props.setDarkMode(e.detail.checked);
     };
     const [ showModalAboutus, setShowModalAboutus ] = useState(false);
     const [ showModalEditProfile, setShowModalEditProfile] = useState(false);
+    const [showChangeModal, setShowChangeModal] = useState(false);
 
-    const editProfile = (name: string, file: any, deleting: boolean) => {
+    const editProfile = async(name: string, file: any, deleting: boolean) => {
         if (user.attributes.name !== name)
             editUsername(name);
         
@@ -55,11 +60,30 @@ const Profile: React.FC<props> = props => {
              //Subir el fichero a S3
             uploadUserImage(user.identityId, file as File);
         }
+        await delay(500);
+        while (uploading || changing || removing)
+            await delay(500);
+        console.log(user.attributes.name !== name)
+        console.log((userImage && deleting))
+        console.log(file)
+        if (user.attributes.name !== name || ((userImage && deleting) || file))
+            setShowToast(true);
     }
+
+    const changePasswordSubmit = (password: string, code: string) => {
+        changePasswordSubmitAction(user.attributes.email, password, code);
+    }
+
+    useEffect(() => {
+        if (submitSuccess) {
+            setShowChangeModal(false);
+            setShowToast(true);
+        }    
+    }, [submitSuccess]);
 
     return (
         <React.Fragment>
-            <CustomLoading showLoading={uploading || changing ||removing}/>
+            <CustomLoading showLoading={uploading || changing || removing}/>
             <IonAlert
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}
@@ -74,14 +98,24 @@ const Profile: React.FC<props> = props => {
                     },
                     },
                 ]}
-            />
+            />       
+            <IonToast
+                isOpen={showToast}
+                onDidDismiss={() => setShowToast(false)}
+                message="Cambios guardados."
+                duration={1500}
+                position="middle"
+            /> 
             {
                 (uploadError) ? <p>{uploadError}</p> : null
             }     
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <EditProfile 
+                handleChangePassword={changePasswordSubmit}
                 showModal={showModalEditProfile} 
                 setShowModal={setShowModalEditProfile} 
+                showChangeModal={showChangeModal}
+                setShowChangeModal={setShowChangeModal}
                 image={userImage} user={user} 
                 handleSaveChanges={editProfile}
             />

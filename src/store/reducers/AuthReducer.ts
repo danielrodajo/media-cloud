@@ -6,6 +6,7 @@ const initialState: AuthState = {
     user: null,
     status: "signin", //en que fase del proceso de autenticacion se encuentra
     loading: false,
+    changePasswordSuccess: false,
     signUpError: null,
     signInError: null,
     verifyError: null,
@@ -135,13 +136,15 @@ const forgotPasswordFail = (state: AuthState, payload: Error) => {
 
 const forgotPasswordSubmit = (state: AuthState) => {
     return updateObject( state, {
-        loading: true
+        loading: true,
+        changePasswordSuccess: false,
     })
 }
 const forgotPasswordSubmitSuccess = (state: AuthState, payload: string) => {
     return updateObject( state, {
         status: payload,
-        loading: false
+        loading: false,
+        changePasswordSuccess: true,
     })
 }
 const forgotPasswordSubmitFail = (state: AuthState, payload: Error) => {

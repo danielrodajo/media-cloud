@@ -5,16 +5,28 @@ import './EditProfile.scss';
 import userdefault from "../../../images/unnamed.jpg";
 import { usePhotoGallery } from '../../../hooks/usePhotoGallery';
 import ChangePassword from './changepassword/ChangePassword';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+import { RootState } from '../../../store/store';
 
 interface props {
     showModal: boolean,
     setShowModal: (value: boolean) => void,
+    showChangeModal: boolean,
+    setShowChangeModal: (value: boolean) => void,
     image: any,
     user: any, 
-    handleSaveChanges: (name: string, image: any, deleting: boolean) => void
+    handleSaveChanges: (name: string, image: any, deleting: boolean) => void,
+    handleChangePassword: (password: string, code: string) => void,
 }
 
 const EditProfile: React.FC<props> = props => {
+
+    const dispatch = useDispatch();
+
+    const forgotPassword = (username: string) => dispatch(actions.forgotPassword(username));
+
+    const user = useSelector((state:RootState) => state.AuthReducer.user);
     
     //Agregamos Hook para tomar una foto y guardarla
     const { photo, setPhoto, takePhoto } = usePhotoGallery();
@@ -28,9 +40,12 @@ const EditProfile: React.FC<props> = props => {
     const [currentImage, setCurrentImage] = useState(props.image);
 
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-    const [showChangeAlert, setShowChangeAlert] = useState(false);
 
-    const [showChangeModal, setShowChangeModal] = useState(false);
+
+    const changePassword = () => {
+        forgotPassword(user.attributes.email);
+        props.setShowChangeModal(true);
+    }
 
     useEffect(() => {
         if (photo) {
@@ -57,22 +72,7 @@ const EditProfile: React.FC<props> = props => {
                     }
                 ]}
             />
-            <IonAlert 
-                isOpen={showChangeAlert}
-                onDidDismiss={() => setShowChangeAlert(false)}
-                cssClass="my-custom-class"
-                header={"¿Quieres cambiar la contraseña?"}
-                buttons={["No",
-                    {
-                        text: "Si",
-                        role: "accept",
-                        handler: () => {
-                            setShowChangeModal(true)
-                        }
-                    }
-                ]}
-            />
-            <ChangePassword showModal={showChangeModal} setShowModal={setShowChangeModal}/>
+            <ChangePassword handleChangePassword={props.handleChangePassword} showModal={props.showChangeModal} setShowModal={props.setShowChangeModal}/>
             <IonModal isOpen={props.showModal}>
                 <IonItem button lines="none" onClick={() => props.setShowModal(false)}>
                     <IonIcon slot="start" icon={arrowBackOutline}/>
@@ -116,10 +116,13 @@ const EditProfile: React.FC<props> = props => {
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center ion-padding-vertical">
-                        <IonButton onClick={() => setShowChangeAlert(true)}>Cambiar contraseña</IonButton>
+                        <IonButton onClick={() => changePassword()}>Cambiar contraseña</IonButton>
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
-                        <IonButton onClick={() => {props.handleSaveChanges(inputUserName.current!.value, photo, deleteImage)}}>Guardar cambios</IonButton>
+                        <IonButton onClick={() => {
+                                props.handleSaveChanges(inputUserName.current!.value.toLowerCase(), photo, deleteImage)
+                                setPhoto(null);
+                            }}>Guardar cambios</IonButton>
                     </IonRow>
                 </IonGrid>
             </IonModal>

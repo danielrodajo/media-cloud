@@ -157,6 +157,9 @@ export const forgotPassword = (username: string) => {
 }
 
 export const forgotPasswordSubmit = (username: string, password: string, code: string) => {
+    console.log(username);
+    console.log(password);
+    console.log(code);
     return (dispatch: any) => {
         dispatch({
             type: types.AUTH_FORGOT_PASSWORD_SUBMIT

@@ -36,6 +36,7 @@ export interface AuthState {
     user: any | null;
     loading: boolean;
     status: string;
+    changePasswordSuccess: boolean;
     signUpError: Object | null;
     signInError: Object | null;
     verifyError: Object | null;
