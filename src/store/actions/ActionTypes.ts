@@ -120,6 +120,22 @@ export const REMOVE_USER_IMAGE = 'REMOVE_USER_IMAGE';
 export const REMOVE_USER_IMAGE_OK = 'REMOVE_USER_IMAGE_OK';
 export const REMOVE_USER_IMAGE_NOK = 'REMOVE_USER_IMAGE_NOK';
 
+export const EDIT_USERNAME = 'EDIT_USERNAME';
+export const EDIT_USERNAME_OK = 'EDIT_USERNAME_OK';
+export const EDIT_USERNAME_NOK = 'EDIT_USERNAME_NOK';
+
+interface editUserNameAction {
+    type: typeof EDIT_USERNAME
+}
+interface editUserNameOkAction {
+    type: typeof EDIT_USERNAME_OK,
+    payload: any
+}
+interface editUserNameNokAction {
+    type: typeof EDIT_USERNAME_NOK,
+    payload: any
+}
+
 interface uploadUserImageAction {
     type: typeof UPLOAD_USER_IMAGE
 }
@@ -481,4 +497,5 @@ export type ActionTypes =   RecoverFilesOkAction | ChangeFolderAction|ChangeFold
                             RecoverFriendsAction|RecoverFriendsOkAction|RecoverFriendsNokAction | deleteFriendAction|deleteFriendOkAction|deleteFriendNokAction | addFriendAction|addFriendNokAction|addFriendOkAction |
                             RecoverShareFilesAction|RecoverShareFilesOkAction|RecoverShareFilesNokAction | sharingFileAction|sharingFileOkAction|sharingFileNokAction | stopSharingFileAction|stopSharingFileOkAction|stopSharingFileNokAction |
                             shareFileWithFriendAction|shareFileWithFriendOkAction|shareFileWithFriendNokAction | stopShareFileWithFriendAction|stopShareFileWithFriendOkAction|stopShareFileWithFriendNokAction | RecoverFilterFilesAction|RecoverFilterFilesOkAction|RecoverFilterFilesNokAction |
-                            uploadUserImageAction|uploadingUserImageAction|uploadUserImageOkWaitAction|uploadUserImageOkAction|uploadUserImageNokAction | removeUserImageAction|removeUserImageOkAction|removeUserImageNokAction | recoverUserImageAction|recoverUserImageOkAction|recoverUserImageNokAction
+                            uploadUserImageAction|uploadingUserImageAction|uploadUserImageOkWaitAction|uploadUserImageOkAction|uploadUserImageNokAction | removeUserImageAction|removeUserImageOkAction|removeUserImageNokAction | recoverUserImageAction|recoverUserImageOkAction|recoverUserImageNokAction |
+                            editUserNameAction|editUserNameOkAction|editUserNameNokAction

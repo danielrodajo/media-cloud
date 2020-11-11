@@ -31,9 +31,12 @@ export interface NotificationState {
 
 
 export interface AuthState {
+    changingUsername: boolean;
+    editUsernameError: Object | null;
     user: any | null;
     loading: boolean;
     status: string;
+    changePasswordSuccess: boolean;
     signUpError: Object | null;
     signInError: Object | null;
     verifyError: Object | null;
@@ -50,6 +53,7 @@ export interface UserState {
     uploading: boolean;
     uploadSuccess: boolean;
     downloading: boolean;
+    removing: boolean;
     loadedUserImage: number;
     totalUserImage: number;
 }

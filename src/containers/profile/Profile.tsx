@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonText, IonSpinner, IonAlert } from '@ionic/react';
+import { IonPage, IonContent, IonAvatar, IonLabel, IonImg, IonButton, IonItemDivider, IonItem, IonIcon, IonToggle, IonSpinner, IonAlert, IonList, IonToast } from '@ionic/react';
 import Toolbar from '../../components/ToolBar/Toolbar';
 import userdefault from "../../images/unnamed.jpg";
 import 'react-circular-progressbar/dist/styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { informationCircleOutline, moonOutline, settingsOutline, closeCircleSharp } from 'ionicons/icons';
+import { informationCircleOutline, moonOutline } from 'ionicons/icons';
 import AboutUs from './aboutus/AboutUs';
 import './Profile.scss';
-import Settings from './settings/Settings';
 import SignOut from '../authentication/signout/SignOut';
-import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 import * as actions from '../../store/actions/index';
-import Popover from '../add/PopoverUpload/PopoverUpload';
+import EditProfile from './editprofile/EditProfile';
+import CustomLoading from '../../components/CustomLoading/CustomLoading';
+import { delay } from '../../shared/utility';
 
 interface props {
     darkMode: boolean,
@@ -27,47 +27,63 @@ const Profile: React.FC<props> = props => {
     const [showAlert, setShowAlert] = useState(false);
     const [loading, setLoading] = useState(true);
     const [errorloading, setErrorLoading] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     const uploadUserImage = (name: string, file: File) => dispatch(actions.uploadUserImage(name, file));
     const removeUserImage = (name: string) => dispatch(actions.removeUserImage(name));
+    const editUsername = (name: string) => dispatch(actions.editUsername(name));
+    const changePasswordSubmitAction = (username: string, password: string, code: string) => dispatch(actions.forgotPasswordSubmit(username, password, code));
 
     const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
-    const success = useSelector((state: RootState) => state.UserReducer.uploadSuccess);
     const downloading = useSelector((state: RootState) => state.UserReducer.downloading);
-    const loadedUserImage = useSelector((state: RootState) => state.UserReducer.loadedUserImage);
-    const totalUserImage = useSelector((state: RootState) => state.UserReducer.totalUserImage);
+    const changing = useSelector((state: RootState) => state.AuthReducer.changingUsername);
+    const removing = useSelector((state: RootState) => state.UserReducer.removing);
     const user = useSelector((state: RootState) => state.AuthReducer.user);
     const userImage: any = useSelector((state: RootState) => state.UserReducer.userImage);
-    
-    //Agregamos Hook para tomar una foto y guardarla
-    const { photo, setPhoto, takePhoto } = usePhotoGallery();
+    const submitSuccess = useSelector((state: RootState) => state.AuthReducer.changePasswordSuccess);
 
     const toggleDarkModeHandler = (e: CustomEvent) => {
         props.setDarkMode(e.detail.checked);
     };
     const [ showModalAboutus, setShowModalAboutus ] = useState(false);
-    const [ showModalSettings, setShowModalSettings ] = useState(false);
+    const [ showModalEditProfile, setShowModalEditProfile] = useState(false);
+    const [showChangeModal, setShowChangeModal] = useState(false);
 
-    const submitPhoto = () => {
-        //Subir el fichero a S3
-        uploadUserImage(user.identityId, photo as File);
-        //Vaciar campo despues de enviarlo
-        setPhoto(null);
+    const editProfile = async(name: string, file: any, deleting: boolean) => {
+        if (user.attributes.name !== name)
+            editUsername(name);
+        
+        if (userImage && deleting) {
+            removeUserImage(user.identityId);
+        } else if (file) {
+             //Subir el fichero a S3
+            uploadUserImage(user.identityId, file as File);
+        }
+        await delay(500);
+        while (uploading || changing || removing)
+            await delay(500);
+        console.log(user.attributes.name !== name)
+        console.log((userImage && deleting))
+        console.log(file)
+        if (user.attributes.name !== name || ((userImage && deleting) || file))
+            setShowToast(true);
+    }
+
+    const changePasswordSubmit = (password: string, code: string) => {
+        changePasswordSubmitAction(user.attributes.email, password, code);
     }
 
     useEffect(() => {
-        let isMounted = true;
-        if (isMounted) {
-            if (photo) {
-                submitPhoto();
-            }
-        }
-        return () => {isMounted = false}
-    },[photo, userImage]);
+        if (submitSuccess) {
+            setShowChangeModal(false);
+            setShowToast(true);
+        }    
+    }, [submitSuccess]);
 
     return (
         <React.Fragment>
+            <CustomLoading showLoading={uploading || changing || removing}/>
             <IonAlert
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}
@@ -82,18 +98,27 @@ const Profile: React.FC<props> = props => {
                     },
                     },
                 ]}
-            />
+            />       
+            <IonToast
+                isOpen={showToast}
+                onDidDismiss={() => setShowToast(false)}
+                message="Cambios guardados."
+                duration={1500}
+                position="middle"
+            /> 
             {
                 (uploadError) ? <p>{uploadError}</p> : null
-            }       
-            <Popover 
-                loadedFile = {loadedUserImage}
-                totalFile = {totalUserImage}
-                uploading = {uploading}
-                success = {success}
-            />
+            }     
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
-            <Settings showModal={showModalSettings} setShowModal={setShowModalSettings}/>
+            <EditProfile 
+                handleChangePassword={changePasswordSubmit}
+                showModal={showModalEditProfile} 
+                setShowModal={setShowModalEditProfile} 
+                showChangeModal={showChangeModal}
+                setShowChangeModal={setShowChangeModal}
+                image={userImage} user={user} 
+                handleSaveChanges={editProfile}
+            />
             <IonPage>
                 <IonContent>
                     <Toolbar />
@@ -102,44 +127,38 @@ const Profile: React.FC<props> = props => {
                             downloading ? 
                             <IonSpinner color="tertiary" className="default-spinner" />
                             : 
-                            <React.Fragment>
-                                <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
-                                <IonImg onClick={takePhoto} className={loading || errorloading ? "hide-img" : "" } onIonImgDidLoad={() => setLoading(false)} 
-                                onIonError={() => {setLoading(false); setErrorLoading(true)}} src={userImage} />  
-                                <IonImg onClick={takePhoto} className={errorloading ? "" : "hide-img"} src={userdefault}/>
+                                <React.Fragment>
                                 {
-                                    !loading && userImage &&
-                                    <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowAlert(true)}/>
-                                }
-                            </React.Fragment>
+                                    userImage ?
+                                    <React.Fragment>
+                                        <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
+                                        <IonImg className={loading || errorloading ? "hide-img" : "" } onIonImgDidLoad={() => setLoading(false)} 
+                                        onIonError={() => {setLoading(false); setErrorLoading(true)}} src={userImage} />  
+                                        <IonImg className={errorloading ? "" : "hide-img"} src={userdefault}/>
+                                    </React.Fragment>
+                                    :
+                                    <IonImg src={userdefault}/>
+                                }                              
+                                </React.Fragment>
                             }
                        
                     </IonAvatar>
-                    {
-                        (photo) ?
-                        <IonText>Elegido</IonText>
-                        : null
-                    }
                     <IonLabel className="namelabel">{user.attributes.name}</IonLabel>
-                    <IonButton className="botton">Editar perfil</IonButton>
+                    <IonButton className="botton" onClick={() => setShowModalEditProfile(true)}>Editar perfil</IonButton>
                     <IonItemDivider/>
-                    <IonItem className="darkmode">
-                        <IonIcon slot="start" icon={moonOutline} />
-                        <IonLabel>Modo oscuro</IonLabel>
-                        <IonToggle slot="end" name="darkMode" checked={props.darkMode} onIonChange={toggleDarkModeHandler}/>
-                    </IonItem>
-                    <IonItem button onClick={() => setShowModalSettings(true)}>
-                        <IonIcon slot="start" icon={settingsOutline}/>
-                        <IonLabel>
-                            Ajustes
-                        </IonLabel>
-                    </IonItem>
-                    <IonItem button onClick={() => setShowModalAboutus(true)}>
-                        <IonIcon slot="start" icon={informationCircleOutline}/>
-                        <IonLabel>
-                            Sobre nosotros
-                        </IonLabel>
-                    </IonItem>
+                    <IonList>
+                        <IonItem className="darkmode">
+                            <IonIcon slot="start" icon={moonOutline} />
+                            <IonLabel>Modo oscuro</IonLabel>
+                            <IonToggle slot="end" name="darkMode" checked={props.darkMode} onIonChange={toggleDarkModeHandler}/>
+                        </IonItem>
+                        <IonItem button onClick={() => setShowModalAboutus(true)}>
+                            <IonIcon slot="start" icon={informationCircleOutline}/>
+                            <IonLabel>
+                                Sobre nosotros
+                            </IonLabel>
+                        </IonItem>
+                    </IonList>
                     <SignOut handleSignOut={props.handleSignOut}/>             
                 </IonContent>
             </IonPage>

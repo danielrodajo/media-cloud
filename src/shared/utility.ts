@@ -124,3 +124,7 @@ export function parseDate(awsDate: string) {
 
     return (day+" de "+month+" de "+date.substr(0, 4));
 }
+
+export function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}

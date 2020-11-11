@@ -6,12 +6,34 @@ const initialState: AuthState = {
     user: null,
     status: "signin", //en que fase del proceso de autenticacion se encuentra
     loading: false,
+    changePasswordSuccess: false,
     signUpError: null,
     signInError: null,
     verifyError: null,
     signOutError: null,
+    changingUsername: false,
+    editUsernameError: null,
     forgotPasswordError: null,
     forgotPasswordSubmitError: null,
+}
+
+const editUsername = (state: AuthState) => {
+    return updateObject( state, {
+        changingUsername: true,
+        editUsernameError: null,
+    })
+}
+const editUsernameSuccess = (state: AuthState, payload: string) => {
+    state.user.attributes['name'] = payload
+    return updateObject( state, {
+        changingUsername: false,
+    })
+}
+const editUsernameFail = (state: AuthState, payload: any) => {
+    return updateObject( state, {
+        changingUsername: false,
+        editUsernameError: payload,
+    })
 }
 
 const signUp = (state: AuthState) => {
@@ -114,13 +136,15 @@ const forgotPasswordFail = (state: AuthState, payload: Error) => {
 
 const forgotPasswordSubmit = (state: AuthState) => {
     return updateObject( state, {
-        loading: true
+        loading: true,
+        changePasswordSuccess: false,
     })
 }
 const forgotPasswordSubmitSuccess = (state: AuthState, payload: string) => {
     return updateObject( state, {
         status: payload,
-        loading: false
+        loading: false,
+        changePasswordSuccess: true,
     })
 }
 const forgotPasswordSubmitFail = (state: AuthState, payload: Error) => {
@@ -169,6 +193,9 @@ const reducer = ( state = initialState, action: types.ActionTypes ): AuthState =
         case types.AUTH_FORGOT_PASSWORD_SUBMIT_NOK: return forgotPasswordSubmitFail(state, action.payload);
         case types.AUTH_SWITCH_COMPONENT: return switchComponent(state, action.payload);
         case types.SWITCH_DARKMODE: return switchDarkMode(state, action.payload);
+        case types.EDIT_USERNAME: return editUsername(state);
+        case types.EDIT_USERNAME_OK: return editUsernameSuccess(state, action.payload);
+        case types.EDIT_USERNAME_NOK: return editUsernameFail(state, action.payload);
         default: return state;
     }
 }

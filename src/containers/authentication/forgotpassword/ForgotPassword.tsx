@@ -52,7 +52,7 @@ const ForgotPassword: React.FC<props> = props => {
                     <IonRow className="ion-justify-content-center max-height">
                         <IonCard>
                             <IonCardHeader>
-                            <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
+                                <IonCardTitle className="ion-text-center"><IonImg className="logoimage" src={logo} alt="mediacloud"/></IonCardTitle>
                             </IonCardHeader>
 
                             <IonCardContent className="ion-justify-content-center max-height ion-align-items-center ion-margin-top">                            

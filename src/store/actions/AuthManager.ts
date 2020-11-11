@@ -157,6 +157,9 @@ export const forgotPassword = (username: string) => {
 }
 
 export const forgotPasswordSubmit = (username: string, password: string, code: string) => {
+    console.log(username);
+    console.log(password);
+    console.log(code);
     return (dispatch: any) => {
         dispatch({
             type: types.AUTH_FORGOT_PASSWORD_SUBMIT
@@ -205,10 +208,21 @@ export const switchComponent = (component: string) => {
     }
 }
 
-export const switchDarkMode = (darkmode: any) => {
-    return {
-        type: types.SWITCH_DARKMODE,
-        payload: darkmode
+export const switchDarkMode = (darkmode: boolean) => {
+    return (dispatch: any) => { 
+        //Actualizamos en AWS Cognito
+      Auth.currentAuthenticatedUser({
+        bypassCache: false 
+      })
+      .then(data => {
+          Auth.updateUserAttributes(data, {
+            "custom:darkMode": (darkmode ? "1" : "0")
+          });
+          dispatch({
+              type: types.SWITCH_DARKMODE,
+              payload: (darkmode ? "1" : "0")
+          })   
+      })
     }
 }
 

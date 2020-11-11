@@ -12,6 +12,7 @@ const initialState: UserState = {
     loadedUserImage: 0,
     totalUserImage: 0,
     downloading: false,
+    removing: false,
 }
 
 //Reseteamos valores de visualizacion de la subida
@@ -55,16 +56,24 @@ const uploadUserImageFail = (state: UserState, payload: Error) => {
     })
 }
 
-const removeFileSuccess = (state: UserState) => {
+const removeFile = (state: UserState) => {
     return updateObject( state, {
         removeError: null,
+        removing: true
+    })
+}
+
+const removeFileSuccess = (state: UserState) => {
+    return updateObject( state, {
         userImage: null,
+        removing: false
     })
 }
 
 const removeFail = (state: UserState, payload: Error) => {
     return updateObject( state, {
-        removeError: payload
+        removeError: payload,
+        removing: false
     })
 }
 
@@ -94,6 +103,7 @@ const reducer = ( state = initialState, action: types.ActionTypes ): UserState =
         case types.UPLOAD_USER_IMAGE_OK: return uploadUserImageSuccess(state);
         case types.UPLOAD_USER_IMAGE_OK_WAIT: return uploadUserImageSuccessWait(state, action.payload);
         case types.UPLOAD_USER_IMAGE_NOK: return uploadUserImageFail(state, action.payload);
+        case types.REMOVE_USER_IMAGE: return removeFile(state);
         case types.REMOVE_USER_IMAGE_OK: return removeFileSuccess(state);
         case types.REMOVE_USER_IMAGE_NOK: return removeFail(state, action.payload);
         case types.RECOVER_USER_IMAGE: return recoverUserImage(state);
