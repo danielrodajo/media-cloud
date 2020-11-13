@@ -54,13 +54,14 @@ const ModalNotifications: React.SFC<Props> = props => {
     const addFriend = (friend: any) => dispatch(actions.addFriend(friend));
     
     const handleCheckPetition = (notification: any) => {
+        console.log(notification);
         setUploading(true);
         //Puesto que GraphQL no admite de momento relaciones a sí mismas, se tiene que crear una entidad Friend secundaria para hacer este proceso
         //Primero se crea un amigo de A a B
-        (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.from.id, id: notification.to.id+notification.from.id, name: notification.to.name, originalId: notification.to.id}})) as Promise<any>)
+        (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.from.id, id: notification.to.id+notification.from.id, friendOriginalUserId: notification.to.id}})) as Promise<any>)
         .then((e:any) => {
             //Se crea el amigo de B a A
-            (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.to.id, id: notification.from.id+notification.to.id, name: notification.from.name, originalId: notification.from.id}})) as Promise<any>)
+            (API.graphql(graphqlOperation(Mutations.createFriend, {input: {friendUserId: notification.to.id, id: notification.from.id+notification.to.id, friendOriginalUserId: notification.from.id}})) as Promise<any>)
             .then((e:any) => {
                 //Agregamos localmente el nuevo amigo
                 addFriend({

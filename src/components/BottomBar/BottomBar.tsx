@@ -101,8 +101,8 @@ const BottomBar: React.FC<props> = props => {
       .subscribe({
         next: (data) => {
           const friendId = data.value.data.onDeleteFriend.user.id;
-          const userId = data.value.data.onDeleteFriend.id.split(friendId)[0];
-          if (userId === user.identityId) {
+          const userId = data.value.data.onDeleteFriend.originalUser.id;
+          if (friendId === user.identityId) {
             deleteFriend(friendId+userId, friendId, files);
           }
         }

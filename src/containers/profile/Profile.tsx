@@ -31,7 +31,7 @@ const Profile: React.FC<props> = props => {
 
     const uploadUserImage = (name: string, file: File) => dispatch(actions.uploadUserImage(name, file));
     const removeUserImage = (name: string) => dispatch(actions.removeUserImage(name));
-    const editUsername = (name: string) => dispatch(actions.editUsername(name));
+    const editUsername = (userId: string, name: string) => dispatch(actions.editUsername(userId, name));
     const changePasswordSubmitAction = (username: string, password: string, code: string) => dispatch(actions.forgotPasswordSubmit(username, password, code));
 
     const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
@@ -52,7 +52,7 @@ const Profile: React.FC<props> = props => {
 
     const editProfile = async(name: string, file: any, deleting: boolean) => {
         if (user.attributes.name !== name)
-            editUsername(name);
+            editUsername(user.identityId, name);
         
         if (userImage && deleting) {
             removeUserImage(user.identityId);

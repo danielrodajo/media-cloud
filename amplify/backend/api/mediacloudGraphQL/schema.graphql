@@ -7,15 +7,15 @@ type User
   mySharedFiles: [SharedFile] @connection(name:"OwnerSharedFiles")
   toPetition: [FriendRequest] @connection(name:"UserToPetition")
   fromPetition: [FriendRequest] @connection(name:"UserFromPetition")
-  friends: [Friend] @connection(name:"UserFriends")
+  friends: [Friend] @connection(name:"OriginalUserFriends")
+  originalFriends: [Friend] @connection(name:"UserFriends")
 }
 
 type Friend
   @model
 {
   id: ID!
-  name: String!
-  originalId: String!
+  originalUser: User! @connection(name:"OriginalUserFriends")
   user: User! @connection(name:"UserFriends")
 }
 

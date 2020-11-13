@@ -11,7 +11,11 @@ export const getFriends = (userId: string) => {
         });
         (API.graphql(graphqlOperation(Queries.getUser, {id: userId})) as Promise<any>)
         .then(async(result: any) => {
-            const resultFriends = await recoverUserImageFriends(result.data.getUser.friends.items);
+            const friends = [];
+            for (let i=0; i<result.data.getUser.friends.items.length; i++) {
+                friends.push(await (API.graphql(graphqlOperation(Queries.getFriend, {id: result.data.getUser.friends.items[i].id})) as Promise<any>));
+            }
+            const resultFriends = await recoverUserImageFriends(friends);
             dispatch({
                 type: types.RECOVER_FRIENDS_OK,
                 payload: resultFriends
@@ -44,7 +48,7 @@ export const deleteFriend = (friendId: string, originalId: string, userId: strin
         (API.graphql(graphqlOperation(Mutations.deleteFriend, {input: {id: friendId}})) as Promise<any>)
         .then(async() => {
             //Borrame de su lista de amigos
-            await API.graphql(graphqlOperation(Mutations.deleteFriend, {input: {id: userId+originalId}}));
+            await API.graphql(graphqlOperation(Mutations.deleteFriend, {input: {id: originalId+userId}}));
 
             //Realizar borrado de la comparticion de ficheros a este usuario
             await deleteCloudGrants(dispatch, userId, originalId);
@@ -108,13 +112,15 @@ async function recoverUserImageFriends(friends: any[]) {
     const result: any = [];
     const keyList: any[] = await Storage.list('', {level: 'public'});
     for (let i=0; i<friends.length; i++) {
-        if (keyList.find(item => item.key === friends[i].originalId)) {
-            await Storage.get(friends[i].originalId, {level: 'public'})
-            .then((result2: any) => {
-                result.push({...friends[i], userImage: result2})
+        if (keyList.find(item => item.key === friends[i].data.getFriend.user.id)) {
+            await Storage.get(friends[i].data.getFriend.user.id, {level: 'public'})
+            .then(async (result2: any) => {
+                const blob = await fetch(result2).then(r => r.blob());
+                const objectURL = URL.createObjectURL(blob);
+                result.push({id: friends[i].data.getFriend.id, name: friends[i].data.getFriend.user.name, originalId: friends[i].data.getFriend.user.id, userImage: objectURL})
             })
         } else {
-            result.push({...friends[i], userImage: null});
+            result.push({id: friends[i].data.getFriend.id, name: friends[i].data.getFriend.user.name, originalId: friends[i].data.getFriend.user.id, userImage: null});
         }
     }
     return result;

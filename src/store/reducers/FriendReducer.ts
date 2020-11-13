@@ -51,6 +51,7 @@ const deleteFriendFail = (state: FriendsState, payload: any) => {
 }
 
 const addFriend = (state: FriendsState, payload: any) => {
+    console.log(payload);
     return updateObject( state, {
         friends: [payload].concat(state.friends)
     })

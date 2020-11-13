@@ -39,8 +39,12 @@ export const getUser = /* GraphQL */ `
       friends {
         items {
           id
-          name
-          originalId
+        }
+        nextToken
+      }
+      originalFriends {
+        items {
+          id
         }
         nextToken
       }
@@ -72,6 +76,9 @@ export const listUsers = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
       nextToken
     }
@@ -81,8 +88,28 @@ export const getFriend = /* GraphQL */ `
   query GetFriend($id: ID!) {
     getFriend(id: $id) {
       id
-      name
-      originalId
+      originalUser {
+        id
+        name
+        sharedFiles {
+          nextToken
+        }
+        mySharedFiles {
+          nextToken
+        }
+        toPetition {
+          nextToken
+        }
+        fromPetition {
+          nextToken
+        }
+        friends {
+          nextToken
+        }
+        originalFriends {
+          nextToken
+        }
+      }
       user {
         id
         name
@@ -101,6 +128,9 @@ export const getFriend = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
     }
   }
@@ -114,8 +144,10 @@ export const listFriends = /* GraphQL */ `
     listFriends(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        originalId
+        originalUser {
+          id
+          name
+        }
         user {
           id
           name
@@ -149,6 +181,9 @@ export const getFriendRequest = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
       from {
         id
@@ -166,6 +201,9 @@ export const getFriendRequest = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -217,6 +255,9 @@ export const getSharedFile = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -282,6 +323,9 @@ export const getSharedFileToUser = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
