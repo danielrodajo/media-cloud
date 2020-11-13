@@ -29,7 +29,7 @@ const FriendPetition: React.SFC<FriendPetitionProps> = props => {
             })
             .catch(err => console.log(err))
         }
-    });
+    }, [props.hasUserImage]);
 
     return (    
         <React.Fragment>

@@ -51,7 +51,7 @@ const Notification: React.FC<NotificationProps> = props => {
             })
             .catch(err => console.log(err))
         }
-    });
+    }, [props.hasUserImage]);
 
 
 
