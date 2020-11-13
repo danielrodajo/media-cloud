@@ -1,7 +1,8 @@
-import { Auth } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import * as types from './ActionTypes';
+import * as Mutations from '../../graphql/mutations';
 
-export const editUsername = (name: string) => {
+export const editUsername = (userId: string, name: string) => {
     return (dispatch: any) => {
         dispatch({
             type: types.EDIT_USERNAME
@@ -9,10 +10,11 @@ export const editUsername = (name: string) => {
         Auth.currentAuthenticatedUser({
             bypassCache: false 
         })
-        .then(data => {
+        .then(async (data) => {
             Auth.updateUserAttributes(data, {
             "name": name
             });
+            await API.graphql(graphqlOperation(Mutations.updateUser, {input: {id: userId, name: name}}));
             dispatch({
                 type: types.EDIT_USERNAME_OK,
                 payload: name

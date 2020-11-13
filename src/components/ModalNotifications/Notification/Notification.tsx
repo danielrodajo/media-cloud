@@ -44,8 +44,10 @@ const Notification: React.FC<NotificationProps> = props => {
     useEffect(() => {
         if (props.hasUserImage) {
             Storage.get(props.notification.from.id, {level: 'public'})
-            .then((result: any) => {
-                setUserImage(result);
+            .then(async(result: any) => {
+                const blob = await fetch(result).then(r => r.blob());
+                const objectURL = URL.createObjectURL(blob);
+                setUserImage(objectURL);
             })
             .catch(err => console.log(err))
         }

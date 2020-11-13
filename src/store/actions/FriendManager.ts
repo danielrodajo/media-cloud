@@ -110,8 +110,10 @@ async function recoverUserImageFriends(friends: any[]) {
     for (let i=0; i<friends.length; i++) {
         if (keyList.find(item => item.key === friends[i].originalId)) {
             await Storage.get(friends[i].originalId, {level: 'public'})
-            .then((result2: any) => {
-                result.push({...friends[i], userImage: result2})
+            .then(async (result2: any) => {
+                const blob = await fetch(result2).then(r => r.blob());
+                const objectURL = URL.createObjectURL(blob);
+                result.push({...friends[i], userImage: objectURL})
             })
         } else {
             result.push({...friends[i], userImage: null});
