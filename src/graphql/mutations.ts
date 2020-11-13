@@ -42,8 +42,12 @@ export const createUser = /* GraphQL */ `
       friends {
         items {
           id
-          name
-          originalId
+        }
+        nextToken
+      }
+      originalFriends {
+        items {
+          id
         }
         nextToken
       }
@@ -90,8 +94,12 @@ export const updateUser = /* GraphQL */ `
       friends {
         items {
           id
-          name
-          originalId
+        }
+        nextToken
+      }
+      originalFriends {
+        items {
+          id
         }
         nextToken
       }
@@ -138,8 +146,12 @@ export const deleteUser = /* GraphQL */ `
       friends {
         items {
           id
-          name
-          originalId
+        }
+        nextToken
+      }
+      originalFriends {
+        items {
+          id
         }
         nextToken
       }
@@ -153,8 +165,28 @@ export const createFriend = /* GraphQL */ `
   ) {
     createFriend(input: $input, condition: $condition) {
       id
-      name
-      originalId
+      originalUser {
+        id
+        name
+        sharedFiles {
+          nextToken
+        }
+        mySharedFiles {
+          nextToken
+        }
+        toPetition {
+          nextToken
+        }
+        fromPetition {
+          nextToken
+        }
+        friends {
+          nextToken
+        }
+        originalFriends {
+          nextToken
+        }
+      }
       user {
         id
         name
@@ -171,6 +203,9 @@ export const createFriend = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -184,8 +219,28 @@ export const updateFriend = /* GraphQL */ `
   ) {
     updateFriend(input: $input, condition: $condition) {
       id
-      name
-      originalId
+      originalUser {
+        id
+        name
+        sharedFiles {
+          nextToken
+        }
+        mySharedFiles {
+          nextToken
+        }
+        toPetition {
+          nextToken
+        }
+        fromPetition {
+          nextToken
+        }
+        friends {
+          nextToken
+        }
+        originalFriends {
+          nextToken
+        }
+      }
       user {
         id
         name
@@ -202,6 +257,9 @@ export const updateFriend = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -215,8 +273,28 @@ export const deleteFriend = /* GraphQL */ `
   ) {
     deleteFriend(input: $input, condition: $condition) {
       id
-      name
-      originalId
+      originalUser {
+        id
+        name
+        sharedFiles {
+          nextToken
+        }
+        mySharedFiles {
+          nextToken
+        }
+        toPetition {
+          nextToken
+        }
+        fromPetition {
+          nextToken
+        }
+        friends {
+          nextToken
+        }
+        originalFriends {
+          nextToken
+        }
+      }
       user {
         id
         name
@@ -233,6 +311,9 @@ export const deleteFriend = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -266,6 +347,9 @@ export const createFriendRequest = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
       from {
         id
@@ -283,6 +367,9 @@ export const createFriendRequest = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -316,6 +403,9 @@ export const updateFriendRequest = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
       from {
         id
@@ -333,6 +423,9 @@ export const updateFriendRequest = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -366,6 +459,9 @@ export const deleteFriendRequest = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
       from {
         id
@@ -383,6 +479,9 @@ export const deleteFriendRequest = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -413,6 +512,9 @@ export const createSharedFile = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -451,6 +553,9 @@ export const updateSharedFile = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
       Sharers {
         items {
@@ -485,6 +590,9 @@ export const deleteSharedFile = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }
@@ -533,6 +641,9 @@ export const createSharedFileToUser = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
     }
   }
@@ -573,6 +684,9 @@ export const updateSharedFileToUser = /* GraphQL */ `
         friends {
           nextToken
         }
+        originalFriends {
+          nextToken
+        }
       }
     }
   }
@@ -611,6 +725,9 @@ export const deleteSharedFileToUser = /* GraphQL */ `
           nextToken
         }
         friends {
+          nextToken
+        }
+        originalFriends {
           nextToken
         }
       }

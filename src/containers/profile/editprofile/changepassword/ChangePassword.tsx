@@ -39,7 +39,7 @@ const ChangePassword: React.FC<props> = props => {
                     <IonLabel>Cambiar contraseña</IonLabel>
                 </IonItem>
                 {submitError && <IonText>{submitError.message}</IonText>}
-                <IonText color="secondary" className="custom-text-change-password">Se le enviará un mensaje al correo de su cuenta para recuperar la contraseña.</IonText>   
+                <IonText color="secondary" className="custom-text-change-password">Se le ha enviado un mensaje al correo de su cuenta para recuperar la contraseña.</IonText>   
                 <IonGrid className="ion-no-margin">             
                     <IonRow className="ion-padding-bottom">
                         <IonCol>
