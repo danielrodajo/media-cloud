@@ -8,8 +8,9 @@
     font-size: 1.5rem;
 }
 
-/*.custom-ion-search-bar-friends {
-}*/
+.custom-ion-search-bar-friends {
+    border: 5px var(--ion-toolbar-background) solid;
+}
 
 .img-custom{
     height: 300px;
