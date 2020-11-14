@@ -1,7 +1,6 @@
 .my-custom-popover-upload-class .popover-content { 
   padding: 15px;
   width: 80%;
-  
 }
 
 .my-custom-popover-upload-class .popover-viewport {
@@ -12,4 +11,7 @@
     text-align: center;
     font-weight: 600;
     margin-bottom: 3vw;
+}
+body.dark .my-custom-popover-upload-class .popover-content {
+  background-color: #0e0d0d;
 }

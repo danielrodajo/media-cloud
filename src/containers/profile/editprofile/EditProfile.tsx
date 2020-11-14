@@ -1,5 +1,5 @@
 import { IonAvatar, IonButton, IonCol, IonGrid, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonModal, IonRow, IonSpinner, IonAlert } from '@ionic/react';
-import { arrowBackOutline, closeCircleSharp } from 'ionicons/icons';
+import { arrowBackOutline, closeCircleSharp, createOutline, create } from 'ionicons/icons';
 import React, { useRef, useState, useEffect } from 'react';
 import './EditProfile.scss';
 import userdefault from "../../../images/unnamed.jpg";
@@ -81,22 +81,26 @@ const EditProfile: React.FC<props> = props => {
                 <IonGrid className="ion-no-margin">
                     <IonRow className="ion-justify-content-center ion-padding-vertical">
                         <IonAvatar className="edit-avatar">
-                        {
-                            currentImage ? 
-                            <React.Fragment>
-                                <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
-                                <IonImg onClick={takePhoto} className={loading || errorloading || deleteImage ? "hide-img" : "" } onIonImgDidLoad={() => setLoading(false)} 
-                                onIonError={() => {setLoading(false); setErrorLoading(true)}} src={currentImage} />  
-                                <IonImg onClick={takePhoto} className={errorloading || deleteImage ? "" : "hide-img"} src={userdefault}/>
-                                {
-                                    !loading && !deleteImage && currentImage &&
-                                    <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowDeleteAlert(true)}/>
-                                }
-                            </React.Fragment>
-                            :
-                            <IonImg onClick={takePhoto} src={userdefault}/>                              
-                        }
-                            
+                            <div className="edit-avatar-membrane" onClick={takePhoto}>
+                                <IonIcon icon={createOutline}/>
+                            </div>
+                            <IonAvatar className="edit-avatar">
+                            {
+                                currentImage ? 
+                                <React.Fragment>
+                                    <IonSpinner color="tertiary" className={!loading ? "hide-img" : "default-spinner"} />
+                                    <IonImg className={loading || errorloading || deleteImage ? "hide-img" : "" } onIonImgDidLoad={() => setLoading(false)} 
+                                    onIonError={() => {setLoading(false); setErrorLoading(true)}} src={currentImage} />  
+                                    <IonImg className={errorloading || deleteImage ? "" : "hide-img"} src={userdefault}/>
+                                    {
+                                        !loading && !deleteImage && currentImage &&
+                                        <IonIcon className="remove-user-image" icon={closeCircleSharp} color="danger" onClick={() => setShowDeleteAlert(true)}/>
+                                    }
+                                </React.Fragment>
+                                :
+                                <IonImg onClick={takePhoto} src={userdefault}/>                              
+                            }
+                            </IonAvatar>
                         </IonAvatar>
                     </IonRow>
                     <IonRow className="ion-padding-top ion-padding-bottom">
