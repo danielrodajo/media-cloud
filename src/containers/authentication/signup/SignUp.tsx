@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './SignUp.scss';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonToast } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import * as actions from '../../../store/actions/index';
 import logo from "../../../images/lightlogobg.png";
+import MessageErrorToast from '../../../components/MessageErrorToast/MessageErrorToast';
 
 interface props {
     userData: UserData,
@@ -16,8 +17,6 @@ const SignUp: React.FC<props> = props => {
 
     const dispatch = useDispatch();
     const messageError: any = useSelector((state: RootState) => state.AuthReducer.signUpError);
-
-    const [showToast, setShowToast] = useState(false);
 
     const handleSignUp = (event: any) => {
         event.preventDefault();
@@ -33,7 +32,7 @@ const SignUp: React.FC<props> = props => {
                 return "Contraseña no valida,debe tener 6 caracteres o mas.";
 
             case "An account with the given email already exists.":
-                return "Este correo ya esta registrado";
+                return "Este correo ya esta registrado.";
             
             case "El nombre del usuario ya existe":
                 return "Este nombre de usuario ya existe.";
@@ -46,20 +45,9 @@ const SignUp: React.FC<props> = props => {
         return !(inputEmail !== "" && inputPass !== "" && inputName !== "");
     }
 
-    useEffect(() => {
-        if(messageError){
-            setShowToast(true);
-        }
-    }, [messageError])
-
     return (
-        <React.Fragment>         
-            <IonToast 
-                isOpen={showToast}
-                onDidDismiss={() => setShowToast(false)}
-                message= {(messageError) ? errorManagement(messageError.message) : ""}
-                duration={500}
-                position="top"/>
+        <React.Fragment>       
+            <MessageErrorToast message={messageError ? errorManagement(messageError.message) : undefined}/>       
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">
                     <IonRow className="ion-justify-content-center max-height">

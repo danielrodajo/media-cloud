@@ -11,9 +11,9 @@ import * as actions from "../../store/actions/index";
 import FriendPetition from './FriendPetition/FriendPetition';
 import { NotificationType } from '../../API';
 import { generateNotification } from '../../shared/utility';
-import CustomAnimation from '../CustomAnimation';
 import emptyFolderAnimation from '../../Animations/nonotificationsanimation.json';
-import CustomLoading from '../CustomLoading/CustomLoading';
+import CustomLoading from '../../components/CustomLoading/CustomLoading';
+import CustomAnimation from '../../components/CustomAnimation';
 
 export interface Props {
     showModal: boolean;
@@ -21,8 +21,6 @@ export interface Props {
 }
  
 const ModalNotifications: React.SFC<Props> = props => {
-
-    const [keyList, setKeyList] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -86,18 +84,6 @@ const ModalNotifications: React.SFC<Props> = props => {
             setUploading(false);
         });
     }
-
-    useEffect(() => {
-        if (notifications.length > 0) {
-            Storage.list('', {level: 'public'})
-            .then(result => {
-                setKeyList(result);
-            })
-            .catch(err => {
-                console.log(err);
-            }); 
-        }
-    }, [notifications]);
 
     return (
         <IonModal isOpen={props.showModal} onDidDismiss={e => props.setShowModal(false)}>

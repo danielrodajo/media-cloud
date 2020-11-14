@@ -26,9 +26,14 @@ export const createFolder = (name: string) => {
         )
         .catch(err => {
             console.log(err);
+            const errorCreateFolder = {
+                code: "CreateFolderException",
+                message: "Ha surgido un error, creación de carpeta cancelada.",
+                name: "CreateFolderException"
+            }
             dispatch({
                 type: types.CREATE_FOLDER_NOK,
-                payload: err
+                payload: errorCreateFolder
             });
         });
     }

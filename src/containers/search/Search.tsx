@@ -11,6 +11,7 @@ import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPa
 import CustomAnimation from '../../components/CustomAnimation';
 import noFileFoundAnimation from '../../Animations/nofilefound.json'
 import startSearchAnimation from '../../Animations/startsearchanimation.json'
+import MessageErrorToast from '../../components/MessageErrorToast/MessageErrorToast';
 
 const Search: React.FC = () => {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Search: React.FC = () => {
     });
 
     const onRecoverFilesByName = useCallback((userId: String, name: string) => dispatch(actions.recoverFilesByName(userId, name)), [dispatch]);
+    const recoverFilterError = useSelector((state: RootState) => state.FileReducer.recoverFilterError);
 
     const downloading = useSelector(
         (state: RootState) => state.FileReducer.downloading
@@ -39,8 +41,10 @@ const Search: React.FC = () => {
 
     return (
         <IonPage>
+            <MessageErrorToast message={removeError ? removeError.message : undefined}/>
+            <MessageErrorToast message={recoverFilterError ? recoverFilterError.message : undefined}/>
             <ToolbarSearch result={setSearchText} placeholder="Búsqueda de ficheros"/>
-                <IonContent className="my-custom-content">
+            <IonContent className="my-custom-content">
             {
                 downloading ? 
                     <CustomLoadingPage type={LoadingType.SearchFiles} />
@@ -57,7 +61,6 @@ const Search: React.FC = () => {
                                     key={file.key}
                                     file={file}
                                     remove={removeFile}
-                                    removeError={removeError}
                                     isAbsolutePath={false}
                             />)  
                         :
@@ -66,7 +69,6 @@ const Search: React.FC = () => {
                                 <IonText className="format-text-notifications">No existe ese fichero</IonText>
                             </div>         
             }
-            {console.log(files)}
             </IonContent>
         </IonPage>
     );

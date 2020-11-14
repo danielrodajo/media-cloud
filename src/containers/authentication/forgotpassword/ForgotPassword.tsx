@@ -1,11 +1,12 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent } from 'react';
 import './ForgotPassword.css';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonToast} from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import * as actions from '../../../store/actions/index';
 import logo from "../../../images/lightlogobg.png";
+import MessageErrorToast from '../../../components/MessageErrorToast/MessageErrorToast';
 
 interface props {
     userData: UserData,
@@ -15,8 +16,6 @@ const ForgotPassword: React.FC<props> = props => {
 
     const dispatch = useDispatch();
     const messageError: any = useSelector((state: RootState) => state.AuthReducer.forgotPasswordError);
-
-    const [showToast, setShowToast] = useState(false);
     
     const handlePassword = (event: FormEvent<HTMLIonButtonElement>) => {
         event.preventDefault();
@@ -33,20 +32,9 @@ const ForgotPassword: React.FC<props> = props => {
         return !(inputEmail !== "");
     }
 
-    useEffect(() => {
-        if(messageError){
-            setShowToast(true);
-        }
-    }, [messageError])
-
     return (
-        <React.Fragment>         
-            <IonToast 
-            isOpen={showToast}
-            onDidDismiss={() => setShowToast(false)}
-            message= {(messageError) ? errorManagement(messageError.name) : ""}
-            duration={500}
-            position="top"/>
+        <React.Fragment>   
+            <MessageErrorToast message={messageError ? errorManagement(messageError.name) : undefined}/>      
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">
                     <IonRow className="ion-justify-content-center max-height">

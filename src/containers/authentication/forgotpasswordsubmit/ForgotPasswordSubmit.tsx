@@ -1,11 +1,12 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent } from 'react';
 import './ForgotPasswordSubmit.css';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText, IonToast } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonRow, IonGrid, IonImg, IonText } from '@ionic/react';
 import { UserData } from '../../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import * as actions from '../../../store/actions/index';
 import logo from "../../../images/lightlogobg.png";
+import MessageErrorToast from '../../../components/MessageErrorToast/MessageErrorToast';
 
 interface props {
     userData: UserData,
@@ -15,8 +16,6 @@ const ForgotPasswordSubmit: React.FC<props> = props => {
 
     const dispatch = useDispatch();
     const messageError: any = useSelector((state: RootState) => state.AuthReducer.forgotPasswordSubmitError);
-
-    const [showToast, setShowToast] = useState(false);
 
     const handleFPSubmit = (event: FormEvent<HTMLIonButtonElement>) => {
         event.preventDefault();
@@ -38,21 +37,10 @@ const ForgotPasswordSubmit: React.FC<props> = props => {
     const disableButton = (inputCode: string, inputPass: string) => {
         return !(inputCode !== "" && inputPass !== "");
     }
-
-    useEffect(() => {
-        if(messageError){
-            setShowToast(true);
-        }
-    }, [messageError])
     
     return (
-        <React.Fragment>         
-            <IonToast 
-            isOpen={showToast}
-            onDidDismiss={() => setShowToast(false)}
-            message= {(messageError) ? errorManagement(messageError.name) : ""}
-            duration={500}
-            position="top"/>
+        <React.Fragment>  
+            <MessageErrorToast message={messageError ? errorManagement(messageError.name) : undefined}/>
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">
                     <IonRow className="ion-justify-content-center max-height">

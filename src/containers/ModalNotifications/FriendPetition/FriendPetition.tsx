@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './FriendPetition.scss'
-import { IonItem, IonText, IonIcon, IonGrid, IonRow, IonCol, IonToast, IonAlert } from '@ionic/react';
-import { checkmarkCircleOutline, closeCircleOutline, checkmarkCircle, closeSharp, checkmark, checkmarkSharp } from 'ionicons/icons';
-import UserImageAvatar from '../../UserImageAvatar/UserImageAvatar';
+import { IonItem, IonText, IonIcon, IonGrid, IonRow, IonCol, IonAlert } from '@ionic/react';
+import { closeSharp, checkmarkSharp } from 'ionicons/icons';
 import { Storage } from 'aws-amplify';
 import { parseDate } from '../../../shared/utility';
+import UserImageAvatar from '../../../components/UserImageAvatar/UserImageAvatar';
 
 export interface FriendPetitionProps {
     notification: any,

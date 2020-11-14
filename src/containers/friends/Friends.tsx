@@ -16,6 +16,7 @@ import CustomLoadingPage, { LoadingType } from '../../components/CustomLoadingPa
 import friendsAnimation from '../../Animations/friendsanimation.json';
 import noFriendsAnimation from '../../Animations/nofriendsanimation.json';
 import CustomAnimation from '../../components/CustomAnimation';
+import MessageErrorToast from '../../components/MessageErrorToast/MessageErrorToast';
 
 export interface FriendsProps {
     
@@ -146,6 +147,7 @@ const Friends: React.SFC<FriendsProps> = () => {
 
     return (
         <IonPage>
+            <MessageErrorToast message={recoverFriendsError ? recoverFriendsError.message : undefined}/>
             <CustomLoading showLoading={deleting}/>
             <Toolbar />
             <IonSearchbar className="ion-no-padding custom-ion-search-bar-friends darkcolor" placeholder="Búsqueda de usuarios" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value!)}/>
@@ -158,7 +160,6 @@ const Friends: React.SFC<FriendsProps> = () => {
                     ? 
                         (
                             <React.Fragment>
-                                {recoverFriendsError ? <span>{recoverFriendsError.message}</span> : null}
                                 {
                                 searchText === null || searchText === "" ?
                                     friends.length > 0 ?

@@ -6,13 +6,14 @@ import 'react-circular-progressbar/dist/styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { informationCircleOutline, moonOutline } from 'ionicons/icons';
-import AboutUs from './aboutus/AboutUs';
+import AboutUs from './AboutUs/AboutUs';
 import './Profile.scss';
-import SignOut from '../authentication/signout/SignOut';
 import * as actions from '../../store/actions/index';
-import EditProfile from './editprofile/EditProfile';
+import EditProfile from './EditProfile/EditProfile';
 import CustomLoading from '../../components/CustomLoading/CustomLoading';
 import { delay } from '../../shared/utility';
+import MessageErrorToast from '../../components/MessageErrorToast/MessageErrorToast';
+import SignOut from '../Authentication/SignOut/SignOut';
 
 interface props {
     darkMode: boolean,
@@ -34,7 +35,8 @@ const Profile: React.FC<props> = props => {
     const editUsername = (userId: string, name: string) => dispatch(actions.editUsername(userId, name));
     const changePasswordSubmitAction = (username: string, password: string, code: string) => dispatch(actions.forgotPasswordSubmit(username, password, code));
 
-    const uploadError = useSelector((state: RootState) => state.UserReducer.uploadError);
+    const uploadError: any = useSelector((state: RootState) => state.UserReducer.uploadError);
+    const recoverError: any = useSelector((state: RootState) => state.UserReducer.recoverError);
     const uploading = useSelector((state: RootState) => state.UserReducer.uploading);
     const downloading = useSelector((state: RootState) => state.UserReducer.downloading);
     const changing = useSelector((state: RootState) => state.AuthReducer.changingUsername);
@@ -63,9 +65,6 @@ const Profile: React.FC<props> = props => {
         await delay(500);
         while (uploading || changing || removing)
             await delay(500);
-        console.log(user.attributes.name !== name)
-        console.log((userImage && deleting))
-        console.log(file)
         if (user.attributes.name !== name || ((userImage && deleting) || file))
             setShowToast(true);
     }
@@ -83,6 +82,8 @@ const Profile: React.FC<props> = props => {
 
     return (
         <React.Fragment>
+            <MessageErrorToast message={uploadError ? uploadError.message : undefined}/>
+            <MessageErrorToast message={recoverError ? recoverError.message : undefined}/>
             <CustomLoading showLoading={uploading || changing || removing}/>
             <IonAlert
                 isOpen={showAlert}
@@ -105,10 +106,7 @@ const Profile: React.FC<props> = props => {
                 message="Cambios guardados."
                 duration={1500}
                 position="middle"
-            /> 
-            {
-                (uploadError) ? <p>{uploadError}</p> : null
-            }     
+            />   
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <EditProfile 
                 handleChangePassword={changePasswordSubmit}

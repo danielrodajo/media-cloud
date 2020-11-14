@@ -9,6 +9,7 @@ import CustomLoadingPage, { LoadingType } from '../../../components/CustomLoadin
 import EmptyFolder from '../../../components/EmptyFolder/EmptyFolder';
 import FolderMenu from './FolderMenu/FolderMenu';
 import CustomLoading from '../../../components/CustomLoading/CustomLoading';
+import MessageErrorToast from '../../../components/MessageErrorToast/MessageErrorToast';
 
 interface props {
   user: any
@@ -92,6 +93,8 @@ const LoadMyFiles:React.FC<props> = props => {
 
     return (
         <React.Fragment>
+          <MessageErrorToast message={recoverError ? recoverError.message : undefined}/>
+          <MessageErrorToast message={removeError ? removeError.message : undefined}/>
           <CustomLoading showLoading={removing}/>
         {
             //Mostrar Spinner mientras se descargan los ficheros
@@ -107,9 +110,6 @@ const LoadMyFiles:React.FC<props> = props => {
                     handleRemoveFolder={handleRemoveFolder}
                     handleReturnFolder={handleReturnFolder}
                   />}
-                
-                {recoverError && <span>{recoverError.message}</span>}
-    
                 {
                   folders.length === 0 && files.length === 0 
                   ? <EmptyFolder />
@@ -140,15 +140,12 @@ const LoadMyFiles:React.FC<props> = props => {
                         key={file.key}
                         file={file}
                         remove={removeFile}
-                        removeError={removeError}
                         isAbsolutePath={true}
                       />
                     )
                   }
                   </React.Fragment>
-                }
-                
-                
+                }            
               </React.Fragment>
             )}
             </React.Fragment>
