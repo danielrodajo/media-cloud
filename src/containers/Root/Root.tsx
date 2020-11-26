@@ -4,7 +4,7 @@ import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon, I
 import { homeOutline, searchOutline, addCircleOutline, peopleOutline, personOutline } from 'ionicons/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import * as actions from "../../store/actions/index";
 import * as Subscriptions from '../../graphql/subscriptions';
 import { Observable } from 'redux';
@@ -79,7 +79,7 @@ const Root: React.FC<props> = props => {
 
     //Iniciamos subscripciones
     useEffect(() => {
-      setSubscriptionCreateFR((API.graphql(graphqlOperation(Subscriptions.onCreateFriendRequest) ) as unknown as Observable<any>)
+      setSubscriptionCreateFR((API.graphql(graphqlOperation(Subscriptions.onCreateFriendRequest)) as unknown as Observable<any>)
       .subscribe({
         next: (data) => {
           const toUserId = data.value.data.onCreateFriendRequest.to.id;
@@ -88,6 +88,7 @@ const Root: React.FC<props> = props => {
           }
         }
       }));
+      
       setSubscriptionCreateFriend((API.graphql(graphqlOperation(Subscriptions.onCreateFriend)) as unknown as Observable<any>)
       .subscribe({
         next: (data) => {
@@ -97,7 +98,8 @@ const Root: React.FC<props> = props => {
           }
         }
       }));
-      setSubscriptionDeleteFriend((API.graphql(graphqlOperation(Subscriptions.onDeleteFriend) ) as unknown as Observable<any>)
+
+      setSubscriptionDeleteFriend((API.graphql(graphqlOperation(Subscriptions.onDeleteFriend)) as unknown as Observable<any>)
       .subscribe({
         next: (data) => {
           const friendId = data.value.data.onDeleteFriend.user.id;

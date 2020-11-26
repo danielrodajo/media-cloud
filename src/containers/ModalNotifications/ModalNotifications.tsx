@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './ModalNotifications.scss';
 import { IonModal, IonContent, IonHeader, IonToolbar, IonIcon, IonItem, IonText } from '@ionic/react';
 import { arrowDown } from 'ionicons/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import Notification from './Notification/Notification';
-import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import * as Mutations from '../../graphql/mutations';
 import * as actions from "../../store/actions/index";
 import FriendPetition from './FriendPetition/FriendPetition';
