@@ -3,6 +3,9 @@ import { logOutOutline } from 'ionicons/icons';
 import './SignOut.css';
 import { IonItem, IonIcon, IonAlert, IonLabel } from '@ionic/react';
 import { useHistory } from 'react-router';
+import { RootState } from '../../../store/store';
+import { useSelector } from 'react-redux';
+import MessageErrorToast from '../../../components/MessageErrorToast/MessageErrorToast';
 
 interface props {
     handleSignOut: () => void
@@ -11,7 +14,7 @@ interface props {
 const SignOut: React.FC<props> = props => {
 
     const [showAlert, setShowAlert] = useState(false);
-
+    const messageError: any = useSelector((state: RootState) => state.AuthReducer.signOutError);
     const history = useHistory();
 
     const handleClick = () => {
@@ -20,6 +23,7 @@ const SignOut: React.FC<props> = props => {
 
     return (
         <React.Fragment>
+            <MessageErrorToast message={messageError ? messageError.message : undefined}/>
             <IonAlert
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}

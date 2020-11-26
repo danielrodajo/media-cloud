@@ -21,15 +21,15 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import BottomBar from './components/BottomBar/BottomBar';
 import Amplify, {Storage} from 'aws-amplify';
 import { withRouter } from 'react-router';
 import { connect, useSelector } from 'react-redux';
 import awsconfig from './aws-exports';
 import { RootState } from './store/store';
 import * as actions from './store/actions/index';
-import Authentication from './containers/authentication/Authentication';
+import Authentication from './containers/Authentication/Authentication';
 import CustomLoading from './components/CustomLoading/CustomLoading';
+import Root from './containers/Root/Root';
 
 
 Amplify.configure(awsconfig);
@@ -57,7 +57,7 @@ const App: React.FC<{
       {loadingAuth ? <CustomLoading showLoading={loadingAuth}/> : null}
       {
         props.isAuthenticated ?
-        <BottomBar default="Home"/>
+        <Root default="Home"/>
         : <Authentication />
       }
     </IonReactRouter>

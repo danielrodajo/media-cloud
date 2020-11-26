@@ -47,9 +47,14 @@ export const uploadFile = (name: string, file: File) => {
             });           
         }).catch(err => {
             console.log(err);
+            const errorUpload = {
+                code: "UploadException",
+                message: "Ha surgido un error, subida del fichero cancelada.",
+                name: "UploadException"
+            }
             dispatch({
                 type: types.UPLOAD_FILE_NOK,
-                payload: err
+                payload: errorUpload
             });
         });
     }   

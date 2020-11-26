@@ -9,7 +9,6 @@ import DisplayImage from '../DisplayImage/DisplayImage';
 interface props {
     file: File,
     remove: (value: string) => void,
-    removeError: Error,
     isAbsolutePath: boolean,
 }
 
@@ -31,7 +30,7 @@ const FileBox: React.FC<props> = props => {
 
     return (
         <React.Fragment>
-            <PopoverFileBox remove={props.remove} removeError={props.removeError}  showPopover={showPopover} setShowPopover={setShowPopover} file={props.file}/>
+            <PopoverFileBox remove={props.remove}  showPopover={showPopover} setShowPopover={setShowPopover} file={props.file}/>
             <IonCard className="my-card ion-activatable ripple-parent" onClick={() => setShowPopover(true)}>
                 {
                     props.file.shared ? <IonIcon className="file-box-share-icon" icon={shareSocialSharp} color="success"/> : null

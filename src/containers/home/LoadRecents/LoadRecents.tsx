@@ -6,6 +6,7 @@ import { RootState } from '../../../store/store';
 import * as actions from "../../../store/actions/index";
 import CustomLoadingPage, { LoadingType } from '../../../components/CustomLoadingPage/CustomLoadingPage';
 import EmptyFolderRecent from '../../../components/EmptyFolderRecent/EmptyFolderRecent';
+import MessageErrorToast from '../../../components/MessageErrorToast/MessageErrorToast';
 
 interface props {
     maxFiles: number,
@@ -47,13 +48,14 @@ const LoadRecents: React.FC<props> = props => {
 
     return (
         <React.Fragment>
+          <MessageErrorToast message={recoverError ? recoverError.message : undefined}/>
+          <MessageErrorToast message={removeError ? removeError.message : undefined}/>
         {
             //Mostrar Spinner mientras se descargan los ficheros
             downloading ? (
               <CustomLoadingPage type={LoadingType.Files}/>
             ) : (
               <React.Fragment>       
-                {recoverError ? <span>{recoverError.message}</span> : null}
                 {
                   files.length === 0 ? 
                   <EmptyFolderRecent showAddModal={props.showAddModal}/>
@@ -64,7 +66,6 @@ const LoadRecents: React.FC<props> = props => {
                       key={file.key}
                       file={file}
                       remove={removeFile}
-                      removeError={removeError}
                       isAbsolutePath={false}
                     />
                   )

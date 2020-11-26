@@ -11,7 +11,6 @@ interface props {
     setShowPopover: (value: boolean) => void;
     file: File;
     remove: (value: string) => void;
-    removeError: Error
  }
 
 const PopoverFileBox: React.FC<props> = props => {

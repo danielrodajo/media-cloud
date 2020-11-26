@@ -9,6 +9,7 @@ import Popover from './PopoverUpload/PopoverUpload';
 import UploadButton from '../../components/UploadButton/UploadButton';
 import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 import { Storage } from 'aws-amplify';
+import MessageErrorToast from '../../components/MessageErrorToast/MessageErrorToast';
 
 
 interface props {
@@ -29,16 +30,12 @@ const Add: React.FC<props> = props => {
     const { photo, setPhoto, takePhoto } = usePhotoGallery();
 
     const createFolder = (name: string) => dispatch(actions.createFolder(name));
-
-    //Estados que tal vez se usen en un futuro para la creacion de carpeta
-    //const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
-    //const creating = useSelector((state: RootState) => state.FolderReducer.creating);
-    //const successFolder = useSelector((state: RootState) => state.FolderReducer.createSuccess);
+    const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
 
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
-    const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.FileReducer.uploading);
     const success = useSelector((state: RootState) => state.FileReducer.uploadSuccess);
+    const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
 
     const loadedFile = useSelector((state: RootState) => state.FileReducer.loadedFile);
     const totalFile = useSelector((state: RootState) => state.FileReducer.totalFile);
@@ -99,6 +96,8 @@ const Add: React.FC<props> = props => {
 
     return (
         <React.Fragment>  
+            <MessageErrorToast message={uploadError ? uploadError.message : undefined}/>
+            <MessageErrorToast message={createFolderError ? createFolderError.message : undefined}/>
             <IonAlert
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}
@@ -161,9 +160,6 @@ const Add: React.FC<props> = props => {
             />
 
             <IonModal isOpen={props.showModal} cssClass="my-custom-modal-css" onDidDismiss={e => props.setShowModal(false)}>
-            {
-                (uploadError) ? <p>{uploadError}</p> : null
-            }
                 <IonItem style={{"width": "100%"}} className="ion-no-padding custom-add-title">
                     <IonText>Crear</IonText>
                 </IonItem>
