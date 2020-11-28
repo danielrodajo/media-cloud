@@ -1,0 +1,27 @@
+.format-percent {
+    font-size: 1.4rem;
+    color: rgb(144, 19, 254);
+    font-family: 'Nunito', sans-serif;
+    margin: auto;
+}
+
+.center-percent {
+    align-content: center;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    top: 30%;
+    right: 34%;
+    width: 30%;
+}
+
+.format-text {
+    position: absolute;
+    top: 72%;
+    right: 25%;
+    font-size: 2.3rem;
+    display: inline-block;
+    text-align: center;
+    color: rgb(144, 19, 254);
+    font-family: 'Nunito', sans-serif;
+}

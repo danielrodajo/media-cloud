@@ -33,8 +33,8 @@ const Verify: React.FC<props> = props => {
     }
 
     return (
-        <React.Fragment>  
-            <MessageErrorToast message={messageError ? errorManagement(messageError.code) : undefined}/>       
+        <React.Fragment>   
+            <MessageErrorToast message={messageError ? errorManagement(messageError.code) : undefined}/>      
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">
                     <IonRow className="ion-justify-content-center max-height">

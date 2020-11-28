@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Verify from './Verify/Verify';
+import Verify from './verify/Verify';
 import { IonPage, IonContent } from '@ionic/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import SignIn from './SignIn/SignIn';
-import SignUp from './SignUp/SignUp';
-import ForgotPassword from './ForgotPassword/ForgotPassword';
-import ForgotPasswordSubmit from './ForgotPasswordSubmit/ForgotPasswordSubmit';
+import SignIn from './signin/SignIn';
+import SignUp from './signup/SignUp';
+import ForgotPassword from './forgotpassword/ForgotPassword';
+import ForgotPasswordSubmit from './forgotpasswordsubmit/ForgotPasswordSubmit';
 
 const Authentication: React.FC = () => {
 

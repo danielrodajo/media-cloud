@@ -1,0 +1,36 @@
+.custom-button {
+    float: left;
+}
+
+.custom-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: inline-block;
+    margin-left: 0.5em;
+    margin-top: 9px !important;
+}
+
+.no-notifications-text {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px; 
+    font-size: 1.1rem;
+}
+
+.format-text-notifications {
+    font-size: 5vw;
+    color: rgb(144, 19, 254);
+    font-family: 'Nunito', sans-serif;
+    margin: auto;
+}
+
+.center-empty-notifications-div {
+    position: absolute;
+    top: 5%;
+    left: 20%;
+    width: 60%;
+    height: 20px;
+    text-align: center;
+}

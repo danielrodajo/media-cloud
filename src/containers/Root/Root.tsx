@@ -9,11 +9,11 @@ import * as actions from "../../store/actions/index";
 import * as Subscriptions from '../../graphql/subscriptions';
 import { Observable } from 'redux';
 import './Root.scss';
-import Add from '../Add/Add';
-import Home from '../Home/Home';
-import Friends from '../Friends/Friends';
-import Profile from '../Profile/Profile';
-import Search from '../Search/Search';
+import Add from '../add/Add';
+import Home from '../home/Home';
+import Friends from '../friends/Friends';
+import Profile from '../profile/Profile';
+import Search from '../search/Search';
 
 interface props {
   default: string;

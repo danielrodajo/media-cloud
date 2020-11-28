@@ -39,7 +39,7 @@ const ForgotPasswordSubmit: React.FC<props> = props => {
     }
     
     return (
-        <React.Fragment>  
+        <React.Fragment>         
             <MessageErrorToast message={messageError ? errorManagement(messageError.name) : undefined}/>
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">

@@ -3,8 +3,8 @@ import { logOutOutline } from 'ionicons/icons';
 import './SignOut.css';
 import { IonItem, IonIcon, IonAlert, IonLabel } from '@ionic/react';
 import { useHistory } from 'react-router';
-import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 import MessageErrorToast from '../../../components/MessageErrorToast/MessageErrorToast';
 
 interface props {

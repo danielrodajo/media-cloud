@@ -30,12 +30,17 @@ const Add: React.FC<props> = props => {
     const { photo, setPhoto, takePhoto } = usePhotoGallery();
 
     const createFolder = (name: string) => dispatch(actions.createFolder(name));
-    const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
 
+    //Estados que tal vez se usen en un futuro para la creacion de carpeta
+    //const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
+    //const creating = useSelector((state: RootState) => state.FolderReducer.creating);
+    //const successFolder = useSelector((state: RootState) => state.FolderReducer.createSuccess);
+    const createFolderError = useSelector((state: RootState) => state.FolderReducer.createFolderError);
+    
     const uploadFile = (name: string, file: File) => dispatch(actions.uploadFile(name, file));
+    const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
     const uploading = useSelector((state: RootState) => state.FileReducer.uploading);
     const success = useSelector((state: RootState) => state.FileReducer.uploadSuccess);
-    const uploadError = useSelector((state: RootState) => state.FileReducer.uploadError);
 
     const loadedFile = useSelector((state: RootState) => state.FileReducer.loadedFile);
     const totalFile = useSelector((state: RootState) => state.FileReducer.totalFile);
@@ -78,11 +83,7 @@ const Add: React.FC<props> = props => {
     }
 
     const submitPhoto = async() => {
-        if (await checkIfFileExists(photo)) {
-            setShowToast(true);
-            return;
-        }
-        const name = (photo as File).name;  
+        const name = new Date().getTime() + '.jpeg';
         //Subir el fichero a S3
         uploadFile(((currentPath === "") ? name : currentPath+"/"+name), photo as File);
         //Vaciar campo despues de enviarlo

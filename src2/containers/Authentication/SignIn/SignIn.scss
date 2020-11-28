@@ -1,0 +1,21 @@
+.logoimage{
+    width: 13em;
+    height: 3em;
+}
+
+.forgot-password-link {
+    color: #763BC6;
+    font-weight: bold;
+    --background: transparent;
+    --background-activated: transparent;
+    --box-shadow: 0;
+}
+
+.show-password {
+    display: block !important;
+    float: right !important;
+}
+
+.white { 
+    color: white;
+}

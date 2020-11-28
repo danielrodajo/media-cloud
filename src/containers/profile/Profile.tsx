@@ -6,14 +6,14 @@ import 'react-circular-progressbar/dist/styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { informationCircleOutline, moonOutline } from 'ionicons/icons';
-import AboutUs from './AboutUs/AboutUs';
+import AboutUs from './aboutus/AboutUs';
 import './Profile.scss';
+import SignOut from '../authentication/signout/SignOut';
 import * as actions from '../../store/actions/index';
-import EditProfile from './EditProfile/EditProfile';
+import EditProfile from './editprofile/EditProfile';
 import CustomLoading from '../../components/CustomLoading/CustomLoading';
 import { delay } from '../../shared/utility';
 import MessageErrorToast from '../../components/MessageErrorToast/MessageErrorToast';
-import SignOut from '../Authentication/SignOut/SignOut';
 
 interface props {
     darkMode: boolean,
@@ -106,7 +106,7 @@ const Profile: React.FC<props> = props => {
                 message="Cambios guardados."
                 duration={1500}
                 position="middle"
-            />   
+            />    
             <AboutUs showModal={showModalAboutus} setShowModal={setShowModalAboutus}/>
             <EditProfile 
                 handleChangePassword={changePasswordSubmit}

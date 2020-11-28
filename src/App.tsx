@@ -27,9 +27,9 @@ import { connect, useSelector } from 'react-redux';
 import awsconfig from './aws-exports';
 import { RootState } from './store/store';
 import * as actions from './store/actions/index';
-import Authentication from './containers/Authentication/Authentication';
+import Authentication from './containers/authentication/Authentication';
 import CustomLoading from './components/CustomLoading/CustomLoading';
-import Root from './containers/Root/Root';
+import Root from './containers/root/Root';
 
 
 Amplify.configure(awsconfig);

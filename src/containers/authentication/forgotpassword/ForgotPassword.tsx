@@ -33,8 +33,8 @@ const ForgotPassword: React.FC<props> = props => {
     }
 
     return (
-        <React.Fragment>   
-            <MessageErrorToast message={messageError ? errorManagement(messageError.name) : undefined}/>      
+        <React.Fragment>     
+            <MessageErrorToast message={messageError ? errorManagement(messageError.name) : undefined}/>   
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">
                     <IonRow className="ion-justify-content-center max-height">

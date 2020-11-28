@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import './EditProfile.scss';
 import userdefault from "../../../images/unnamed.jpg";
 import { usePhotoGallery } from '../../../hooks/usePhotoGallery';
-import ChangePassword from './ChangePassword/ChangePassword';
+import ChangePassword from './changepassword/ChangePassword';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import { RootState } from '../../../store/store';
@@ -45,7 +45,7 @@ const EditProfile: React.FC<props> = props => {
         if (props.image)
             setCurrentImage(props.image)
     }, [props.image]);
-
+    
     const changePassword = () => {
         forgotPassword(user.attributes.email);
         props.setShowChangeModal(true);

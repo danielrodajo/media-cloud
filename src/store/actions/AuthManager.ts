@@ -244,7 +244,7 @@ export const authCheckState = () => {
             })           
         })
         .catch(err => {
-            if (err !== 'not authenticated') {
+            if (err !== 'The user is not authenticated' && err !== 'not authenticated') {
                 console.log(err);
                 dispatch({
                     type: types.AUTH_SIGNIN_NOK,

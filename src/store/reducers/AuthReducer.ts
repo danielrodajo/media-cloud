@@ -39,7 +39,6 @@ const editUsernameFail = (state: AuthState, payload: any) => {
 const signUp = (state: AuthState) => {
     return updateObject( state, {
         loading: true,
-        signUpError: null,
     } )
 }
 
@@ -58,7 +57,7 @@ const signUpFail = (state: AuthState, payload: Error) => {
 }
 
 const signIn = (state: AuthState) => {
-    return updateObject( state, {
+    return updateObject( state, {  
         signInError: null,
         loading: true,
     });
@@ -79,7 +78,7 @@ const signInFail = (state: AuthState, payload: Error) => {
 }
 
 const verify = (state: AuthState) => {
-    return updateObject( state, {
+    return updateObject( state, { 
         verifyError: null,
         loading: true
     } )

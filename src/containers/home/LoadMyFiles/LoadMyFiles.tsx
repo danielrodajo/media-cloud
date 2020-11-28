@@ -145,7 +145,7 @@ const LoadMyFiles:React.FC<props> = props => {
                     )
                   }
                   </React.Fragment>
-                }            
+                }             
               </React.Fragment>
             )}
             </React.Fragment>

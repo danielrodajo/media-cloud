@@ -46,8 +46,8 @@ const SignUp: React.FC<props> = props => {
     }
 
     return (
-        <React.Fragment>       
-            <MessageErrorToast message={messageError ? errorManagement(messageError.message) : undefined}/>       
+        <React.Fragment>      
+            <MessageErrorToast message={messageError ? errorManagement(messageError.message) : undefined}/>      
             <IonContent className="ion-padding" color="light">
                 <IonGrid className="max-height">
                     <IonRow className="ion-justify-content-center max-height">

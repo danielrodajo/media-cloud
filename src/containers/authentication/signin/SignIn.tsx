@@ -45,11 +45,9 @@ const SignIn: React.FC<props> = props => {
         return !(inputEmail !== "" && inputPass !== "");
     }
 
-   
-
     return (
-        <React.Fragment>       
-            <MessageErrorToast message={messageError ? errorManagement(messageError.name) : undefined}/>
+        <React.Fragment>    
+            <MessageErrorToast message={messageError ? errorManagement(messageError.name) : undefined}/>    
             <IonContent className="ion-padding" color="light">  
                 <IonGrid className="max-height max-width">
                     <IonRow className="ion-justify-content-center max-height max-width">
