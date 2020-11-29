@@ -12,8 +12,8 @@ const UserImageAvatar: React.FC<UserImageAvatarProps> = props => {
     
     return ( 
         <IonAvatar slot="start">
-            <IonImg className={errorloading && props.urlImage.length === 0 ? "hide-img" : ""} onIonError={() => setErrorLoading(true)} src={props.urlImage} />  
-            <IonImg className={errorloading && props.urlImage.length === 0 ? "" : "hide-img"} src={DefaultAvatar}/>
+            <IonImg className={props.urlImage === null || (errorloading && props.urlImage.length === 0) ? "hide-img" : ""} onIonError={() => setErrorLoading(true)} src={props.urlImage} />  
+            <IonImg className={props.urlImage === null || (errorloading && props.urlImage.length === 0) ? "" : "hide-img"} src={DefaultAvatar}/>
         </IonAvatar>
      );
 }
