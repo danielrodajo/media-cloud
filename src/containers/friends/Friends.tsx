@@ -75,9 +75,6 @@ const Friends: React.SFC<FriendsProps> = () => {
         }
     }, [searchText]);
 
-    useEffect(() => {
-    },[]);
-
     //Revisa si ya hay notificacion pendiente del usuario para ver si puede enviar otra mas
     const checkNotificationConditions = async(friendId: String) => {
         if (notifications.filter((notification: any) => notification.from.id === friendId && notification.type === NotificationType.SENDPETITION).length > 0) {

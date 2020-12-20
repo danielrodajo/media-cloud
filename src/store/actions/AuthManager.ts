@@ -31,9 +31,9 @@ export const signIn = (username: string, password: string) => {
             })
             .then(data => {
                 Auth.currentUserCredentials()
-                .then(e => {
+                .then(async(e) => {
                     data = {...data, identityId: e.identityId}
-                    addIfNewUser(data);
+                    await addIfNewUser(data);
                     dispatch({
                         type: types.AUTH_SIGNIN_OK,
                         payload: data

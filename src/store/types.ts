@@ -16,7 +16,7 @@ export interface File {
 }
 
 export interface FriendsState {
-    friends: any | null;
+    friends: any[];
     recoverFriendsError: Object | null;
     downloadingFriends: boolean;
     deleting: boolean;

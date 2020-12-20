@@ -21,7 +21,7 @@ const MessageErrorToast: React.SFC<MessageErrorToastProps> = props => {
             isOpen={showToast}
             onDidDismiss={() => setShowToast(false)}
             message= {(props.message) ? props.message : ""}
-            duration={1000}
+            duration={1500}
             position="top"/>
      );
 }

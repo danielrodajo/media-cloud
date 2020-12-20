@@ -12,18 +12,29 @@ export const getFriends = (userId: string) => {
         (API.graphql(graphqlOperation(Queries.getUser, {id: userId})) as Promise<any>)
         .then(async(result: any) => {
             const friends = [];
-            for (let i=0; i<result.data.getUser.friends.items.length; i++) {
-                friends.push(await (API.graphql(graphqlOperation(Queries.getFriend, {id: result.data.getUser.friends.items[i].id})) as Promise<any>));
+            
+            //Evitamos error de primer inicio de sesion, que no de tiempo a crear el registro del usuario en DynamoDB
+            if (result.data.getUser === null) {
+                 dispatch({
+                    type: types.RECOVER_FRIENDS_OK,
+                    payload: []
+                });  
+            } else {
+                for (let i=0; i<result.data.getUser.friends.items.length; i++) {
+                    friends.push(await (API.graphql(graphqlOperation(Queries.getFriend, {id: result.data.getUser.friends.items[i].id})) as Promise<any>));
+                }
+                const resultFriends = await recoverUserImageFriends(friends);
+                dispatch({
+                    type: types.RECOVER_FRIENDS_OK,
+                    payload: resultFriends
+                });
             }
-            const resultFriends = await recoverUserImageFriends(friends);
+        }).catch((err: any) => {
+            console.log(err)
             dispatch({
-                type: types.RECOVER_FRIENDS_OK,
-                payload: resultFriends
-            });
-        }).catch((err: any) => dispatch({
             type: types.RECOVER_FRIENDS_NOK,
             payload: err
-        }))
+        })})
     }
 }
 
