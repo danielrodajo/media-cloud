@@ -41,7 +41,7 @@
     "lottie-react": "^2.1.0",
     "lottie-react-web": "^2.2.2",
     "lottie-web": "^5.7.3",
-    "node-sass": "^4.14.1",
+    "node-sass": "^9.0.0",
     "phonegap-plugin-barcodescanner": "^8.1.0",
     "react": "^16.13.0",
     "react-circular-progressbar": "^2.0.3",
